@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#073d2b">
 <title>PalmGrow | Grow With Nature</title>
 
@@ -11,7 +11,6 @@
   --green: #073d2b;
   --light-green: #0d6244;
   --gold: #d6b45b;
-  --white: #ffffff;
   --background: #f4f7f4;
   --text: #23372e;
   --muted: #78867e;
@@ -27,17 +26,18 @@ body {
   font-family: Arial, sans-serif;
   background: var(--background);
   color: var(--text);
+  line-height: 1.5;
 }
 
 header {
   background: var(--green);
   color: white;
-  padding: 20px;
+  padding: 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 12px;
 }
 
 .logo {
@@ -52,61 +52,151 @@ header {
 .badge {
   border: 1px solid var(--gold);
   color: var(--gold);
-  padding: 7px 12px;
   border-radius: 20px;
-  font-size: 12px;
+  padding: 6px 10px;
+  font-size: 11px;
 }
 
 .container {
-  max-width: 1100px;
+  max-width: 1000px;
   margin: auto;
   padding: 24px 16px;
 }
 
+h1, h2, h3 {
+  line-height: 1.3;
+}
+
 .welcome {
-  margin-bottom: 24px;
-}
-
-.welcome h1 {
-  font-size: 27px;
-  margin-bottom: 8px;
-}
-
-.welcome p {
-  color: var(--muted);
-  line-height: 1.5;
-}
-
-.demo-notice {
-  background: #fff4d7;
-  color: #72551a;
-  border: 1px solid #ead79e;
-  border-radius: 10px;
-  padding: 13px;
-  font-size: 13px;
-  line-height: 1.5;
   margin-bottom: 22px;
 }
 
-.stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-  margin-bottom: 28px;
+.welcome h1 {
+  margin-bottom: 8px;
 }
 
-.card, .panel {
+.muted {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.notice {
+  background: #fff4d7;
+  border: 1px solid #ead79e;
+  color: #72551a;
+  border-radius: 10px;
+  padding: 14px;
+  margin: 18px 0;
+  font-size: 13px;
+}
+
+.panel, .card, .plan {
   background: white;
-  border: 1px solid #e5ebe6;
+  border: 1px solid #e3eae4;
   border-radius: 14px;
   padding: 20px;
+  margin-bottom: 18px;
   box-shadow: 0 3px 12px rgba(0,0,0,.025);
 }
 
-.card p {
+.section-title {
+  margin: 28px 0 14px;
+}
+
+.section-title p {
   color: var(--muted);
   font-size: 13px;
-  margin-bottom: 12px;
+  margin-top: 5px;
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  margin: 8px 0 14px;
+  border: 1px solid #d5dfd7;
+  border-radius: 8px;
+  background: white;
+  font-size: 16px;
+}
+
+label {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+button {
+  border: none;
+  border-radius: 8px;
+  padding: 13px;
+  background: var(--green);
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--light-green);
+}
+
+button:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+.full {
+  width: 100%;
+}
+
+.secondary {
+  background: #e8efe9;
+  color: var(--green);
+}
+
+.secondary:hover {
+  background: #dbe7dd;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.status {
+  margin: 12px 0;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.success {
+  background: #e5f5e9;
+  color: #155b31;
+}
+
+.error {
+  background: #ffeded;
+  color: #8a2222;
+}
+
+.stats, .plans {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.card p {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 7px;
 }
 
 .card h2 {
@@ -114,172 +204,77 @@ header {
   font-size: 21px;
 }
 
-.section-title {
-  margin: 26px 0 15px;
-}
-
-.section-title h2 {
-  font-size: 21px;
-  margin-bottom: 6px;
-}
-
-.section-title p {
-  font-size: 13px;
-  color: var(--muted);
-}
-
 .project {
   background: linear-gradient(135deg, #073d2b, #0d6244);
   color: white;
-  border-radius: 16px;
   padding: 24px;
-  margin-bottom: 25px;
-}
-
-.project h2 {
-  margin: 12px 0;
-  font-size: 23px;
+  border-radius: 15px;
+  margin: 20px 0;
 }
 
 .project p {
-  color: #d9e9df;
+  color: #e0ece4;
   font-size: 14px;
-  line-height: 1.6;
-}
-
-.project-icon {
-  font-size: 42px;
-}
-
-.progress-info {
-  display: flex;
-  justify-content: space-between;
-  margin: 22px 0 10px;
-  font-size: 13px;
-}
-
-.progress {
-  height: 8px;
-  background: rgba(255,255,255,.2);
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.progress div {
-  height: 100%;
-  width: 68%;
-  background: var(--gold);
-}
-
-.plans {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 15px;
-}
-
-.plan {
-  background: white;
-  border: 1px solid #e0e8e1;
-  padding: 23px;
-  border-radius: 14px;
-}
-
-.plan.featured {
-  border: 2px solid var(--gold);
+  margin-top: 8px;
 }
 
 .plan .icon {
   font-size: 34px;
-  margin-bottom: 13px;
 }
 
 .plan h3 {
-  margin-bottom: 9px;
+  margin: 10px 0;
 }
 
 .plan p {
-  color: var(--muted);
   font-size: 13px;
-  line-height: 1.6;
-  margin-bottom: 18px;
-}
-
-.plan .amount {
-  display: block;
-  color: var(--green);
-  font-weight: bold;
-  font-size: 22px;
-  margin-bottom: 17px;
-}
-
-button {
-  width: 100%;
-  background: var(--green);
-  color: white;
-  padding: 13px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:focus-visible {
-  outline: 3px solid var(--gold);
-  outline-offset: 3px;
-}
-
-button:hover {
-  background: var(--light-green);
-}
-
-.transaction {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 17px 0;
-  border-bottom: 1px solid #edf0ed;
-}
-
-.transaction:last-child {
-  border-bottom: none;
-}
-
-.transaction strong {
-  display: block;
-  font-size: 14px;
-  margin-bottom: 6px;
-}
-
-.transaction small {
   color: var(--muted);
+  margin-bottom: 12px;
 }
 
-.amount {
+.plan .price {
+  display: block;
+  font-size: 22px;
   font-weight: bold;
   color: var(--green);
-  white-space: nowrap;
+  margin: 14px 0;
+}
+
+.bank-details {
+  background: #f4f8f4;
+  border: 1px dashed #b7cbb9;
+  padding: 16px;
+  border-radius: 10px;
+  margin: 15px 0;
+}
+
+.bank-details p {
+  margin: 8px 0;
+  overflow-wrap: anywhere;
+}
+
+.bank-details strong {
+  color: var(--green);
 }
 
 footer {
   text-align: center;
-  padding: 30px 12px;
   color: var(--muted);
   font-size: 12px;
-  line-height: 1.8;
+  padding: 25px 15px;
 }
 
 @media (min-width: 700px) {
   .stats {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .plans {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .welcome h1 {
-    font-size: 32px;
+  .container {
+    padding-top: 32px;
   }
 }
 </style>
@@ -296,125 +291,392 @@ footer {
 
   <section class="welcome">
     <h1>Welcome to PalmGrow 🌱</h1>
-    <p>Growing a greener future through agricultural projects.</p>
+    <p class="muted">
+      Explore oil-palm agriculture and agricultural project opportunities.
+    </p>
   </section>
 
-  <div class="demo-notice">
-    <strong>DEMO VERSION:</strong> All account balances, project
-    figures and progress indicators on this page are illustrative.
-    No real account or investment is connected.
+  <div class="notice">
+    <strong>Important:</strong> PalmGrow is being developed.
+    Agricultural investments involve risks. Returns are not guaranteed.
+    Do not transfer money until the project, payment process and applicable
+    regulatory requirements have been independently verified.
   </div>
 
-  <div class="stats">
-    <div class="card">
-      <p>Total Investment</p>
-      <h2>₦500,000</h2>
+  <!-- REGISTRATION AND LOGIN -->
+  <section id="authSection" class="panel">
+    <h2 id="authHeading">Create Your PalmGrow Account</h2>
+    <p class="muted" style="margin:8px 0 18px">
+      Register or sign in to access your account.
+    </p>
+
+    <form id="authForm">
+      <div id="nameField">
+        <label for="fullName">Full Name</label>
+        <input id="fullName" type="text"
+          autocomplete="name" placeholder="Enter your full name">
+      </div>
+
+      <div id="phoneField">
+        <label for="phone">Phone Number</label>
+        <input id="phone" type="tel"
+          autocomplete="tel" placeholder="Enter your phone number">
+      </div>
+
+      <label for="email">Email Address</label>
+      <input id="email" type="email"
+        autocomplete="email" required placeholder="Enter your email">
+
+      <label for="password">Password</label>
+      <input id="password" type="password"
+        autocomplete="current-password" minlength="8"
+        required placeholder="At least 8 characters">
+
+      <button id="submitButton" class="full" type="submit">
+        Create Account
+      </button>
+    </form>
+
+    <div id="authMessage" class="status hidden" role="status"></div>
+
+    <div class="actions">
+      <button id="switchButton" class="secondary" type="button">
+        Already Registered? Login
+      </button>
+      <button id="resetButton" class="secondary" type="button">
+        Forgot Password?
+      </button>
     </div>
-
-    <div class="card">
-      <p>Projected Returns</p>
-      <h2>₦75,000</h2>
-    </div>
-
-    <div class="card">
-      <p>Active Projects</p>
-      <h2>02</h2>
-    </div>
-
-    <div class="card">
-      <p>Referral Rewards</p>
-      <h2>₦10,000</h2>
-    </div>
-  </div>
-
-  <section class="project">
-    <div class="project-icon">🌴</div>
-    <p>FEATURED AGRICULTURAL PROJECT</p>
-    <h2>Oil Palm Plantation</h2>
-    <p>Explore oil-palm farming and learn how agricultural
-    projects operate, from cultivation to harvesting.</p>
-
-    <div class="progress-info">
-      <span>Illustrative project progress</span>
-      <strong>68%</strong>
-    </div>
-
-    <div class="progress"><div></div></div>
   </section>
 
-  <section>
+  <!-- ACCOUNT DASHBOARD -->
+  <section id="dashboard" class="hidden">
+
+    <div class="panel">
+      <p class="muted">Signed in as</p>
+      <h2 id="userName" style="margin:5px 0">PalmGrow Member</h2>
+      <p id="userEmail" class="muted"></p>
+      <button id="logoutButton" class="secondary"
+        style="margin-top:14px">Log Out</button>
+    </div>
+
+    <div class="stats">
+      <div class="card">
+        <p>Verified Investment</p>
+        <h2 id="investmentTotal">₦0</h2>
+      </div>
+
+      <div class="card">
+        <p>Verified Payments</p>
+        <h2 id="paymentTotal">₦0</h2>
+      </div>
+
+      <div class="card">
+        <p>Account Status</p>
+        <h2 style="font-size:17px">Registered</h2>
+      </div>
+    </div>
+
+    <div class="project">
+      <div style="font-size:38px">🌴</div>
+      <h2>Oil Palm Plantation</h2>
+      <p>
+        Learn about oil-palm cultivation, farm management,
+        harvesting and agricultural development.
+      </p>
+    </div>
+
     <div class="section-title">
-      <h2>Explore Investment Plans</h2>
-      <p>Illustrative plan categories for the prototype.</p>
+      <h2>Explore Agricultural Plans</h2>
+      <p>Minimum proposed participation amount: ₦5,000.</p>
+      <p>Proposed term: 24 months, subject to final contract terms.</p>
     </div>
 
     <div class="plans">
       <article class="plan">
         <div class="icon">🌱</div>
         <h3>Starter Palm</h3>
-        <p>Explore an entry-level agricultural project.</p>
-        <span class="amount">₦100,000</span>
-        <button onclick="showInfo()">Explore Plan</button>
+        <p>Entry-level agricultural project category.</p>
+        <span class="price">₦5,000</span>
+        <button class="full planButton" data-plan="Starter Palm"
+          data-amount="5000">View Payment Details</button>
       </article>
 
-      <article class="plan featured">
+      <article class="plan">
         <div class="icon">🌴</div>
         <h3>Growth Palm</h3>
-        <p>Learn about a medium-scale plantation project.</p>
-        <span class="amount">₦300,000</span>
-        <button onclick="showInfo()">Explore Plan</button>
+        <p>Medium-level agricultural project category.</p>
+        <span class="price">₦50,000</span>
+        <button class="full planButton" data-plan="Growth Palm"
+          data-amount="50000">View Payment Details</button>
       </article>
 
       <article class="plan">
         <div class="icon">🌳</div>
         <h3>Premium Palm</h3>
-        <p>Explore a larger agricultural project category.</p>
-        <span class="amount">₦500,000</span>
-        <button onclick="showInfo()">Explore Plan</button>
+        <p>Larger agricultural project category.</p>
+        <span class="price">₦100,000</span>
+        <button class="full planButton" data-plan="Premium Palm"
+          data-amount="100000">View Payment Details</button>
       </article>
     </div>
-  </section>
 
-  <section>
-    <div class="section-title">
-      <h2>Recent Transactions</h2>
-      <p>Example records only — not actual payments.</p>
-    </div>
+    <section id="paymentSection" class="panel hidden">
+      <h2>Payment Instructions</h2>
+      <p id="selectedPlan" style="margin-top:8px"></p>
 
-    <div class="panel">
-      <div class="transaction">
-        <div>
-          <strong>Growth Palm Example</strong>
-          <small>28 October 2026</small>
-        </div>
-        <span class="amount">₦300,000</span>
+      <div class="notice">
+        Please verify the beneficiary and contract terms before making
+        any transfer. A transfer alone does not confirm an investment.
       </div>
 
-      <div class="transaction">
-        <div>
-          <strong>Example Referral Reward</strong>
-          <small>25 October 2026</small>
-        </div>
-        <span class="amount">₦10,000</span>
+      <div class="bank-details">
+        <p>Bank Name: <strong>Opay</strong></p>
+        <p>Account Number: <strong id="accountNumber">7037816664</strong></p>
+        <p>Account Name: <strong>Ovie Ezekiel</strong></p>
+        <button id="copyAccount" class="secondary" type="button">
+          Copy Account Number
+        </button>
       </div>
-    </div>
+
+      <p class="muted">
+        Make a payment to this account and once it's confirmed,
+        your account can be funded. Payments must be independently
+        verified before any account balance is updated.
+      </p>
+
+      <p class="muted" style="margin-top:12px">
+        This page does not submit payment proof or automatically
+        confirm bank transfers. Please do not treat a transfer as
+        a confirmed investment until you receive independently
+        verified confirmation and the applicable contract.
+      </p>
+    </section>
+
+    <section class="panel">
+      <h2>Account Information</h2>
+      <p class="muted" style="margin-top:8px">
+        Your account is connected to Supabase authentication.
+        Investment balances remain at zero until verified records
+        are securely added to the database.
+      </p>
+    </section>
+
   </section>
 
 </main>
 
 <footer>
   <p>© 2026 PalmGrow. All rights reserved.</p>
-  <p>Prototype only. Figures are not offers or promises of returns.</p>
+  <p>Registration does not guarantee investment approval or returns.</p>
 </footer>
 
-<script>
-function showInfo() {
-  alert(
-    "Welcome to PalmGrow! This is a demonstration page. " +
-    "Account registration and real investments are not enabled yet."
-  );
+<script type="module">
+import { createClient } from
+  "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+// PalmGrow Supabase project settings
+const SUPABASE_URL = "https://ghdiycdzsmncmlcpdniy.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_xy6UyL2BeQFgB8LeYMHuJA_k6MdhVz9";
+
+const supabase = createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+const $ = id => document.getElementById(id);
+
+let loginMode = false;
+let selectedPlan = null;
+
+function showMessage(message, type = "success") {
+  const box = $("authMessage");
+  box.textContent = message;
+  box.className = "status " + type;
 }
+
+function setBusy(busy) {
+  $("submitButton").disabled = busy;
+  $("submitButton").textContent = busy
+    ? "Please wait..."
+    : loginMode ? "Login" : "Create Account";
+}
+
+function updateAuthMode() {
+  $("authHeading").textContent = loginMode
+    ? "Login to PalmGrow"
+    : "Create Your PalmGrow Account";
+
+  $("submitButton").textContent = loginMode
+    ? "Login"
+    : "Create Account";
+
+  $("nameField").classList.toggle("hidden", loginMode);
+  $("phoneField").classList.toggle("hidden", loginMode);
+
+  $("switchButton").textContent = loginMode
+    ? "Create New Account"
+    : "Already Registered? Login";
+
+  $("password").autocomplete = loginMode
+    ? "current-password"
+    : "new-password";
+
+  $("authMessage").classList.add("hidden");
+}
+
+$("switchButton").addEventListener("click", () => {
+  loginMode = !loginMode;
+  updateAuthMode();
+});
+
+$("authForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const email = $("email").value.trim();
+  const password = $("password").value;
+  const fullName = $("fullName").value.trim();
+  const phone = $("phone").value.trim();
+
+  if (!loginMode && !fullName) {
+    showMessage("Please enter your full name.", "error");
+    return;
+  }
+
+  setBusy(true);
+
+  try {
+    let result;
+
+    if (loginMode) {
+      result = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+    } else {
+      result = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: fullName,
+            phone: phone
+          }
+        }
+      });
+    }
+
+    if (result.error) throw result.error;
+
+    if (!loginMode && !result.data.session) {
+      showMessage(
+        "Registration received. Check your email to confirm your account, then return to login."
+      );
+    } else {
+      showMessage("Account authenticated successfully.");
+      await renderSession();
+    }
+
+  } catch (error) {
+    showMessage(error.message || "Unable to complete the request.", "error");
+  } finally {
+    setBusy(false);
+  }
+});
+
+$("resetButton").addEventListener("click", async () => {
+  const email = $("email").value.trim();
+
+  if (!email) {
+    showMessage("Enter your email address first.", "error");
+    return;
+  }
+
+  try {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + window.location.pathname
+    });
+
+    if (error) throw error;
+
+    showMessage("If password recovery is enabled, check your email for instructions.");
+
+  } catch (error) {
+    showMessage(error.message || "Unable to request password recovery.", "error");
+  }
+});
+
+async function renderSession() {
+  const { data, error } = await supabase.auth.getSession();
+
+  if (error) {
+    showMessage("Unable to check your session.", "error");
+    return;
+  }
+
+  const user = data.session?.user;
+
+  $("authSection").classList.toggle("hidden", !!user);
+  $("dashboard").classList.toggle("hidden", !user);
+
+  if (!user) return;
+
+  const name = user.user_metadata?.full_name || "PalmGrow Member";
+
+  $("userName").textContent = name;
+  $("userEmail").textContent = user.email || "";
+
+  // Do not invent balances. Real figures require verified database records.
+  $("investmentTotal").textContent = "₦0";
+  $("paymentTotal").textContent = "₦0";
+}
+
+$("logoutButton").addEventListener("click", async () => {
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    alert("Unable to log out. Please try again.");
+    return;
+  }
+
+  $("paymentSection").classList.add("hidden");
+  await renderSession();
+});
+
+document.querySelectorAll(".planButton").forEach(button => {
+  button.addEventListener("click", () => {
+    selectedPlan = {
+      name: button.dataset.plan,
+      amount: Number(button.dataset.amount)
+    };
+
+    $("selectedPlan").textContent =
+      selectedPlan.name + " — ₦" +
+      selectedPlan.amount.toLocaleString("en-NG");
+
+    $("paymentSection").classList.remove("hidden");
+    $("paymentSection").scrollIntoView({ behavior: "smooth" });
+  });
+});
+
+$("copyAccount").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText("7037816664");
+    $("copyAccount").textContent = "Copied!";
+  } catch {
+    alert("Account number: 7037816664");
+  }
+});
+
+supabase.auth.onAuthStateChange(() => {
+  // Delay avoids doing additional Supabase requests inside the auth callback.
+  setTimeout(() => renderSession(), 0);
+});
+
+updateAuthMode();
+await renderSession();
 </script>
 
 </body>
-  </html>
+          </html>
