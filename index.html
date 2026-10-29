@@ -677,6 +677,32 @@ supabase.auth.onAuthStateChange(() => {
 updateAuthMode();
 await renderSession();
 </script>
+  <section id="admin-section" style="display:none; padding:20px; max-width:1000px; margin:auto;">
+  <h2>PalmGrow Admin Dashboard</h2>
+  <p>Review deposit submissions and verify payments.</p>
+
+  <button id="load-deposits-btn" type="button">Load Deposits</button>
+
+  <p id="admin-message" role="status"></p>
+
+  <div style="overflow-x:auto;">
+    <table style="width:100%; border-collapse:collapse;">
+      <thead>
+        <tr>
+          <th>Amount (₦)</th>
+          <th>Payment Reference</th>
+          <th>Status</th>
+          <th>Submitted</th>
+        </tr>
+      </thead>
+      <tbody id="admin-deposits">
+        <tr>
+          <td colspan="4">No deposits loaded yet.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </section>
 
 </body>
           </html>
