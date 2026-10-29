@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#073d2b">
+<title>PalmGrow | Grow With Nature</title>
+
+<style>
+:root {
+  --green: #073d2b;
+  --light-green: #0d6244;
+  --gold: #d6b45b;
+  --white: #ffffff;
+  --background: #f4f7f4;
+  --text: #23372e;
+  --muted: #78867e;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--background);
+  color: var(--text);
+}
+
+header {
+  background: var(--green);
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.logo span {
+  color: var(--gold);
+}
+
+.badge {
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 7px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 24px 16px;
+}
+
+.welcome {
+  margin-bottom: 24px;
+}
+
+.welcome h1 {
+  font-size: 27px;
+  margin-bottom: 8px;
+}
+
+.welcome p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.demo-notice {
+  background: #fff4d7;
+  color: #72551a;
+  border: 1px solid #ead79e;
+  border-radius: 10px;
+  padding: 13px;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.card, .panel {
+  background: white;
+  border: 1px solid #e5ebe6;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 3px 12px rgba(0,0,0,.025);
+}
+
+.card p {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.card h2 {
+  color: var(--green);
+  font-size: 21px;
+}
+
+.section-title {
+  margin: 26px 0 15px;
+}
+
+.section-title h2 {
+  font-size: 21px;
+  margin-bottom: 6px;
+}
+
+.section-title p {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.project {
+  background: linear-gradient(135deg, #073d2b, #0d6244);
+  color: white;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 25px;
+}
+
+.project h2 {
+  margin: 12px 0;
+  font-size: 23px;
+}
+
+.project p {
+  color: #d9e9df;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.project-icon {
+  font-size: 42px;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  margin: 22px 0 10px;
+  font-size: 13px;
+}
+
+.progress {
+  height: 8px;
+  background: rgba(255,255,255,.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress div {
+  height: 100%;
+  width: 68%;
+  background: var(--gold);
+}
+
+.plans {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+
+.plan {
+  background: white;
+  border: 1px solid #e0e8e1;
+  padding: 23px;
+  border-radius: 14px;
+}
+
+.plan.featured {
+  border: 2px solid var(--gold);
+}
+
+.plan .icon {
+  font-size: 34px;
+  margin-bottom: 13px;
+}
+
+.plan h3 {
+  margin-bottom: 9px;
+}
+
+.plan p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.plan .amount {
+  display: block;
+  color: var(--green);
+  font-weight: bold;
+  font-size: 22px;
+  margin-bottom: 17px;
+}
+
+button {
+  width: 100%;
+  background: var(--green);
+  color: white;
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+button:hover {
+  background: var(--light-green);
+}
+
+.transaction {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 17px 0;
+  border-bottom: 1px solid #edf0ed;
+}
+
+.transaction:last-child {
+  border-bottom: none;
+}
+
+.transaction strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.transaction small {
+  color: var(--muted);
+}
+
+.amount {
+  font-weight: bold;
+  color: var(--green);
+  white-space: nowrap;
+}
+
+footer {
+  text-align: center;
+  padding: 30px 12px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+@media (min-width: 700px) {
+  .stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .plans {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .welcome h1 {
+    font-size: 32px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🌴 Palm<span>Grow</span></div>
+  <div class="badge">AGRICULTURE &amp; GROWTH</div>
+</header>
+
+<main class="container">
+
+  <section class="welcome">
+    <h1>Welcome to PalmGrow 🌱</h1>
+    <p>Growing a greener future through agricultural projects.</p>
+  </section>
+
+  <div class="demo-notice">
+    <strong>DEMO VERSION:</strong> All account balances, project
+    figures and progress indicators on this page are illustrative.
+    No real account or investment is connected.
+  </div>
+
+  <div class="stats">
+    <div class="card">
+      <p>Total Investment</p>
+      <h2>₦500,000</h2>
+    </div>
+
+    <div class="card">
+      <p>Projected Returns</p>
+      <h2>₦75,000</h2>
+    </div>
+
+    <div class="card">
+      <p>Active Projects</p>
+      <h2>02</h2>
+    </div>
+
+    <div class="card">
+      <p>Referral Rewards</p>
+      <h2>₦10,000</h2>
+    </div>
+  </div>
+
+  <section class="project">
+    <div class="project-icon">🌴</div>
+    <p>FEATURED AGRICULTURAL PROJECT</p>
+    <h2>Oil Palm Plantation</h2>
+    <p>Explore oil-palm farming and learn how agricultural
+    projects operate, from cultivation to harvesting.</p>
+
+    <div class="progress-info">
+      <span>Illustrative project progress</span>
+      <strong>68%</strong>
+    </div>
+
+    <div class="progress"><div></div></div>
+  </section>
+
+  <section>
+    <div class="section-title">
+      <h2>Explore Investment Plans</h2>
+      <p>Illustrative plan categories for the prototype.</p>
+    </div>
+
+    <div class="plans">
+      <article class="plan">
+        <div class="icon">🌱</div>
+        <h3>Starter Palm</h3>
+        <p>Explore an entry-level agricultural project.</p>
+        <span class="amount">₦100,000</span>
+        <button onclick="showInfo()">Explore Plan</button>
+      </article>
+
+      <article class="plan featured">
+        <div class="icon">🌴</div>
+        <h3>Growth Palm</h3>
+        <p>Learn about a medium-scale plantation project.</p>
+        <span class="amount">₦300,000</span>
+        <button onclick="showInfo()">Explore Plan</button>
+      </article>
+
+      <article class="plan">
+        <div class="icon">🌳</div>
+        <h3>Premium Palm</h3>
+        <p>Explore a larger agricultural project category.</p>
+        <span class="amount">₦500,000</span>
+        <button onclick="showInfo()">Explore Plan</button>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title">
+      <h2>Recent Transactions</h2>
+      <p>Example records only — not actual payments.</p>
+    </div>
+
+    <div class="panel">
+      <div class="transaction">
+        <div>
+          <strong>Growth Palm Example</strong>
+          <small>28 October 2026</small>
+        </div>
+        <span class="amount">₦300,000</span>
+      </div>
+
+      <div class="transaction">
+        <div>
+          <strong>Example Referral Reward</strong>
+          <small>25 October 2026</small>
+        </div>
+        <span class="amount">₦10,000</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2026 PalmGrow. All rights reserved.</p>
+  <p>Prototype only. Figures are not offers or promises of returns.</p>
+</footer>
+
+<script>
+function showInfo() {
+  alert(
+    "Welcome to PalmGrow! This is a demonstration page. " +
+    "Account registration and real investments are not enabled yet."
+  );
+}
+</script>
+
+</body>
+  </html>
