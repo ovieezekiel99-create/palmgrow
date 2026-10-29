@@ -519,5 +519,123 @@ supabase.auth.onAuthStateChange(() => {
 updateAuthMode();
 await renderSession();
 </script>
+  <!-- PALMGROW HELP CENTER -->
+<section id="palmgrow-help" style="max-width:900px;margin:35px auto;padding:24px;background:#f3f8f0;border-radius:16px;font-family:Arial,sans-serif;color:#183b24;">
+  <h2 style="text-align:center;color:#176b35;">🌴 PalmGrow Help Center</h2>
+  <p style="text-align:center;">Welcome to PalmGrow! We are here to help you understand and use our website.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:22px 0;">
+    <button class="pg-help-question" data-question="How do I create an account?" style="padding:15px;border:1px solid #d2dfce;border-radius:10px;background:white;cursor:pointer;">👤 Creating an Account</button>
+    <button class="pg-help-question" data-question="How do I log in or reset my password?" style="padding:15px;border:1px solid #d2dfce;border-radius:10px;background:white;cursor:pointer;">🔐 Login & Password</button>
+    <button class="pg-help-question" data-question="How do deposits work?" style="padding:15px;border:1px solid #d2dfce;border-radius:10px;background:white;cursor:pointer;">💳 Deposits & Payments</button>
+    <button class="pg-help-question" data-question="How do I understand the agricultural plans?" style="padding:15px;border:1px solid #d2dfce;border-radius:10px;background:white;cursor:pointer;">🌱 Agricultural Plans</button>
+    <button class="pg-help-question" data-question="How can I contact PalmGrow support?" style="padding:15px;border:1px solid #d2dfce;border-radius:10px;background:white;cursor:pointer;">💬 Customer Support</button>
+    <button class="pg-help-question" data-question="How do I keep my account safe?" style="padding:15px;border:1px solid #d2dfce;border-radius:10px;background:white;cursor:pointer;">🛡️ Account Security</button>
+  </div>
+
+  <div style="background:white;border:1px solid #d2dfce;border-radius:12px;padding:16px;">
+    <h3 style="color:#176b35;">💬 Chat with PalmGrow Assistant</h3>
+    <p style="font-size:14px;">Ask a question about using the PalmGrow website. This free assistant uses prepared answers and is not a live human agent or a full AI service.</p>
+
+    <div id="pg-chat-messages" role="log" aria-live="polite" style="height:260px;overflow-y:auto;background:#f8faf7;border:1px solid #e0e8dc;border-radius:8px;padding:12px;margin-bottom:12px;">
+      <p><strong>PalmGrow Assistant:</strong> Hello! 🌴 Welcome to PalmGrow. How can I help you with the website today?</p>
+    </div>
+
+    <form id="pg-chat-form" style="display:flex;gap:8px;flex-wrap:wrap;">
+      <input id="pg-chat-input" type="text" maxlength="500" placeholder="Type your question here..." aria-label="Your question" required style="flex:1;min-width:180px;padding:12px;border:1px solid #b9cbb4;border-radius:8px;">
+      <button type="submit" style="padding:12px 18px;background:#176b35;color:white;border:0;border-radius:8px;cursor:pointer;">Send</button>
+    </form>
+    <p style="font-size:12px;color:#536657;">Never share your password, bank PIN, or verification code in chat.</p>
+  </div>
+</section>
+
+<script>
+(function () {
+  const form = document.getElementById("pg-chat-form");
+  const input = document.getElementById("pg-chat-input");
+  const messages = document.getElementById("pg-chat-messages");
+
+  if (!form || !input || !messages) return;
+
+  function addMessage(sender, text) {
+    const p = document.createElement("p");
+    const strong = document.createElement("strong");
+    strong.textContent = sender + ": ";
+    p.appendChild(strong);
+    p.appendChild(document.createTextNode(text));
+    messages.appendChild(p);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function getAnswer(question) {
+    const q = question.toLowerCase();
+
+    if (/hello|hi\b|good morning|good afternoon|good evening/.test(q)) {
+      return "Hello and welcome to PalmGrow! 🌴 We are glad you are here. What would you like help with today?";
+    }
+
+    if (/create|sign up|register|registration|new account/.test(q)) {
+      return "To get started, open the account registration area on the PalmGrow website and follow the instructions. Enter accurate details and keep your login information private.";
+    }
+
+    if (/login|log in|password|forgot password|reset/.test(q)) {
+      return "Use the login area to access your account. If you forget your password, use the password-reset option if available. Never share your password or verification code with anyone.";
+    }
+
+    if (/deposit|payment|opay|transfer|bank|account number/.test(q)) {
+      return "Please check the deposit or payment section of the PalmGrow website for the displayed payment instructions. Follow the current instructions carefully and keep your transaction receipt. Submitting a deposit does not mean it has been confirmed; check your account for its status.";
+    }
+
+    if (/plan|agricultur|farm|investment|invest/.test(q)) {
+      return "PalmGrow provides website information about its agricultural plans. Please read each plan's details and terms carefully before making a decision. Agricultural activities involve risk, and returns should never be assumed to be guaranteed.";
+    }
+
+    if (/confirm|verified|pending|receipt|transaction|reference/.test(q)) {
+      return "If your payment is pending, allow the website administrator to review it. Keep your receipt and payment reference. The assistant cannot verify payments, change account balances, or approve transactions.";
+    }
+
+    if (/withdraw|withdrawal|profit|return|earn|earning|balance/.test(q)) {
+      return "Please check the relevant account section and the applicable PalmGrow terms for information about balances or withdrawals. I cannot confirm earnings, guarantee returns, or process financial transactions.";
+    }
+
+    if (/contact|support|customer service|human|admin|help/.test(q)) {
+      return "You are chatting with the automated PalmGrow Assistant. I can answer basic questions about using the website, but I cannot contact an administrator directly. Please use any official contact details displayed on the website if you need personal assistance.";
+    }
+
+    if (/safe|security|scam|pin|otp|verification code/.test(q)) {
+      return "Protect your account by using a strong password. Never share your password, bank PIN, or one-time verification code. Verify payment instructions independently before transferring money.";
+    }
+
+    if (/thank/.test(q)) {
+      return "You are welcome! 🌱 Thank you for visiting PalmGrow. We are happy to help you navigate the website.";
+    }
+
+    if (/website|palmgrow|channel|about/.test(q)) {
+      return "Welcome to PalmGrow! 🌴 Explore the website to learn about its features and agricultural information. We aim to make the website clear and helpful for visitors. Please check the published information and terms for details.";
+    }
+
+    return "Thank you for your question! I can help with account registration, login, deposits, payment status, agricultural plans, and account security. Please ask about one of these website topics.";
+  }
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    const question = input.value.trim();
+    if (!question) return;
+
+    addMessage("You", question);
+    addMessage("PalmGrow Assistant", getAnswer(question));
+    input.value = "";
+    input.focus();
+  });
+
+  document.querySelectorAll(".pg-help-question").forEach(function (button) {
+    button.addEventListener("click", function () {
+      const question = button.getAttribute("data-question");
+      addMessage("You", question);
+      addMessage("PalmGrow Assistant", getAnswer(question));
+    });
+  });
+})();
+</script>
 </body>
         </html>
