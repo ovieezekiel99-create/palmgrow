@@ -8,468 +8,199 @@
 
 <style>
 :root {
-  --green: #073d2b;
-  --light-green: #0d6244;
-  --gold: #d6b45b;
-  --background: #f4f7f4;
-  --text: #23372e;
-  --muted: #78867e;
+  --green:#073d2b;
+  --light-green:#0d6244;
+  --gold:#d6b45b;
+  --background:#f4f7f4;
+  --text:#23372e;
+  --muted:#78867e;
 }
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background: var(--background);
-  color: var(--text);
-  line-height: 1.5;
-}
-
-header {
-  background: var(--green);
-  color: white;
-  padding: 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.logo span {
-  color: var(--gold);
-}
-
-.badge {
-  border: 1px solid var(--gold);
-  color: var(--gold);
-  border-radius: 20px;
-  padding: 6px 10px;
-  font-size: 11px;
-}
-
-.container {
-  max-width: 1000px;
-  margin: auto;
-  padding: 24px 16px;
-}
-
-h1, h2, h3 {
-  line-height: 1.3;
-}
-
-.welcome {
-  margin-bottom: 22px;
-}
-
-.welcome h1 {
-  margin-bottom: 8px;
-}
-
-.muted {
-  color: var(--muted);
-  font-size: 14px;
-}
-
-.notice {
-  background: #fff4d7;
-  border: 1px solid #ead79e;
-  color: #72551a;
-  border-radius: 10px;
-  padding: 14px;
-  margin: 18px 0;
-  font-size: 13px;
-}
-
-.panel, .card, .plan {
-  background: white;
-  border: 1px solid #e3eae4;
-  border-radius: 14px;
-  padding: 20px;
-  margin-bottom: 18px;
-  box-shadow: 0 3px 12px rgba(0,0,0,.025);
-}
-
-.section-title {
-  margin: 28px 0 14px;
-}
-
-.section-title p {
-  color: var(--muted);
-  font-size: 13px;
-  margin-top: 5px;
-}
-
-input {
-  display: block;
-  width: 100%;
-  padding: 13px;
-  margin: 8px 0 14px;
-  border: 1px solid #d5dfd7;
-  border-radius: 8px;
-  background: white;
-  font-size: 16px;
-}
-
-label {
-  font-size: 13px;
-  font-weight: bold;
-}
-
-button {
-  border: none;
-  border-radius: 8px;
-  padding: 13px;
-  background: var(--green);
-  color: white;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:hover {
-  background: var(--light-green);
-}
-
-button:disabled {
-  opacity: .6;
-  cursor: wait;
-}
-
-.full {
-  width: 100%;
-}
-
-.secondary {
-  background: #e8efe9;
-  color: var(--green);
-}
-
-.actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.hidden {
-  display: none !important;
-}
-
-.status {
-  margin: 12px 0;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 13px;
-  overflow-wrap: anywhere;
-}
-
-.success {
-  background: #e5f5e9;
-  color: #155b31;
-}
-
-.error {
-  background: #ffeded;
-  color: #8a2222;
-}
-
-.stats, .plans {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-}
-
-.card p {
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 7px;
-}
-
-.card h2 {
-  color: var(--green);
-  font-size: 21px;
-}
-
-.project {
-  background: linear-gradient(135deg, #073d2b, #0d6244);
-  color: white;
-  padding: 24px;
-  border-radius: 15px;
-  margin: 20px 0;
-}
-
-.project p {
-  color: #e0ece4;
-  font-size: 14px;
-  margin-top: 8px;
-}
-
-.plan .icon {
-  font-size: 34px;
-}
-
-.plan h3 {
-  margin: 10px 0;
-}
-
-.plan p {
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 12px;
-}
-
-.plan .price {
-  display: block;
-  font-size: 22px;
-  font-weight: bold;
-  color: var(--green);
-  margin: 14px 0;
-}
-
-.bank-details {
-  background: #f4f8f4;
-  border: 1px dashed #b7cbb9;
-  padding: 16px;
-  border-radius: 10px;
-  margin: 15px 0;
-}
-
-.bank-details p {
-  margin: 8px 0;
-  overflow-wrap: anywhere;
-}
-
-.admin-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-}
-
-.admin-table th,
-.admin-table td {
-  border: 1px solid #dce5dd;
-  padding: 10px;
-  text-align: left;
-}
-
-.admin-table th {
-  background: #e8efe9;
-}
-
-footer {
-  text-align: center;
-  color: var(--muted);
-  font-size: 12px;
-  padding: 25px 15px;
-}
-
-@media (min-width: 700px) {
-  .stats {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .plans {
-    grid-template-columns: repeat(3, 1fr);
-  }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:var(--background);color:var(--text);line-height:1.5}
+header{background:var(--green);color:white;padding:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.logo{font-size:24px;font-weight:bold}
+.logo span{color:var(--gold)}
+.badge{border:1px solid var(--gold);color:var(--gold);border-radius:20px;padding:6px 10px;font-size:11px}
+.container{max-width:1000px;margin:auto;padding:24px 16px}
+h1,h2,h3{line-height:1.3}
+.welcome{margin-bottom:22px}
+.welcome h1{margin-bottom:8px}
+.muted{color:var(--muted);font-size:14px}
+.notice{background:#fff4d7;border:1px solid #ead79e;color:#72551a;border-radius:10px;padding:14px;margin:18px 0;font-size:13px}
+.panel,.card,.plan{background:white;border:1px solid #e3eae4;border-radius:14px;padding:20px;margin-bottom:18px;box-shadow:0 3px 12px rgba(0,0,0,.025)}
+.section-title{margin:28px 0 14px}
+.section-title p{color:var(--muted);font-size:13px;margin-top:5px}
+input,select{display:block;width:100%;padding:13px;margin:8px 0 14px;border:1px solid #d5dfd7;border-radius:8px;background:white;font-size:16px}
+label{font-size:13px;font-weight:bold}
+button{border:none;border-radius:8px;padding:13px;background:var(--green);color:white;font-size:14px;font-weight:bold;cursor:pointer}
+button:hover{background:var(--light-green)}
+button:disabled{opacity:.6;cursor:wait}
+.full{width:100%}
+.secondary{background:#e8efe9;color:var(--green)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.hidden{display:none!important}
+.status{margin:12px 0;padding:10px;border-radius:8px;font-size:13px;overflow-wrap:anywhere}
+.success{background:#e5f5e9;color:#155b31}
+.error{background:#ffeded;color:#8a2222}
+.stats,.plans{display:grid;grid-template-columns:1fr;gap:14px}
+.card p{font-size:13px;color:var(--muted);margin-bottom:7px}
+.card h2{color:var(--green);font-size:21px}
+.project{background:linear-gradient(135deg,#073d2b,#0d6244);color:white;padding:24px;border-radius:15px;margin:20px 0}
+.project p{color:#e0ece4;font-size:14px;margin-top:8px}
+.plan .icon{font-size:34px}
+.plan h3{margin:10px 0}
+.plan p{font-size:13px;color:var(--muted);margin-bottom:12px}
+.plan .price{display:block;font-size:22px;font-weight:bold;color:var(--green);margin:14px 0}
+.admin-table{width:100%;border-collapse:collapse;font-size:13px}
+.admin-table th,.admin-table td{border:1px solid #dce5dd;padding:10px;text-align:left}
+.admin-table th{background:#e8efe9}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:25px 15px}
+@media(min-width:700px){
+.stats{grid-template-columns:repeat(3,1fr)}
+.plans{grid-template-columns:repeat(3,1fr)}
 }
 </style>
 </head>
 
 <body>
-
 <header>
   <div class="logo">🌴 Palm<span>Grow</span></div>
   <div class="badge">AGRICULTURE &amp; GROWTH</div>
 </header>
 
 <main class="container">
+<section class="welcome">
+  <h1>Welcome to PalmGrow 🌱</h1>
+  <p class="muted">Explore oil-palm agriculture and agricultural project opportunities.</p>
+</section>
 
-  <section class="welcome">
-    <h1>Welcome to PalmGrow 🌱</h1>
-    <p class="muted">
-      Explore oil-palm agriculture and agricultural project opportunities.
-    </p>
-  </section>
+<div class="notice">
+  <strong>Important:</strong> PalmGrow is under development. Agricultural investments involve risk, and returns are not guaranteed. Do not transfer money until the project, contract and applicable regulatory requirements have been independently verified.
+</div>
 
-  <div class="notice">
-    <strong>Important:</strong> PalmGrow is under development.
-    Agricultural investments involve risk, and returns are not guaranteed.
-    Do not transfer money until the project, contract and applicable
-    regulatory requirements have been independently verified.
+<section id="authSection" class="panel">
+  <h2 id="authHeading">Create Your PalmGrow Account</h2>
+  <form id="authForm" style="margin-top:16px">
+    <div id="nameField">
+      <label for="fullName">Full Name</label>
+      <input id="fullName" autocomplete="name" placeholder="Enter your full name">
+    </div>
+    <div id="phoneField">
+      <label for="phone">Phone Number</label>
+      <input id="phone" type="tel" autocomplete="tel" placeholder="Enter your phone number">
+    </div>
+    <label for="email">Email Address</label>
+    <input id="email" type="email" required autocomplete="email" placeholder="Enter your email">
+    <label for="password">Password</label>
+    <input id="password" type="password" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters">
+    <button id="submitButton" class="full" type="submit">Create Account</button>
+  </form>
+  <div id="authMessage" class="status hidden" role="status"></div>
+  <div class="actions">
+    <button id="switchButton" class="secondary" type="button">Already Registered? Login</button>
+    <button id="resetButton" class="secondary" type="button">Forgot Password?</button>
+  </div>
+</section>
+
+<section id="dashboard" class="hidden">
+  <div class="panel">
+    <p class="muted">Signed in as</p>
+    <h2 id="userName">PalmGrow Member</h2>
+    <p id="userEmail" class="muted"></p>
+    <button id="logoutButton" class="secondary" style="margin-top:14px">Log Out</button>
   </div>
 
-  <section id="authSection" class="panel">
-    <h2 id="authHeading">Create Your PalmGrow Account</h2>
+  <div class="stats">
+    <div class="card"><p>Verified Investment</p><h2 id="investmentTotal">₦0.00</h2></div>
+    <div class="card"><p>Verified Payments</p><h2 id="paymentTotal">₦0.00</h2></div>
+    <div class="card"><p>Account Status</p><h2 id="accountStatus" style="font-size:17px">Registered</h2></div>
+  </div>
 
-    <form id="authForm" style="margin-top:16px">
-      <div id="nameField">
-        <label for="fullName">Full Name</label>
-        <input id="fullName" autocomplete="name"
-          placeholder="Enter your full name">
-      </div>
+  <div class="project">
+    <div style="font-size:38px">🌴</div>
+    <h2>Oil Palm Plantation</h2>
+    <p>Learn about oil-palm cultivation, farm management, harvesting and agricultural development.</p>
+  </div>
 
-      <div id="phoneField">
-        <label for="phone">Phone Number</label>
-        <input id="phone" type="tel" autocomplete="tel"
-          placeholder="Enter your phone number">
-      </div>
+  <div class="section-title">
+    <h2>Agricultural Plans</h2>
+    <p>Proposed participation categories. These are not guarantees of returns.</p>
+  </div>
 
-      <label for="email">Email Address</label>
-      <input id="email" type="email" required autocomplete="email"
-        placeholder="Enter your email">
+  <div class="plans">
+    <article class="plan">
+      <div class="icon">🌱</div><h3>Starter Palm</h3>
+      <p>Entry-level agricultural project category.</p>
+      <span class="price">₦5,000</span>
+      <button class="full planButton" data-plan="Starter Palm" data-amount="5000">View Details</button>
+    </article>
+    <article class="plan">
+      <div class="icon">🌴</div><h3>Growth Palm</h3>
+      <p>Medium-level agricultural project category.</p>
+      <span class="price">₦50,000</span>
+      <button class="full planButton" data-plan="Growth Palm" data-amount="50000">View Details</button>
+    </article>
+    <article class="plan">
+      <div class="icon">🌳</div><h3>Premium Palm</h3>
+      <p>Larger agricultural project category.</p>
+      <span class="price">₦100,000</span>
+      <button class="full planButton" data-plan="Premium Palm" data-amount="100000">View Details</button>
+    </article>
+  </div>
 
-      <label for="password">Password</label>
-      <input id="password" type="password" required minlength="8"
-        autocomplete="new-password" placeholder="At least 8 characters">
+  <section id="paymentSection" class="panel hidden">
+    <h2>Deposit Submission</h2>
+    <p id="selectedPlan" style="margin-top:8px"></p>
 
-      <button id="submitButton" class="full" type="submit">
-        Create Account
-      </button>
+    <div class="notice">
+      Only submit this form after making a payment through an independently verified, authorised payment channel. A submission is not proof of payment or confirmation of an investment.
+    </div>
+
+    <form id="depositForm">
+      <label for="depositAmount">Deposit Amount</label>
+      <select id="depositAmount" required>
+        <option value="">Select amount</option>
+        <option value="5000">₦5,000</option>
+        <option value="50000">₦50,000</option>
+        <option value="100000">₦100,000</option>
+      </select>
+
+      <label for="paymentReference">Payment Reference</label>
+      <input id="paymentReference" maxlength="120" required placeholder="Enter your bank transaction reference">
+
+      <button id="depositButton" type="submit" class="full">Submit Deposit for Review</button>
     </form>
 
-    <div id="authMessage" class="status hidden" role="status"></div>
+    <div id="depositMessage" class="status hidden" role="status"></div>
+    <button id="myDepositsButton" type="button" class="secondary full">View My Deposit Submissions</button>
+    <div id="myDepositsMessage" class="status hidden" role="status"></div>
 
-    <div class="actions">
-      <button id="switchButton" class="secondary" type="button">
-        Already Registered? Login
-      </button>
-      <button id="resetButton" class="secondary" type="button">
-        Forgot Password?
-      </button>
-    </div>
-  </section>
-
-  <section id="dashboard" class="hidden">
-
-    <div class="panel">
-      <p class="muted">Signed in as</p>
-      <h2 id="userName">PalmGrow Member</h2>
-      <p id="userEmail" class="muted"></p>
-      <button id="logoutButton" class="secondary"
-        style="margin-top:14px">Log Out</button>
-    </div>
-
-    <div class="stats">
-      <div class="card">
-        <p>Verified Investment</p>
-        <h2 id="investmentTotal">₦0</h2>
-      </div>
-      <div class="card">
-        <p>Verified Payments</p>
-        <h2 id="paymentTotal">₦0</h2>
-      </div>
-      <div class="card">
-        <p>Account Status</p>
-        <h2 id="accountStatus" style="font-size:17px">Registered</h2>
-      </div>
-    </div>
-
-    <div class="project">
-      <div style="font-size:38px">🌴</div>
-      <h2>Oil Palm Plantation</h2>
-      <p>
-        Learn about oil-palm cultivation, farm management,
-        harvesting and agricultural development.
-      </p>
-    </div>
-
-    <div class="section-title">
-      <h2>Agricultural Plans</h2>
-      <p>Proposed participation categories. These are not guarantees of returns.</p>
-    </div>
-
-    <div class="plans">
-      <article class="plan">
-        <div class="icon">🌱</div>
-        <h3>Starter Palm</h3>
-        <p>Entry-level agricultural project category.</p>
-        <span class="price">₦5,000</span>
-        <button class="full planButton" data-plan="Starter Palm"
-          data-amount="5000">View Details</button>
-      </article>
-
-      <article class="plan">
-        <div class="icon">🌴</div>
-        <h3>Growth Palm</h3>
-        <p>Medium-level agricultural project category.</p>
-        <span class="price">₦50,000</span>
-        <button class="full planButton" data-plan="Growth Palm"
-          data-amount="50000">View Details</button>
-      </article>
-
-      <article class="plan">
-        <div class="icon">🌳</div>
-        <h3>Premium Palm</h3>
-        <p>Larger agricultural project category.</p>
-        <span class="price">₦100,000</span>
-        <button class="full planButton" data-plan="Premium Palm"
-          data-amount="100000">View Details</button>
-      </article>
-    </div>
-
-    <section id="paymentSection" class="panel hidden">
-      <h2>Payment Information</h2>
-      <p id="selectedPlan" style="margin-top:8px"></p>
-
-      <div class="notice">
-        Payment details are displayed for reference only. Verify the
-        beneficiary and applicable contract before making any transfer.
-        A transfer is not confirmation of an investment.
-      </div>
-
-      <p class="muted">
-        Payment submissions and bank verification have not yet been
-        implemented. Your balance will not change from this page.
-      </p>
-    </section>
-
-    <section class="panel">
-      <h2>Account Information</h2>
-      <p class="muted" style="margin-top:8px">
-        Your balance remains at zero until verified financial records
-        are securely added to the database.
-      </p>
-    </section>
-
-  </section>
-
-  <section id="admin-section" class="panel hidden">
-    <h2>PalmGrow Admin Dashboard</h2>
-    <p class="muted" style="margin:8px 0 14px">
-      View submitted deposits. Verify transfers against your bank records
-      before confirming any payment.
-    </p>
-
-    <button id="load-deposits-btn" type="button">Load Deposits</button>
-    <p id="admin-message" class="status" role="status"></p>
-
-    <div style="overflow-x:auto;margin-top:14px">
+    <div style="overflow-x:auto">
       <table class="admin-table">
-        <thead>
-          <tr>
-            <th>Amount</th>
-            <th>Payment Reference</th>
-            <th>Status</th>
-            <th>Submitted</th>
-          </tr>
-        </thead>
-        <tbody id="admin-deposits">
-          <tr><td colspan="4">Click Load Deposits.</td></tr>
-        </tbody>
+        <thead><tr><th>Amount</th><th>Reference</th><th>Status</th><th>Date</th></tr></thead>
+        <tbody id="myDeposits"><tr><td colspan="4">Your submissions will appear here.</td></tr></tbody>
       </table>
     </div>
   </section>
 
+  <section class="panel">
+    <h2>Account Information</h2>
+    <p class="muted" style="margin-top:8px">Your balance remains at zero until verified financial records are securely added to the database.</p>
+  </section>
+</section>
+
+<section id="admin-section" class="panel hidden">
+  <h2>PalmGrow Admin Dashboard</h2>
+  <p class="muted" style="margin:8px 0 14px">Review deposit submissions. Check your actual bank records before confirming any payment.</p>
+  <button id="load-deposits-btn" type="button">Load Deposits</button>
+  <p id="admin-message" class="status" role="status"></p>
+  <div style="overflow-x:auto;margin-top:14px">
+    <table class="admin-table">
+      <thead><tr><th>Amount</th><th>Payment Reference</th><th>Status</th><th>Submitted</th></tr></thead>
+      <tbody id="admin-deposits"><tr><td colspan="4">Click Load Deposits.</td></tr></tbody>
+    </table>
+  </div>
+</section>
 </main>
 
 <footer>
@@ -478,54 +209,38 @@ footer {
 </footer>
 
 <script type="module">
-import { createClient } from
-  "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-const SUPABASE_URL =
-  "https://ghdiycdzsmncmlcpdniy.supabase.co";
-
-const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_xy6UyL2BeQFgB8LeYMHuJA_k6MdhVz9";
-
-const supabase = createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
+const SUPABASE_URL = "https://ghdiycdzsmncmlcpdniy.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_xy6UyL2BeQFgB8LeYMHuJA_k6MdhVz9";
+const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
 const $ = id => document.getElementById(id);
 let loginMode = false;
+let selectedAmount = 0;
 
-function showMessage(message, type = "success") {
-  const box = $("authMessage");
-  box.textContent = message;
+function message(id, text, type = "success") {
+  const box = $(id);
+  box.textContent = text;
   box.className = "status " + type;
 }
-
-function setBusy(busy) {
-  $("submitButton").disabled = busy;
-  $("submitButton").textContent = busy
-    ? "Please wait..."
-    : loginMode ? "Login" : "Create Account";
+function naira(value) {
+  return "₦" + Number(value || 0).toLocaleString("en-NG", {
+    minimumFractionDigits: 2, maximumFractionDigits: 2
+  });
+}
+function busy(button, state, normalText) {
+  button.disabled = state;
+  button.textContent = state ? "Please wait..." : normalText;
 }
 
 function updateAuthMode() {
-  $("authHeading").textContent = loginMode
-    ? "Login to PalmGrow"
-    : "Create Your PalmGrow Account";
-
-  $("submitButton").textContent = loginMode
-    ? "Login" : "Create Account";
-
+  $("authHeading").textContent = loginMode ? "Login to PalmGrow" : "Create Your PalmGrow Account";
+  $("submitButton").textContent = loginMode ? "Login" : "Create Account";
   $("nameField").classList.toggle("hidden", loginMode);
   $("phoneField").classList.toggle("hidden", loginMode);
-
-  $("switchButton").textContent = loginMode
-    ? "Create New Account"
-    : "Already Registered? Login";
-
-  $("password").autocomplete = loginMode
-    ? "current-password" : "new-password";
-
+  $("switchButton").textContent = loginMode ? "Create New Account" : "Already Registered? Login";
+  $("password").autocomplete = loginMode ? "current-password" : "new-password";
   $("authMessage").classList.add("hidden");
 }
 
@@ -536,215 +251,258 @@ $("switchButton").addEventListener("click", () => {
 
 $("authForm").addEventListener("submit", async event => {
   event.preventDefault();
-
   const email = $("email").value.trim();
   const password = $("password").value;
   const fullName = $("fullName").value.trim();
   const phone = $("phone").value.trim();
 
   if (!loginMode && !fullName) {
-    showMessage("Please enter your full name.", "error");
+    message("authMessage", "Please enter your full name.", "error");
     return;
   }
 
-  setBusy(true);
-
+  busy($("submitButton"), true, "");
   try {
-    let result;
-
-    if (loginMode) {
-      result = await supabase.auth.signInWithPassword({
-        email,
-        password
-      });
-    } else {
-      result = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: { full_name: fullName, phone }
-        }
-      });
-    }
+    const result = loginMode
+      ? await supabase.auth.signInWithPassword({ email, password })
+      : await supabase.auth.signUp({
+          email, password,
+          options: { data: { full_name: fullName, phone } }
+        });
 
     if (result.error) throw result.error;
 
     if (!loginMode && !result.data.session) {
-      showMessage(
-        "Registration received. Check your email to confirm your account."
-      );
+      message("authMessage", "Registration received. Check your email to confirm your account.");
     } else {
-      showMessage("Signed in successfully.");
+      message("authMessage", "Signed in successfully.");
       await renderSession();
     }
   } catch (error) {
-    showMessage(error.message || "Unable to complete request.", "error");
+    message("authMessage", error.message || "Unable to complete request.", "error");
   } finally {
-    setBusy(false);
+    busy($("submitButton"), false, loginMode ? "Login" : "Create Account");
   }
 });
 
 $("resetButton").addEventListener("click", async () => {
   const email = $("email").value.trim();
-
   if (!email) {
-    showMessage("Enter your email address first.", "error");
+    message("authMessage", "Enter your email address first.", "error");
     return;
   }
-
   try {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: window.location.origin + window.location.pathname
     });
-
     if (error) throw error;
-    showMessage("If recovery is enabled, check your email for instructions.");
+    message("authMessage", "If recovery is enabled, check your email for instructions.");
   } catch (error) {
-    showMessage(error.message || "Unable to request recovery.", "error");
+    message("authMessage", error.message || "Unable to request recovery.", "error");
   }
 });
 
-function naira(value) {
-  return "₦" + Number(value || 0).toLocaleString("en-NG", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
-}
-
 async function renderSession() {
   const { data, error } = await supabase.auth.getSession();
-
   if (error) {
-    showMessage("Unable to check your session.", "error");
+    message("authMessage", "Unable to check your session.", "error");
     return;
   }
 
   const user = data.session?.user;
-
   $("authSection").classList.toggle("hidden", !!user);
   $("dashboard").classList.toggle("hidden", !user);
   $("admin-section").classList.add("hidden");
 
   if (!user) return;
 
-  $("userName").textContent =
-    user.user_metadata?.full_name || "PalmGrow Member";
+  $("userName").textContent = user.user_metadata?.full_name || "PalmGrow Member";
   $("userEmail").textContent = user.email || "";
   $("investmentTotal").textContent = naira(0);
   $("paymentTotal").textContent = naira(0);
 
   const { data: profile, error: profileError } = await supabase
-    .from("profiles")
-    .select("role")
-    .eq("id", user.id)
-    .maybeSingle();
+    .from("profiles").select("role").eq("id", user.id).maybeSingle();
 
   if (profileError) {
     console.error("Profile lookup failed:", profileError.message);
     return;
   }
-
-  if (profile?.role === "admin") {
-    $("admin-section").classList.remove("hidden");
-  }
+  if (profile?.role === "admin") $("admin-section").classList.remove("hidden");
 }
 
 $("logoutButton").addEventListener("click", async () => {
   const { error } = await supabase.auth.signOut();
-
   if (error) {
     alert("Unable to log out. Please try again.");
     return;
   }
-
   $("paymentSection").classList.add("hidden");
   await renderSession();
 });
 
 document.querySelectorAll(".planButton").forEach(button => {
   button.addEventListener("click", () => {
-    const amount = Number(button.dataset.amount);
-
-    $("selectedPlan").textContent =
-      button.dataset.plan + " — " + naira(amount);
-
+    selectedAmount = Number(button.dataset.amount);
+    $("depositAmount").value = String(selectedAmount);
+    $("selectedPlan").textContent = button.dataset.plan + " — " + naira(selectedAmount);
     $("paymentSection").classList.remove("hidden");
     $("paymentSection").scrollIntoView({ behavior: "smooth" });
   });
 });
 
-$("load-deposits-btn").addEventListener("click", async () => {
-  const message = $("admin-message");
-  const tbody = $("admin-deposits");
-
-  message.textContent = "Checking administrator access...";
-  tbody.replaceChildren();
-
-  const { data: sessionData, error: sessionError } =
-    await supabase.auth.getSession();
-
+$("depositForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
   const user = sessionData?.session?.user;
 
   if (sessionError || !user) {
-    message.textContent = "Please sign in again.";
+    message("depositMessage", "Please log in again before submitting.", "error");
+    return;
+  }
+
+  const amount = Number($("depositAmount").value);
+  const reference = $("paymentReference").value.trim();
+
+  if (![5000, 50000, 100000].includes(amount)) {
+    message("depositMessage", "Please select a valid deposit amount.", "error");
+    return;
+  }
+  if (!reference || reference.length > 120) {
+    message("depositMessage", "Enter a valid payment reference.", "error");
+    return;
+  }
+
+  busy($("depositButton"), true, "");
+  try {
+    const { error } = await supabase.from("deposit_records").insert({
+      user_id: user.id,
+      amount,
+      payment_reference: reference,
+      status: "pending"
+    });
+    if (error) throw error;
+
+    $("paymentReference").value = "";
+    message("depositMessage", "Deposit submitted for review. Status: PENDING. Your balance has not changed.");
+    await loadMyDeposits();
+  } catch (error) {
+    message("depositMessage", "Submission failed: " + (error.message || "Please try again."), "error");
+  } finally {
+    busy($("depositButton"), false, "Submit Deposit for Review");
+  }
+});
+
+async function loadMyDeposits() {
+  const { data: sessionData } = await supabase.auth.getSession();
+  const user = sessionData?.session?.user;
+  if (!user) {
+    message("myDepositsMessage", "Please log in.", "error");
+    return;
+  }
+
+  const tbody = $("myDeposits");
+  tbody.replaceChildren();
+
+  const { data, error } = await supabase
+    .from("deposit_records")
+    .select("amount,payment_reference,status,submitted_at")
+    .eq("user_id", user.id)
+    .order("submitted_at", { ascending: false });
+
+  if (error) {
+    message("myDepositsMessage", "Could not load submissions: " + error.message, "error");
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    const row = document.createElement("tr");
+    const cell = document.createElement("td");
+    cell.colSpan = 4;
+    cell.textContent = "No submissions yet.";
+    row.appendChild(cell);
+    tbody.appendChild(row);
+    message("myDepositsMessage", "No deposit submissions found.");
+    return;
+  }
+
+  for (const item of data) {
+    const row = document.createElement("tr");
+    const values = [
+      naira(item.amount),
+      item.payment_reference || "Not provided",
+      item.status,
+      item.submitted_at ? new Date(item.submitted_at).toLocaleString() : "Unknown"
+    ];
+    for (const value of values) {
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      row.appendChild(cell);
+    }
+    tbody.appendChild(row);
+  }
+  message("myDepositsMessage", "Loaded " + data.length + " submission(s).");
+}
+
+$("myDepositsButton").addEventListener("click", loadMyDeposits);
+
+$("load-deposits-btn").addEventListener("click", async () => {
+  message("admin-message", "Checking administrator access...");
+  const tbody = $("admin-deposits");
+  tbody.replaceChildren();
+
+  const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+  const user = sessionData?.session?.user;
+  if (sessionError || !user) {
+    message("admin-message", "Please sign in again.", "error");
     return;
   }
 
   const { data: profile, error: profileError } = await supabase
-    .from("profiles")
-    .select("role")
-    .eq("id", user.id)
-    .maybeSingle();
+    .from("profiles").select("role").eq("id", user.id).maybeSingle();
 
   if (profileError || profile?.role !== "admin") {
-    message.textContent = "Administrator access required.";
+    message("admin-message", "Administrator access required.", "error");
     return;
   }
 
-  const { data: deposits, error } = await supabase
+  const { data, error } = await supabase
     .from("deposit_records")
-    .select("amount, payment_reference, status, submitted_at")
+    .select("amount,payment_reference,status,submitted_at")
     .order("submitted_at", { ascending: false });
 
   if (error) {
-    message.textContent =
-      "Could not load deposits: " + error.message;
+    message("admin-message", "Could not load deposits: " + error.message, "error");
     return;
   }
 
-  if (!deposits || deposits.length === 0) {
-    message.textContent = "No deposit records have been submitted yet.";
+  if (!data || data.length === 0) {
     const row = document.createElement("tr");
     const cell = document.createElement("td");
     cell.colSpan = 4;
     cell.textContent = "No deposits found.";
     row.appendChild(cell);
     tbody.appendChild(row);
+    message("admin-message", "No deposit records have been submitted yet.");
     return;
   }
 
-  for (const deposit of deposits) {
+  for (const item of data) {
     const row = document.createElement("tr");
-
-    const amount = document.createElement("td");
-    amount.textContent = naira(deposit.amount);
-
-    const reference = document.createElement("td");
-    reference.textContent = deposit.payment_reference || "Not provided";
-
-    const status = document.createElement("td");
-    status.textContent = deposit.status;
-
-    const submitted = document.createElement("td");
-    submitted.textContent = deposit.submitted_at
-      ? new Date(deposit.submitted_at).toLocaleString()
-      : "Unknown";
-
-    row.append(amount, reference, status, submitted);
+    const values = [
+      naira(item.amount),
+      item.payment_reference || "Not provided",
+      item.status,
+      item.submitted_at ? new Date(item.submitted_at).toLocaleString() : "Unknown"
+    ];
+    for (const value of values) {
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      row.appendChild(cell);
+    }
     tbody.appendChild(row);
   }
-
-  message.textContent = "Loaded " + deposits.length + " deposit record(s).";
+  message("admin-message", "Loaded " + data.length + " deposit record(s).");
 });
 
 supabase.auth.onAuthStateChange(() => {
@@ -754,6 +512,5 @@ supabase.auth.onAuthStateChange(() => {
 updateAuthMode();
 await renderSession();
 </script>
-
 </body>
-  </html>
+</html>
