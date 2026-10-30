@@ -546,13 +546,13 @@ $("authForm").onsubmit = async (e) => {
   const password = $("password").value;
   const fullName = $("fullName").value.trim();
 
-  // Normalize phone to digits only (e.g., 07037816664) and form standard email for Supabase auth
+  // Normalize phone to digits only and form valid .com email for Supabase auth
   const phoneDigits = rawPhone.replace(/\D/g, "");
   if (!phoneDigits || phoneDigits.length < 10) {
     msg("authMessage", "Please enter a valid phone number", "error");
     return;
   }
-  const pseudoEmail = `${phoneDigits}@palmgrow.ng`;
+  const pseudoEmail = `${phoneDigits}@palmgrow.com`;
 
   if (!loginMode && !fullName) {
     msg("authMessage", "Please enter your full name", "error");
