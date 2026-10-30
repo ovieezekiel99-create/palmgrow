@@ -317,10 +317,10 @@ th { background: #f0f5f2; font-weight: 600; }
         <label>Full Name</label>
         <input id="fullName" placeholder="Your full name">
       </div>
-      <label id="phoneLabel">Phone Number</label>
-      <input id="phone" type="tel" required placeholder="Phone number (e.g. 0703...)">
-      <label id="passLabel">Password</label>
-      <input id="password" type="password" required minlength="8" placeholder="At least 8 characters">
+      <label>Phone Number</label>
+      <input id="phone" type="tel" required placeholder="e.g. 07037816664">
+      <label>Password</label>
+      <input id="password" type="password" required minlength="6" placeholder="At least 6 characters">
       <button type="submit" id="submitBtn">Create Account</button>
     </form>
     <div id="authMessage" class="status hidden"></div>
@@ -530,7 +530,7 @@ function msg(id, text, type = "success") {
   el.classList.remove("hidden");
 }
 
-/* AUTH */
+/* AUTH UI */
 function updateAuthUI() {
   $("authSub").textContent = loginMode ? "Login with your phone number" : "Create your account to continue";
   $("submitBtn").textContent = loginMode ? "Login" : "Create Account";
@@ -539,18 +539,25 @@ function updateAuthUI() {
 }
 $("switchBtn").onclick = () => { loginMode = !loginMode; updateAuthUI(); };
 
+/* AUTH SUBMISSION */
 $("authForm").onsubmit = async (e) => {
   e.preventDefault();
-  const phone = $("phone").value.trim();
+  const rawPhone = $("phone").value.trim();
   const password = $("password").value;
   const fullName = $("fullName").value.trim();
 
-  // Clean phone number to make a reliable internal email
-  const cleanPhone = phone.replace(/[^0-9]/g, "");
-  const pseudoEmail = `${cleanPhone}@palmgrow.local`;
+  // Normalize phone to digits only (e.g., 07037816664) and form standard email for Supabase auth
+  const phoneDigits = rawPhone.replace(/\D/g, "");
+  if (!phoneDigits || phoneDigits.length < 10) {
+    msg("authMessage", "Please enter a valid phone number", "error");
+    return;
+  }
+  const pseudoEmail = `${phoneDigits}@palmgrow.ng`;
 
-  if (!loginMode && !fullName) { msg("authMessage", "Please enter your full name", "error"); return; }
-  if (!cleanPhone) { msg("authMessage", "Please enter a valid phone number", "error"); return; }
+  if (!loginMode && !fullName) {
+    msg("authMessage", "Please enter your full name", "error");
+    return;
+  }
 
   $("submitBtn").disabled = true;
   try {
@@ -561,19 +568,21 @@ $("authForm").onsubmit = async (e) => {
       result = await supabase.auth.signUp({
         email: pseudoEmail,
         password,
-        options: { data: { full_name: fullName, phone: cleanPhone } }
+        options: { data: { full_name: fullName, phone: phoneDigits } }
       });
     }
+
     if (result.error) throw result.error;
+
     if (!loginMode && !result.data.session) {
-      msg("authMessage", "Account created! You can now log in.");
+      msg("authMessage", "Account created successfully! You can now log in.");
       loginMode = true;
       updateAuthUI();
     } else {
       await loadDashboard();
     }
   } catch (err) {
-    msg("authMessage", err.message || "Something went wrong", "error");
+    msg("authMessage", err.message || "Authentication failed", "error");
   } finally {
     $("submitBtn").disabled = false;
   }
