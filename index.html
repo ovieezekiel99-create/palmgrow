@@ -20,7 +20,7 @@ body{font-family:Arial,sans-serif;background:var(--background);color:var(--text)
 header{background:var(--green);color:white;padding:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
 .logo{font-size:24px;font-weight:bold}
 .logo span{color:var(--gold)}
-.badge{border:1px solid var(--gold);color:var(--gold);border-radius:20px;padding:6px 10px;font-size:11px}
+.badge{border:1px solid var(--gold);color:var(--gold);border-radius:20px;padding:6px 10px;font-size:11px;font-weight:bold}
 .container{max-width:1000px;margin:auto;padding:24px 16px}
 h1,h2,h3{line-height:1.3}
 .welcome{margin-bottom:22px}
@@ -54,10 +54,18 @@ button:disabled{opacity:.6;cursor:wait}
 .admin-table{width:100%;border-collapse:collapse;font-size:13px}
 .admin-table th,.admin-table td{border:1px solid #dce5dd;padding:10px;text-align:left}
 .admin-table th{background:#e8efe9}
+
+/* Service Grid Styles */
+.service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.service-btn { background: white; border: 1px solid #d5dfd7; padding: 15px; border-radius: 12px; text-align: left; display: flex; flex-direction: column; gap: 5px; cursor: pointer; }
+.service-btn .title { font-weight: bold; font-size: 0.95rem; color: var(--green); }
+.service-btn .desc { font-size: 0.75rem; color: var(--muted); }
+
 footer{text-align:center;color:var(--muted);font-size:12px;padding:25px 15px}
 @media(min-width:700px){
 .stats{grid-template-columns:repeat(3,1fr)}
 .plans{grid-template-columns:repeat(3,1fr)}
+.service-grid{grid-template-columns:repeat(4,1fr)}
 }
 </style>
 </head>
@@ -73,6 +81,8 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:25px 15px}
   <h1>Welcome to PalmGrow 🌱</h1>
   <p class="muted">Explore oil-palm agriculture and agricultural project opportunities.</p>
 </section>
+
+<!-- Authentication Panel -->
 <section id="authSection" class="panel">
   <h2 id="authHeading">Create Your PalmGrow Account</h2>
   <form id="authForm" style="margin-top:16px">
@@ -97,6 +107,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:25px 15px}
   </div>
 </section>
 
+<!-- Main User Dashboard -->
 <section id="dashboard" class="hidden">
   <div class="panel">
     <p class="muted">Signed in as</p>
@@ -105,16 +116,51 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:25px 15px}
     <button id="logoutButton" class="secondary" style="margin-top:14px">Log Out</button>
   </div>
 
+  <div class="notice">
+    📢 <span>Celebrating user ****3010 on winning cash rewards in the lucky draw!</span>
+  </div>
+
   <div class="stats">
-    <div class="card"><p>Verified Investment</p><h2 id="investmentTotal">₦0.00</h2></div>
-    <div class="card"><p>Verified Payments</p><h2 id="paymentTotal">₦0.00</h2></div>
+    <div class="card"><p>Account Balance</p><h2 id="accountBalance">₦0.00</h2></div>
+    <div class="card"><p>Palm Gems</p><h2 id="gemsBalance">0 Gems</h2></div>
     <div class="card"><p>Account Status</p><h2 id="accountStatus" style="font-size:17px">Registered</h2></div>
+  </div>
+
+  <!-- Interactive Features Grid -->
+  <div class="service-grid">
+    <div class="service-btn" id="copyRefBtn">
+      <span class="title">👥 Referral Zone</span>
+      <span class="desc">Code: <strong id="refCodeText">Loading...</strong></span>
+      <span class="badge" style="width:fit-content;margin-top:4px;">Tap to Copy</span>
+    </div>
+    <div class="service-btn" id="claimCheckinBtn">
+      <span class="title">📅 Daily Check-in</span>
+      <span class="desc">Claim daily gems</span>
+      <span class="badge" style="width:fit-content;margin-top:4px;">+100 GEMS</span>
+    </div>
+    <div class="service-btn" onclick="document.getElementById('paymentSection').scrollIntoView({behavior:'smooth'})">
+      <span class="title">💳 Deposit History</span>
+      <span class="desc">View payments & status</span>
+    </div>
+    <div class="service-btn" onclick="document.getElementById('farm-display-section').scrollIntoView({behavior:'smooth'})">
+      <span class="title">🌴 Farm Zone</span>
+      <span class="desc">Manage active trees</span>
+    </div>
   </div>
 
   <div class="project">
     <div style="font-size:38px">🌴</div>
     <h2>Oil Palm Plantation</h2>
     <p>Learn about oil-palm cultivation, farm management, harvesting and agricultural development.</p>
+  </div>
+
+  <!-- Live Farm Display Section -->
+  <div id="farm-display-section" class="panel">
+    <h2>🌴 Live Farm Display</h2>
+    <p class="muted" style="margin-bottom:12px">Your active palm tree farm items appear below:</p>
+    <div id="farmDisplay" style="text-align:center; padding:15px; color:var(--muted); background:#f8faf7; border-radius:10px;">
+      No active palm farm categories yet. Deposit to get started!
+    </div>
   </div>
 
   <div class="section-title">
@@ -143,6 +189,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:25px 15px}
     </article>
   </div>
 
+  <!-- Payment & Deposit Submission Panel -->
   <section id="paymentSection" class="panel hidden">
     <h2>Deposit Submission</h2>
     <p id="selectedPlan" style="margin-top:8px"></p>
@@ -174,10 +221,10 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:25px 15px}
     </form>
 
     <div id="depositMessage" class="status hidden" role="status"></div>
-    <button id="myDepositsButton" type="button" class="secondary full">View My Deposit Submissions</button>
+    <button id="myDepositsButton" type="button" class="secondary full" style="margin-top:10px;">View My Deposit Submissions</button>
     <div id="myDepositsMessage" class="status hidden" role="status"></div>
 
-    <div style="overflow-x:auto">
+    <div style="overflow-x:auto; margin-top:10px;">
       <table class="admin-table">
         <thead><tr><th>Amount</th><th>Reference</th><th>Status</th><th>Date</th></tr></thead>
         <tbody id="myDeposits"><tr><td colspan="4">Your submissions will appear here.</td></tr></tbody>
@@ -191,6 +238,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:25px 15px}
   </section>
 </section>
 
+<!-- Admin Panel -->
 <section id="admin-section" class="panel hidden">
   <h2>PalmGrow Admin Dashboard</h2>
   <p class="muted" style="margin:8px 0 14px">Review deposit submissions. Check your actual bank records before confirming any payment.</p>
@@ -320,18 +368,44 @@ async function renderSession() {
 
   $("userName").textContent = user.user_metadata?.full_name || "PalmGrow Member";
   $("userEmail").textContent = user.email || "";
-  $("investmentTotal").textContent = naira(0);
-  $("paymentTotal").textContent = naira(0);
 
+  // Load User Profile details (Account balance, Gems, Referral code)
   const { data: profile, error: profileError } = await supabase
-    .from("profiles").select("role").eq("id", user.id).maybeSingle();
+    .from("profiles")
+    .select("role, account_balance, gems_balance, referral_code")
+    .eq("id", user.id)
+    .maybeSingle();
 
-  if (profileError) {
-    console.error("Profile lookup failed:", profileError.message);
-    return;
+  if (profile) {
+    $("accountBalance").textContent = naira(profile.account_balance || 0);
+    $("gemsBalance").textContent = (profile.gems_balance || 0) + " Gems";
+    $("refCodeText").textContent = profile.referral_code || "PALM-X99";
+
+    if (profile.role === "admin") $("admin-section").classList.remove("hidden");
   }
-  if (profile?.role === "admin") $("admin-section").classList.remove("hidden");
 }
+
+// Claim Daily Check-in Function
+$("claimCheckinBtn").addEventListener("click", async () => {
+  const { data: sessionData } = await supabase.auth.getSession();
+  const user = sessionData?.session?.user;
+  if (!user) return alert("Please log in first.");
+
+  const { data, error } = await supabase.rpc("claim_daily_checkin", { p_user_id: user.id });
+  if (error) {
+    alert("Check-in failed: " + error.message);
+  } else if (data) {
+    alert(data.message);
+    await renderSession();
+  }
+});
+
+// Copy Referral Code
+$("copyRefBtn").addEventListener("click", () => {
+  const code = $("refCodeText").textContent;
+  navigator.clipboard.writeText(code);
+  alert("Referral code copied to clipboard: " + code);
+});
 
 $("logoutButton").addEventListener("click", async () => {
   const { error } = await supabase.auth.signOut();
@@ -514,7 +588,8 @@ supabase.auth.onAuthStateChange(() => {
 updateAuthMode();
 await renderSession();
 </script>
-  <!-- PALMGROW HELP CENTER -->
+
+<!-- PALMGROW HELP CENTER -->
 <section id="palmgrow-help" style="max-width:900px;margin:35px auto;padding:24px;background:#f3f8f0;border-radius:16px;font-family:Arial,sans-serif;color:#183b24;">
   <h2 style="text-align:center;color:#176b35;">🌴 PalmGrow Help Center</h2>
   <p style="text-align:center;">Welcome to PalmGrow! We are here to help you understand and use our website.</p>
@@ -530,7 +605,7 @@ await renderSession();
 
   <div style="background:white;border:1px solid #d2dfce;border-radius:12px;padding:16px;">
     <h3 style="color:#176b35;">💬 Chat with PalmGrow Assistant</h3>
-    <p style="font-size:14px;">Ask a question about using the PalmGrow website.
+    <p style="font-size:14px;">Ask a question about using the PalmGrow website.</p>
 
     <div id="pg-chat-messages" role="log" aria-live="polite" style="height:260px;overflow-y:auto;background:#f8faf7;border:1px solid #e0e8dc;border-radius:8px;padding:12px;margin-bottom:12px;">
       <p><strong>PalmGrow Assistant:</strong> Hello! 🌴 Welcome to PalmGrow. How can I help you with the website today?</p>
@@ -633,4 +708,4 @@ await renderSession();
 })();
 </script>
 </body>
-        </html>
+</html>
