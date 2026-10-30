@@ -317,19 +317,14 @@ th { background: #f0f5f2; font-weight: 600; }
         <label>Full Name</label>
         <input id="fullName" placeholder="Your full name">
       </div>
-      <div id="phoneField">
-        <label>Phone Number</label>
-        <input id="phone" type="tel" placeholder="Phone number">
-      </div>
-      <label>Email</label>
-      <input id="email" type="email" required placeholder="Email address">
-      <label>Password</label>
+      <label id="phoneLabel">Phone Number</label>
+      <input id="phone" type="tel" required placeholder="Phone number (e.g. 0703...)">
+      <label id="passLabel">Password</label>
       <input id="password" type="password" required minlength="8" placeholder="At least 8 characters">
       <button type="submit" id="submitBtn">Create Account</button>
     </form>
     <div id="authMessage" class="status hidden"></div>
     <button type="button" class="secondary" id="switchBtn">Already have an account? Login</button>
-    <button type="button" class="secondary" id="resetBtn" style="margin-top:8px">Forgot Password?</button>
   </div>
 </div>
 
@@ -355,7 +350,7 @@ th { background: #f0f5f2; font-weight: 600; }
         <div class="avatar" id="userAvatar">P</div>
         <div>
           <div id="userName" style="font-weight:600">Member</div>
-          <div id="userEmail" style="font-size:12px;color:var(--muted)"></div>
+          <div id="userPhone" style="font-size:12px;color:var(--muted)"></div>
         </div>
       </div>
     </div>
@@ -537,37 +532,43 @@ function msg(id, text, type = "success") {
 
 /* AUTH */
 function updateAuthUI() {
-  $("authSub").textContent = loginMode ? "Login to your account" : "Create your account to continue";
+  $("authSub").textContent = loginMode ? "Login with your phone number" : "Create your account to continue";
   $("submitBtn").textContent = loginMode ? "Login" : "Create Account";
   $("nameField").classList.toggle("hidden", loginMode);
-  $("phoneField").classList.toggle("hidden", loginMode);
   $("switchBtn").textContent = loginMode ? "Need an account? Register" : "Already have an account? Login";
 }
 $("switchBtn").onclick = () => { loginMode = !loginMode; updateAuthUI(); };
 
 $("authForm").onsubmit = async (e) => {
   e.preventDefault();
-  const email = $("email").value.trim();
+  const phone = $("phone").value.trim();
   const password = $("password").value;
   const fullName = $("fullName").value.trim();
-  const phone = $("phone").value.trim();
+
+  // Clean phone number to make a reliable internal email
+  const cleanPhone = phone.replace(/[^0-9]/g, "");
+  const pseudoEmail = `${cleanPhone}@palmgrow.local`;
 
   if (!loginMode && !fullName) { msg("authMessage", "Please enter your full name", "error"); return; }
+  if (!cleanPhone) { msg("authMessage", "Please enter a valid phone number", "error"); return; }
 
   $("submitBtn").disabled = true;
   try {
     let result;
     if (loginMode) {
-      result = await supabase.auth.signInWithPassword({ email, password });
+      result = await supabase.auth.signInWithPassword({ email: pseudoEmail, password });
     } else {
       result = await supabase.auth.signUp({
-        email, password,
-        options: { data: { full_name: fullName, phone } }
+        email: pseudoEmail,
+        password,
+        options: { data: { full_name: fullName, phone: cleanPhone } }
       });
     }
     if (result.error) throw result.error;
     if (!loginMode && !result.data.session) {
-      msg("authMessage", "Check your email to confirm your account");
+      msg("authMessage", "Account created! You can now log in.");
+      loginMode = true;
+      updateAuthUI();
     } else {
       await loadDashboard();
     }
@@ -575,18 +576,6 @@ $("authForm").onsubmit = async (e) => {
     msg("authMessage", err.message || "Something went wrong", "error");
   } finally {
     $("submitBtn").disabled = false;
-  }
-};
-
-$("resetBtn").onclick = async () => {
-  const email = $("email").value.trim();
-  if (!email) { msg("authMessage", "Enter your email first", "error"); return; }
-  try {
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
-    if (error) throw error;
-    msg("authMessage", "Check your email for recovery instructions");
-  } catch (err) {
-    msg("authMessage", err.message, "error");
   }
 };
 
@@ -637,9 +626,10 @@ async function loadDashboard() {
   $("app").style.display = "block";
 
   const name = currentUser.user_metadata?.full_name || "Member";
+  const phone = currentUser.user_metadata?.phone || "";
   $("userName").textContent = name;
   $("welcomeName").textContent = name;
-  $("userEmail").textContent = currentUser.email || "";
+  $("userPhone").textContent = phone;
   $("userAvatar").textContent = name.charAt(0).toUpperCase();
   $("referralCode").textContent = currentUser.id.slice(0, 8).toUpperCase();
 
