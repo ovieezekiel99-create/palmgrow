@@ -5,347 +5,424 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0b3d2e">
 <title>PalmGrow | Dashboard</title>
+
 <style>
 :root {
-  --green-dark: #0b3d2e;
-  --green: #0f5c42;
-  --green-light: #147a56;
-  --gold: #d4af37;
-  --bg: #f4f7f5;
-  --card: #ffffff;
-  --text: #1a2e25;
-  --muted: #6b7c73;
-  --border: #e2ebe6;
+  --green-dark:#0b3d2e;
+  --green:#0f5c42;
+  --green-light:#147a56;
+  --gold:#d4af37;
+  --bg:#f4f7f5;
+  --card:#fff;
+  --text:#1a2e25;
+  --muted:#6b7c73;
+  --border:#e2ebe6;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.5;
-  min-height: 100vh;
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.5;
+  min-height:100vh;
 }
-.hidden { display: none !important; }
+.hidden{display:none!important}
+#authScreen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:linear-gradient(135deg,#0b3d2e,#0f5c42);
+}
+.auth-box{
+  background:#fff;
+  width:100%;
+  max-width:420px;
+  border-radius:16px;
+  padding:28px 24px;
+  box-shadow:0 20px 40px rgba(0,0,0,.2);
+}
+.auth-box h1{
+  font-size:22px;
+  margin-bottom:6px;
+  color:var(--green-dark);
+}
+.auth-box .sub{
+  color:var(--muted);
+  font-size:14px;
+  margin-bottom:20px;
+}
+.auth-box label{
+  display:block;
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:4px;
+}
+.auth-box input,.auth-box select{
+  width:100%;
+  padding:12px 14px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  font-size:15px;
+  margin-bottom:14px;
+  background:white;
+}
+.auth-box button{
+  width:100%;
+  padding:13px;
+  background:var(--green);
+  color:#fff;
+  border:0;
+  border-radius:8px;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+  margin-top:6px;
+}
+.auth-box button.secondary{
+  background:#e8f0ec;
+  color:var(--green-dark);
+  margin-top:10px;
+}
+.status{
+  margin-top:12px;
+  padding:10px;
+  border-radius:8px;
+  font-size:13px;
+}
+.success{background:#e5f5e9;color:#155b31}
+.error{background:#ffeded;color:#8a2222}
 
-/* ===== AUTH SCREEN ===== */
-#authScreen {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background: linear-gradient(135deg, #0b3d2e, #0f5c42);
+#app{display:none;min-height:100vh}
+.sidebar{
+  position:fixed;
+  top:0;
+  left:0;
+  bottom:0;
+  width:240px;
+  background:var(--green-dark);
+  color:#fff;
+  padding:20px 0;
+  overflow-y:auto;
+  z-index:100;
+  transform:translateX(-100%);
+  transition:transform .25s ease;
 }
-.auth-box {
-  background: white;
-  width: 100%;
-  max-width: 400px;
-  border-radius: 16px;
-  padding: 28px 24px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+.sidebar.open{transform:translateX(0)}
+.sidebar .logo{
+  padding:0 20px 24px;
+  font-size:22px;
+  font-weight:700;
 }
-.auth-box h1 { font-size: 22px; margin-bottom: 6px; color: var(--green-dark); }
-.auth-box .sub { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
-.auth-box label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
-.auth-box input {
-  width: 100%;
-  padding: 12px 14px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 15px;
-  margin-bottom: 14px;
+.sidebar .logo span{color:var(--gold)}
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 20px;
+  color:rgba(255,255,255,.85);
+  cursor:pointer;
+  font-size:14px;
+  border-left:3px solid transparent;
 }
-.auth-box button {
-  width: 100%;
-  padding: 13px;
-  background: var(--green);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 6px;
+.nav-item:hover,.nav-item.active{
+  background:rgba(255,255,255,.08);
+  border-left-color:var(--gold);
+  color:#fff;
 }
-.auth-box button.secondary {
-  background: #e8f0ec;
-  color: var(--green-dark);
-  margin-top: 10px;
+.main{
+  margin-left:0;
+  min-height:100vh;
+  padding-bottom:40px;
 }
-.status { margin-top: 12px; padding: 10px; border-radius: 8px; font-size: 13px; }
-.success { background: #e5f5e9; color: #155b31; }
-.error { background: #ffeded; color: #8a2222; }
-
-/* ===== DASHBOARD LAYOUT ===== */
-#app { display: none; min-height: 100vh; }
-.sidebar {
-  position: fixed;
-  top: 0; left: 0; bottom: 0;
-  width: 240px;
-  background: var(--green-dark);
-  color: white;
-  padding: 20px 0;
-  overflow-y: auto;
-  z-index: 100;
-  transform: translateX(-100%);
-  transition: transform 0.25s ease;
+.topbar{
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  padding:12px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:50;
 }
-.sidebar.open { transform: translateX(0); }
-.sidebar .logo {
-  padding: 0 20px 24px;
-  font-size: 22px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.menu-btn{
+  background:none;
+  border:0;
+  font-size:22px;
+  cursor:pointer;
+  color:var(--green-dark);
+  padding:4px 8px;
 }
-.sidebar .logo span { color: var(--gold); }
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 20px;
-  color: rgba(255,255,255,0.85);
-  cursor: pointer;
-  font-size: 14px;
-  border-left: 3px solid transparent;
+.user-info{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:14px;
 }
-.nav-item:hover, .nav-item.active {
-  background: rgba(255,255,255,0.08);
-  border-left-color: var(--gold);
-  color: white;
+.user-info .avatar{
+  width:36px;
+  height:36px;
+  background:var(--green);
+  color:#fff;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:600;
 }
-.main {
-  margin-left: 0;
-  min-height: 100vh;
-  padding-bottom: 40px;
+.content{
+  padding:16px;
+  max-width:1100px;
+  margin:0 auto;
 }
-.topbar {
-  background: white;
-  border-bottom: 1px solid var(--border);
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 50;
+.welcome{
+  background:linear-gradient(135deg,#0b3d2e,#147a56);
+  color:#fff;
+  border-radius:14px;
+  padding:20px;
+  margin-bottom:18px;
 }
-.menu-btn {
-  background: none;
-  border: none;
-  font-size: 22px;
-  cursor: pointer;
-  color: var(--green-dark);
-  padding: 4px 8px;
+.welcome h2{font-size:20px;margin-bottom:4px}
+.welcome p{opacity:.9;font-size:14px}
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:18px;
 }
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
+.stat-card{
+  background:#fff;
+  border-radius:12px;
+  padding:16px;
+  border:1px solid var(--border);
 }
-.user-info .avatar {
-  width: 36px; height: 36px;
-  background: var(--green);
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
+.stat-card .label{
+  font-size:12px;
+  color:var(--muted);
+  margin-bottom:6px;
 }
-.content { padding: 16px; max-width: 1100px; margin: 0 auto; }
-
-/* Cards & Stats */
-.welcome {
-  background: linear-gradient(135deg, #0b3d2e, #147a56);
-  color: white;
-  border-radius: 14px;
-  padding: 20px;
-  margin-bottom: 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
+.stat-card .value{
+  font-size:18px;
+  font-weight:700;
+  color:var(--green-dark);
 }
-.welcome h2 { font-size: 20px; margin-bottom: 4px; }
-.welcome p { opacity: 0.9; font-size: 14px; }
-.stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 18px;
+.stat-card button{
+  margin-top:10px;
+  width:100%;
+  padding:8px;
+  background:var(--green);
+  color:#fff;
+  border:0;
+  border-radius:6px;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
 }
-.stat-card {
-  background: white;
-  border-radius: 12px;
-  padding: 16px;
-  border: 1px solid var(--border);
+.section{
+  background:#fff;
+  border-radius:12px;
+  border:1px solid var(--border);
+  padding:18px;
+  margin-bottom:16px;
 }
-.stat-card .label { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
-.stat-card .value { font-size: 18px; font-weight: 700; color: var(--green-dark); }
-.stat-card button {
-  margin-top: 10px;
-  width: 100%;
-  padding: 8px;
-  background: var(--green);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
+.section h3{
+  font-size:16px;
+  margin-bottom:14px;
 }
-
-.section {
-  background: white;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  padding: 18px;
-  margin-bottom: 16px;
+.plans{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
 }
-.section h3 {
-  font-size: 16px;
-  margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.plan{
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:16px;
+  text-align:center;
 }
-.plans {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
+.plan .icon{font-size:28px}
+.plan h4{margin:8px 0 4px;font-size:15px}
+.plan .price{
+  font-size:20px;
+  font-weight:700;
+  color:var(--green-dark);
+  margin:8px 0;
 }
-.plan {
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 16px;
-  text-align: center;
+.plan p{
+  font-size:12px;
+  color:var(--muted);
+  margin-bottom:12px;
 }
-.plan .icon { font-size: 28px; }
-.plan h4 { margin: 8px 0 4px; font-size: 15px; }
-.plan .price { font-size: 20px; font-weight: 700; color: var(--green-dark); margin: 8px 0; }
-.plan p { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
-.plan button {
-  width: 100%;
-  padding: 10px;
-  background: var(--green);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
+.plan button{
+  width:100%;
+  padding:10px;
+  background:var(--green);
+  color:#fff;
+  border:0;
+  border-radius:6px;
+  font-weight:600;
+  cursor:pointer;
 }
-
-.notice {
-  background: #fff8e6;
-  border: 1px solid #f0d78c;
-  color: #7a5c12;
-  border-radius: 8px;
-  padding: 12px;
-  font-size: 13px;
-  margin-bottom: 14px;
+.notice{
+  background:#fff8e6;
+  border:1px solid #f0d78c;
+  color:#7a5c12;
+  border-radius:8px;
+  padding:12px;
+  font-size:13px;
+  margin-bottom:14px;
 }
-.payment-box {
-  background: #f0fdf4;
-  border: 1px solid #16a34a;
-  border-radius: 8px;
-  padding: 14px;
-  margin-bottom: 16px;
-  font-size: 14px;
+.payment-box{
+  background:#f0fdf4;
+  border:1px solid #16a34a;
+  border-radius:8px;
+  padding:14px;
+  margin-bottom:16px;
+  font-size:14px;
 }
-.payment-box strong { color: var(--green-dark); }
-
-form label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
-form input, form select {
-  width: 100%;
-  padding: 11px 12px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 15px;
-  margin-bottom: 12px;
+.payment-box strong{color:var(--green-dark)}
+form label{
+  display:block;
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:4px;
 }
-form button {
-  width: 100%;
-  padding: 12px;
-  background: var(--green);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
+form input,form select{
+  width:100%;
+  padding:11px 12px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  font-size:15px;
+  margin-bottom:12px;
 }
-.secondary-btn {
-  background: #e8f0ec !important;
-  color: var(--green-dark) !important;
-  margin-top: 10px;
+form button{
+  width:100%;
+  padding:12px;
+  background:var(--green);
+  color:#fff;
+  border:0;
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
 }
-
-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-th, td { padding: 10px 8px; text-align: left; border-bottom: 1px solid var(--border); }
-th { background: #f0f5f2; font-weight: 600; }
-
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 90;
-  display: none;
+.secondary-btn{
+  background:#e8f0ec!important;
+  color:var(--green-dark)!important;
+  margin-top:10px;
 }
-.overlay.show { display: block; }
-
-@media (min-width: 768px) {
-  .sidebar { transform: translateX(0); }
-  .main { margin-left: 240px; }
-  .menu-btn { display: none; }
-  .stats { grid-template-columns: repeat(4, 1fr); }
-  .plans { grid-template-columns: repeat(3, 1fr); }
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+}
+th,td{
+  padding:10px 8px;
+  text-align:left;
+  border-bottom:1px solid var(--border);
+}
+th{
+  background:#f0f5f2;
+  font-weight:600;
+}
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  z-index:90;
+  display:none;
+}
+.overlay.show{display:block}
+@media(min-width:768px){
+  .sidebar{transform:translateX(0)}
+  .main{margin-left:240px}
+  .menu-btn{display:none}
+  .stats{grid-template-columns:repeat(4,1fr)}
+  .plans{grid-template-columns:repeat(3,1fr)}
 }
 </style>
 </head>
+
 <body>
 
-<!-- AUTH SCREEN -->
+<!-- AUTHENTICATION -->
 <div id="authScreen">
   <div class="auth-box">
     <h1>🌴 PalmGrow</h1>
-    <p class="sub" id="authSub">Create your account to continue</p>
+    <p class="sub" id="authSub">Create your PalmGrow account</p>
+
     <form id="authForm">
+
       <div id="nameField">
         <label>Full Name</label>
-        <input id="fullName" placeholder="Your full name">
+        <input id="fullName" type="text" autocomplete="name"
+          placeholder="Your full name">
       </div>
-      <label>Phone Number</label>
-      <input id="phone" type="tel" required placeholder="e.g. 07037816664">
+
+      <div id="accountTypeField">
+        <label>Account Type</label>
+        <select id="accountType">
+          <option value="investor">Investor</option>
+          <option value="employee">Employee</option>
+        </select>
+      </div>
+
+      <div id="referralField">
+        <label>Referral Code (Optional)</label>
+        <input id="referralCodeInput" type="text"
+          placeholder="Enter referral code">
+      </div>
+
+      <label>Email Address</label>
+      <input id="email" type="email" required autocomplete="email"
+        placeholder="Enter your email">
+
       <label>Password</label>
-      <input id="password" type="password" required minlength="6" placeholder="At least 6 characters">
+      <input id="password" type="password" required minlength="8"
+        autocomplete="current-password" placeholder="At least 8 characters">
+
       <button type="submit" id="submitBtn">Create Account</button>
     </form>
+
     <div id="authMessage" class="status hidden"></div>
-    <button type="button" class="secondary" id="switchBtn">Already have an account? Login</button>
+
+    <button type="button" class="secondary" id="switchBtn">
+      Already have an account? Login
+    </button>
   </div>
 </div>
 
-<!-- DASHBOARD -->
+<!-- MAIN APPLICATION -->
 <div id="app">
+
   <div class="overlay" id="overlay"></div>
 
   <aside class="sidebar" id="sidebar">
+
     <div class="logo">🌴 Palm<span>Grow</span></div>
+
     <div class="nav-item active" data-page="dashboard">🏠 Dashboard</div>
     <div class="nav-item" data-page="invest">💰 Make Investment</div>
-    <div class="nav-item" data-page="employee-tasks">🌱 Employee Daily Tasks</div>
+
+    <div class="nav-item hidden" data-page="employee-tasks"
+      id="employeeTasksNav">🌱 Employee Daily Tasks</div>
+
     <div class="nav-item" data-page="deposit">📥 Deposit</div>
     <div class="nav-item" data-page="referral">👥 Referral Program</div>
-    <div class="nav-item" data-page="admin" id="adminNav" style="display:none">🛡️ Admin Panel</div>
+
+    <div class="nav-item" data-page="admin" id="adminNav"
+      style="display:none">🛡️ Admin Panel</div>
+
     <div class="nav-item" id="logoutNav">🚪 Log Out</div>
+
   </aside>
 
   <div class="main">
+
     <div class="topbar">
       <button class="menu-btn" id="menuBtn">☰</button>
+
       <div class="user-info">
         <div class="avatar" id="userAvatar">P</div>
         <div>
@@ -356,74 +433,94 @@ th { background: #f0f5f2; font-weight: 600; }
     </div>
 
     <div class="content">
-      <!-- DASHBOARD PAGE -->
+
+      <!-- DASHBOARD -->
       <div id="page-dashboard">
+
         <div class="welcome">
-          <div>
-            <h2>Welcome Back, <span id="welcomeName">Member</span></h2>
-            <p>Your investment journey is growing!</p>
-          </div>
+          <h2>Welcome Back, <span id="welcomeName">Member</span></h2>
+          <p>Your investment journey is growing!</p>
         </div>
 
         <div class="stats">
+
           <div class="stat-card">
             <div class="label">Available Balance</div>
             <div class="value" id="availableBalance">₦0.00</div>
             <button onclick="showPage('deposit')">Fund Wallet</button>
           </div>
+
           <div class="stat-card">
             <div class="label">Total Investment</div>
             <div class="value" id="totalInvestment">₦0.00</div>
           </div>
+
           <div class="stat-card">
             <div class="label">Total Earnings</div>
             <div class="value" id="totalEarnings">₦0.00</div>
           </div>
+
           <div class="stat-card">
             <div class="label">Referral Earnings</div>
             <div class="value" id="referralEarnings">₦0.00</div>
           </div>
+
         </div>
       </div>
 
-      <!-- EMPLOYEE DAILY TASKS PAGE -->
+      <!-- EMPLOYEE TASKS -->
       <div id="page-employee-tasks" class="hidden">
         <div class="section">
-          <h3>🌱 Employee Daily Palm Tasks (2-Year Contract)</h3>
-          <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Complete your daily assigned agricultural task to automatically receive your reward credited instantly to your wallet balance.</p>
+          <h3>🌱 Employee Daily Tasks</h3>
 
-          <div class="notice" style="background:#e8f5e9; border:1px solid #2e7d32; color:#1b5e20;">
-            <strong>Today's Task:</strong> <span id="taskDescription">Pruning and inspecting oil palm fronds for optimal plantation growth.</span>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:14px">
+            Complete your assigned daily agricultural tasks.
+          </p>
+
+          <div class="notice">
+            <strong>Today's Task:</strong>
+            <span id="taskDescription">
+              Pruning and inspecting oil palm fronds.
+            </span>
           </div>
 
-          <div class="stat-card" style="margin-bottom: 16px; text-align: center; padding: 20px;">
+          <div class="stat-card" style="margin-bottom:16px;text-align:center">
             <div class="label">Daily Reward Rate</div>
             <div class="value" id="dailyRateDisplay">₦0.00 / day</div>
           </div>
 
-          <button id="completeTaskBtn" style="background:var(--green); color:white; width:100%; padding:14px; border:none; border-radius:8px; font-weight:600; cursor:pointer;">
-            ✅ Complete Today's Task & Credit Wallet Instantly
+          <button id="completeTaskBtn"
+            style="background:var(--green);color:white;width:100%;padding:14px;border:0;border-radius:8px;font-weight:600;cursor:pointer">
+            ✅ Complete Today's Task
           </button>
 
-          <div id="taskMessage" class="status hidden" style="margin-top:12px;"></div>
+          <div id="taskMessage" class="status hidden"></div>
         </div>
       </div>
 
-      <!-- DEPOSIT PAGE -->
+      <!-- DEPOSIT -->
       <div id="page-deposit" class="hidden">
         <div class="section">
+
           <h3>📥 Deposit Submission</h3>
+
           <div class="notice">
-            Only submit this form after making a payment. A submission is not proof of payment.
+            Only submit this form after making a payment.
+            A submission is not proof of payment.
           </div>
+
           <div class="payment-box">
             <strong>Payment Details (OPay)</strong><br><br>
             Account Name: <strong>Ovie Ezekiel</strong><br>
             Account Number: <strong>7037816664</strong><br>
             Bank: <strong>OPay</strong>
           </div>
-          <p id="selectedPlanText" style="margin-bottom:12px;font-weight:600"></p>
+
+          <p id="selectedPlanText"
+            style="margin-bottom:12px;font-weight:600"></p>
+
           <form id="depositForm">
+
             <label>Deposit Amount</label>
             <select id="depositAmount" required>
               <option value="">Select amount</option>
@@ -431,402 +528,793 @@ th { background: #f0f5f2; font-weight: 600; }
               <option value="50000">₦50,000</option>
               <option value="100000">₦100,000</option>
             </select>
+
             <label>Payment Reference</label>
-            <input id="paymentReference" maxlength="120" required placeholder="Bank transaction reference">
-            <button type="submit" id="depositBtn">Submit Deposit for Review</button>
+            <input id="paymentReference" maxlength="120" required
+              placeholder="Bank transaction reference">
+
+            <button type="submit" id="depositBtn">
+              Submit Deposit for Review
+            </button>
+
           </form>
+
           <div id="depositMessage" class="status hidden"></div>
-          <button class="secondary-btn" id="myDepositsBtn" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:600;cursor:pointer">View My Deposit Submissions</button>
+
+          <button class="secondary-btn" id="myDepositsBtn"
+            style="width:100%;padding:12px;border:0;border-radius:8px;font-weight:600;cursor:pointer">
+            View My Deposit Submissions
+          </button>
+
           <div id="myDepositsMessage" class="status hidden"></div>
+
           <div style="overflow-x:auto;margin-top:12px">
             <table>
-              <thead><tr><th>Amount</th><th>Reference</th><th>Status</th><th>Date</th></tr></thead>
-              <tbody id="myDepositsBody"><tr><td colspan="4">No submissions yet</td></tr></tbody>
+              <thead>
+                <tr>
+                  <th>Amount</th>
+                  <th>Reference</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="myDepositsBody">
+                <tr><td colspan="4">No submissions yet</td></tr>
+              </tbody>
             </table>
           </div>
+
         </div>
       </div>
 
-      <!-- REFERRAL PAGE -->
+      <!-- REFERRALS -->
       <div id="page-referral" class="hidden">
         <div class="section">
           <h3>👥 Referral Program</h3>
-          <p style="margin-bottom:14px;color:var(--muted);font-size:14px">Share your referral code with friends. Earn rewards when they invest.</p>
+
+          <p style="margin-bottom:14px;color:var(--muted);font-size:14px">
+            Share your referral code with friends.
+          </p>
+
           <div class="payment-box">
             Your Referral Code:<br>
-            <strong id="referralCode" style="font-size:20px;letter-spacing:1px">LOADING...</strong>
+            <strong id="referralCode"
+              style="font-size:20px;letter-spacing:1px">LOADING...</strong>
           </div>
-          <p style="font-size:13px;color:var(--muted)">Referral earnings will appear on your dashboard when the system is fully activated.</p>
+
         </div>
       </div>
 
-      <!-- ADMIN PAGE -->
+      <!-- ADMIN -->
       <div id="page-admin" class="hidden">
         <div class="section">
+
           <h3>🛡️ Admin Panel – Review Deposits</h3>
-          <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Check your actual bank records before confirming any payment.</p>
-          <button id="loadDepositsBtn" style="padding:10px 16px;background:var(--green);color:white;border:none;border-radius:6px;font-weight:600;cursor:pointer">Load Pending Deposits</button>
+
+          <p style="font-size:13px;color:var(--muted);margin-bottom:12px">
+            Check actual bank records before confirming payments.
+          </p>
+
+          <button id="loadDepositsBtn"
+            style="padding:10px 16px;background:var(--green);color:white;border:0;border-radius:6px;font-weight:600;cursor:pointer">
+            Load Pending Deposits
+          </button>
+
           <div id="adminMessage" class="status hidden"></div>
+
           <div style="overflow-x:auto;margin-top:14px">
             <table>
-              <thead><tr><th>Amount</th><th>Reference</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
-              <tbody id="adminDepositsBody"><tr><td colspan="5">Click Load Pending Deposits</td></tr></tbody>
+              <thead>
+                <tr>
+                  <th>Amount</th>
+                  <th>Reference</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="adminDepositsBody">
+                <tr><td colspan="5">Click Load Pending Deposits</td></tr>
+              </tbody>
             </table>
           </div>
+
         </div>
       </div>
 
-      <!-- INVEST PAGE -->
+      <!-- INVESTMENT -->
       <div id="page-invest" class="hidden">
         <div class="section">
+
           <h3>💰 Make Investment</h3>
+
           <div class="plans">
+
             <div class="plan">
               <div class="icon">🌱</div>
               <h4>Starter Palm</h4>
               <div class="price">₦5,000</div>
               <p>Entry-level agricultural project</p>
-              <button class="planBtn" data-plan="Starter Palm" data-amount="5000">Invest Now</button>
+              <button class="planBtn"
+                data-plan="Starter Palm" data-amount="5000">
+                Invest Now
+              </button>
             </div>
+
             <div class="plan">
               <div class="icon">🌴</div>
               <h4>Growth Palm</h4>
               <div class="price">₦50,000</div>
               <p>Medium-level project</p>
-              <button class="planBtn" data-plan="Growth Palm" data-amount="50000">Invest Now</button>
+              <button class="planBtn"
+                data-plan="Growth Palm" data-amount="50000">
+                Invest Now
+              </button>
             </div>
+
             <div class="plan">
               <div class="icon">🌳</div>
               <h4>Premium Palm</h4>
               <div class="price">₦100,000</div>
               <p>Larger agricultural project</p>
-              <button class="planBtn" data-plan="Premium Palm" data-amount="100000">Invest Now</button>
+              <button class="planBtn"
+                data-plan="Premium Palm" data-amount="100000">
+                Invest Now
+              </button>
             </div>
+
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </div>
 
 <script type="module">
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+import { createClient } from
+"https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-const SUPABASE_URL = "https://ghdiycdzsmncmlcpdniy.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_xy6UyL2BeQFgB8LeYMHuJA_k6MdhVz9";
-const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+const SUPABASE_URL =
+"https://ghdiycdzsmncmlcpdniy.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_xy6UyL2BeQFgB8LeYMHuJA_k6MdhVz9";
+
+const supabase = createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 
 const $ = id => document.getElementById(id);
+
 let loginMode = false;
 let currentUser = null;
+let currentProfile = null;
 
-function naira(v) {
-  return "₦" + Number(v || 0).toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+function naira(value) {
+  return "₦" + Number(value || 0).toLocaleString("en-NG", {
+    minimumFractionDigits:2,
+    maximumFractionDigits:2
+  });
 }
-function msg(id, text, type = "success") {
+
+function msg(id,text,type="success") {
   const el = $(id);
   el.textContent = text;
   el.className = "status " + type;
   el.classList.remove("hidden");
 }
 
-/* AUTH UI */
 function updateAuthUI() {
-  $("authSub").textContent = loginMode ? "Login with your phone number" : "Create your account to continue";
-  $("submitBtn").textContent = loginMode ? "Login" : "Create Account";
-  $("nameField").classList.toggle("hidden", loginMode);
-  $("switchBtn").textContent = loginMode ? "Need an account? Register" : "Already have an account? Login";
-}
-$("switchBtn").onclick = () => { loginMode = !loginMode; updateAuthUI(); };
+  $("authSub").textContent = loginMode
+    ? "Login to your PalmGrow account"
+    : "Create your PalmGrow account";
 
-/* AUTH SUBMISSION */
-$("authForm").onsubmit = async (e) => {
-  e.preventDefault();
-  const rawPhone = $("phone").value.trim();
+  $("submitBtn").textContent = loginMode
+    ? "Login"
+    : "Create Account";
+
+  $("nameField").classList.toggle("hidden",loginMode);
+  $("accountTypeField").classList.toggle("hidden",loginMode);
+  $("referralField").classList.toggle("hidden",loginMode);
+
+  $("switchBtn").textContent = loginMode
+    ? "Need an account? Register"
+    : "Already have an account? Login";
+}
+
+$("switchBtn").onclick = () => {
+  loginMode = !loginMode;
+  $("authMessage").classList.add("hidden");
+  updateAuthUI();
+};
+
+/* REGISTRATION AND LOGIN */
+
+$("authForm").onsubmit = async event => {
+  event.preventDefault();
+
+  const email = $("email").value.trim().toLowerCase();
   const password = $("password").value;
   const fullName = $("fullName").value.trim();
-
-  // Normalize phone to digits only and form valid .com email for Supabase auth
-  const phoneDigits = rawPhone.replace(/\D/g, "");
-  if (!phoneDigits || phoneDigits.length < 10) {
-    msg("authMessage", "Please enter a valid phone number", "error");
-    return;
-  }
-  const pseudoEmail = `${phoneDigits}@palmgrow.com`;
-
-  if (!loginMode && !fullName) {
-    msg("authMessage", "Please enter your full name", "error");
-    return;
-  }
+  const referralCode =
+    $("referralCodeInput").value.trim().toUpperCase();
+  const accountType = $("accountType").value;
 
   $("submitBtn").disabled = true;
+  $("submitBtn").textContent = "Please wait...";
+
   try {
-    let result;
+
     if (loginMode) {
-      result = await supabase.auth.signInWithPassword({ email: pseudoEmail, password });
+
+      const {error} =
+        await supabase.auth.signInWithPassword({
+          email,
+          password
+        });
+
+      if (error) throw error;
+
+      await loadDashboard();
+
     } else {
-      result = await supabase.auth.signUp({
-        email: pseudoEmail,
-        password,
-        options: { data: { full_name: fullName, phone: phoneDigits } }
-      });
-    }
 
-    if (result.error) throw result.error;
+      if (fullName.length < 2) {
+        throw new Error("Please enter your full name.");
+      }
 
-    if (!loginMode && !result.data.session) {
-      msg("authMessage", "Account created successfully! You can now log in.");
+      if (password.length < 8) {
+        throw new Error("Password must contain at least 8 characters.");
+      }
+
+      const response = await fetch(
+        `${SUPABASE_URL}/functions/v1/palmgrow-register`,
+        {
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json",
+            "apikey":SUPABASE_PUBLISHABLE_KEY
+          },
+          body:JSON.stringify({
+            action:"register",
+            full_name:fullName,
+            email,
+            password,
+            account_type:accountType,
+            referral_code:referralCode
+          })
+        }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || "Registration failed.");
+      }
+
+      msg(
+        "authMessage",
+        result.message || "Registration successful. You can now log in."
+      );
+
       loginMode = true;
       updateAuthUI();
-    } else {
-      await loadDashboard();
+
+      $("email").value = email;
+      $("password").value = "";
     }
-  } catch (err) {
-    msg("authMessage", err.message || "Authentication failed", "error");
+
+  } catch(error) {
+
+    msg(
+      "authMessage",
+      error.message || "Authentication failed.",
+      "error"
+    );
+
   } finally {
+
     $("submitBtn").disabled = false;
+    updateAuthUI();
+
   }
 };
 
 /* NAVIGATION */
+
 function showPage(page) {
-  ["dashboard","deposit","referral","admin","invest","employee-tasks"].forEach(p => {
-    const el = $("page-" + p);
-    if (el) el.classList.toggle("hidden", p !== page);
+
+  const allowedPages = [
+    "dashboard",
+    "deposit",
+    "referral",
+    "admin",
+    "invest",
+    "employee-tasks"
+  ];
+
+  if (!allowedPages.includes(page)) return;
+
+  if (
+    page === "employee-tasks" &&
+    currentProfile?.account_type === "employee" &&
+    currentProfile?.employee_status !== "active"
+  ) {
+    alert("Employee Daily Tasks are locked until your deposit is confirmed by an administrator.");
+    return;
+  }
+
+  if (
+    page === "admin" &&
+    currentProfile?.role !== "admin"
+  ) {
+    alert("Admin access required.");
+    return;
+  }
+
+  allowedPages.forEach(name => {
+    const element = $("page-" + name);
+    if (element) {
+      element.classList.toggle("hidden",name !== page);
+    }
   });
-  document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
-  const active = document.querySelector(`.nav-item[data-page="${page}"]`);
+
+  document.querySelectorAll(".nav-item").forEach(item => {
+    item.classList.remove("active");
+  });
+
+  const active = document.querySelector(
+    `.nav-item[data-page="${page}"]`
+  );
+
   if (active) active.classList.add("active");
+
   closeSidebar();
 }
+
+window.showPage = showPage;
+
 document.querySelectorAll(".nav-item[data-page]").forEach(item => {
   item.onclick = () => showPage(item.dataset.page);
 });
+
 $("menuBtn").onclick = () => {
   $("sidebar").classList.add("open");
   $("overlay").classList.add("show");
 };
+
 $("overlay").onclick = closeSidebar;
+
 function closeSidebar() {
   $("sidebar").classList.remove("open");
   $("overlay").classList.remove("show");
 }
+
 $("logoutNav").onclick = async () => {
   await supabase.auth.signOut();
   location.reload();
 };
 
-/* PLAN BUTTONS */
-document.querySelectorAll(".planBtn").forEach(btn => {
-  btn.onclick = () => {
-    $("depositAmount").value = btn.dataset.amount;
-    $("selectedPlanText").textContent = btn.dataset.plan + " — " + naira(btn.dataset.amount);
+document.querySelectorAll(".planBtn").forEach(button => {
+
+  button.onclick = () => {
+    $("depositAmount").value = button.dataset.amount;
+
+    $("selectedPlanText").textContent =
+      button.dataset.plan + " — " + naira(button.dataset.amount);
+
     showPage("deposit");
   };
+
 });
 
 /* LOAD DASHBOARD */
+
 async function loadDashboard() {
-  const { data: { session } } = await supabase.auth.getSession();
+
+  const {
+    data:{session}
+  } = await supabase.auth.getSession();
+
   if (!session) return;
+
   currentUser = session.user;
 
   $("authScreen").style.display = "none";
   $("app").style.display = "block";
 
-  const name = currentUser.user_metadata?.full_name || "Member";
-  const phone = currentUser.user_metadata?.phone || "";
-  $("userName").textContent = name;
-  $("welcomeName").textContent = name;
-  $("userPhone").textContent = phone;
-  $("userAvatar").textContent = name.charAt(0).toUpperCase();
-  $("referralCode").textContent = currentUser.id.slice(0, 8).toUpperCase();
-
-  // Load balances & task rate
-  const { data: profile } = await supabase
+  const {data:profile,error} = await supabase
     .from("profiles")
-    .select("role, available_balance, total_investment, total_earnings, referral_earnings, daily_payout_amount")
-    .eq("id", currentUser.id)
+    .select(`
+      full_name,
+      phone,
+      role,
+      account_type,
+      employee_status,
+      referral_code,
+      available_balance,
+      total_investment,
+      total_earnings,
+      referral_earnings,
+      daily_payout_amount
+    `)
+    .eq("id",currentUser.id)
     .maybeSingle();
 
-  if (profile) {
-    $("availableBalance").textContent = naira(profile.available_balance);
-    $("totalInvestment").textContent = naira(profile.total_investment);
-    $("totalEarnings").textContent = naira(profile.total_earnings);
-    $("referralEarnings").textContent = naira(profile.referral_earnings);
-    
-    // Display daily rate
-    const rate = profile.daily_payout_amount || (profile.total_investment ? profile.total_investment / 30 : 0);
-    $("dailyRateDisplay").textContent = naira(rate) + " / day";
-
-    if (profile.role === "admin") {
-      $("adminNav").style.display = "flex";
-    }
+  if (error) {
+    console.error("Profile loading error:",error.message);
+    alert("Unable to load your profile. Please contact support.");
+    return;
   }
+
+  if (!profile) {
+    alert("Your PalmGrow profile could not be found.");
+    return;
+  }
+
+  currentProfile = profile;
+
+  const name =
+    profile.full_name ||
+    currentUser.user_metadata?.full_name ||
+    "Member";
+
+  $("userName").textContent = name;
+  $("welcomeName").textContent = name;
+  $("userPhone").textContent =
+    profile.account_type === "employee"
+      ? "Employee Account"
+      : "Investor Account";
+
+  $("userAvatar").textContent =
+    name.charAt(0).toUpperCase();
+
+  $("referralCode").textContent =
+    profile.referral_code || "Not assigned";
+
+  $("availableBalance").textContent =
+    naira(profile.available_balance);
+
+  $("totalInvestment").textContent =
+    naira(profile.total_investment);
+
+  $("totalEarnings").textContent =
+    naira(profile.total_earnings);
+
+  $("referralEarnings").textContent =
+    naira(profile.referral_earnings);
+
+  const rate = profile.daily_payout_amount || 0;
+
+  $("dailyRateDisplay").textContent =
+    naira(rate) + " / day";
+
+  $("adminNav").style.display =
+    profile.role === "admin" ? "flex" : "none";
+
+  const isEmployee =
+    profile.account_type === "employee";
+
+  const tasksUnlocked =
+    isEmployee && profile.employee_status === "active";
+
+  $("employeeTasksNav").classList.toggle(
+    "hidden",
+    !tasksUnlocked
+  );
+
+  if (isEmployee && !tasksUnlocked) {
+    $("taskMessage").textContent =
+      "Your daily tasks are locked until your deposit payment is confirmed.";
+    $("taskMessage").className = "status";
+  }
+
   showPage("dashboard");
 }
 
-/* EMPLOYEE DAILY TASK HANDLER */
+/* EMPLOYEE DAILY TASKS */
+
 $("completeTaskBtn").onclick = async () => {
-  if (!currentUser) return alert("Please log in first.");
-  
-  const btn = $("completeTaskBtn");
-  btn.disabled = true;
-  btn.textContent = "Verifying task & crediting wallet...";
+
+  if (!currentUser) {
+    alert("Please log in first.");
+    return;
+  }
+
+  if (
+    currentProfile?.account_type !== "employee" ||
+    currentProfile?.employee_status !== "active"
+  ) {
+    msg(
+      "taskMessage",
+      "Your employee tasks are locked.",
+      "error"
+    );
+    return;
+  }
+
+  const button = $("completeTaskBtn");
+  button.disabled = true;
+  button.textContent = "Verifying task...";
 
   try {
-    const { data, error } = await supabase.rpc("complete_daily_employee_task", { 
-      p_user_id: currentUser.id 
-    });
+
+    const {data,error} = await supabase.rpc(
+      "complete_daily_employee_task",
+      {p_user_id:currentUser.id}
+    );
 
     if (error) throw error;
 
     if (data && data.success) {
-      msg("taskMessage", data.message, "success");
+      msg("taskMessage",data.message);
       await loadDashboard();
     } else {
-      msg("taskMessage", data ? data.message : "Task completion failed.", "error");
+      msg(
+        "taskMessage",
+        data?.message || "Task completion failed.",
+        "error"
+      );
     }
-  } catch (err) {
-    msg("taskMessage", "Error completing task: " + err.message, "error");
+
+  } catch(error) {
+
+    msg(
+      "taskMessage",
+      "Error completing task: " + error.message,
+      "error"
+    );
+
   } finally {
-    btn.disabled = false;
-    btn.textContent = "✅ Complete Today's Task & Credit Wallet Instantly";
+
+    button.disabled = false;
+    button.textContent = "✅ Complete Today's Task";
+
   }
 };
 
-/* DEPOSIT */
-$("depositForm").onsubmit = async (e) => {
-  e.preventDefault();
+/* DEPOSIT SUBMISSION */
+
+$("depositForm").onsubmit = async event => {
+
+  event.preventDefault();
+
   const amount = Number($("depositAmount").value);
   const reference = $("paymentReference").value.trim();
+
   if (![5000,50000,100000].includes(amount)) {
-    msg("depositMessage", "Select a valid amount", "error"); return;
+    msg("depositMessage","Select a valid amount.","error");
+    return;
   }
-  if (!reference) { msg("depositMessage", "Enter payment reference", "error"); return; }
+
+  if (!reference) {
+    msg("depositMessage","Enter your payment reference.","error");
+    return;
+  }
 
   $("depositBtn").disabled = true;
+
   try {
-    const { error } = await supabase.from("deposit_records").insert({
-      user_id: currentUser.id,
-      amount,
-      payment_reference: reference,
-      status: "pending"
-    });
+
+    const {error} = await supabase
+      .from("deposit_records")
+      .insert({
+        user_id:currentUser.id,
+        amount,
+        payment_reference:reference,
+        status:"pending"
+      });
+
     if (error) throw error;
+
     $("paymentReference").value = "";
-    msg("depositMessage", "Deposit submitted. Status: PENDING. Balance will update after admin approval.");
-    loadMyDeposits();
-  } catch (err) {
-    msg("depositMessage", err.message || "Submission failed", "error");
+
+    msg(
+      "depositMessage",
+      "Deposit submitted successfully. Awaiting admin confirmation."
+    );
+
+    await loadMyDeposits();
+
+  } catch(error) {
+
+    msg(
+      "depositMessage",
+      error.message || "Deposit submission failed.",
+      "error"
+    );
+
   } finally {
+
     $("depositBtn").disabled = false;
+
   }
 };
+
+/* USER DEPOSIT HISTORY */
 
 async function loadMyDeposits() {
+
   const tbody = $("myDepositsBody");
   tbody.innerHTML = "";
-  const { data, error } = await supabase
+
+  const {data,error} = await supabase
     .from("deposit_records")
-    .select("amount, payment_reference, status, submitted_at")
-    .eq("user_id", currentUser.id)
-    .order("submitted_at", { ascending: false });
+    .select("amount,payment_reference,status,submitted_at")
+    .eq("user_id",currentUser.id)
+    .order("submitted_at",{ascending:false});
 
   if (error || !data || data.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="4">No submissions yet</td></tr>`;
+    tbody.innerHTML =
+      '<tr><td colspan="4">No submissions yet</td></tr>';
     return;
   }
+
   data.forEach(item => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${naira(item.amount)}</td>
-      <td>${item.payment_reference || "-"}</td>
-      <td>${item.status}</td>
-      <td>${item.submitted_at ? new Date(item.submitted_at).toLocaleString() : "-"}</td>`;
-    tbody.appendChild(tr);
+
+    const row = document.createElement("tr");
+
+    [
+      naira(item.amount),
+      item.payment_reference || "-",
+      item.status,
+      item.submitted_at
+        ? new Date(item.submitted_at).toLocaleString()
+        : "-"
+    ].forEach(value => {
+
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      row.appendChild(cell);
+
+    });
+
+    tbody.appendChild(row);
+
   });
+
 }
+
 $("myDepositsBtn").onclick = loadMyDeposits;
 
-/* ADMIN */
+/* ADMIN DEPOSIT REVIEW */
+
 $("loadDepositsBtn").onclick = async () => {
+
   const tbody = $("adminDepositsBody");
   tbody.innerHTML = "";
-  msg("adminMessage", "Loading...");
 
-  const { data: profile } = await supabase.from("profiles").select("role").eq("id", currentUser.id).maybeSingle();
-  if (!profile || profile.role !== "admin") {
-    msg("adminMessage", "Admin access required", "error"); return;
+  msg("adminMessage","Loading pending deposits...");
+
+  if (currentProfile?.role !== "admin") {
+    msg("adminMessage","Admin access required.","error");
+    return;
   }
 
-  const { data, error } = await supabase
+  const {data,error} = await supabase
     .from("deposit_records")
-    .select("id, amount, payment_reference, status, submitted_at, user_id")
-    .eq("status", "pending")
-    .order("submitted_at", { ascending: false });
+    .select("id,amount,payment_reference,status,submitted_at,user_id")
+    .eq("status","pending")
+    .order("submitted_at",{ascending:false});
 
-  if (error) { msg("adminMessage", error.message, "error"); return; }
+  if (error) {
+    msg("adminMessage",error.message,"error");
+    return;
+  }
+
   if (!data || data.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="5">No pending deposits</td></tr>`;
-    msg("adminMessage", "No pending deposits found");
+    tbody.innerHTML =
+      '<tr><td colspan="5">No pending deposits</td></tr>';
+
+    msg("adminMessage","No pending deposits found.");
     return;
   }
 
   data.forEach(item => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${naira(item.amount)}</td>
-      <td>${item.payment_reference || "-"}</td>
-      <td>${item.status}</td>
-      <td>${item.submitted_at ? new Date(item.submitted_at).toLocaleString() : "-"}</td>
-      <td>
-        <button onclick="approveDeposit('${item.id}')" style="background:#16a34a;color:white;border:none;padding:6px 10px;border-radius:4px;cursor:pointer;margin-right:4px">Confirm</button>
-        <button onclick="rejectDeposit('${item.id}')" style="background:#dc2626;color:white;border:none;padding:6px 10px;border-radius:4px;cursor:pointer">Reject</button>
-      </td>`;
-    tbody.appendChild(tr);
+
+    const row = document.createElement("tr");
+
+    [
+      naira(item.amount),
+      item.payment_reference || "-",
+      item.status,
+      item.submitted_at
+        ? new Date(item.submitted_at).toLocaleString()
+        : "-"
+    ].forEach(value => {
+
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      row.appendChild(cell);
+
+    });
+
+    const actionCell = document.createElement("td");
+
+    const approve = document.createElement("button");
+    approve.textContent = "Confirm";
+    approve.style.cssText =
+      "background:#16a34a;color:white;border:0;padding:6px 10px;border-radius:4px;margin-right:4px";
+
+    approve.onclick = () => reviewDeposit(item.id,"confirmed");
+
+    const reject = document.createElement("button");
+    reject.textContent = "Reject";
+    reject.style.cssText =
+      "background:#dc2626;color:white;border:0;padding:6px 10px;border-radius:4px";
+
+    reject.onclick = () => reviewDeposit(item.id,"rejected");
+
+    actionCell.append(approve,reject);
+    row.appendChild(actionCell);
+    tbody.appendChild(row);
+
   });
-  msg("adminMessage", `Loaded ${data.length} pending deposit(s)`);
+
+  msg("adminMessage",`Loaded ${data.length} pending deposit(s).`);
+
 };
 
-window.approveDeposit = async (id) => {
-  try {
-    const { error } = await supabase.rpc("admin_review_deposit", {
-      p_deposit_id: id,
-      p_decision: "confirmed"
-    });
-    if (error) throw error;
-    alert("Deposit confirmed.");
-    $("loadDepositsBtn").click();
-  } catch (err) {
-    alert("Error: " + err.message);
-  }
-};
-window.rejectDeposit = async (id) => {
-  try {
-    const { error } = await supabase.rpc("admin_review_deposit", {
-      p_deposit_id: id,
-      p_decision: "rejected"
-    });
-    if (error) throw error;
-    alert("Deposit rejected");
-    $("loadDepositsBtn").click();
-  } catch (err) {
-    alert("Error: " + err.message);
-  }
-};
+async function reviewDeposit(id,decision) {
 
-/* INIT */
-supabase.auth.onAuthStateChange((_event, session) => {
-  if (session) loadDashboard();
-  else {
+  try {
+
+    const {error} = await supabase.rpc(
+      "admin_review_deposit",
+      {
+        p_deposit_id:id,
+        p_decision:decision
+      }
+    );
+
+    if (error) throw error;
+
+    alert(
+      decision === "confirmed"
+        ? "Deposit confirmation submitted."
+        : "Deposit rejected."
+    );
+
+    $("loadDepositsBtn").click();
+
+    await loadDashboard();
+
+  } catch(error) {
+
+    alert("Error: " + error.message);
+
+  }
+
+}
+
+/* SESSION INITIALIZATION */
+
+supabase.auth.onAuthStateChange((_event,session) => {
+
+  if (session) {
+    currentUser = session.user;
+    loadDashboard();
+  } else {
+    currentUser = null;
+    currentProfile = null;
     $("authScreen").style.display = "flex";
     $("app").style.display = "none";
   }
+
 });
+
 updateAuthUI();
-const { data: { session } } = await supabase.auth.getSession();
-if (session) loadDashboard();
+
+const {
+  data:{session}
+} = await supabase.auth.getSession();
+
+if (session) {
+  await loadDashboard();
+}
+
 </script>
 </body>
-</html>
+  </html>
