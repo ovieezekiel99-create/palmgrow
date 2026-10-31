@@ -273,7 +273,8 @@ cursor:pointer
 .task-done{border-color:#8ac49d;background:#f2fbf4}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th,td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--border)}
-th{background:#f0f5f2}
+th{background:#f0f5f2;white-space:nowrap}
+td{vertical-align:middle}
 .overlay{
 position:fixed;
 inset:0;
@@ -282,6 +283,39 @@ z-index:90;
 display:none
 }
 .overlay.show{display:block}
+.admin-table-wrap{overflow-x:auto;margin-top:14px}
+.admin-table{min-width:850px}
+.account-badge{
+display:inline-block;
+padding:4px 8px;
+border-radius:20px;
+font-size:11px;
+font-weight:700
+}
+.badge-investor{background:#e0f2fe;color:#075985}
+.badge-employee{background:#dcfce7;color:#166534}
+.badge-unknown{background:#f1f5f9;color:#475569}
+.purpose-badge{
+display:inline-block;
+padding:4px 8px;
+border-radius:20px;
+background:#fff4d6;
+color:#805b00;
+font-size:11px;
+font-weight:700
+}
+.admin-action{
+border:0;
+padding:8px 10px;
+border-radius:5px;
+color:white;
+font-weight:600;
+cursor:pointer;
+margin:2px
+}
+.confirm-btn{background:#16a34a}
+.reject-btn{background:#dc2626}
+.admin-action:disabled{opacity:.5;cursor:not-allowed}
 @media(min-width:768px){
 .sidebar{transform:translateX(0)}
 .main{margin-left:240px}
@@ -527,23 +561,37 @@ Your Referral Code:<br>
 <div id="page-admin" class="hidden">
 <div class="section">
 <h3>🛡️ Administrator Panel – Deposit Review</h3>
+
 <p style="font-size:13px;color:var(--muted);margin-bottom:12px">
-Check your actual payment records before confirming any deposit.
+Review actual payment records before confirming any deposit. Check the customer account type and deposit purpose carefully.
 </p>
 
-<button id="loadDepositsBtn" style="padding:10px 16px;background:var(--green);color:white;border:0;border-radius:6px">
+<div class="notice">
+<strong>Important:</strong> Confirm only deposits whose actual payment has been independently verified.
+</div>
+
+<button id="loadDepositsBtn" style="padding:10px 16px;background:var(--green);color:white;border:0;border-radius:6px;cursor:pointer">
 Load Pending Deposits
 </button>
 
 <div id="adminMessage" class="status hidden"></div>
 
-<div style="overflow-x:auto;margin-top:14px">
-<table>
+<div class="admin-table-wrap">
+<table class="admin-table">
 <thead>
-<tr><th>Amount</th><th>Reference</th><th>Status</th><th>Date</th><th>Action</th></tr>
+<tr>
+<th>Customer</th>
+<th>Account Type</th>
+<th>Purpose</th>
+<th>Amount</th>
+<th>Reference</th>
+<th>Status</th>
+<th>Date</th>
+<th>Action</th>
+</tr>
 </thead>
 <tbody id="adminDepositsBody">
-<tr><td colspan="5">Click Load Pending Deposits</td></tr>
+<tr><td colspan="8">Click Load Pending Deposits</td></tr>
 </tbody>
 </table>
 </div>
@@ -563,6 +611,7 @@ const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_xy6UyL2BeQFgB8LeYMHuJA_k6MdhVz9
 const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
 const $ = id => document.getElementById(id);
+
 const naira = value => "₦" + Number(value || 0).toLocaleString("en-NG", {
   minimumFractionDigits:2,
   maximumFractionDigits:2
@@ -662,11 +711,6 @@ $("authForm").onsubmit=async e=>{
         throw new Error(data?.error||"Registration failed.");
       }
 
-      msg(
-        "authMessage",
-        data.message||"Registration successful. You can now log in."
-      );
-
       loginMode=true;
       $("email").value=email;
       $("password").value="";
@@ -754,31 +798,39 @@ async function loadDashboard(options={}){
     return;
   }
 
+  if(!profile){
+    console.error("Profile not found for authenticated user.");
+    $("authScreen").style.display="flex";
+    $("app").style.display="none";
+    msg("authMessage","Your profile could not be found. Please contact support.","error");
+    return;
+  }
+
   currentProfile=profile;
 
-  const name=profile?.full_name||currentUser.user_metadata?.full_name||"Member";
+  const name=profile.full_name||currentUser.user_metadata?.full_name||"Member";
 
   $("userName").textContent=name;
   $("welcomeName").textContent=name;
-  $("userPhone").textContent=profile?.phone||"";
+  $("userPhone").textContent=profile.phone||"";
   $("userAvatar").textContent=name.charAt(0).toUpperCase();
 
-  $("availableBalance").textContent=naira(profile?.available_balance);
-  $("totalInvestment").textContent=naira(profile?.total_investment);
-  $("totalEarnings").textContent=naira(profile?.total_earnings);
-  $("referralEarnings").textContent=naira(profile?.referral_earnings);
+  $("availableBalance").textContent=naira(profile.available_balance);
+  $("totalInvestment").textContent=naira(profile.total_investment);
+  $("totalEarnings").textContent=naira(profile.total_earnings);
+  $("referralEarnings").textContent=naira(profile.referral_earnings);
 
-  $("referralCode").textContent=profile?.referral_code||
+  $("referralCode").textContent=profile.referral_code||
     currentUser.id.replace(/-/g,"").slice(0,8).toUpperCase();
 
   $("employeeNav").style.display=
-    profile?.account_type==="employee"?"flex":"none";
+    profile.account_type==="employee"?"flex":"none";
 
   $("adminNav").style.display=
-    profile?.role==="admin"?"flex":"none";
+    profile.role==="admin"?"flex":"none";
 
   $("dailyRateDisplay").textContent=
-    naira(profile?.daily_payout_amount)+" / day";
+    naira(profile.daily_payout_amount)+" / day";
 
   if(options.navigate!==false){
     showPage("dashboard");
@@ -979,7 +1031,8 @@ $("depositForm").onsubmit=async e=>{
       user_id:currentUser.id,
       amount,
       payment_reference:reference,
-      status:"pending"
+      status:"pending",
+      deposit_purpose:"initial"
     });
 
     if(error)throw error;
@@ -1051,8 +1104,13 @@ $("myDepositsBtn").onclick=loadMyDeposits;
 $("loadDepositsBtn").onclick=async()=>{
   const tbody=$("adminDepositsBody");
 
-  tbody.innerHTML="<tr><td colspan='5'>Loading...</td></tr>";
+  tbody.innerHTML="<tr><td colspan='8'>Loading...</td></tr>";
   msg("adminMessage","Checking administrator access...");
+
+  if(!currentUser){
+    msg("adminMessage","Please log in again.","error");
+    return;
+  }
 
   const {data:profile,error:profileError}=await supabase.from("profiles")
     .select("role")
@@ -1065,32 +1123,87 @@ $("loadDepositsBtn").onclick=async()=>{
   }
 
   const {data,error}=await supabase.from("deposit_records")
-    .select("id,amount,payment_reference,status,submitted_at,user_id")
+    .select("id,amount,payment_reference,status,submitted_at,user_id,deposit_purpose")
     .eq("status","pending")
     .order("submitted_at",{ascending:false});
 
   if(error){
+    tbody.innerHTML="<tr><td colspan='8'>Unable to load deposits.</td></tr>";
     msg("adminMessage",error.message,"error");
     return;
   }
 
   if(!data||data.length===0){
-    tbody.innerHTML="<tr><td colspan='5'>No pending deposits.</td></tr>";
+    tbody.innerHTML="<tr><td colspan='8'>No pending deposits.</td></tr>";
     msg("adminMessage","No pending deposits found.");
     return;
   }
 
+  const userIds=[...new Set(data.map(item=>item.user_id))];
+
+  const {data:profiles,error:profilesError}=await supabase.from("profiles")
+    .select("id,full_name,account_type")
+    .in("id",userIds);
+
+  if(profilesError){
+    tbody.innerHTML="<tr><td colspan='8'>Unable to load customer details.</td></tr>";
+    msg("adminMessage","Could not retrieve customer information.","error");
+    return;
+  }
+
+  const profileMap=new Map(
+    (profiles||[]).map(p=>[p.id,p])
+  );
+
   tbody.innerHTML="";
 
   data.forEach(item=>{
+    const customer=profileMap.get(item.user_id);
+
     const tr=document.createElement("tr");
 
-    [
+    const nameCell=document.createElement("td");
+    nameCell.textContent=customer?.full_name||"Unknown";
+    tr.appendChild(nameCell);
+
+    const accountCell=document.createElement("td");
+    const accountType=customer?.account_type||"unknown";
+    const accountBadge=document.createElement("span");
+
+    accountBadge.className="account-badge "+
+      (accountType==="employee"
+        ?"badge-employee"
+        :accountType==="investor"
+          ?"badge-investor"
+          :"badge-unknown");
+
+    accountBadge.textContent=
+      accountType==="employee"?"Employee":
+      accountType==="investor"?"Investor":"Unknown";
+
+    accountCell.appendChild(accountBadge);
+    tr.appendChild(accountCell);
+
+    const purposeCell=document.createElement("td");
+    const purposeBadge=document.createElement("span");
+
+    purposeBadge.className="purpose-badge";
+    purposeBadge.textContent=
+      item.deposit_purpose==="upgrade"?"Upgrade":"Initial";
+
+    purposeCell.appendChild(purposeBadge);
+    tr.appendChild(purposeCell);
+
+    const values=[
       naira(item.amount),
       item.payment_reference||"-",
       item.status,
-      item.submitted_at?new Date(item.submitted_at).toLocaleString():"-"
-    ].forEach(value=>{
+      item.submitted_at
+        ?new Date(item.submitted_at).toLocaleString()
+        :"-"
+    ];
+
+    values.forEach(value=>{
       const td=document.createElement("td");
       td.textContent=value;
       tr.appendChild(td);
@@ -1100,16 +1213,17 @@ $("loadDepositsBtn").onclick=async()=>{
 
     const approve=document.createElement("button");
     approve.textContent="Confirm";
-    approve.style.cssText="background:#16a34a;color:white;border:0;padding:7px;border-radius:4px;margin:3px";
+    approve.className="admin-action confirm-btn";
     approve.onclick=()=>reviewDeposit(item.id,"confirmed");
 
     const reject=document.createElement("button");
     reject.textContent="Reject";
-    reject.style.cssText="background:#dc2626;color:white;border:0;padding:7px;border-radius:4px;margin:3px";
+    reject.className="admin-action reject-btn";
     reject.onclick=()=>reviewDeposit(item.id,"rejected");
 
     action.append(approve,reject);
     tr.appendChild(action);
+
     tbody.appendChild(tr);
   });
 
@@ -1119,7 +1233,7 @@ $("loadDepositsBtn").onclick=async()=>{
 async function reviewDeposit(id,decision){
   const confirmed=confirm(
     decision==="confirmed"
-      ?"Confirm this deposit? Only proceed after verifying the payment."
+      ?"Confirm this deposit? Only proceed after verifying the actual payment."
       :"Reject this deposit?"
   );
 
@@ -1136,6 +1250,8 @@ async function reviewDeposit(id,decision){
     alert(decision==="confirmed"?"Deposit confirmed.":"Deposit rejected.");
 
     $("loadDepositsBtn").click();
+
+    await loadDashboard({navigate:false});
 
   }catch(err){
     alert("Error: "+err.message);
