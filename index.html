@@ -887,6 +887,7 @@ $("loadDepositsBtn").onclick = async () => {
   }
 
   try {
+    /* First verify that the logged-in user is an administrator. */
     const { data: adminProfile, error: adminError } =
       await supabase.from("profiles")
         .select("role")
@@ -899,11 +900,13 @@ $("loadDepositsBtn").onclick = async () => {
       throw new Error("Administrator access required.");
     }
 
+    /*
+      Secure RPC:
+      The database function performs the admin check and joins
+      deposit_records with profiles using SECURITY DEFINER.
+    */
     const { data: deposits, error: depositError } =
-      await supabase.from("deposit_records")
-        .select("id,user_id,amount,payment_reference,status,submitted_at,deposit_purpose")
-        .eq("status", "pending")
-        .order("submitted_at", { ascending: false });
+      await supabase.rpc("admin_get_pending_deposits");
 
     if (depositError) throw depositError;
 
@@ -913,80 +916,93 @@ $("loadDepositsBtn").onclick = async () => {
       return;
     }
 
-    const userIds = [...new Set(deposits.map(d => d.user_id))];
-
-    const { data: profiles, error: profilesError } =
-      await supabase.from("profiles")
-        .select("id,full_name,account_type,role")
-        .in("id", userIds);
-
-    if (profilesError) throw profilesError;
-
-    const profileMap = new Map(
-      (profiles || []).map(profile => [profile.id, profile])
-    );
-
     tbody.innerHTML = "";
 
     deposits.forEach(deposit => {
-      const customer = profileMap.get(deposit.user_id);
       const tr = document.createElement("tr");
 
+      /* CUSTOMER */
       const nameCell = document.createElement("td");
-      nameCell.textContent = customer?.full_name || "Profile not found";
+      nameCell.textContent = deposit.full_name || "Unknown";
       tr.appendChild(nameCell);
 
+      /* ACCOUNT TYPE */
       const accountCell = document.createElement("td");
       const badge = document.createElement("span");
-      const accountType = customer?.account_type || "unknown";
 
-      badge.className = "account-badge " +
-        (accountType === "employee"
-          ? "badge-employee"
-          : accountType === "investor"
-            ? "badge-investor"
-            : "badge-unknown");
+      const accountType = deposit.account_type || "unknown";
+
+      badge.className =
+        "account-badge " +
+        (
+          accountType === "employee"
+            ? "badge-employee"
+            : accountType === "investor"
+              ? "badge-investor"
+              : "badge-unknown"
+        );
 
       badge.textContent =
-        accountType === "employee" ? "Employee" :
-        accountType === "investor" ? "Investor" :
-        customer?.role === "admin" ? "Admin" : "Unknown";
+        accountType === "employee"
+          ? "Employee"
+          : accountType === "investor"
+            ? "Investor"
+            : accountType === "admin"
+              ? "Admin"
+              : "Unknown";
 
       accountCell.appendChild(badge);
       tr.appendChild(accountCell);
 
+      /* PURPOSE */
       const purposeCell = document.createElement("td");
       const purposeBadge = document.createElement("span");
+
       purposeBadge.className = "purpose-badge";
       purposeBadge.textContent =
-        deposit.deposit_purpose === "upgrade" ? "Upgrade" : "Initial";
+        deposit.deposit_purpose === "upgrade"
+          ? "Upgrade"
+          : "Initial";
+
       purposeCell.appendChild(purposeBadge);
       tr.appendChild(purposeCell);
 
-      [
-        naira(deposit.amount),
-        deposit.payment_reference || "-",
-        deposit.status,
-        deposit.submitted_at
-          ? new Date(deposit.submitted_at).toLocaleString()
-          : "-"
-      ].forEach(value => {
-        const td = document.createElement("td");
-        td.textContent = value;
-        tr.appendChild(td);
-      });
+      /* AMOUNT */
+      const amountCell = document.createElement("td");
+      amountCell.textContent = naira(deposit.amount);
+      tr.appendChild(amountCell);
 
+      /* REFERENCE */
+      const referenceCell = document.createElement("td");
+      referenceCell.textContent = deposit.payment_reference || "-";
+      tr.appendChild(referenceCell);
+
+      /* STATUS */
+      const statusCell = document.createElement("td");
+      statusCell.textContent = deposit.status || "pending";
+      tr.appendChild(statusCell);
+
+      /* DATE */
+      const dateCell = document.createElement("td");
+      dateCell.textContent = deposit.submitted_at
+        ? new Date(deposit.submitted_at).toLocaleString()
+        : "-";
+      tr.appendChild(dateCell);
+
+      /* ACTIONS */
       const actionCell = document.createElement("td");
 
       const approve = document.createElement("button");
       approve.textContent = "Confirm";
       approve.className = "admin-action confirm-btn";
-      approve.onclick = () => reviewDeposit(deposit.id, "confirmed");
+      approve.onclick = () =>
+        reviewDeposit(deposit.id, "confirmed");
 
       const reject = document.createElement("button");
       reject.textContent = "Reject";
       reject.className = "admin-action reject-btn";
-      reject.onclick = () => reviewDeposit(deposit.id, "rejected");
+      reject.onclick = () =>
+        reviewDeposit(deposit.id, "rejected");
 
       actionCell.append(approve, reject);
       tr.appendChild(actionCell);
@@ -994,14 +1010,22 @@ $("loadDepositsBtn").onclick = async () => {
       tbody.appendChild(tr);
     });
 
-    msg("adminMessage", `Loaded ${deposits.length} pending deposit(s).`);
+    msg(
+      "adminMessage",
+      `Loaded ${deposits.length} pending deposit(s).`
+    );
 
   } catch (error) {
     console.error("Admin deposit loading error:", error);
 
-    tbody.innerHTML = "<tr><td colspan='8'>Unable to load deposit information.</td></tr>";
+    tbody.innerHTML =
+      "<tr><td colspan='8'>Unable to load deposit information.</td></tr>";
 
-    msg("adminMessage", error.message || "Unable to load deposits.", "error");
+    msg(
+      "adminMessage",
+      error.message || "Unable to load deposits.",
+      "error"
+    );
   }
 };
 
@@ -1022,7 +1046,11 @@ async function reviewDeposit(id, decision) {
 
     if (error) throw error;
 
-    alert(decision === "confirmed" ? "Deposit confirmed." : "Deposit rejected.");
+    alert(
+      decision === "confirmed"
+        ? "Deposit confirmed."
+        : "Deposit rejected."
+    );
 
     $("loadDepositsBtn").click();
     await loadDashboard({ navigate: false });
