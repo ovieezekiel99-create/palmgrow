@@ -4,753 +4,249 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0b3d2e">
-<title>PalmGrow | Palm Farm & Oil Management</title>
-
+<title>PalmGrow | Dashboard</title>
 <style>
-:root{
---green-dark:#0b3d2e;
---green:#0f5c42;
---green-light:#147a56;
---gold:#d4af37;
---bg:#f4f7f5;
---text:#1a2e25;
---muted:#6b7c73;
---border:#e2ebe6;
+:root {
+  --green-dark:#0b3d2e; --green:#0f5c42; --green-light:#147a56;
+  --gold:#d4af37; --bg:#f4f7f5; --card:#fff; --text:#1a2e25;
+  --muted:#6b7c73; --border:#e2ebe6;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-background:var(--bg);
-color:var(--text);
-line-height:1.5;
-min-height:100vh
-}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;min-height:100vh}
 .hidden{display:none!important}
-#authScreen{
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:20px;
-background:linear-gradient(135deg,#0b3d2e,#0f5c42)
-}
-.auth-box{
-background:#fff;
-width:100%;
-max-width:420px;
-border-radius:16px;
-padding:28px 24px;
-box-shadow:0 20px 40px rgba(0,0,0,.2)
-}
-.auth-box h1{font-size:24px;margin-bottom:6px;color:var(--green-dark)}
+#authScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#0b3d2e,#0f5c42)}
+.auth-box{background:#fff;width:100%;max-width:400px;border-radius:16px;padding:28px 24px;box-shadow:0 20px 40px rgba(0,0,0,.2)}
+.auth-box h1{font-size:22px;margin-bottom:6px;color:var(--green-dark)}
 .auth-box .sub{color:var(--muted);font-size:14px;margin-bottom:20px}
-.auth-box label,form label{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
-.auth-box input,.auth-box select,form input,form select{
-width:100%;padding:12px;border:1px solid var(--border);
-border-radius:8px;font-size:15px;margin-bottom:14px;background:#fff
-}
-.auth-box button{
-width:100%;padding:13px;background:var(--green);color:#fff;
-border:0;border-radius:8px;font-size:15px;font-weight:600;
-cursor:pointer;margin-top:6px
-}
+.auth-box label{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
+.auth-box input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;font-size:15px;margin-bottom:14px}
+.auth-box button{width:100%;padding:13px;background:var(--green);color:#fff;border:0;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;margin-top:6px}
 .auth-box button.secondary{background:#e8f0ec;color:var(--green-dark);margin-top:10px}
 .status{margin-top:12px;padding:10px;border-radius:8px;font-size:13px}
-.success{background:#e5f5e9;color:#155b31}
-.error{background:#ffeded;color:#8a2222}
-
+.success{background:#e5f5e9;color:#155b31}.error{background:#ffeded;color:#8a2222}
 #app{display:none;min-height:100vh}
-
-/* PALM FARM SIDEBAR */
-.sidebar{
-position:fixed;top:0;left:0;bottom:0;width:260px;
-background:var(--green-dark);color:#fff;padding:24px 0;
-overflow-y:auto;z-index:100;transform:translateX(-100%);
-transition:transform .25s ease;
-display:flex;flex-direction:column;justify-content:space-between;
-border-right:1px solid rgba(212,175,55,0.2);
-}
-.sidebar-top{width:100%}
-.sidebar .logo{padding:0 20px 8px;font-size:26px;font-weight:800;letter-spacing:-0.5px}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:240px;background:var(--green-dark);color:#fff;padding:20px 0;overflow-y:auto;z-index:100;transform:translateX(-100%);transition:transform .25s ease}
+.sidebar.open{transform:translateX(0)}
+.sidebar .logo{padding:0 20px 24px;font-size:22px;font-weight:700;display:flex;align-items:center;gap:8px}
 .sidebar .logo span{color:var(--gold)}
-.sidebar .logo-sub{padding:0 20px 24px;font-size:12px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:1px}
-
-.nav-item{
-display:flex;align-items:center;gap:14px;padding:14px 20px;
-color:rgba(255,255,255,.85);cursor:pointer;font-size:14px;font-weight:500;
-border-left:4px solid transparent;transition:all 0.2s
-}
-.nav-item:hover,.nav-item.active{
-background:var(--gold);border-left-color:#fff;color:var(--green-dark);font-weight:700
-}
-.nav-item.active{background:linear-gradient(90deg, var(--gold) 0%, #e6c555 100%)}
-
-.sidebar-footer{
-padding:16px 20px;margin-top:auto;
-background:linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%);
-border-top:1px solid rgba(255,255,255,0.1)
-}
-.sidebar-footer .footer-tagline{
-font-style:italic;font-size:13px;color:#fff;margin-bottom:10px;line-height:1.3;font-weight:300
-}
-.sidebar-footer .footer-tagline span{color:var(--gold);font-weight:600}
-.sidebar-footer img{width:100%;height:90px;object-fit:cover;border-radius:8px;border:1px solid var(--gold)}
-
-/* MAIN LAYOUT WITH PALM PLANTATION OVERLAY */
-.main{margin-left:0;min-height:100vh;padding-bottom:40px;position:relative}
-.main::before{
-content:'';position:fixed;top:0;left:0;right:0;bottom:0;
-background:linear-gradient(rgba(11, 61, 46, 0.88), rgba(15, 92, 66, 0.85)), url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
-z-index:-1;
-}
-
-/* STICKY TOPBAR WITH BACK BUTTON */
-.topbar{
-background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);
-padding:12px 24px;display:flex;align-items:center;justify-content:space-between;
-position:sticky;top:0;z-index:50
-}
-.topbar-left{display:flex;align-items:center;gap:12px}
-.menu-btn{background:none;border:0;font-size:22px;cursor:pointer;color:var(--green-dark)}
-
-/* BACK NAVIGATION BUTTON STYLES */
-.back-btn{
-display:inline-flex;align-items:center;gap:6px;
-background:#e8f5e9;color:var(--green-dark);border:1px solid #c8e6c9;
-padding:7px 14px;border-radius:20px;font-size:13px;font-weight:700;
-cursor:pointer;transition:all 0.2s ease
-}
-.back-btn:hover{background:var(--green);color:#fff;border-color:var(--green)}
-.page-back-bar{margin-bottom:16px}
-
-.topbar-right{display:flex;align-items:center;gap:15px}
-.date-badge{background:#e8f5e9;color:var(--green-dark);padding:6px 12px;border-radius:20px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;border:1px solid #c8e6c9}
-.notif-btn{position:relative;background:#fff;border:1px solid var(--border);width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px}
-.notif-badge{position:absolute;top:-2px;right:-2px;background:#dc2626;color:#fff;font-size:10px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
-
-.content{padding:24px;max-width:1250px;margin:0 auto}
-
-/* WELCOME BANNER */
-.welcome{
-background:rgba(255, 255, 255, 0.95);backdrop-filter:blur(8px);
-border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:22px;
-display:flex;align-items:center;gap:20px;box-shadow:0 8px 24px rgba(0,0,0,0.06)
-}
-.welcome-avatar{
-width:64px;height:64px;background:var(--gold);color:var(--green-dark);
-border-radius:50%;display:flex;align-items:center;justify-content:center;
-font-size:26px;font-weight:700;border:3px solid var(--green);flex-shrink:0;box-shadow:0 4px 10px rgba(0,0,0,0.1)
-}
-.welcome h2{font-size:24px;color:var(--green-dark);margin-bottom:2px}
-.welcome p{color:var(--muted);font-size:14px}
-
-/* STATS CARDS FOR PALM FARM METRICS */
-.stats{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:22px}
-.stat-card{
-background:rgba(255,255,255,0.96);backdrop-filter:blur(8px);
-border-radius:14px;padding:20px;border:1px solid var(--border);
-box-shadow:0 6px 18px rgba(0,0,0,0.04);position:relative;overflow:hidden
-}
-.stat-card .label{font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:500}
-.stat-card .value{font-size:22px;font-weight:800;color:var(--green-dark)}
-.stat-card button{
-margin-top:12px;width:100%;padding:9px;background:var(--green);
-color:#fff;border:0;border-radius:7px;cursor:pointer;font-weight:600;font-size:13px;
-transition:background 0.2s
-}
-.stat-card button:hover{background:var(--green-light)}
-
-/* DASHBOARD MAIN GRID */
-.dashboard-grid{
-display:grid;grid-template-columns:1fr;gap:20px;margin-bottom:20px
-}
-@media(min-width:992px){
-.dashboard-grid{grid-template-columns:2fr 1fr}
-}
-
-.dashboard-left,.dashboard-right{display:flex;flex-direction:column;gap:20px}
-
-.section-box{
-background:rgba(255,255,255,0.96);backdrop-filter:blur(8px);
-border-radius:16px;border:1px solid var(--border);padding:22px;
-box-shadow:0 8px 24px rgba(0,0,0,0.05)
-}
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.section-header h3{font-size:18px;color:var(--green-dark);display:flex;align-items:center;gap:8px}
-.view-all-btn{background:var(--green);color:#fff;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;border:0;cursor:pointer}
-
-.plans{display:grid;grid-template-columns:1fr;gap:14px}
-@media(min-width:600px){
-.plans{grid-template-columns:repeat(3,1fr)}
-}
-.plan{
-border:1px solid var(--border);border-radius:12px;overflow:hidden;
-text-align:center;background:#fff;display:flex;flex-direction:column;
-box-shadow:0 4px 12px rgba(0,0,0,0.03);transition:transform 0.2s
-}
-.plan:hover{transform:translateY(-3px)}
-.plan-img{width:100%;height:110px;object-fit:cover}
-.plan-content{padding:14px;display:flex;flex-direction:column;flex-grow:1;justify-content:space-between}
-.plan h4{margin:4px 0 2px;font-size:16px;color:var(--green-dark)}
-.plan .price{font-size:18px;font-weight:800;color:var(--green-dark);margin:6px 0}
-.plan p{font-size:12px;color:var(--muted);margin-bottom:12px}
-.plan button{
-width:100%;padding:10px;background:var(--green);color:#fff;
-border:0;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px
-}
-
-/* FARM REFERRAL & PROMO CARD */
-.referral-card{
-background:rgba(255,255,255,0.96);backdrop-filter:blur(8px);
-border-radius:16px;border:1px solid var(--border);padding:20px;
-box-shadow:0 8px 24px rgba(0,0,0,0.05)
-}
-.referral-box{
-background:#e8f5e9;border:1px solid #a3d9b1;border-radius:12px;
-padding:16px;text-align:center;margin-top:12px;display:flex;align-items:center;justify-content:space-between
-}
-.referral-code-text{font-size:24px;font-weight:800;letter-spacing:2px;color:var(--green-dark)}
-.copy-btn{background:none;border:0;font-size:20px;cursor:pointer;color:var(--green)}
-
-.invite-promo-card{
-background:linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
-border:1px solid #ffeeba;border-radius:16px;padding:20px;
-display:flex;align-items:center;justify-content:space-between;
-box-shadow:0 8px 24px rgba(0,0,0,0.04)
-}
-.invite-promo-text h4{color:#856404;font-size:16px;margin-bottom:4px}
-.invite-promo-text p{color:#6c757d;font-size:12px;line-height:1.4}
-.gift-box-img{width:70px;height:70px;object-fit:contain}
-
-/* BOTTOM SECTION GRID */
-.bottom-grid{
-display:grid;grid-template-columns:1fr;gap:20px;margin-top:20px
-}
-@media(min-width:992px){
-.bottom-grid{grid-template-columns:repeat(3,1fr)}
-}
-
-/* ABOUT SECTION */
-.about-card img{width:100%;height:130px;object-fit:cover;border-radius:10px;margin:10px 0}
-.about-card p{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.5}
-.learn-more-btn{background:var(--green);color:#fff;padding:10px 18px;border-radius:20px;font-size:13px;font-weight:600;border:0;cursor:pointer;display:inline-block}
-
-/* PROGRESS SECTION */
-.progress-card{display:flex;flex-direction:column;align-items:center;text-align:center}
-.progress-circle{
-width:110px;height:110px;border-radius:50%;background:conic-gradient(var(--green) 0% 75%, #e2ebe6 75% 100%);
-display:flex;align-items:center;justify-content:center;margin:10px 0;position:relative
-}
-.progress-inner{
-width:86px;height:86px;background:#fff;border-radius:50%;
-display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:var(--green-dark)
-}
-.progress-stats-row{width:100%;display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:10px;border-top:1px solid var(--border);padding-top:10px}
-.progress-stats-row strong{color:var(--green-dark);font-size:14px;display:block}
-.progress-bar-container{width:100%;background:#e2ebe6;height:8px;border-radius:4px;margin-top:12px;overflow:hidden}
-.progress-bar-fill{width:75%;background:var(--green);height:100%;border-radius:4px}
-
-/* QUICK ACTIONS */
-.quick-actions-list{display:flex;flex-direction:column;gap:10px;margin-top:12px}
-.quick-action-btn{
-width:100%;padding:12px 16px;background:var(--green);color:#fff;
-border:0;border-radius:10px;font-weight:600;cursor:pointer;font-size:14px;
-display:flex;align-items:center;gap:12px;text-align:left;box-shadow:0 4px 12px rgba(15,92,66,0.2);
-transition:background 0.2s
-}
-.quick-action-btn:hover{background:var(--green-light)}
-
-/* STANDARD PANELS & TABLES */
-.section{background:rgba(255,255,255,0.96);backdrop-filter:blur(8px);border-radius:16px;border:1px solid var(--border);padding:24px;margin-bottom:20px;box-shadow:0 8px 24px rgba(0,0,0,0.05)}
-.section h3{font-size:18px;color:var(--green-dark);margin-bottom:14px}
-.notice{background:#fff8e6;border:1px solid #f0d78c;color:#7a5c12;border-radius:10px;padding:14px;font-size:13px;margin-bottom:16px}
-.payment-box{background:#f0fdf4;border:1px solid #16a34a;border-radius:10px;padding:16px;margin-bottom:16px;font-size:14px}
-.secondary-btn{background:#e8f0ec!important;color:var(--green-dark)!important;margin-top:10px}
-
-table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{padding:12px 10px;text-align:left;border-bottom:1px solid var(--border)}
-th{background:#f0f5f2;white-space:nowrap;color:var(--green-dark);font-weight:700}
-td{vertical-align:middle}
-
-.task-card{border:1px solid var(--border);border-radius:12px;padding:16px;margin:12px 0;background:#fff}
+.nav-item{display:flex;align-items:center;gap:12px;padding:12px 20px;color:rgba(255,255,255,.85);cursor:pointer;font-size:14px;border-left:3px solid transparent}
+.nav-item:hover,.nav-item.active{background:rgba(255,255,255,.08);border-left-color:var(--gold);color:#fff}
+.task-card{border:1px solid var(--border);border-radius:10px;padding:14px;margin:10px 0;background:#fff}
 .task-card h4{color:var(--green-dark);margin-bottom:6px}
-.task-card p{font-size:13px;color:var(--muted);margin-bottom:12px}
-.task-card button{width:100%;padding:12px;background:var(--green);color:#fff;border:0;border-radius:8px;font-weight:600;cursor:pointer}
+.task-card p{font-size:13px;color:var(--muted);margin-bottom:10px}
+.task-card button{width:100%;padding:11px;background:var(--green);color:#fff;border:0;border-radius:7px;font-weight:600;cursor:pointer}
 .task-card button:disabled{background:#8a9b91;cursor:not-allowed}
 .task-done{border-color:#8ac49d;background:#f2fbf4}
-
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:90;display:none}
+.position-plan{position:relative;border:1px solid #dce9df;border-radius:16px;padding:20px;margin:12px 0;background:linear-gradient(145deg,#fff,#f3faf5);box-shadow:0 5px 18px rgba(11,61,46,.07);overflow:hidden}
+.position-plan:before{content:"";position:absolute;top:0;left:0;width:100%;height:5px;background:linear-gradient(90deg,#0b3d2e,#d4af37)}
+.position-plan h4{color:var(--green-dark);font-size:23px;margin:8px 0 14px}
+.position-plan p{font-size:13px;color:#52675b;margin:0}
+.position-plan .level-badge{display:inline-block;background:#e5f3e9;color:#0b5b3c;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700}
+.position-plan .position-price{background:#fff8e5;border:1px solid #ead28a;border-radius:10px;padding:13px;margin:12px 0}
+.position-plan .position-price strong{display:block;font-size:22px;color:#0b3d2e;margin-top:3px}
+.position-plan .position-details{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.position-plan .detail-box{background:#fff;border:1px solid #e2ebe6;border-radius:9px;padding:11px}
+.position-plan .detail-box strong{display:block;color:#0b3d2e;font-size:15px;margin-top:4px}
+.position-plan .join-button{width:100%;padding:14px;margin-top:17px;background:linear-gradient(135deg,#0b3d2e,#147a56);color:#fff;border:0;border-radius:9px;font-size:15px;font-weight:700;cursor:pointer}
+.position-plan .join-button:disabled{opacity:.6;cursor:not-allowed}
+@media(min-width:768px){#employeePositionPlans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}}
+.main{margin-left:0;min-height:100vh;padding-bottom:40px}
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.menu-btn{background:none;border:0;font-size:22px;cursor:pointer;color:var(--green-dark);padding:4px 8px}
+.user-info{display:flex;align-items:center;gap:10px;font-size:14px}
+.user-info .avatar{width:36px;height:36px;background:var(--green);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600}
+.content{padding:16px;max-width:1100px;margin:0 auto}
+.welcome{background:linear-gradient(135deg,#0b3d2e,#147a56);color:#fff;border-radius:14px;padding:20px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.welcome h2{font-size:20px;margin-bottom:4px}.welcome p{opacity:.9;font-size:14px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.stat-card{background:#fff;border-radius:12px;padding:16px;border:1px solid var(--border)}
+.stat-card .label{font-size:12px;color:var(--muted);margin-bottom:6px}
+.stat-card .value{font-size:18px;font-weight:700;color:var(--green-dark)}
+.stat-card button{margin-top:10px;width:100%;padding:8px;background:var(--green);color:#fff;border:0;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer}
+.section{background:#fff;border-radius:12px;border:1px solid var(--border);padding:18px;margin-bottom:16px}
+.section h3{font-size:16px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.plans{display:grid;grid-template-columns:1fr;gap:12px}
+.plan{border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center}
+.plan .icon{font-size:28px}.plan h4{margin:8px 0 4px;font-size:15px}
+.plan .price{font-size:20px;font-weight:700;color:var(--green-dark);margin:8px 0}
+.plan p{font-size:12px;color:var(--muted);margin-bottom:12px}
+.plan button{width:100%;padding:10px;background:var(--green);color:#fff;border:0;border-radius:6px;font-weight:600;cursor:pointer}
+.notice{background:#fff8e6;border:1px solid #f0d78c;color:#7a5c12;border-radius:8px;padding:12px;font-size:13px;margin-bottom:14px}
+.payment-box{background:#f0fdf4;border:1px solid #16a34a;border-radius:8px;padding:14px;margin-bottom:16px;font-size:14px}
+.payment-box strong{color:var(--green-dark)}
+form label{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
+form input,form select{width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px;margin-bottom:12px}
+form button{width:100%;padding:12px;background:var(--green);color:#fff;border:0;border-radius:8px;font-weight:600;cursor:pointer}
+.secondary-btn{background:#e8f0ec!important;color:var(--green-dark)!important;margin-top:10px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:#f0f5f2;font-weight:600}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:90;display:none}
 .overlay.show{display:block}
-.admin-table-wrap{overflow-x:auto;margin-top:14px}
-.admin-table{min-width:850px}
-.account-badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
-.badge-investor{background:#e0f2fe;color:#075985}
-.badge-employee{background:#dcfce7;color:#166534}
-.badge-unknown{background:#f1f5f9;color:#475569}
-.purpose-badge{display:inline-block;padding:4px 10px;border-radius:20px;background:#fff4d6;color:#805b00;font-size:11px;font-weight:700}
-.admin-action{border:0;padding:8px 12px;border-radius:6px;color:white;font-weight:600;cursor:pointer;margin:2px}
-.confirm-btn{background:#16a34a}
-.reject-btn{background:#dc2626}
-.admin-action:disabled{opacity:.5;cursor:not-allowed}
-
-/* M1-M9 SECTOR STYLES */
-.level-card{border:1px solid var(--border);border-radius:14px;padding:18px;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.03)}
-.level-card h4{color:var(--green-dark);font-size:18px}
-.level-card .level-price{font-size:22px;font-weight:800;color:var(--green-dark);margin:8px 0}
-.level-card p{font-size:13px;color:var(--muted);margin:6px 0}
-.level-card button{width:100%;padding:12px;margin-top:14px;background:var(--green);color:#fff;border:0;border-radius:8px;font-weight:700;cursor:pointer}
-.level-card button:disabled{background:#9aa9a1;cursor:not-allowed}
-.level-grid{display:grid;grid-template-columns:1fr;gap:14px}
-.current-position{background:#e8f5e9;border:1px solid #86bd91;border-radius:12px;padding:16px;margin-bottom:16px}
-.current-position strong{color:var(--green-dark)}
-.level-detail{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-.level-detail div{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px}
-.level-detail small{display:block;color:var(--muted);font-size:11px}
-.level-detail strong{font-size:14px;color:var(--green-dark)}
-
-@media(min-width:768px){
-.sidebar{transform:translateX(0)}
-.main{margin-left:260px}
-.menu-btn{display:none}
-.stats{grid-template-columns:repeat(4,1fr)}
-.plans{grid-template-columns:repeat(3,1fr)}
-.level-grid{grid-template-columns:repeat(3,1fr)}
-}
+@media(min-width:768px){.sidebar{transform:translateX(0)}.main{margin-left:240px}.menu-btn{display:none}.stats{grid-template-columns:repeat(4,1fr)}.plans{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
-
 <body>
-
 <div id="authScreen">
-<div class="auth-box">
-<h1>🌴 PalmGrow</h1>
-<p class="sub" id="authSub">Create your PalmGrow account</p>
-
-<form id="authForm">
-<div id="nameField">
-<label>Full Name</label>
-<input id="fullName" type="text" autocomplete="name" placeholder="Your full name">
-</div>
-
-<div id="accountTypeField">
-<label>Choose Account Type</label>
-<select id="accountType">
-<option value="investor">Investor / Partner</option>
-<option value="employee">Farm Field Worker</option>
-</select>
-</div>
-
-<div id="referralField">
-<label>Referral Code (Optional)</label>
-<input id="referralCodeInput" type="text" placeholder="Enter referral code">
-</div>
-
-<label>Email Address</label>
-<input id="email" type="email" required autocomplete="email" placeholder="Enter your email">
-
-<label>Password</label>
-<input id="password" type="password" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters">
-
-<button type="submit" id="submitBtn">Create Account</button>
-</form>
-
-<div id="authMessage" class="status hidden"></div>
-
-<button type="button" class="secondary" id="switchBtn">Already have an account? Login</button>
-</div>
+  <div class="auth-box">
+    <h1>🌴 PalmGrow</h1>
+    <p class="sub" id="authSub">Create your PalmGrow account</p>
+    <form id="authForm">
+      <div id="nameField"><label>Full Name</label><input id="fullName" type="text" autocomplete="name" placeholder="Your full name"></div>
+      <div id="referralField"><label>Referral Code (Optional)</label><input id="referralCodeInput" type="text" placeholder="Enter referral code"></div>
+      <label>Email Address</label><input id="email" type="email" required autocomplete="email" placeholder="Enter your email">
+      <label>Password</label><input id="password" type="password" required minlength="6" autocomplete="current-password" placeholder="At least 6 characters">
+      <button type="submit" id="submitBtn">Create Account</button>
+    </form>
+    <div id="authMessage" class="status hidden"></div>
+    <button type="button" class="secondary" id="switchBtn">Already have an account? Login</button>
+  </div>
 </div>
 
 <div id="app">
-<div class="overlay" id="overlay"></div>
+  <div class="overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">🌴 Palm<span>Grow</span></div>
+    <div class="nav-item active" data-page="dashboard">🏠 Dashboard</div>
+    <div class="nav-item" data-page="invest">💰 Make Investment</div>
+    <div class="nav-item" data-page="employee-position" id="employeePositionNav" style="display:none">📈 Employee Position M1–M9</div>
+    <div class="nav-item" data-page="employee-tasks">🌱 Employee Daily Tasks</div>
+    <div class="nav-item" data-page="deposit">📥 Deposit</div>
+    <div class="nav-item" data-page="withdrawal" id="withdrawalNav">💳 Withdraw</div>
+    <div class="nav-item" data-page="referral">👥 Referral Program</div>
+    <div class="nav-item" data-page="admin" id="adminNav" style="display:none">🛡️ Admin Panel</div>
+    <div class="nav-item" id="logoutNav">🚪 Log Out</div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn">☰</button>
+      <div class="user-info">
+        <div class="avatar" id="userAvatar">P</div>
+        <div><div id="userName" style="font-weight:600">Member</div><div id="userPhone" style="font-size:12px;color:var(--muted)"></div></div>
+      </div>
+    </div>
+    <div class="content">
+      <div id="page-dashboard">
+        <div class="welcome"><div><h2>Welcome, <span id="welcomeName">Member</span>!</h2><p>Your PalmGrow account overview</p></div><div>🌴 Growing together</div></div>
+        <div class="stats">
+          <div class="stat-card"><div class="label">Available Balance</div><div class="value" id="availableBalance">₦0.00</div></div>
+          <div class="stat-card"><div class="label">Total Investment</div><div class="value" id="totalInvestment">₦0.00</div></div>
+          <div class="stat-card"><div class="label">Total Earnings</div><div class="value" id="totalEarnings">₦0.00</div></div>
+          <div class="stat-card"><div class="label">Referral Earnings</div><div class="value" id="referralEarnings">₦0.00</div></div>
+        </div>
+        <div class="section"><h3>Account Information</h3><p>Name: <strong id="profileName">-</strong></p><p>Phone: <strong id="profilePhone">-</strong></p><p>Account Type: <strong id="accountType">-</strong></p><p>Referral Code: <strong id="profileReferral">-</strong></p></div>
+      </div>
 
-<!-- PALM FARM SIDEBAR -->
-<aside class="sidebar" id="sidebar">
-<div class="sidebar-top">
-<div class="logo">🌴 Palm<span>Grow</span></div>
-<div class="logo-sub">Harvest • Process • Prosper</div>
+      <div id="page-employee-position" class="hidden">
+        <div class="section"><h3>📈 Employee Position M1–M9</h3><p style="color:var(--muted);font-size:13px;margin-bottom:12px">Choose an available position and follow the requirements shown for each level.</p><div id="employeePositionPlans"><p>Loading employee positions...</p></div><div id="employeePositionMessage" class="status hidden"></div></div>
+      </div>
 
-<div class="nav-item active" data-page="dashboard">🏠 Farm Dashboard</div>
-<div class="nav-item" data-page="invest">🌴 Palm Farm Projects</div>
-<div class="nav-item" data-page="employee-position" id="positionNav" style="display:none">🚜 Plantation Sectors M1–M9</div>
-<div class="nav-item" data-page="employee-tasks" id="employeeNav" style="display:none">🌾 Daily Harvest Tasks</div>
-<div class="nav-item" data-page="deposit">📥 Funding & Deposits</div>
-<div class="nav-item" data-page="referral">👥 Partner Program</div>
-<div class="nav-item" data-page="admin" id="adminNav" style="display:none">🛡️ Farm Admin Panel</div>
-</div>
+      <div id="page-employee-tasks" class="hidden">
+        <div class="section">
+          <h3>🌱 Employee Daily Tasks</h3>
+          <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Complete your assigned daily tasks and submit them for review.</p>
+          <div class="payment-box"><strong>Daily task progress</strong><br><span id="taskProgressDisplay">0 of 0 tasks completed</span></div>
+          <div id="employeeTaskList"><p style="color:var(--muted)">Your tasks will load here.</p></div>
+          <div id="taskMessage" class="status hidden" style="margin-top:12px"></div>
+          <div class="section" style="margin-top:16px;background:#f8fbf9"><h3>My Task Payment History</h3><div style="overflow-x:auto"><table><thead><tr><th>Payment</th><th>Description</th><th>Date</th></tr></thead><tbody id="employeePayrollBody"><tr><td colspan="3">No task payments displayed yet.</td></tr></tbody></table></div></div>
+        </div>
+      </div>
 
-<div class="sidebar-footer">
-<div class="footer-tagline">Together for a <span>Greener</span> and <span>Wealthier</span> Future</div>
-<img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=400&q=80" alt="Fresh Palm Fruit Bunches">
-<div class="nav-item" id="logoutNav" style="margin-top:10px;padding:8px 0;border:0">🚪 Log Out</div>
-</div>
-</aside>
+      <div id="page-deposit" class="hidden">
+        <div class="section">
+          <h3>📥 Deposit Submission</h3>
+          <div class="notice">Only submit this form after making a payment. A submission is not proof of payment.</div>
+          <div class="payment-box"><strong>Payment Details (OPay)</strong><br><br>Account Name: <strong>Ovie Ezekiel</strong><br>Account Number: <strong>7037816664</strong><br>Bank: <strong>OPay</strong></div>
+          <p id="selectedPlanText" style="margin-bottom:12px;font-weight:600"></p>
+          <form id="depositForm">
+            <label>Deposit Amount</label><select id="depositAmount" required><option value="">Select amount</option><option value="5000">₦5,000</option><option value="50000">₦50,000</option><option value="100000">₦100,000</option></select>
+            <label>Payment Reference</label><input id="paymentReference" maxlength="120" required placeholder="Bank transaction reference">
+            <button type="submit" id="depositBtn">Submit Deposit for Review</button>
+          </form>
+          <div id="depositMessage" class="status hidden"></div>
+          <button class="secondary-btn" id="myDepositsBtn" style="width:100%;padding:12px;border:0;border-radius:8px;font-weight:600;cursor:pointer">View My Deposit Submissions</button>
+          <div id="myDepositsMessage" class="status hidden"></div>
+          <div style="overflow-x:auto;margin-top:12px"><table><thead><tr><th>Amount</th><th>Reference</th><th>Status</th><th>Date</th></tr></thead><tbody id="myDepositsBody"><tr><td colspan="4">No submissions yet</td></tr></tbody></table></div>
+        </div>
+      </div>
 
-<div class="main">
-<!-- STICKY TOPBAR WITH HEADER BACK BUTTON -->
-<div class="topbar">
-<div class="topbar-left">
-<button class="menu-btn" id="menuBtn">☰</button>
-<button class="back-btn hidden" id="headerBackBtn" onclick="goBack()">← Back</button>
-</div>
-<div class="topbar-right">
-<div class="date-badge">📅 <span id="currentDateDisplay">Today: May 21, 2025</span></div>
-<div class="notif-btn">🔔<div class="notif-badge">2</div></div>
-</div>
-</div>
+      <div id="page-withdrawal" class="hidden">
+        <div class="section">
+          <h3>💳 Withdraw Funds</h3>
+          <div class="notice">Withdrawals are available on weekdays from 10:00am to 5:00pm Lagos time. One request per user per day. Investors can withdraw credited interest only; investment principal and investor available balance are not withdrawable.</div>
+          <div class="payment-box"><strong>Withdrawal fees</strong><br>Handling fee: 10% of selected amount<br>Transfer fare: ₦100<br><strong>Net amount = selected amount − fees</strong></div>
+          <h3>1. Bank Account</h3>
+          <div id="withdrawBankStatus" class="notice">Loading bank setup...</div>
+          <form id="withdrawBankForm">
+            <label>Approved Bank</label><select id="withdrawBank" required><option value="">Select bank</option><option>Access Bank Plc</option><option>UBA</option><option>OPay</option><option>PalmPay</option><option>MoMo PSB NG</option><option>Kuda Bank</option></select>
+            <label>Account Number</label><input id="withdrawAccountNumber" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" required placeholder="10-digit account number">
+            <button type="submit" id="saveWithdrawBank">Register Bank Account</button>
+          </form>
+          <div id="withdrawBankMessage" class="status hidden"></div>
+          <h3 style="margin-top:20px">2. Withdrawal PIN</h3>
+          <form id="withdrawPinForm">
+            <label>Create six-digit PIN (one-time setup)</label>
+            <input id="withdrawPin" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" required placeholder="Six-digit PIN">
+            <button type="submit">Create Withdrawal PIN</button>
+          </form>
+          <div id="withdrawPinMessage" class="status hidden"></div>
+          <h3 style="margin-top:20px">3. Request Withdrawal</h3>
+          <div class="stat-card" style="margin-bottom:12px"><div class="label" id="withdrawBalanceLabel">Withdrawable balance</div><div class="value" id="withdrawableBalance">₦0.00</div></div>
+          <form id="withdrawRequestForm">
+            <label>Choose amount</label>
+            <select id="withdrawAmount" required>
+              <option value="">Select withdrawal amount</option>
+              <option value="1800">₦1,800</option><option value="2800">₦2,800</option>
+              <option value="8000">₦8,000</option><option value="26000">₦26,000</option>
+              <option value="75000">₦75,000</option><option value="200000">₦200,000</option>
+              <option value="400000">₦400,000</option><option value="1500000">₦1,500,000</option>
+              <option value="3000000">₦3,000,000</option><option value="6000000">₦6,000,000</option>
+            </select>
+            <div class="payment-box" id="withdrawCalculation">Select an amount to calculate fees and net payment.</div>
+            <label>Confirm six-digit PIN</label>
+            <input id="withdrawConfirmPin" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" required placeholder="Enter your PIN">
+            <button type="submit" id="withdrawSubmit">Verify PIN and Request Withdrawal</button>
+          </form>
+          <div id="withdrawRequestMessage" class="status hidden"></div>
+          <h3 style="margin-top:20px">My Withdrawal History</h3>
+          <button id="loadMyWithdrawals" type="button" style="padding:10px 16px;background:var(--green);color:white;border:0;border-radius:6px">Refresh History</button>
+          <div style="overflow-x:auto;margin-top:12px"><table><thead><tr><th>Gross</th><th>Handling</th><th>Transfer</th><th>Net</th><th>Status</th><th>Date</th></tr></thead><tbody id="myWithdrawalsBody"><tr><td colspan="6">Tap Refresh History</td></tr></tbody></table></div>
+        </div>
+      </div>
 
-<div class="content">
+      <div id="page-referral" class="hidden">
+        <div class="section"><h3>👥 Referral Program</h3><p style="margin-bottom:14px;color:var(--muted);font-size:14px">Share your referral code with friends. Earn rewards when they invest.</p><div class="payment-box">Your Referral Code:<br><strong id="referralCode" style="font-size:20px;letter-spacing:1px">LOADING...</strong></div><p style="font-size:13px;color:var(--muted)">Referral earnings will appear on your dashboard when the system is fully activated.</p></div>
+      </div>
 
-<!-- DASHBOARD PAGE -->
-<div id="page-dashboard">
-<div class="welcome">
-<div class="welcome-avatar" id="userAvatar">J</div>
-<div>
-<h2>Welcome Back, <span id="welcomeName">John Doe</span>!</h2>
-<p>Grow your palm farm yield and oil output with PalmGrow</p>
-</div>
-</div>
+      <div id="page-admin" class="hidden">
+        <div class="section">
+          <h3>🛡️ Admin Panel – Review Deposits</h3>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Check your actual bank records before confirming any payment.</p>
+          <button id="loadDepositsBtn" style="padding:10px 16px;background:var(--green);color:white;border:0;border-radius:6px;font-weight:600;cursor:pointer">Load Pending Deposits</button>
+          <div id="adminMessage" class="status hidden"></div>
+          <div style="overflow-x:auto;margin-top:14px"><table><thead><tr><th>Amount</th><th>Reference</th><th>Status</th><th>Date</th><th>Action</th></tr></thead><tbody id="adminDepositsBody"><tr><td colspan="5">Click Load Pending Deposits</td></tr></tbody></table></div>
+        </div>
+        <div class="section">
+          <h3>💳 Admin – Withdrawals</h3>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Verify the bank transfer independently before marking a request Paid. First move it to Bank Processing. Mark Paid only after sending the net amount.</p>
+          <button id="loadAdminWithdrawals" style="padding:10px 16px;background:var(--green);color:white;border:0;border-radius:6px;font-weight:600">Load Withdrawals</button>
+          <div id="adminWithdrawalMessage" class="status hidden"></div>
+          <div style="overflow-x:auto;margin-top:14px"><table><thead><tr><th>User</th><th>Type</th><th>Bank details</th><th>Gross</th><th>Fees</th><th>Net</th><th>Status</th><th>Action</th></tr></thead><tbody id="adminWithdrawalsBody"><tr><td colspan="8">Click Load Withdrawals</td></tr></tbody></table></div>
+        </div>
+      </div>
 
-<!-- 4 PALM FARM STATS CARDS -->
-<div class="stats">
-<div class="stat-card">
-<div class="label">Available Wallet Balance</div>
-<div class="value" id="availableBalance">₦150,000.00</div>
-<button onclick="showPage('deposit')">Make Deposit</button>
-</div>
-<div class="stat-card">
-<div class="label">Palm Fruit Harvested (FFB)</div>
-<div class="value" id="totalInvestment">₦200,000.00</div>
-</div>
-<div class="stat-card">
-<div class="label">Palm Oil Earnings (CPO)</div>
-<div class="value" id="totalEarnings">₦80,000.00</div>
-</div>
-<div class="stat-card">
-<div class="label">Partner Bonus Earnings</div>
-<div class="value" id="referralEarnings">₦25,000.00</div>
-</div>
-</div>
-
-<!-- DASHBOARD MAIN SECTION GRID -->
-<div class="dashboard-grid">
-<div class="dashboard-left">
-<!-- PALM FARM PLANS -->
-<div class="section-box">
-<div class="section-header">
-<h3>🌴 Our Palm Farm & Oil Projects</h3>
-<button class="view-all-btn" onclick="showPage('invest')">View All →</button>
-</div>
-<div class="plans">
-<div class="plan">
-<img class="plan-img" src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?auto=format&fit=crop&w=400&q=80" alt="Palm Nursery">
-<div class="plan-content">
-<div>
-<h4>Starter Nursery</h4>
-<div class="price">₦5,000</div>
-<p>Seedlings & Nursery Care</p>
-</div>
-<button onclick="selectDeposit(5000)">Participate →</button>
-</div>
-</div>
-<div class="plan">
-<img class="plan-img" src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=400&q=80" alt="Fresh Fruit Bunches">
-<div class="plan-content">
-<div>
-<h4>Growth Plantation</h4>
-<div class="price">₦50,000</div>
-<p>Fresh Fruit Bunches (FFB)</p>
-</div>
-<button onclick="selectDeposit(50000)">Participate →</button>
-</div>
-</div>
-<div class="plan">
-<img class="plan-img" src="https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=400&q=80" alt="Palm Oil Extraction">
-<div class="plan-content">
-<div>
-<h4>Premium Mill</h4>
-<div class="price">₦100,000</div>
-<p>Crude Palm Oil (CPO) Processing</p>
-</div>
-<button onclick="selectDeposit(100000)">Participate →</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div class="dashboard-right">
-<!-- REFERRAL CODE -->
-<div class="referral-card">
-<h3 style="font-size:16px;color:var(--green-dark)">👥 Your Partner Code</h3>
-<div class="referral-box">
-<span class="referral-code-text" id="referralCode">8F3A7D</span>
-<button class="copy-btn" title="Copy Code" onclick="navigator.clipboard.writeText(document.getElementById('referralCode').innerText);alert('Partner code copied!');">📋</button>
-</div>
-</div>
-
-<!-- PROMO CARD -->
-<div class="invite-promo-card">
-<div class="invite-promo-text">
-<h4>🎁 Invite Partners & Earn!</h4>
-<p>Share your partner code and earn ₦5,000 per verified farm referral.</p>
-</div>
-<img class="gift-box-img" src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=200&q=80" alt="Gift Box">
-</div>
-</div>
-</div>
-
-<!-- BOTTOM 3-COLUMN CARDS -->
-<div class="bottom-grid">
-<!-- ABOUT PALMGROW -->
-<div class="section-box about-card">
-<h3 style="font-size:16px;color:var(--green-dark)">🌿 About PalmGrow Plantation</h3>
-<img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=500&q=80" alt="Palm Fruit Harvest">
-<p>A trusted palm farm operations platform empowering you to build wealth through sustainable oil palm farming and processing.</p>
-<button class="learn-more-btn" onclick="showPage('invest')">Learn More →</button>
-</div>
-
-<!-- YOUR PROGRESS -->
-<div class="section-box progress-card">
-<h3 style="font-size:16px;color:var(--green-dark);align-self:flex-start">🏆 Plantation Goal Progress</h3>
-<div class="progress-circle">
-<div class="progress-inner">75%</div>
-</div>
-<div class="progress-bar-container">
-<div class="progress-bar-fill"></div>
-</div>
-<div class="progress-stats-row">
-<div><small style="color:var(--muted)">Harvest Goal</small><strong>200 Tons</strong></div>
-<div style="text-align:right"><small style="color:var(--muted)">Current Progress</small><strong style="color:var(--green)">150 Tons</strong></div>
-</div>
-</div>
-
-<!-- QUICK ACTIONS -->
-<div class="section-box">
-<h3 style="font-size:16px;color:var(--green-dark)">⚡ Quick Actions</h3>
-<div class="quick-actions-list">
-<button class="quick-action-btn" onclick="showPage('deposit')">📥 Make a Deposit</button>
-<button class="quick-action-btn" onclick="showPage('deposit')">📋 View My Deposits</button>
-<button class="quick-action-btn" onclick="showPage('referral')">👥 Check Partner Stats</button>
-</div>
-</div>
-</div>
-
-</div>
-
-<!-- INVEST PAGE -->
-<div id="page-invest" class="hidden">
-<div class="page-back-bar">
-<button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
-</div>
-<div class="section">
-<h3>🌴 Palm Farm & Oil Mill Projects</h3>
-<div class="notice">Select a project tier and submit your deposit for administrator review.</div>
-<div class="plans">
-<div class="plan">
-<div class="plan-content">
-<div>
-<h4>Starter Nursery</h4>
-<div class="price">₦5,000</div>
-<p>Palm seedling cultivation</p>
-</div>
-<button onclick="selectDeposit(5000)">Choose Project</button>
-</div>
-</div>
-<div class="plan">
-<div class="plan-content">
-<div>
-<h4>Growth Plantation</h4>
-<div class="price">₦50,000</div>
-<p>Fresh Fruit Bunches (FFB)</p>
-</div>
-<button onclick="selectDeposit(50000)">Choose Project</button>
-</div>
-</div>
-<div class="plan">
-<div class="plan-content">
-<div>
-<h4>Premium Mill</h4>
-<div class="price">₦100,000</div>
-<p>Crude Palm Oil (CPO)</p>
-</div>
-<button onclick="selectDeposit(100000)">Choose Project</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<!-- EMPLOYEE SECTOR PAGE -->
-<div id="page-employee-position" class="hidden">
-<div class="page-back-bar">
-<button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
-</div>
-<div class="section">
-<h3>🚜 Plantation Sectors – M1 to M9</h3>
-<p style="font-size:13px;color:var(--muted);margin-bottom:14px">
-Assign your field worker profile to a farm sector based on available wallet balance.
-</p>
-
-<div id="positionStatusMessage" class="status hidden"></div>
-
-<div id="currentPositionBox" class="current-position hidden">
-<strong>Your Assigned Sector</strong>
-<div class="level-detail">
-<div><small>Sector Code</small><strong id="currentLevel">-</strong></div>
-<div><small>Locked Deposit</small><strong id="currentLockedDeposit">₦0.00</strong></div>
-<div><small>Sector Status</small><strong id="currentPositionStatus">-</strong></div>
-<div><small>Activated On</small><strong id="currentPositionDate">-</strong></div>
-</div>
-</div>
-
-<div class="notice">
-<strong>Important:</strong> Daily task payouts depend on genuine field completion and supervisor confirmation.
-</div>
-
-<h3 style="margin-top:18px">Available Plantation Sectors</h3>
-<div id="employeeLevelPlans" class="level-grid">
-Loading plantation sectors...
-</div>
-</div>
-
-<div class="section">
-<h3>📋 Sector Assignment History</h3>
-<div style="overflow-x:auto">
-<table>
-<thead>
-<tr><th>Action</th><th>Previous Sector</th><th>New Sector</th><th>Deposit</th><th>Date</th></tr>
-</thead>
-<tbody id="positionHistoryBody">
-<tr><td colspan="5">Sector history will appear here.</td></tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-
-<!-- EMPLOYEE TASKS PAGE -->
-<div id="page-employee-tasks" class="hidden">
-<div class="page-back-bar">
-<button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
-</div>
-<div class="section">
-<h3>🌾 Daily Field & Harvest Tasks</h3>
-<p style="font-size:13px;color:var(--muted);margin-bottom:14px">
-Your assigned palm farm tasks appear here on working days. Mark completed after finishing harvesting or maintenance.
-</p>
-<div class="stat-card" style="margin-bottom:12px;text-align:center">
-<div class="label">Daily Task Rate</div>
-<div class="value" id="dailyRateDisplay">₦0.00 / day</div>
-</div>
-<div class="notice" style="background:#e8f5e9;border-color:#2e7d32;color:#1b5e20">
-<strong>Progress:</strong> <span id="taskProgressDisplay">0 of 0 tasks completed</span>
-</div>
-<div id="employeeTaskList">Loading tasks...</div>
-<div id="taskMessage" class="status hidden"></div>
-</div>
-
-<div class="section">
-<h3>💳 Field Work Payout History</h3>
-<div style="overflow-x:auto">
-<table>
-<thead><tr><th>Amount</th><th>Task Description</th><th>Date</th></tr></thead>
-<tbody id="employeePayrollBody">
-<tr><td colspan="3">No task payments yet.</td></tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-
-<!-- DEPOSIT PAGE -->
-<div id="page-deposit" class="hidden">
-<div class="page-back-bar">
-<button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
-</div>
-<div class="section">
-<h3>📥 Deposit Submission</h3>
-<div class="payment-box">
-<strong>Payment Details (OPay)</strong><br><br>
-Account Name: <strong>Ibukun Michael Ogunbayo</strong><br>
-Account Number: <strong>8063514016</strong><br>
-Bank: <strong>OPay</strong>
-</div>
-<div class="notice">
-Submit this form only after making payment. Your deposit remains pending until an administrator reviews it.
-</div>
-
-<form id="depositForm">
-<label>Deposit Amount</label>
-<select id="depositAmount" required>
-<option value="">Select amount</option>
-<option value="5000">₦5,000</option>
-<option value="10000">₦10,000</option>
-<option value="20000">₦20,000</option>
-<option value="50000">₦50,000</option>
-<option value="100000">₦100,000</option>
-</select>
-<label>Payment Reference</label>
-<input id="paymentReference" type="text" maxlength="120" required placeholder="Enter payment reference">
-<button type="submit" id="depositBtn">Submit Deposit for Review</button>
-</form>
-
-<div id="depositMessage" class="status hidden"></div>
-<button class="secondary-btn" id="myDepositsBtn" style="width:100%;padding:12px;border:0;border-radius:8px">View My Deposit History</button>
-
-<div style="overflow-x:auto;margin-top:14px">
-<table>
-<thead><tr><th>Amount</th><th>Reference</th><th>Status</th><th>Date</th></tr></thead>
-<tbody id="myDepositsBody"><tr><td colspan="4">No submissions yet</td></tr></tbody>
-</table>
-</div>
-</div>
-</div>
-
-<!-- REFERRAL PAGE -->
-<div id="page-referral" class="hidden">
-<div class="page-back-bar">
-<button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
-</div>
-<div class="section">
-<h3>👥 Partner Program</h3>
-<p style="font-size:13px;color:var(--muted);margin-bottom:12px">Share your referral code with partners you invite to PalmGrow.</p>
-<div class="payment-box">
-Your Partner Code:<br>
-<strong id="referralCodePage" style="font-size:24px">LOADING...</strong>
-</div>
-</div>
-</div>
-
-<!-- ADMIN PAGE -->
-<div id="page-admin" class="hidden">
-<div class="page-back-bar">
-<button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
-</div>
-<div class="section">
-<h3>🛡️ Farm Admin Panel – Deposit Review</h3>
-<p style="font-size:13px;color:var(--muted);margin-bottom:12px">
-Review payment records before confirming deposits.
-</p>
-<div class="notice"><strong>Important:</strong> Confirm only deposits whose actual payment has been verified.</div>
-<button id="loadDepositsBtn" style="padding:10px 16px;background:var(--green);color:white;border:0;border-radius:6px;cursor:pointer">Load Pending Deposits</button>
-<div id="adminMessage" class="status hidden"></div>
-
-<div class="admin-table-wrap">
-<table class="admin-table">
-<thead>
-<tr>
-<th>Customer</th><th>Account Type</th><th>Purpose</th><th>Amount</th>
-<th>Reference</th><th>Status</th><th>Date</th><th>Action</th>
-</tr>
-</thead>
-<tbody id="adminDepositsBody"><tr><td colspan="8">Click Load Pending Deposits</td></tr></tbody>
-</table>
-</div>
-</div>
-</div>
-
-</div>
-</div>
+      <div id="page-invest" class="hidden">
+        <div class="section">
+          <h3>💰 Make Investment</h3>
+          <div class="plans">
+            <div class="plan"><div class="icon">🌱</div><h4>Starter Palm</h4><div class="price">₦5,000</div><p>Entry-level agricultural project</p><button class="planBtn" data-plan="Starter Palm" data-amount="5000">Invest Now</button></div>
+            <div class="plan"><div class="icon">🌴</div><h4>Growth Palm</h4><div class="price">₦50,000</div><p>Medium-level project</p><button class="planBtn" data-plan="Growth Palm" data-amount="50000">Invest Now</button></div>
+            <div class="plan"><div class="icon">🌳</div><h4>Premium Palm</h4><div class="price">₦100,000</div><p>Larger agricultural project</p><button class="planBtn" data-plan="Premium Palm" data-amount="100000">Invest Now</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script type="module">
@@ -758,715 +254,61 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 
 const SUPABASE_URL = "https://ghdiycdzsmncmlcpdniy.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_xy6UyL2BeQFgB8LeYMHuJA_k6MdhVz9";
-
 const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 const $ = id => document.getElementById(id);
-
-const naira = value => "₦" + Number(value || 0).toLocaleString("en-NG", {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2
-});
-
-let currentUser = null;
-let currentProfile = null;
 let loginMode = false;
-let dashboardLoading = false;
-let positionPlans = [];
-let currentPosition = null;
+let currentUser = null;
 
-// NAVIGATION HISTORY MANAGEMENT
-let pageHistory = ["dashboard"];
+function naira(v){return "₦"+Number(v||0).toLocaleString("en-NG",{minimumFractionDigits:2,maximumFractionDigits:2})}
+function msg(id,text,type="success"){const el=$(id);el.textContent=text;el.className="status "+type;el.classList.remove("hidden")}
+function escapeHtml(value){return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 
-function msg(id, text, type = "success") {
-  const el = $(id);
-  if (!el) return;
-  el.textContent = text;
-  el.className = "status " + (type === "error" ? "error" : "success");
-  el.classList.remove("hidden");
+/* EMAIL AUTHENTICATION */
+function updateAuthUI(){
+  $("authSub").textContent=loginMode?"Login to your PalmGrow account":"Create your PalmGrow account";
+  $("submitBtn").textContent=loginMode?"Login":"Create Account";
+  $("nameField").classList.toggle("hidden",loginMode);
+  $("referralField").classList.toggle("hidden",loginMode);
+  $("switchBtn").textContent=loginMode?"Need an account? Register":"Already have an account? Login";
 }
+$("switchBtn").onclick=()=>{loginMode=!loginMode;$("authMessage").classList.add("hidden");updateAuthUI()};
 
-function hideMessage(id) {
-  const el = $(id);
-  if (el) el.classList.add("hidden");
-}
-
-/* AUTHENTICATION */
-function updateAuthUI() {
-  $("authSub").textContent = loginMode
-    ? "Login to your PalmGrow account"
-    : "Create your PalmGrow account";
-
-  $("nameField").classList.toggle("hidden", loginMode);
-  $("accountTypeField").classList.toggle("hidden", loginMode);
-  $("referralField").classList.toggle("hidden", loginMode);
-
-  $("submitBtn").textContent = loginMode ? "Login" : "Create Account";
-  $("switchBtn").textContent = loginMode
-    ? "Need an account? Register"
-    : "Already have an account? Login";
-
-  $("password").autocomplete = loginMode ? "current-password" : "new-password";
-  hideMessage("authMessage");
-}
-
-$("switchBtn").onclick = () => {
-  loginMode = !loginMode;
-  updateAuthUI();
-};
-
-$("authForm").onsubmit = async e => {
+$("authForm").onsubmit=async e=>{
   e.preventDefault();
-  const email = $("email").value.trim().toLowerCase();
-  const password = $("password").value;
-
-  $("submitBtn").disabled = true;
-  $("submitBtn").textContent = "Please wait...";
-
-  try {
-    if (loginMode) {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) throw error;
+  const email=$("email").value.trim(),password=$("password").value;
+  $("submitBtn").disabled=true;
+  try{
+    if(loginMode){
+      const {data,error}=await supabase.auth.signInWithPassword({email,password});
+      if(error)throw error;
+      currentUser=data.user;
       await loadDashboard();
-    } else {
-      const fullName = $("fullName").value.trim();
-      const accountType = $("accountType").value;
-      const referralCode = $("referralCodeInput").value.trim().toUpperCase();
-
-      if (fullName.length < 2) throw new Error("Please enter your full name.");
-      if (password.length < 8) throw new Error("Password must contain at least 8 characters.");
-
-      const { data, error } = await supabase.functions.invoke("palmgrow-register", {
-        body: { full_name: fullName, email, password, account_type: accountType, referral_code: referralCode }
-      });
-
-      if (error) {
-        let detail = error.message;
-        try {
-          if (error.context && typeof error.context.json === "function") {
-            const responseBody = await error.context.json();
-            if (responseBody.error) detail = responseBody.error;
-          }
-        } catch (_) {}
-        throw new Error(detail);
-      }
-
-      if (!data?.success) throw new Error(data?.error || "Registration failed.");
-
-      loginMode = true;
-      $("email").value = email;
-      $("password").value = "";
-      updateAuthUI();
-      msg("authMessage", data.message || "Registration successful. You can now log in.");
+    }else{
+      const full_name=$("fullName").value.trim();
+      const referral_code=$("referralCodeInput").value.trim();
+      if(!full_name)throw new Error("Enter your full name.");
+      const {data,error}=await supabase.functions.invoke("palmgrow-register",{body:{full_name,email,password,referral_code}});
+      if(error)throw error;
+      if(!data?.success)throw new Error(data?.message||"Registration failed.");
+      msg("authMessage","Account created. Please check your email if confirmation is required.");
+      loginMode=true;updateAuthUI();
     }
-  } catch (err) {
-    console.error("Authentication error:", err);
-    msg("authMessage", err.message || "Authentication failed.", "error");
-  } finally {
-    $("submitBtn").disabled = false;
-    $("submitBtn").textContent = loginMode ? "Login" : "Create Account";
-  }
+  }catch(err){msg("authMessage",err.message,"error")}
+  finally{$("submitBtn").disabled=false}
 };
 
-/* NAVIGATION & BACK BUTTON FUNCTIONALITY */
-function showPage(page, isBackAction = false) {
-  document.querySelectorAll("[id^='page-']").forEach(el => el.classList.add("hidden"));
-  const target = $("page-" + page);
-  if (target) target.classList.remove("hidden");
-
-  document.querySelectorAll(".nav-item[data-page]").forEach(el => {
-    el.classList.toggle("active", el.dataset.page === page);
-  });
-
-  $("sidebar").classList.remove("open");
-  $("overlay").classList.remove("show");
-
-  if (!isBackAction) {
-    if (pageHistory[pageHistory.length - 1] !== page) {
-      pageHistory.push(page);
-    }
-  }
-
-  // Show Header Back Button on all sub-pages except dashboard
-  if ($("headerBackBtn")) {
-    $("headerBackBtn").classList.toggle("hidden", page === "dashboard");
-  }
-
-  if (page === "employee-tasks") loadEmployeeTasks();
-  if (page === "employee-position") loadEmployeePosition();
-  if (page === "deposit") loadMyDeposits();
+/* NAVIGATION */
+function showPage(page){
+  document.querySelectorAll('[id^="page-"]').forEach(el=>el.classList.add("hidden"));
+  const target=$("page-"+page);if(target)target.classList.remove("hidden");
+  document.querySelectorAll(".nav-item[data-page]").forEach(el=>el.classList.toggle("active",el.dataset.page===page));
+  $("sidebar").classList.remove("open");$("overlay").classList.remove("show");
+  if(page==="employee-position")loadEmployeePositions();
+  if(page==="employee-tasks")loadEmployeeTasks();
+  if(page==="deposit")loadMyDeposits();
+  if(page==="withdrawal"){loadWithdrawalSetup();loadMyWithdrawals()}
+  if(page==="admin"){loadAdminWithdrawals()}
 }
-
-function goBack() {
-  if (pageHistory.length > 1) {
-    pageHistory.pop();
-    const previousPage = pageHistory[pageHistory.length - 1];
-    showPage(previousPage, true);
-  } else {
-    showPage("dashboard", true);
-  }
-}
-
-window.showPage = showPage;
-window.goBack = goBack;
-
-window.selectDeposit = amount => {
-  $("depositAmount").value = String(amount);
-  showPage("deposit");
-};
-
-document.querySelectorAll(".nav-item[data-page]").forEach(item => {
-  item.onclick = () => showPage(item.dataset.page);
-});
-
-$("menuBtn").onclick = () => {
-  $("sidebar").classList.toggle("open");
-  $("overlay").classList.toggle("show");
-};
-
-$("overlay").onclick = () => {
-  $("sidebar").classList.remove("open");
-  $("overlay").classList.remove("show");
-};
-
-$("logoutNav").onclick = async () => {
-  await supabase.auth.signOut();
-};
-
-/* DASHBOARD */
-async function loadDashboard(options = {}) {
-  if (dashboardLoading) return;
-  dashboardLoading = true;
-
-  try {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) return;
-
-    currentUser = session.user;
-    $("authScreen").style.display = "none";
-    $("app").style.display = "block";
-
-    const { data: profile, error } = await supabase.from("profiles")
-      .select("full_name,phone,role,account_type,employee_status,referral_code,available_balance,total_investment,total_earnings,referral_earnings,daily_payout_amount")
-      .eq("id", currentUser.id)
-      .maybeSingle();
-
-    if (error) throw error;
-    if (!profile) {
-      $("authScreen").style.display = "flex";
-      $("app").style.display = "none";
-      msg("authMessage", "Your profile could not be found. Please contact support.", "error");
-      return;
-    }
-
-    currentProfile = profile;
-    const name = profile.full_name || currentUser.user_metadata?.full_name || "John Doe";
-
-    $("welcomeName").textContent = name;
-    $("userAvatar").textContent = name.charAt(0).toUpperCase();
-
-    $("availableBalance").textContent = naira(profile.available_balance);
-    $("totalInvestment").textContent = naira(profile.total_investment);
-    $("totalEarnings").textContent = naira(profile.total_earnings);
-    $("referralEarnings").textContent = naira(profile.referral_earnings);
-
-    const refCode = profile.referral_code || currentUser.id.replace(/-/g, "").slice(0, 6).toUpperCase();
-    $("referralCode").textContent = refCode;
-    if ($("referralCodePage")) $("referralCodePage").textContent = refCode;
-
-    $("employeeNav").style.display = profile.account_type === "employee" ? "flex" : "none";
-    $("positionNav").style.display = profile.account_type === "employee" ? "flex" : "none";
-    $("adminNav").style.display = profile.role === "admin" ? "flex" : "none";
-    $("dailyRateDisplay").textContent = naira(profile.daily_payout_amount) + " / day";
-
-    if (options.navigate !== false) showPage("dashboard");
-  } catch (err) {
-    console.error("Dashboard loading error:", err);
-    $("app").style.display = "block";
-    msg("authMessage", err.message || "Unable to load your dashboard.", "error");
-  } finally {
-    dashboardLoading = false;
-  }
-}
-
-/* NIGERIA DATE */
-function lagosDate() {
-  const parts = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Africa/Lagos", year: "numeric", month: "2-digit", day: "2-digit"
-  }).formatToParts(new Date());
-  const values = {};
-  parts.forEach(p => values[p.type] = p.value);
-  return `${values.year}-${values.month}-${values.day}`;
-}
-
-/* EMPLOYEE TASKS */
-async function loadEmployeeTasks() {
-  if (!currentUser) return;
-  const list = $("employeeTaskList");
-  list.textContent = "Loading your assigned tasks...";
-  hideMessage("taskMessage");
-
-  if (currentProfile?.account_type !== "employee") {
-    list.textContent = "This section is available to employee accounts only.";
-    return;
-  }
-
-  if (currentProfile?.employee_status !== "active") {
-    list.textContent = "Your employee deposit is awaiting administrator confirmation. Daily tasks unlock after confirmation.";
-    $("taskProgressDisplay").textContent = "Tasks locked";
-    await loadEmployeePayroll();
-    return;
-  }
-
-  try {
-    const { data: setup, error: setupError } = await supabase.rpc("ensure_daily_employee_tasks");
-    if (setupError) throw setupError;
-
-    const taskDate = setup?.task_date || lagosDate();
-    const { data: tasks, error } = await supabase.from("agri_task_assignments")
-      .select("id,task_title,task_description,task_date,status,task_sequence")
-      .eq("employee_id", currentUser.id)
-      .eq("task_date", taskDate)
-      .order("task_sequence", { ascending: true });
-
-    if (error) throw error;
-
-    const visibleTasks = (tasks || []).filter(t => t.status !== "cancelled");
-    const completed = visibleTasks.filter(t => t.status === "completed").length;
-    $("taskProgressDisplay").textContent = `${completed} of ${visibleTasks.length} tasks completed`;
-
-    if (visibleTasks.length === 0) {
-      list.textContent = "No tasks are currently assigned. Employee tasks are available on weekdays for active employees.";
-    } else {
-      list.innerHTML = "";
-      visibleTasks.forEach(task => {
-        const card = document.createElement("div");
-        card.className = "task-card" + (task.status === "completed" ? " task-done" : "");
-
-        const title = document.createElement("h4");
-        title.textContent = `Task ${task.task_sequence}: ${task.task_title}`;
-
-        const description = document.createElement("p");
-        description.textContent = task.task_description || "Complete this assigned agricultural task.";
-
-        const button = document.createElement("button");
-        button.textContent = task.status === "completed" ? "✓ Completed" : "Complete Task";
-        button.disabled = task.status !== "pending";
-        button.onclick = () => completeEmployeeTask(task.id, button);
-
-        card.append(title, description, button);
-        list.appendChild(card);
-      });
-    }
-    await loadEmployeePayroll();
-  } catch (err) {
-    console.error("Task loading error:", err);
-    list.textContent = "Unable to load tasks: " + err.message;
-  }
-}
-
-async function completeEmployeeTask(taskId, button) {
-  button.disabled = true;
-  button.textContent = "Processing...";
-  try {
-    const { data, error } = await supabase.rpc("complete_employee_task", { p_task_id: taskId });
-    if (error) throw error;
-    if (!data?.success) throw new Error(data?.message || "Task could not be completed.");
-
-    msg("taskMessage", `Task completed. ${naira(data.payment)} has been credited to your available balance.`);
-    await loadDashboard({ navigate: false });
-    await loadEmployeeTasks();
-  } catch (err) {
-    console.error("Task completion error:", err);
-    msg("taskMessage", err.message || "Unable to complete task.", "error");
-    await loadEmployeeTasks();
-  }
-}
-
-async function loadEmployeePayroll() {
-  const body = $("employeePayrollBody");
-  body.innerHTML = "<tr><td colspan='3'>Loading payment history...</td></tr>";
-
-  const { data, error } = await supabase.from("employee_payroll_ledger")
-    .select("amount,description,credited_at")
-    .eq("employee_id", currentUser.id)
-    .order("credited_at", { ascending: false })
-    .limit(30);
-
-  if (error || !data || data.length === 0) {
-    body.innerHTML = "<tr><td colspan='3'>No task payments yet.</td></tr>";
-    return;
-  }
-
-  body.innerHTML = "";
-  data.forEach(row => {
-    const tr = document.createElement("tr");
-    [
-      naira(row.amount),
-      row.description || "Agricultural task payment",
-      row.credited_at ? new Date(row.credited_at).toLocaleString() : "-"
-    ].forEach(value => {
-      const td = document.createElement("td");
-      td.textContent = value;
-      tr.appendChild(td);
-    });
-    body.appendChild(tr);
-  });
-}
-
-/* EMPLOYEE POSITION SYSTEM */
-function formatLevelName(level) {
-  return String(level || "").toUpperCase();
-}
-
-async function loadEmployeePosition() {
-  const plansBox = $("employeeLevelPlans");
-  const historyBody = $("positionHistoryBody");
-
-  plansBox.textContent = "Loading employee levels...";
-  historyBody.innerHTML = "<tr><td colspan='5'>Loading position history...</td></tr>";
-  hideMessage("positionStatusMessage");
-
-  if (!currentUser || currentProfile?.account_type !== "employee") {
-    plansBox.textContent = "This section is available to employee accounts only.";
-    historyBody.innerHTML = "<tr><td colspan='5'>Not available.</td></tr>";
-    return;
-  }
-
-  try {
-    const { data: plans, error: plansError } = await supabase
-      .from("employee_level_plans")
-      .select("id,level_code,deposit_amount,daily_order_limit,unit_price,daily_income_projection,monthly_income_projection,five_hundred_day_projection,is_active")
-      .eq("is_active", true)
-      .order("deposit_amount", { ascending: true });
-
-    if (plansError) throw plansError;
-    positionPlans = plans || [];
-
-    const { data: position, error: positionError } = await supabase
-      .from("employee_positions")
-      .select("id,level_code,locked_deposit,position_status,activated_at")
-      .eq("employee_id", currentUser.id)
-      .maybeSingle();
-
-    if (positionError) throw positionError;
-    currentPosition = position;
-
-    if (position && position.position_status === "active") {
-      $("currentPositionBox").classList.remove("hidden");
-      $("currentLevel").textContent = formatLevelName(position.level_code);
-      $("currentLockedDeposit").textContent = naira(position.locked_deposit);
-      $("currentPositionStatus").textContent = position.position_status;
-      $("currentPositionDate").textContent = position.activated_at ? new Date(position.activated_at).toLocaleDateString() : "-";
-    } else {
-      $("currentPositionBox").classList.add("hidden");
-    }
-
-    renderEmployeeLevelPlans();
-
-    const { data: history, error: historyError } = await supabase
-      .from("employee_position_history")
-      .select("action_type,previous_level,new_level,new_deposit,recorded_at")
-      .eq("employee_id", currentUser.id)
-      .order("recorded_at", { ascending: false })
-      .limit(30);
-
-    if (historyError) throw historyError;
-
-    if (!history || history.length === 0) {
-      historyBody.innerHTML = "<tr><td colspan='5'>No position history yet.</td></tr>";
-    } else {
-      historyBody.innerHTML = "";
-      history.forEach(row => {
-        const tr = document.createElement("tr");
-        [
-          row.action_type || "-", row.previous_level || "-", row.new_level || "-",
-          naira(row.new_deposit), row.recorded_at ? new Date(row.recorded_at).toLocaleString() : "-"
-        ].forEach(value => {
-          const td = document.createElement("td");
-          td.textContent = value;
-          tr.appendChild(td);
-        });
-        historyBody.appendChild(tr);
-      });
-    }
-  } catch (error) {
-    console.error("Employee position loading error:", error);
-    plansBox.textContent = "Unable to load employee levels: " + error.message;
-    historyBody.innerHTML = "<tr><td colspan='5'>Unable to load position history.</td></tr>";
-  }
-}
-
-function renderEmployeeLevelPlans() {
-  const container = $("employeeLevelPlans");
-  container.innerHTML = "";
-  if (!positionPlans.length) {
-    container.textContent = "No active employee levels are available.";
-    return;
-  }
-
-  const balance = Number(currentProfile?.available_balance || 0);
-  const activePosition = currentPosition?.position_status === "active";
-
-  positionPlans.forEach(plan => {
-    const card = document.createElement("div");
-    card.className = "level-card";
-
-    const title = document.createElement("h4");
-    title.textContent = formatLevelName(plan.level_code);
-
-    const price = document.createElement("div");
-    price.className = "level-price";
-    price.textContent = naira(plan.deposit_amount);
-
-    const order = document.createElement("p");
-    order.textContent = `Daily order limit: ${plan.daily_order_limit}`;
-    const unit = document.createElement("p");
-    unit.textContent = `Unit price: ${naira(plan.unit_price)}`;
-    const daily = document.createElement("p");
-    daily.textContent = `Daily projection: ${naira(plan.daily_income_projection)}`;
-    const monthly = document.createElement("p");
-    monthly.textContent = `Monthly projection: ${naira(plan.monthly_income_projection)}`;
-    const longTerm = document.createElement("p");
-    longTerm.textContent = `500-day projection: ${naira(plan.five_hundred_day_projection)}`;
-
-    const button = document.createElement("button");
-    const currentIndex = positionPlans.findIndex(item => item.level_code === currentPosition?.level_code);
-    const targetIndex = positionPlans.findIndex(item => item.level_code === plan.level_code);
-
-    const isSameLevel = activePosition && plan.level_code === currentPosition.level_code;
-    const isLowerLevel = activePosition && currentIndex >= 0 && targetIndex <= currentIndex;
-
-    if (isSameLevel) {
-      button.textContent = "Your Current Sector";
-      button.disabled = true;
-    } else if (isLowerLevel) {
-      button.textContent = "Lower Sectors Unavailable";
-      button.disabled = true;
-    } else if (currentProfile?.employee_status !== "active") {
-      button.textContent = "Employee Account Not Active";
-      button.disabled = true;
-    } else if (balance < Number(plan.deposit_amount)) {
-      button.textContent = "Insufficient Wallet Balance";
-      button.disabled = true;
-    } else {
-      button.textContent = activePosition ? "Upgrade Sector" : "Activate Sector";
-      button.onclick = () => activateOrUpgradePosition(plan);
-    }
-
-    card.append(title, price, order, unit, daily, monthly, longTerm, button);
-    container.appendChild(card);
-  });
-}
-
-async function activateOrUpgradePosition(plan) {
-  if (!currentUser || !currentProfile) return;
-  const amount = Number(plan.deposit_amount);
-  const balance = Number(currentProfile.available_balance || 0);
-
-  if (balance < amount) {
-    msg("positionStatusMessage", "Insufficient available wallet balance.", "error");
-    return;
-  }
-
-  const upgrading = currentPosition?.position_status === "active";
-  const actionText = upgrading
-    ? `Upgrade to ${plan.level_code}? The new sector deposit is ${naira(amount)}.`
-    : `Activate sector ${plan.level_code} with a deposit of ${naira(amount)}?`;
-
-  if (!confirm(actionText + "\n\nPlease confirm.")) return;
-
-  msg("positionStatusMessage", upgrading ? "Processing upgrade..." : "Activating sector...");
-  try {
-    const idempotencyKey = crypto.randomUUID();
-    const rpcName = upgrading ? "upgrade_employee_position" : "activate_employee_position";
-    const rpcArgs = upgrading ? { p_new_level_code: plan.level_code, p_idempotency_key: idempotencyKey } : { p_level_code: plan.level_code, p_idempotency_key: idempotencyKey };
-
-    const { data, error } = await supabase.rpc(rpcName, rpcArgs);
-    if (error) throw error;
-    if (!data?.success) throw new Error(data?.message || data?.error || "Transaction failed.");
-
-    msg("positionStatusMessage", upgrading ? `Upgrade successful to ${plan.level_code}.` : `Sector activated successfully.`);
-    await loadDashboard({ navigate: false });
-    await loadEmployeePosition();
-  } catch (error) {
-    console.error("Position error:", error);
-    msg("positionStatusMessage", error.message || "Unable to complete transaction.", "error");
-  }
-}
-
-/* DEPOSIT SUBMISSION */
-$("depositForm").onsubmit = async e => {
-  e.preventDefault();
-  const amount = Number($("depositAmount").value);
-  const reference = $("paymentReference").value.trim();
-
-  if (![5000, 10000, 20000, 50000, 100000].includes(amount)) {
-    msg("depositMessage", "Select a valid deposit amount.", "error");
-    return;
-  }
-  if (!reference) {
-    msg("depositMessage", "Enter your payment reference.", "error");
-    return;
-  }
-
-  $("depositBtn").disabled = true;
-  $("depositBtn").textContent = "Submitting...";
-
-  try {
-    const { error } = await supabase.from("deposit_records").insert({
-      user_id: currentUser.id, amount, payment_reference: reference, status: "pending", deposit_purpose: "initial"
-    });
-    if (error) throw error;
-    $("paymentReference").value = "";
-    msg("depositMessage", "Deposit submitted successfully. Awaiting admin review.");
-    await loadMyDeposits();
-  } catch (err) {
-    msg("depositMessage", err.message || "Deposit submission failed.", "error");
-  } finally {
-    $("depositBtn").disabled = false;
-    $("depositBtn").textContent = "Submit Deposit for Review";
-  }
-};
-
-async function loadMyDeposits() {
-  if (!currentUser) return;
-  const tbody = $("myDepositsBody");
-  tbody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
-
-  const { data, error } = await supabase.from("deposit_records")
-    .select("amount,payment_reference,status,submitted_at")
-    .eq("user_id", currentUser.id)
-    .order("submitted_at", { ascending: false });
-
-  if (error || !data || data.length === 0) {
-    tbody.innerHTML = "<tr><td colspan='4'>No submissions yet.</td></tr>";
-    return;
-  }
-
-  tbody.innerHTML = "";
-  data.forEach(item => {
-    const tr = document.createElement("tr");
-    [naira(item.amount), item.payment_reference || "-", item.status, item.submitted_at ? new Date(item.submitted_at).toLocaleString() : "-"].forEach(value => {
-      const td = document.createElement("td");
-      td.textContent = value;
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
-  });
-}
-$("myDepositsBtn").onclick = loadMyDeposits;
-
-/* ADMIN PANEL */
-$("loadDepositsBtn").onclick = async () => {
-  const tbody = $("adminDepositsBody");
-  tbody.innerHTML = "<tr><td colspan='8'>Loading...</td></tr>";
-  msg("adminMessage", "Checking access...");
-
-  try {
-    const { data: deposits, error: depositError } = await supabase.rpc("admin_get_pending_deposits");
-    if (depositError) throw depositError;
-
-    if (!deposits || deposits.length === 0) {
-      tbody.innerHTML = "<tr><td colspan='8'>No pending deposits.</td></tr>";
-      msg("adminMessage", "No pending deposits found.");
-      return;
-    }
-
-    tbody.innerHTML = "";
-    deposits.forEach(deposit => {
-      const tr = document.createElement("tr");
-
-      const nameCell = document.createElement("td");
-      nameCell.textContent = deposit.full_name || "Unknown";
-      tr.appendChild(nameCell);
-
-      const accountCell = document.createElement("td");
-      const badge = document.createElement("span");
-      badge.className = "account-badge " + (deposit.account_type === "employee" ? "badge-employee" : "badge-investor");
-      badge.textContent = deposit.account_type || "Unknown";
-      accountCell.appendChild(badge);
-      tr.appendChild(accountCell);
-
-      const purposeCell = document.createElement("td");
-      const purposeBadge = document.createElement("span");
-      purposeBadge.className = "purpose-badge";
-      purposeBadge.textContent = deposit.deposit_purpose || "Initial";
-      purposeCell.appendChild(purposeBadge);
-      tr.appendChild(purposeCell);
-
-      const amountCell = document.createElement("td");
-      amountCell.textContent = naira(deposit.amount);
-      tr.appendChild(amountCell);
-
-      const refCell = document.createElement("td");
-      refCell.textContent = deposit.payment_reference || "-";
-      tr.appendChild(refCell);
-
-      const statusCell = document.createElement("td");
-      statusCell.textContent = deposit.status || "pending";
-      tr.appendChild(statusCell);
-
-      const dateCell = document.createElement("td");
-      dateCell.textContent = deposit.submitted_at ? new Date(deposit.submitted_at).toLocaleString() : "-";
-      tr.appendChild(dateCell);
-
-      const actionCell = document.createElement("td");
-      const approve = document.createElement("button");
-      approve.textContent = "Confirm";
-      approve.className = "admin-action confirm-btn";
-      approve.onclick = () => reviewDeposit(deposit.id, "confirmed");
-
-      const reject = document.createElement("button");
-      reject.textContent = "Reject";
-      reject.className = "admin-action reject-btn";
-      reject.onclick = () => reviewDeposit(deposit.id, "rejected");
-
-      actionCell.append(approve, reject);
-      tr.appendChild(actionCell);
-      tbody.appendChild(tr);
-    });
-    msg("adminMessage", `Loaded ${deposits.length} pending deposit(s).`);
-  } catch (error) {
-    tbody.innerHTML = "<tr><td colspan='8'>Unable to load.</td></tr>";
-    msg("adminMessage", error.message || "Error loading deposits.", "error");
-  }
-};
-
-async function reviewDeposit(id, decision) {
-  if (!confirm(decision === "confirmed" ? "Confirm deposit?" : "Reject deposit?")) return;
-  try {
-    const { error } = await supabase.rpc("admin_review_deposit", { p_deposit_id: id, p_decision: decision });
-    if (error) throw error;
-    alert(decision === "confirmed" ? "Deposit confirmed." : "Deposit rejected.");
-    $("loadDepositsBtn").click();
-    await loadDashboard({ navigate: false });
-  } catch (error) {
-    alert("Error: " + error.message);
-  }
-}
-
-/* SESSION INITIALIZATION */
-supabase.auth.onAuthStateChange((event, session) => {
-  setTimeout(() => {
-    if (session) {
-      currentUser = session.user;
-      loadDashboard();
-    } else {
-      currentUser = null;
-      currentProfile = null;
-      currentPosition = null;
-      $("authScreen").style.display = "flex";
-      $("app").style.display = "none";
-    }
-  }, 0);
-});
-
-updateAuthUI();
-const { data: { session } } = await supabase.auth.getSession();
-if (session) {
-  currentUser = session.user;
-  await loadDashboard();
-}
-</script>
-</body>
-</html>
+document.querySelectorAll(".nav-item[data-page]").forEach(el=>el.onclick=()=>showPage(el.dataset.page));
+$("menuBtn").onclick=()=>{$("sidebar").classList.add("open");$("overlay").classList.add("show")};
+$("overlay").onclick=()=>{$("sidebar").classList.remove("open");$("overlay").classList.remove("show")};
