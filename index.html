@@ -89,7 +89,7 @@ th{background:#f0f5f2;font-weight:600}
 .summary-row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px}
 .summary-row.total{font-weight:700;color:var(--green-dark);font-size:16px}
 .admin-actions{display:flex;flex-wrap:wrap;gap:6px}
-.admin-actions button{padding:7px 9px;border:0;border-radius:5px;cursor:pointer;font-weight:600}
+.admin-actions button{padding:6px 8px;border:0;border-radius:4px;cursor:pointer;font-weight:600;font-size:11px}
 @media(min-width:768px){
   .sidebar{transform:translateX(0)}
   .main{margin-left:240px}
@@ -379,6 +379,28 @@ th{background:#f0f5f2;font-weight:600}
 
       <div id="page-admin" class="hidden">
         <div class="section">
+          <h3>🛡️ Admin Panel – Employee Account Management</h3>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:12px">View, manage, restrict, disable, or delete employee accounts that violate platform policies.</p>
+          <button id="loadEmployeesBtn" class="primary-btn">Load Employee Accounts</button>
+          <div id="adminEmployeeMessage" class="status hidden"></div>
+          <div style="overflow-x:auto;margin-top:14px">
+            <table>
+              <thead>
+                <tr>
+                  <th>Employee</th>
+                  <th>Status / Level</th>
+                  <th>Balance</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminEmployeesBody">
+                <tr><td colspan="4">Click "Load Employee Accounts" to view members.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="section">
           <h3>🛡️ Admin Panel – Review Deposits</h3>
           <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Check your actual bank records before confirming any payment.</p>
           <button id="loadDepositsBtn" style="padding:10px 16px;background:var(--green);color:white;border:0;border-radius:6px;font-weight:600;cursor:pointer">Load Pending Deposits</button>
@@ -596,7 +618,7 @@ function showPage(page, pushHistory = true){
   if(page==="employee-tasks")loadEmployeeTasks();
   if(page==="employee-position")loadEmployeePositionPlans();
   if(page==="withdraw")loadWithdrawalPage();
-  if(page==="admin")loadAdminWithdrawalData();
+  if(page==="admin")loadAdminData();
 }
 
 window.showPage=showPage;
@@ -1135,6 +1157,122 @@ async function reviewDeposit(id,decision){
   }
 }
 
+/* ADMIN EMPLOYEE MANAGEMENT */
+
+$("loadEmployeesBtn").onclick = loadAdminEmployees;
+
+async function loadAdminEmployees(){
+  const tbody = $("adminEmployeesBody");
+  tbody.innerHTML = "<tr><td colspan=\"4\">Loading employee accounts...</td></tr>";
+  msg("adminEmployeeMessage", "Loading employees...");
+
+  try{
+    const {data, error} = await supabase
+      .from("profiles")
+      .select("id, full_name, phone, account_type, employee_status, available_balance")
+      .eq("account_type", "employee")
+      .order("full_name", {ascending: true});
+
+    if(error) throw error;
+
+    if(!data || data.length === 0){
+      tbody.innerHTML = "<tr><td colspan=\"4\">No employee accounts found.</td></tr>";
+      msg("adminEmployeeMessage", "No employees found.");
+      return;
+    }
+
+    tbody.innerHTML = "";
+
+    data.forEach(emp => {
+      const tr = document.createElement("tr");
+
+      const infoTd = document.createElement("td");
+      infoTd.innerHTML = `<strong>${escapeHtml(emp.full_name || "Member")}</strong><br><span style="color:var(--muted);font-size:11px">${escapeHtml(emp.phone || "No phone")}</span>`;
+
+      const statusTd = document.createElement("td");
+      statusTd.innerHTML = `<span style="font-weight:600">${displayStatus(emp.employee_status || "Active")}</span>`;
+
+      const balTd = document.createElement("td");
+      balTd.textContent = naira(emp.available_balance);
+
+      const actionTd = document.createElement("td");
+      const actionsDiv = document.createElement("div");
+      actionsDiv.className = "admin-actions";
+
+      // Restrict/Unrestrict
+      const isRestricted = emp.employee_status === "restricted";
+      const restrictBtn = document.createElement("button");
+      restrictBtn.textContent = isRestricted ? "Unrestrict" : "Restrict";
+      restrictBtn.style.background = isRestricted ? "#16a34a" : "#d97706";
+      restrictBtn.style.color = "white";
+      restrictBtn.onclick = () => updateEmployeeStatus(emp.id, isRestricted ? "active" : "restricted");
+      actionsDiv.appendChild(restrictBtn);
+
+      // Disable/Enable
+      const isDisabled = emp.employee_status === "disabled";
+      const disableBtn = document.createElement("button");
+      disableBtn.textContent = isDisabled ? "Enable" : "Disable";
+      disableBtn.style.background = isDisabled ? "#16a34a" : "#4b5563";
+      disableBtn.style.color = "white";
+      disableBtn.onclick = () => updateEmployeeStatus(emp.id, isDisabled ? "active" : "disabled");
+      actionsDiv.appendChild(disableBtn);
+
+      // Delete
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "Delete";
+      deleteBtn.style.background = "#dc2626";
+      deleteBtn.style.color = "white";
+      deleteBtn.onclick = () => deleteEmployeeAccount(emp.id, emp.full_name);
+      actionsDiv.appendChild(deleteBtn);
+
+      actionTd.appendChild(actionsDiv);
+      tr.append(infoTd, statusTd, balTd, actionTd);
+      tbody.appendChild(tr);
+    });
+
+    msg("adminEmployeeMessage", `Loaded ${data.length} employee account(s).`);
+  }catch(err){
+    tbody.innerHTML = "<tr><td colspan=\"4\">Unable to load employees.</td></tr>";
+    msg("adminEmployeeMessage", err.message, "error");
+  }
+}
+
+async function updateEmployeeStatus(employeeId, newStatus){
+  if(!confirm(`Are you sure you want to set this employee's status to "${newStatus.toUpperCase()}"?`)) return;
+
+  try{
+    const {error} = await supabase
+      .from("profiles")
+      .update({ employee_status: newStatus })
+      .eq("id", employeeId);
+
+    if(error) throw error;
+
+    alert(`Employee status successfully updated to ${newStatus.toUpperCase()}`);
+    loadAdminEmployees();
+  }catch(err){
+    alert("Failed to update status: " + err.message);
+  }
+}
+
+async function deleteEmployeeAccount(employeeId, employeeName){
+  if(!confirm(`WARNING: Permanently delete employee account for "${employeeName || 'Member'}"? This action cannot be undone.`)) return;
+
+  try{
+    const {error} = await supabase
+      .from("profiles")
+      .delete()
+      .eq("id", employeeId);
+
+    if(error) throw error;
+
+    alert("Employee account profile successfully deleted.");
+    loadAdminEmployees();
+  }catch(err){
+    alert("Failed to delete account: " + err.message);
+  }
+}
+
 /* WITHDRAWAL SETUP & NEW VIEW LOGIC */
 
 async function loadWithdrawalPage(){
@@ -1360,8 +1498,9 @@ async function verifyWithdrawalBank(userId,button){
 
 $("loadAdminWithdrawalsBtn").onclick=loadAdminWithdrawals;
 
-async function loadAdminWithdrawalData(){
+async function loadAdminData(){
   if(currentProfile?.role==="admin"){
+    await loadAdminEmployees();
     await loadAdminWithdrawalBanks();
     await loadAdminWithdrawals();
   }
