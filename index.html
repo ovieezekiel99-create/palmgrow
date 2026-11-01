@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0b3d2e">
-<title>PalmGrow | Dashboard</title>
+<title>PalmGrow | Palm Farm & Oil Management</title>
 
 <style>
 :root{
@@ -61,7 +61,7 @@ cursor:pointer;margin-top:6px
 
 #app{display:none;min-height:100vh}
 
-/* REPLICATED EXACT SIDEBAR */
+/* PALM FARM SIDEBAR */
 .sidebar{
 position:fixed;top:0;left:0;bottom:0;width:260px;
 background:var(--green-dark);color:#fff;padding:24px 0;
@@ -96,11 +96,11 @@ font-style:italic;font-size:13px;color:#fff;margin-bottom:10px;line-height:1.3;f
 .sidebar-footer .footer-tagline span{color:var(--gold);font-weight:600}
 .sidebar-footer img{width:100%;height:90px;object-fit:cover;border-radius:8px;border:1px solid var(--gold)}
 
-/* MAIN LAYOUT WITH PLANTATION BACKGROUND OVERLAY */
+/* MAIN LAYOUT WITH PALM PLANTATION OVERLAY */
 .main{margin-left:0;min-height:100vh;padding-bottom:40px;position:relative}
 .main::before{
 content:'';position:fixed;top:0;left:0;right:0;bottom:0;
-background:linear-gradient(rgba(11, 61, 46, 0.88), rgba(15, 92, 66, 0.85)), url('https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+background:linear-gradient(rgba(11, 61, 46, 0.88), rgba(15, 92, 66, 0.85)), url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
 z-index:-1;
 }
 
@@ -144,7 +144,7 @@ font-size:26px;font-weight:700;border:3px solid var(--green);flex-shrink:0;box-s
 .welcome h2{font-size:24px;color:var(--green-dark);margin-bottom:2px}
 .welcome p{color:var(--muted);font-size:14px}
 
-/* STATS CARDS */
+/* STATS CARDS FOR PALM FARM METRICS */
 .stats{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:22px}
 .stat-card{
 background:rgba(255,255,255,0.96);backdrop-filter:blur(8px);
@@ -170,7 +170,6 @@ display:grid;grid-template-columns:1fr;gap:20px;margin-bottom:20px
 
 .dashboard-left,.dashboard-right{display:flex;flex-direction:column;gap:20px}
 
-/* INVESTMENT PLANS CONTAINER */
 .section-box{
 background:rgba(255,255,255,0.96);backdrop-filter:blur(8px);
 border-radius:16px;border:1px solid var(--border);padding:22px;
@@ -200,7 +199,7 @@ width:100%;padding:10px;background:var(--green);color:#fff;
 border:0;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px
 }
 
-/* REFERRAL CODE BOX */
+/* FARM REFERRAL & PROMO CARD */
 .referral-card{
 background:rgba(255,255,255,0.96);backdrop-filter:blur(8px);
 border-radius:16px;border:1px solid var(--border);padding:20px;
@@ -294,7 +293,7 @@ td{vertical-align:middle}
 .reject-btn{background:#dc2626}
 .admin-action:disabled{opacity:.5;cursor:not-allowed}
 
-/* M1-M9 POSITION STYLES */
+/* M1-M9 SECTOR STYLES */
 .level-card{border:1px solid var(--border);border-radius:14px;padding:18px;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.03)}
 .level-card h4{color:var(--green-dark);font-size:18px}
 .level-card .level-price{font-size:22px;font-weight:800;color:var(--green-dark);margin:8px 0}
@@ -336,8 +335,8 @@ td{vertical-align:middle}
 <div id="accountTypeField">
 <label>Choose Account Type</label>
 <select id="accountType">
-<option value="investor">Investor</option>
-<option value="employee">Employee</option>
+<option value="investor">Investor / Partner</option>
+<option value="employee">Farm Field Worker</option>
 </select>
 </div>
 
@@ -364,30 +363,30 @@ td{vertical-align:middle}
 <div id="app">
 <div class="overlay" id="overlay"></div>
 
-<!-- SIDEBAR -->
+<!-- PALM FARM SIDEBAR -->
 <aside class="sidebar" id="sidebar">
 <div class="sidebar-top">
 <div class="logo">🌴 Palm<span>Grow</span></div>
-<div class="logo-sub">Invest • Grow • Prosper</div>
+<div class="logo-sub">Harvest • Process • Prosper</div>
 
-<div class="nav-item active" data-page="dashboard">🏠 Dashboard</div>
-<div class="nav-item" data-page="invest">💰 Make Investment</div>
-<div class="nav-item" data-page="employee-position" id="positionNav" style="display:none">🌴 Employee Position M1–M9</div>
-<div class="nav-item" data-page="employee-tasks" id="employeeNav" style="display:none">🌱 Employee Daily Tasks</div>
-<div class="nav-item" data-page="deposit">📥 Deposit</div>
-<div class="nav-item" data-page="referral">👥 Referral Program</div>
-<div class="nav-item" data-page="admin" id="adminNav" style="display:none">🛡️ Admin Panel</div>
+<div class="nav-item active" data-page="dashboard">🏠 Farm Dashboard</div>
+<div class="nav-item" data-page="invest">🌴 Palm Farm Projects</div>
+<div class="nav-item" data-page="employee-position" id="positionNav" style="display:none">🚜 Plantation Sectors M1–M9</div>
+<div class="nav-item" data-page="employee-tasks" id="employeeNav" style="display:none">🌾 Daily Harvest Tasks</div>
+<div class="nav-item" data-page="deposit">📥 Funding & Deposits</div>
+<div class="nav-item" data-page="referral">👥 Partner Program</div>
+<div class="nav-item" data-page="admin" id="adminNav" style="display:none">🛡️ Farm Admin Panel</div>
 </div>
 
 <div class="sidebar-footer">
 <div class="footer-tagline">Together for a <span>Greener</span> and <span>Wealthier</span> Future</div>
-<img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=400&q=80" alt="Palm Fruit">
+<img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=400&q=80" alt="Fresh Palm Fruit Bunches">
 <div class="nav-item" id="logoutNav" style="margin-top:10px;padding:8px 0;border:0">🚪 Log Out</div>
 </div>
 </aside>
 
 <div class="main">
-<!-- TOPBAR WITH HEADER BACK BUTTON -->
+<!-- STICKY TOPBAR WITH HEADER BACK BUTTON -->
 <div class="topbar">
 <div class="topbar-left">
 <button class="menu-btn" id="menuBtn">☰</button>
@@ -407,27 +406,27 @@ td{vertical-align:middle}
 <div class="welcome-avatar" id="userAvatar">J</div>
 <div>
 <h2>Welcome Back, <span id="welcomeName">John Doe</span>!</h2>
-<p>Grow your wealth with PalmGrow</p>
+<p>Grow your palm farm yield and oil output with PalmGrow</p>
 </div>
 </div>
 
-<!-- 4 STATS CARDS -->
+<!-- 4 PALM FARM STATS CARDS -->
 <div class="stats">
 <div class="stat-card">
-<div class="label">Available Balance</div>
+<div class="label">Available Wallet Balance</div>
 <div class="value" id="availableBalance">₦150,000.00</div>
 <button onclick="showPage('deposit')">Make Deposit</button>
 </div>
 <div class="stat-card">
-<div class="label">Total Investment</div>
+<div class="label">Palm Fruit Harvested (FFB)</div>
 <div class="value" id="totalInvestment">₦200,000.00</div>
 </div>
 <div class="stat-card">
-<div class="label">Total Earnings</div>
+<div class="label">Palm Oil Earnings (CPO)</div>
 <div class="value" id="totalEarnings">₦80,000.00</div>
 </div>
 <div class="stat-card">
-<div class="label">Referral Earnings</div>
+<div class="label">Partner Bonus Earnings</div>
 <div class="value" id="referralEarnings">₦25,000.00</div>
 </div>
 </div>
@@ -435,44 +434,44 @@ td{vertical-align:middle}
 <!-- DASHBOARD MAIN SECTION GRID -->
 <div class="dashboard-grid">
 <div class="dashboard-left">
-<!-- INVESTMENT PLANS -->
+<!-- PALM FARM PLANS -->
 <div class="section-box">
 <div class="section-header">
-<h3>🌱 Our Investment Plans</h3>
+<h3>🌴 Our Palm Farm & Oil Projects</h3>
 <button class="view-all-btn" onclick="showPage('invest')">View All →</button>
 </div>
 <div class="plans">
 <div class="plan">
-<img class="plan-img" src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?auto=format&fit=crop&w=400&q=80" alt="Starter Palm">
+<img class="plan-img" src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?auto=format&fit=crop&w=400&q=80" alt="Palm Nursery">
 <div class="plan-content">
 <div>
-<h4>Starter Palm</h4>
+<h4>Starter Nursery</h4>
 <div class="price">₦5,000</div>
-<p>Begin your journey</p>
+<p>Seedlings & Nursery Care</p>
 </div>
-<button onclick="selectDeposit(5000)">Invest Now →</button>
+<button onclick="selectDeposit(5000)">Participate →</button>
 </div>
 </div>
 <div class="plan">
-<img class="plan-img" src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=400&q=80" alt="Growth Palm">
+<img class="plan-img" src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=400&q=80" alt="Fresh Fruit Bunches">
 <div class="plan-content">
 <div>
-<h4>Growth Palm</h4>
+<h4>Growth Plantation</h4>
 <div class="price">₦50,000</div>
-<p>Medium-level project</p>
+<p>Fresh Fruit Bunches (FFB)</p>
 </div>
-<button onclick="selectDeposit(50000)">Invest Now →</button>
+<button onclick="selectDeposit(50000)">Participate →</button>
 </div>
 </div>
 <div class="plan">
-<img class="plan-img" src="https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=400&q=80" alt="Premium Palm">
+<img class="plan-img" src="https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=400&q=80" alt="Palm Oil Extraction">
 <div class="plan-content">
 <div>
-<h4>Premium Palm</h4>
+<h4>Premium Mill</h4>
 <div class="price">₦100,000</div>
-<p>Larger agricultural project</p>
+<p>Crude Palm Oil (CPO) Processing</p>
 </div>
-<button onclick="selectDeposit(100000)">Invest Now →</button>
+<button onclick="selectDeposit(100000)">Participate →</button>
 </div>
 </div>
 </div>
@@ -482,18 +481,18 @@ td{vertical-align:middle}
 <div class="dashboard-right">
 <!-- REFERRAL CODE -->
 <div class="referral-card">
-<h3 style="font-size:16px;color:var(--green-dark)">👥 Your Referral Code</h3>
+<h3 style="font-size:16px;color:var(--green-dark)">👥 Your Partner Code</h3>
 <div class="referral-box">
 <span class="referral-code-text" id="referralCode">8F3A7D</span>
-<button class="copy-btn" title="Copy Code" onclick="navigator.clipboard.writeText(document.getElementById('referralCode').innerText);alert('Referral code copied!');">📋</button>
+<button class="copy-btn" title="Copy Code" onclick="navigator.clipboard.writeText(document.getElementById('referralCode').innerText);alert('Partner code copied!');">📋</button>
 </div>
 </div>
 
-<!-- INVITE FRIENDS PROMO -->
+<!-- PROMO CARD -->
 <div class="invite-promo-card">
 <div class="invite-promo-text">
-<h4>🎁 Invite Friends Earn More!</h4>
-<p>Share your referral code and earn ₦5,000 per referral.</p>
+<h4>🎁 Invite Partners & Earn!</h4>
+<p>Share your partner code and earn ₦5,000 per verified farm referral.</p>
 </div>
 <img class="gift-box-img" src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=200&q=80" alt="Gift Box">
 </div>
@@ -504,15 +503,15 @@ td{vertical-align:middle}
 <div class="bottom-grid">
 <!-- ABOUT PALMGROW -->
 <div class="section-box about-card">
-<h3 style="font-size:16px;color:var(--green-dark)">🌿 About PalmGrow</h3>
-<img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=500&q=80" alt="Palm plantation">
-<p>A trusted agricultural investment platform, empowering you to grow wealth through sustainable palm oil projects.</p>
+<h3 style="font-size:16px;color:var(--green-dark)">🌿 About PalmGrow Plantation</h3>
+<img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=500&q=80" alt="Palm Fruit Harvest">
+<p>A trusted palm farm operations platform empowering you to build wealth through sustainable oil palm farming and processing.</p>
 <button class="learn-more-btn" onclick="showPage('invest')">Learn More →</button>
 </div>
 
 <!-- YOUR PROGRESS -->
 <div class="section-box progress-card">
-<h3 style="font-size:16px;color:var(--green-dark);align-self:flex-start">🏆 Your Progress</h3>
+<h3 style="font-size:16px;color:var(--green-dark);align-self:flex-start">🏆 Plantation Goal Progress</h3>
 <div class="progress-circle">
 <div class="progress-inner">75%</div>
 </div>
@@ -520,8 +519,8 @@ td{vertical-align:middle}
 <div class="progress-bar-fill"></div>
 </div>
 <div class="progress-stats-row">
-<div><small style="color:var(--muted)">Investment Goal</small><strong>₦200,000</strong></div>
-<div style="text-align:right"><small style="color:var(--muted)">Current Progress</small><strong style="color:var(--green)">₦150,000</strong></div>
+<div><small style="color:var(--muted)">Harvest Goal</small><strong>200 Tons</strong></div>
+<div style="text-align:right"><small style="color:var(--muted)">Current Progress</small><strong style="color:var(--green)">150 Tons</strong></div>
 </div>
 </div>
 
@@ -531,7 +530,7 @@ td{vertical-align:middle}
 <div class="quick-actions-list">
 <button class="quick-action-btn" onclick="showPage('deposit')">📥 Make a Deposit</button>
 <button class="quick-action-btn" onclick="showPage('deposit')">📋 View My Deposits</button>
-<button class="quick-action-btn" onclick="showPage('referral')">👥 Check Referral Stats</button>
+<button class="quick-action-btn" onclick="showPage('referral')">👥 Check Partner Stats</button>
 </div>
 </div>
 </div>
@@ -544,85 +543,85 @@ td{vertical-align:middle}
 <button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
 </div>
 <div class="section">
-<h3>🌴 PalmGrow Investment Plans</h3>
-<div class="notice">Choose your investment amount and submit your deposit for administrator review.</div>
+<h3>🌴 Palm Farm & Oil Mill Projects</h3>
+<div class="notice">Select a project tier and submit your deposit for administrator review.</div>
 <div class="plans">
 <div class="plan">
 <div class="plan-content">
 <div>
-<h4>Starter Plan</h4>
+<h4>Starter Nursery</h4>
 <div class="price">₦5,000</div>
-<p>Starter investment plan</p>
+<p>Palm seedling cultivation</p>
 </div>
-<button onclick="selectDeposit(5000)">Choose Plan</button>
+<button onclick="selectDeposit(5000)">Choose Project</button>
 </div>
 </div>
 <div class="plan">
 <div class="plan-content">
 <div>
-<h4>Growth Plan</h4>
+<h4>Growth Plantation</h4>
 <div class="price">₦50,000</div>
-<p>Growth investment plan</p>
+<p>Fresh Fruit Bunches (FFB)</p>
 </div>
-<button onclick="selectDeposit(50000)">Choose Plan</button>
+<button onclick="selectDeposit(50000)">Choose Project</button>
 </div>
 </div>
 <div class="plan">
 <div class="plan-content">
 <div>
-<h4>Premium Plan</h4>
+<h4>Premium Mill</h4>
 <div class="price">₦100,000</div>
-<p>Premium investment plan</p>
+<p>Crude Palm Oil (CPO)</p>
 </div>
-<button onclick="selectDeposit(100000)">Choose Plan</button>
+<button onclick="selectDeposit(100000)">Choose Project</button>
 </div>
 </div>
 </div>
 </div>
 </div>
 
-<!-- EMPLOYEE POSITION PAGE -->
+<!-- EMPLOYEE SECTOR PAGE -->
 <div id="page-employee-position" class="hidden">
 <div class="page-back-bar">
 <button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
 </div>
 <div class="section">
-<h3>🌴 Employee Position – M1 to M9</h3>
+<h3>🚜 Plantation Sectors – M1 to M9</h3>
 <p style="font-size:13px;color:var(--muted);margin-bottom:14px">
-Select an employee position based on your available wallet balance. Your wallet will only be debited after the database confirms your activation.
+Assign your field worker profile to a farm sector based on available wallet balance.
 </p>
 
 <div id="positionStatusMessage" class="status hidden"></div>
 
 <div id="currentPositionBox" class="current-position hidden">
-<strong>Your Current Position</strong>
+<strong>Your Assigned Sector</strong>
 <div class="level-detail">
-<div><small>Position Level</small><strong id="currentLevel">-</strong></div>
+<div><small>Sector Code</small><strong id="currentLevel">-</strong></div>
 <div><small>Locked Deposit</small><strong id="currentLockedDeposit">₦0.00</strong></div>
-<div><small>Position Status</small><strong id="currentPositionStatus">-</strong></div>
+<div><small>Sector Status</small><strong id="currentPositionStatus">-</strong></div>
 <div><small>Activated On</small><strong id="currentPositionDate">-</strong></div>
 </div>
 </div>
 
 <div class="notice">
-<strong>Important:</strong> Daily income projections are estimates based on the plan figures. They are not guaranteed earnings. Actual payments depend on genuine assigned work and verified completion.
+<strong>Important:</strong> Daily task payouts depend on genuine field completion and supervisor confirmation.
 </div>
 
-<h3 style="margin-top:18px">Available Employee Levels</h3>
+<h3 style="margin-top:18px">Available Plantation Sectors</h3>
 <div id="employeeLevelPlans" class="level-grid">
-Loading employee levels...
+Loading plantation sectors...
 </div>
 </div>
 
 <div class="section">
-<h3>📋 Position History</h3>
+<h3>📋 Sector Assignment History</h3>
 <div style="overflow-x:auto">
 <table>
 <thead>
-<tr><th>Action</th><th>Previous Level</th><th>New Level</th><th>Deposit</th><th>Date</th></tr>
+<tr><th>Action</th><th>Previous Sector</th><th>New Sector</th><th>Deposit</th><th>Date</th></tr>
 </thead>
 <tbody id="positionHistoryBody">
-<tr><td colspan="5">Position history will appear here.</td></tr>
+<tr><td colspan="5">Sector history will appear here.</td></tr>
 </tbody>
 </table>
 </div>
@@ -635,12 +634,12 @@ Loading employee levels...
 <button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
 </div>
 <div class="section">
-<h3>🌱 Employee Daily Tasks</h3>
+<h3>🌾 Daily Field & Harvest Tasks</h3>
 <p style="font-size:13px;color:var(--muted);margin-bottom:14px">
-Your assigned agricultural tasks appear here on working days. Mark each task complete only after carrying out the work. Completion is self-reported.
+Your assigned palm farm tasks appear here on working days. Mark completed after finishing harvesting or maintenance.
 </p>
 <div class="stat-card" style="margin-bottom:12px;text-align:center">
-<div class="label">Total Daily Task Payment</div>
+<div class="label">Daily Task Rate</div>
 <div class="value" id="dailyRateDisplay">₦0.00 / day</div>
 </div>
 <div class="notice" style="background:#e8f5e9;border-color:#2e7d32;color:#1b5e20">
@@ -651,10 +650,10 @@ Your assigned agricultural tasks appear here on working days. Mark each task com
 </div>
 
 <div class="section">
-<h3>💳 Task Payment History</h3>
+<h3>💳 Field Work Payout History</h3>
 <div style="overflow-x:auto">
 <table>
-<thead><tr><th>Amount</th><th>Description</th><th>Date</th></tr></thead>
+<thead><tr><th>Amount</th><th>Task Description</th><th>Date</th></tr></thead>
 <tbody id="employeePayrollBody">
 <tr><td colspan="3">No task payments yet.</td></tr>
 </tbody>
@@ -713,10 +712,10 @@ Submit this form only after making payment. Your deposit remains pending until a
 <button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
 </div>
 <div class="section">
-<h3>👥 Referral Program</h3>
-<p style="font-size:13px;color:var(--muted);margin-bottom:12px">Share your referral code with people you invite to PalmGrow.</p>
+<h3>👥 Partner Program</h3>
+<p style="font-size:13px;color:var(--muted);margin-bottom:12px">Share your referral code with partners you invite to PalmGrow.</p>
 <div class="payment-box">
-Your Referral Code:<br>
+Your Partner Code:<br>
 <strong id="referralCodePage" style="font-size:24px">LOADING...</strong>
 </div>
 </div>
@@ -728,11 +727,11 @@ Your Referral Code:<br>
 <button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
 </div>
 <div class="section">
-<h3>🛡️ Administrator Panel – Deposit Review</h3>
+<h3>🛡️ Farm Admin Panel – Deposit Review</h3>
 <p style="font-size:13px;color:var(--muted);margin-bottom:12px">
-Review actual payment records before confirming any deposit. Check the customer account type and deposit purpose carefully.
+Review payment records before confirming deposits.
 </p>
-<div class="notice"><strong>Important:</strong> Confirm only deposits whose actual payment has been independently verified.</div>
+<div class="notice"><strong>Important:</strong> Confirm only deposits whose actual payment has been verified.</div>
 <button id="loadDepositsBtn" style="padding:10px 16px;background:var(--green);color:white;border:0;border-radius:6px;cursor:pointer">Load Pending Deposits</button>
 <div id="adminMessage" class="status hidden"></div>
 
@@ -899,7 +898,7 @@ function showPage(page, isBackAction = false) {
 
 function goBack() {
   if (pageHistory.length > 1) {
-    pageHistory.pop(); // Remove current page
+    pageHistory.pop();
     const previousPage = pageHistory[pageHistory.length - 1];
     showPage(previousPage, true);
   } else {
@@ -1238,10 +1237,10 @@ function renderEmployeeLevelPlans() {
     const isLowerLevel = activePosition && currentIndex >= 0 && targetIndex <= currentIndex;
 
     if (isSameLevel) {
-      button.textContent = "Your Current Level";
+      button.textContent = "Your Current Sector";
       button.disabled = true;
     } else if (isLowerLevel) {
-      button.textContent = "Lower Levels Unavailable";
+      button.textContent = "Lower Sectors Unavailable";
       button.disabled = true;
     } else if (currentProfile?.employee_status !== "active") {
       button.textContent = "Employee Account Not Active";
@@ -1250,7 +1249,7 @@ function renderEmployeeLevelPlans() {
       button.textContent = "Insufficient Wallet Balance";
       button.disabled = true;
     } else {
-      button.textContent = activePosition ? "Upgrade Position" : "Activate Position";
+      button.textContent = activePosition ? "Upgrade Sector" : "Activate Sector";
       button.onclick = () => activateOrUpgradePosition(plan);
     }
 
@@ -1271,12 +1270,12 @@ async function activateOrUpgradePosition(plan) {
 
   const upgrading = currentPosition?.position_status === "active";
   const actionText = upgrading
-    ? `Upgrade to ${plan.level_code}? The new plan deposit is ${naira(amount)}.`
-    : `Activate ${plan.level_code} with a deposit of ${naira(amount)}?`;
+    ? `Upgrade to ${plan.level_code}? The new sector deposit is ${naira(amount)}.`
+    : `Activate sector ${plan.level_code} with a deposit of ${naira(amount)}?`;
 
   if (!confirm(actionText + "\n\nPlease confirm.")) return;
 
-  msg("positionStatusMessage", upgrading ? "Processing upgrade..." : "Activating position...");
+  msg("positionStatusMessage", upgrading ? "Processing upgrade..." : "Activating sector...");
   try {
     const idempotencyKey = crypto.randomUUID();
     const rpcName = upgrading ? "upgrade_employee_position" : "activate_employee_position";
@@ -1286,7 +1285,7 @@ async function activateOrUpgradePosition(plan) {
     if (error) throw error;
     if (!data?.success) throw new Error(data?.message || data?.error || "Transaction failed.");
 
-    msg("positionStatusMessage", upgrading ? `Upgrade successful to ${plan.level_code}.` : `Position activated successfully.`);
+    msg("positionStatusMessage", upgrading ? `Upgrade successful to ${plan.level_code}.` : `Sector activated successfully.`);
     await loadDashboard({ navigate: false });
     await loadEmployeePosition();
   } catch (error) {
