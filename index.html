@@ -303,76 +303,68 @@ th{background:#f0f5f2;font-weight:600}
       </div>
 
       <div id="page-withdraw" class="hidden">
-        <div class="section">
-          <h3>💸 Withdraw Funds</h3>
-          <div class="notice">
-            Withdrawals are available Monday to Friday, between 10:00 AM and 5:00 PM Lagos time. The server checks the actual withdrawal time.
-          </div>
-
-          <div class="stats">
-            <div class="stat-card">
-              <div class="label">Withdrawable Balance</div>
-              <div class="value" id="withdrawAvailable">₦0.00</div>
+        <div style="max-width: 480px; margin: 0 auto; background: #f3f4f6; min-height: 100vh; font-family: sans-serif; box-sizing: border-box; display: flex; flex-direction: column;">
+            
+            <!-- Top Header Bar -->
+            <div style="background: #0d382b; color: white; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 12px 12px 0 0;">
+                <a href="#" onclick="showPage('dashboard'); return false;" style="color: white; text-decoration: none; font-size: 20px; font-weight: bold;">&lsaquo;</a>
+                <h1 style="margin: 0; font-size: 16px; font-weight: 600;">Withdrawal</h1>
+                <a href="#" onclick="showPage('withdraw'); return false;" style="color: white; text-decoration: none; font-size: 13px;">View Records</a>
             </div>
-            <div class="stat-card">
-              <div class="label">Account Type</div>
-              <div class="value" id="withdrawAccountType">—</div>
+
+            <!-- Main Content Form Area -->
+            <div style="padding: 20px; flex: 1; padding-bottom: 40px; background: white; border-radius: 0 0 12px 12px;">
+
+                <!-- 1. Account Section -->
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 13px; font-weight: 700; color: #0d382b; margin-bottom: 8px;">Account</label>
+                    <div id="selectAccountBtn" style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                        <span style="font-size: 14px; color: #1f2937; display: flex; align-items: center; gap: 10px;">
+                            <span>👤</span> <span id="bankDisplaySummary">Loading bank...</span>
+                        </span>
+                        <span style="color: #9ca3af; font-size: 16px;">&rsaquo;</span>
+                    </div>
+                </div>
+
+                <!-- 2. Fund Password Section -->
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 13px; font-weight: 700; color: #0d382b; margin-bottom: 8px;">Fund password (6-digit PIN)</label>
+                    <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; gap: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                        <span style="color: #9ca3af; font-size: 16px;">🔒</span>
+                        <input type="password" id="fundPasswordInput" inputmode="numeric" maxlength="6" placeholder="Please enter fund password" style="border: none; outline: none; width: 100%; font-size: 14px; color: #1f2937; background: transparent;">
+                    </div>
+                </div>
+
+                <!-- 3. Withdraw Amount Section -->
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 13px; font-weight: 700; color: #0d382b; margin-bottom: 8px;">Withdraw amount</label>
+                    
+                    <!-- Balance Display Card -->
+                    <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                        <div>
+                            <span style="font-size: 12px; color: #6b7280; display: block; margin-bottom: 2px;">Withdrawable Balance (<span id="withdrawAccountType">—</span>)</span>
+                            <strong style="font-size: 20px; color: #0d382b;" id="walletBalanceVal">₦0.00</strong>
+                        </div>
+                        <div style="background: #e6f4ea; padding: 8px 12px; border-radius: 8px; color: #137333; font-size: 18px;">
+                            💰
+                        </div>
+                    </div>
+
+                    <!-- Preset Amount Grid (3 columns) -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;" id="amountGrid">
+                        <!-- Dynamically populated preset buttons -->
+                    </div>
+                </div>
+
+                <!-- Error / Success Feedback Container -->
+                <div id="withdrawalFeedback" style="display: none; font-size: 13px; margin-bottom: 15px; text-align: center; padding: 10px; border-radius: 8px;"></div>
+
+                <!-- Submit Button -->
+                <button id="submitWithdrawalBtn" style="width: 100%; background: #0d382b; color: white; border: none; padding: 16px; border-radius: 12px; font-weight: 600; font-size: 15px; cursor: pointer; box-shadow: 0 4px 10px rgba(13, 56, 43, 0.2); margin-top: 10px;">
+                    Submit Withdrawal
+                </button>
+
             </div>
-          </div>
-
-          <div class="section" style="background:#f8fbf9">
-            <h3>🔐 Withdrawal PIN</h3>
-            <p id="pinStatusText" style="font-size:13px;color:var(--muted);margin-bottom:12px">Checking PIN status...</p>
-            <form id="pinForm">
-              <label id="pinFormLabel">Create a six-digit withdrawal PIN</label>
-              <input id="withdrawPin" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" autocomplete="off" placeholder="Enter six-digit PIN" required>
-              <button id="pinSubmitBtn" type="submit">Create Withdrawal PIN</button>
-            </form>
-            <div id="pinMessage" class="status hidden"></div>
-          </div>
-
-          <div class="section" style="background:#f8fbf9">
-            <h3>🏦 Bank Account</h3>
-            <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Register your bank account. Withdrawals can only be sent to an account verified by PalmGrow administration.</p>
-            <div id="bankCurrentDetails" class="payment-box">Loading bank details...</div>
-            <form id="bankForm">
-              <label>Choose Bank</label>
-              <select id="withdrawBank" required>
-                <option value="">Select approved bank</option>
-                <option>Access Bank Plc</option>
-                <option>UBA</option>
-                <option>OPay</option>
-                <option>PalmPay</option>
-                <option>MoMo PSB NG</option>
-                <option>Kuda Bank</option>
-              </select>
-              <label>Account Number</label>
-              <input id="withdrawAccountNumber" type="text" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" placeholder="Enter 10-digit account number" required>
-              <button type="submit" id="bankSubmitBtn">Register Bank Account</button>
-            </form>
-            <div id="bankMessage" class="status hidden"></div>
-          </div>
-
-          <div class="section">
-            <h3>💰 Select Withdrawal Amount</h3>
-            <p style="font-size:13px;color:var(--muted);margin-bottom:12px">A 10% handling fee and ₦100 transfer fee apply to each withdrawal.</p>
-            <div id="withdrawFeePreview" class="payment-box">
-              Select an amount to see the fee and amount you will receive.
-            </div>
-            <div class="withdraw-grid" id="withdrawOptions"></div>
-            <div id="withdrawMessage" class="status hidden"></div>
-          </div>
-
-          <div class="section">
-            <h3>📜 My Withdrawal History</h3>
-            <button id="loadMyWithdrawalsBtn" class="primary-btn">Refresh Withdrawal History</button>
-            <div style="overflow-x:auto;margin-top:14px">
-              <table>
-                <thead><tr><th>Amount</th><th>Fees</th><th>Net Amount</th><th>Status</th><th>Date</th></tr></thead>
-                <tbody id="myWithdrawalsBody"><tr><td colspan="5">Click refresh to load your history.</td></tr></tbody>
-              </table>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -447,6 +439,7 @@ let currentUser = null;
 let currentProfile = null;
 let withdrawalSetup = null;
 let pageHistory = ["dashboard"];
+let selectedWithdrawalAmount = null;
 
 const WITHDRAWAL_AMOUNTS = [
   1800,2800,8000,26000,75000,200000,
@@ -709,7 +702,7 @@ function getWithdrawableBalance(){
 function updateWithdrawalBalance(){
   const balance=getWithdrawableBalance();
   $("dashboardWithdrawable").textContent=naira(balance);
-  $("withdrawAvailable").textContent=naira(balance);
+  $("walletBalanceVal").textContent=Number(balance).toLocaleString("en-NG",{minimumFractionDigits:2,maximumFractionDigits:2});
   $("withdrawAccountType").textContent=
     currentProfile?.account_type==="employee"?"Employee":"Investor";
   $("dashboardAccountType").textContent=
@@ -1142,22 +1135,21 @@ async function reviewDeposit(id,decision){
   }
 }
 
-/* WITHDRAWAL SETUP */
+/* WITHDRAWAL SETUP & NEW VIEW LOGIC */
 
 async function loadWithdrawalPage(){
   if(!currentUser)return;
 
   updateWithdrawalBalance();
+  selectedWithdrawalAmount = null;
 
-  $("withdrawOptions").innerHTML="";
-  $("withdrawFeePreview").textContent=
-    "Select an amount to see the fee and amount you will receive.";
-
-  $("pinMessage").classList.add("hidden");
+  const feedbackEl = $("withdrawalFeedback");
+  if(feedbackEl){
+    feedbackEl.style.display = "none";
+  }
 
   await loadWithdrawalSetup();
-  await loadMyWithdrawals();
-  renderWithdrawalOptions();
+  renderWithdrawalPresetGrid();
 }
 
 async function loadWithdrawalSetup(){
@@ -1167,29 +1159,7 @@ async function loadWithdrawalSetup(){
 
     withdrawalSetup=objectOf(data);
 
-    const hasPin=Boolean(
-      withdrawalSetup.has_pin||
-      withdrawalSetup.pin_created||
-      withdrawalSetup.withdrawal_pin_set||
-      withdrawalSetup.pin_is_set
-    );
-
-    $("pinStatusText").textContent=hasPin
-      ?"Your withdrawal PIN is already set. PIN changes require administrator assistance."
-      :"You have not created a withdrawal PIN yet.";
-
-    $("pinFormLabel").textContent=hasPin
-      ?"Your withdrawal PIN is already set."
-      :"Create a six-digit withdrawal PIN";
-
-    $("pinSubmitBtn").textContent=hasPin
-      ?"PIN Already Created"
-      :"Create Withdrawal PIN";
-
-    $("pinSubmitBtn").disabled=hasPin;
-    $("withdrawPin").disabled=hasPin;
-
-    const bankName=withdrawalSetup.bank_name||"";
+    const bankName=withdrawalSetup.bank_name||"No Bank";
     const accountNumber=withdrawalSetup.account_number||"";
     const accountName=withdrawalSetup.account_name||"";
     const verified=Boolean(
@@ -1197,269 +1167,110 @@ async function loadWithdrawalSetup(){
       withdrawalSetup.is_bank_verified
     );
 
-    if(bankName&&accountNumber){
-      $("bankCurrentDetails").textContent=
-        `${bankName} | ${accountNumber} | ${accountName||"Account name pending"} | ${verified?"VERIFIED":"AWAITING VERIFICATION"}`;
+    if(bankName && accountNumber){
+      $("bankDisplaySummary").textContent = `${bankName} (${accountNumber}) - ${verified ? 'Verified' : 'Awaiting Verification'}`;
     }else{
-      $("bankCurrentDetails").textContent="No bank account registered yet.";
+      $("bankDisplaySummary").textContent = "No bank account registered. Click to add.";
     }
 
-    if(bankName)$("withdrawBank").value=bankName;
-    if(accountNumber)$("withdrawAccountNumber").value=accountNumber;
-
   }catch(err){
-    $("pinStatusText").textContent="Unable to check PIN status: "+err.message;
-    $("bankCurrentDetails").textContent="Unable to load bank details.";
+    $("bankDisplaySummary").textContent = "Unable to load bank details.";
   }
 }
 
-/* CREATE WITHDRAWAL PIN */
+function renderWithdrawalPresetGrid(){
+  const grid = $("amountGrid");
+  if(!grid)return;
+  grid.innerHTML = "";
 
-$("pinForm").onsubmit=async e=>{
-  e.preventDefault();
+  WITHDRAWAL_AMOUNTS.forEach(amount => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.style.cssText = "background: white; border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px 8px; text-align: center; cursor: pointer; font-weight: 600; font-size: 14px; color: #1f2937; transition: all 0.2s;";
+    btn.textContent = naira(amount);
 
-  const pin=$("withdrawPin").value.trim();
-
-  if(!/^\d{6}$/.test(pin)){
-    msg("pinMessage","Your PIN must contain exactly six digits.","error");
-    return;
-  }
-
-  $("pinSubmitBtn").disabled=true;
-
-  try{
-    const {data,error}=await supabase.rpc("palmgrow_create_withdrawal_pin",{
-      p_pin:pin
-    });
-
-    if(error)throw error;
-
-    if(data?.success===false){
-      throw new Error(data.message||"Unable to create PIN.");
-    }
-
-    $("withdrawPin").value="";
-    msg("pinMessage","Your withdrawal PIN has been created. Enter it when making a withdrawal.");
-    await loadWithdrawalSetup();
-
-  }catch(err){
-    msg("pinMessage",err.message||"PIN creation failed.","error");
-    $("pinSubmitBtn").disabled=false;
-  }
-};
-
-/* REGISTER BANK ACCOUNT */
-
-$("bankForm").onsubmit=async e=>{
-  e.preventDefault();
-
-  const bank=$("withdrawBank").value;
-  const accountNumber=$("withdrawAccountNumber").value.trim();
-
-  if(!bank){
-    msg("bankMessage","Please select your bank.","error");
-    return;
-  }
-
-  if(!/^\d{10}$/.test(accountNumber)){
-    msg("bankMessage","Enter a valid 10-digit account number.","error");
-    return;
-  }
-
-  $("bankSubmitBtn").disabled=true;
-
-  try{
-    const {data,error}=await supabase.rpc("palmgrow_register_withdrawal_bank",{
-      p_bank_name:bank,
-      p_account_number:accountNumber
-    });
-
-    if(error)throw error;
-
-    if(data?.success===false){
-      throw new Error(data.message||"Bank registration failed.");
-    }
-
-    msg("bankMessage","Bank account submitted. It must be verified by an administrator before withdrawals can be made.");
-    await loadWithdrawalSetup();
-
-  }catch(err){
-    msg("bankMessage",err.message||"Bank registration failed.","error");
-  }finally{
-    $("bankSubmitBtn").disabled=false;
-  }
-};
-
-/* WITHDRAWAL AMOUNT OPTIONS AND FEE CALCULATOR */
-
-function calculateWithdrawal(amount){
-  const handlingFee=Number(amount)*0.10;
-  const transferFee=100;
-  const netAmount=Number(amount)-handlingFee-transferFee;
-
-  return {
-    amount:Number(amount),
-    handlingFee,
-    transferFee,
-    netAmount
-  };
-}
-
-function showWithdrawalPreview(amount){
-  const fees=calculateWithdrawal(amount);
-
-  $("withdrawFeePreview").innerHTML=`
-    <div class="summary-row"><span>Withdrawal amount</span><strong>${naira(fees.amount)}</strong></div>
-    <div class="summary-row"><span>Handling fee (10%)</span><strong>${naira(fees.handlingFee)}</strong></div>
-    <div class="summary-row"><span>Transfer fee</span><strong>${naira(fees.transferFee)}</strong></div>
-    <div class="summary-row total"><span>Amount you receive</span><strong>${naira(fees.netAmount)}</strong></div>
-  `;
-}
-
-function renderWithdrawalOptions(){
-  const host=$("withdrawOptions");
-  host.innerHTML="";
-
-  WITHDRAWAL_AMOUNTS.forEach(amount=>{
-    const fees=calculateWithdrawal(amount);
-
-    const card=document.createElement("div");
-    card.className="withdraw-option";
-
-    const title=document.createElement("strong");
-    title.textContent=naira(amount);
-
-    const detail=document.createElement("span");
-    detail.textContent="You receive "+naira(fees.netAmount)+" after fees.";
-
-    const button=document.createElement("button");
-    button.textContent="Select Amount";
-    button.onclick=()=>{
-      showWithdrawalPreview(amount);
-      requestWithdrawal(amount,button);
+    btn.onclick = () => {
+      document.querySelectorAll("#amountGrid button").forEach(b => {
+        b.style.background = "white";
+        b.style.borderColor = "#e5e7eb";
+        b.style.color = "#1f2937";
+      });
+      btn.style.background = "#e6f4ea";
+      btn.style.borderColor = "#137333";
+      btn.style.color = "#137333";
+      selectedWithdrawalAmount = amount;
     };
 
-    card.append(title,detail,button);
-    host.appendChild(card);
+    grid.appendChild(btn);
   });
 }
 
-/* VERIFY PIN AND REQUEST WITHDRAWAL */
+$("submitWithdrawalBtn").onclick = async () => {
+  const pin = $("fundPasswordInput").value.trim();
+  const feedback = $("withdrawalFeedback");
 
-async function requestWithdrawal(amount,button){
-  const fees=calculateWithdrawal(amount);
-
-  const confirmed=confirm(
-    "Withdrawal amount: "+naira(fees.amount)+
-    "\nHandling fee: "+naira(fees.handlingFee)+
-    "\nTransfer fee: "+naira(fees.transferFee)+
-    "\nYou will receive: "+naira(fees.netAmount)+
-    "\n\nContinue?"
-  );
-
-  if(!confirmed)return;
-
-  const pin=prompt("Enter your six-digit withdrawal PIN:");
-
-  if(pin===null)return;
-
-  if(!/^\d{6}$/.test(pin)){
-    msg("withdrawMessage","Enter a valid six-digit PIN.","error");
+  if(!selectedWithdrawalAmount){
+    feedback.style.display = "block";
+    feedback.style.background = "#ffeded";
+    feedback.style.color = "#8a2222";
+    feedback.textContent = "Please select a withdrawal amount.";
     return;
   }
 
-  button.disabled=true;
-  button.textContent="Processing...";
+  if(!/^\d{6}$/.test(pin)){
+    feedback.style.display = "block";
+    feedback.style.background = "#ffeded";
+    feedback.style.color = "#8a2222";
+    feedback.textContent = "Please enter your valid 6-digit fund password / PIN.";
+    return;
+  }
+
+  $("submitWithdrawalBtn").disabled = true;
+  $("submitWithdrawalBtn").textContent = "Processing...";
+  feedback.style.display = "none";
 
   try{
-    const {data:verifyData,error:verifyError}=await supabase.rpc(
+    const {data:verifyData, error:verifyError} = await supabase.rpc(
       "palmgrow_verify_withdrawal_pin",
-      {p_pin:pin}
+      {p_pin: pin}
     );
 
-    if(verifyError)throw verifyError;
-
-    if(verifyData?.success===false){
-      throw new Error(verifyData.message||"PIN verification failed.");
+    if(verifyError) throw verifyError;
+    if(verifyData?.success === false){
+      throw new Error(verifyData.message || "Invalid fund password / PIN.");
     }
 
-    const {data,error}=await supabase.rpc(
+    const {data, error} = await supabase.rpc(
       "palmgrow_request_withdrawal",
-      {p_amount:amount}
+      {p_amount: selectedWithdrawalAmount}
     );
 
-    if(error)throw error;
-
-    if(data?.success===false){
-      throw new Error(data.message||"Withdrawal request failed.");
+    if(error) throw error;
+    if(data?.success === false){
+      throw new Error(data.message || "Withdrawal request failed.");
     }
 
-    msg(
-      "withdrawMessage",
-      data?.message||"Your withdrawal request has been submitted successfully."
-    );
-
+    feedback.style.display = "block";
+    feedback.style.background = "#e5f5e9";
+    feedback.style.color = "#155b31";
+    feedback.textContent = data?.message || "Withdrawal request submitted successfully!";
+    
+    $("fundPasswordInput").value = "";
+    selectedWithdrawalAmount = null;
     await loadDashboard();
     await loadWithdrawalSetup();
-    await loadMyWithdrawals();
+    renderWithdrawalPresetGrid();
 
   }catch(err){
-    msg("withdrawMessage",err.message||"Withdrawal request failed.","error");
+    feedback.style.display = "block";
+    feedback.style.background = "#ffeded";
+    feedback.style.color = "#8a2222";
+    feedback.textContent = err.message || "Withdrawal request failed.";
   }finally{
-    button.disabled=false;
-    button.textContent="Select Amount";
+    $("submitWithdrawalBtn").disabled = false;
+    $("submitWithdrawalBtn").textContent = "Submit Withdrawal";
   }
-}
-
-/* MEMBER WITHDRAWAL HISTORY */
-
-async function loadMyWithdrawals(){
-  const body=$("myWithdrawalsBody");
-
-  body.innerHTML="<tr><td colspan=\"5\">Loading withdrawal history...</td></tr>";
-
-  try{
-    const {data,error}=await supabase.rpc("palmgrow_my_withdrawals");
-    if(error)throw error;
-
-    const records=rowsOf(data);
-
-    if(records.length===0){
-      body.innerHTML="<tr><td colspan=\"5\">No withdrawal requests found.</td></tr>";
-      return;
-    }
-
-    body.innerHTML="";
-
-    records.forEach(item=>{
-      const amount=Number(item.amount??item.gross_amount??0);
-      const handling=Number(item.handling_fee??0);
-      const transfer=Number(item.transfer_fee??0);
-      const net=Number(item.net_amount??(amount-handling-transfer));
-
-      const tr=document.createElement("tr");
-
-      [
-        naira(amount),
-        naira(handling+transfer),
-        naira(net),
-        displayStatus(item.status),
-        dateText(item.requested_at||item.created_at)
-      ].forEach(value=>{
-        const td=document.createElement("td");
-        td.textContent=value;
-        tr.appendChild(td);
-      });
-
-      body.appendChild(tr);
-    });
-
-  }catch(err){
-    body.innerHTML="<tr><td colspan=\"5\">Unable to load history: "+escapeHtml(err.message)+"</td></tr>";
-  }
-}
-
-$("loadMyWithdrawalsBtn").onclick=loadMyWithdrawals;
+};
 
 /* ADMIN BANK VERIFICATION */
 
