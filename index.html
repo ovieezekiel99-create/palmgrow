@@ -61,7 +61,7 @@ cursor:pointer;margin-top:6px
 
 #app{display:none;min-height:100vh}
 
-/* REPLICATED EXACT SIDEBAR FROM REFERENCE DESIGN */
+/* REPLICATED EXACT SIDEBAR */
 .sidebar{
 position:fixed;top:0;left:0;bottom:0;width:260px;
 background:var(--green-dark);color:#fff;padding:24px 0;
@@ -104,12 +104,25 @@ background:linear-gradient(rgba(11, 61, 46, 0.88), rgba(15, 92, 66, 0.85)), url(
 z-index:-1;
 }
 
+/* STICKY TOPBAR WITH BACK BUTTON */
 .topbar{
 background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);
 padding:12px 24px;display:flex;align-items:center;justify-content:space-between;
 position:sticky;top:0;z-index:50
 }
+.topbar-left{display:flex;align-items:center;gap:12px}
 .menu-btn{background:none;border:0;font-size:22px;cursor:pointer;color:var(--green-dark)}
+
+/* BACK NAVIGATION BUTTON STYLES */
+.back-btn{
+display:inline-flex;align-items:center;gap:6px;
+background:#e8f5e9;color:var(--green-dark);border:1px solid #c8e6c9;
+padding:7px 14px;border-radius:20px;font-size:13px;font-weight:700;
+cursor:pointer;transition:all 0.2s ease
+}
+.back-btn:hover{background:var(--green);color:#fff;border-color:var(--green)}
+.page-back-bar{margin-bottom:16px}
+
 .topbar-right{display:flex;align-items:center;gap:15px}
 .date-badge{background:#e8f5e9;color:var(--green-dark);padding:6px 12px;border-radius:20px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;border:1px solid #c8e6c9}
 .notif-btn{position:relative;background:#fff;border:1px solid var(--border);width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px}
@@ -351,7 +364,7 @@ td{vertical-align:middle}
 <div id="app">
 <div class="overlay" id="overlay"></div>
 
-<!-- REPLICATED EXACT SIDEBAR -->
+<!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
 <div class="sidebar-top">
 <div class="logo">🌴 Palm<span>Grow</span></div>
@@ -374,8 +387,12 @@ td{vertical-align:middle}
 </aside>
 
 <div class="main">
+<!-- TOPBAR WITH HEADER BACK BUTTON -->
 <div class="topbar">
+<div class="topbar-left">
 <button class="menu-btn" id="menuBtn">☰</button>
+<button class="back-btn hidden" id="headerBackBtn" onclick="goBack()">← Back</button>
+</div>
 <div class="topbar-right">
 <div class="date-badge">📅 <span id="currentDateDisplay">Today: May 21, 2025</span></div>
 <div class="notif-btn">🔔<div class="notif-badge">2</div></div>
@@ -384,7 +401,7 @@ td{vertical-align:middle}
 
 <div class="content">
 
-<!-- DASHBOARD PAGE MATCHING EXACT REFERENCE DESIGN -->
+<!-- DASHBOARD PAGE -->
 <div id="page-dashboard">
 <div class="welcome">
 <div class="welcome-avatar" id="userAvatar">J</div>
@@ -523,6 +540,9 @@ td{vertical-align:middle}
 
 <!-- INVEST PAGE -->
 <div id="page-invest" class="hidden">
+<div class="page-back-bar">
+<button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
+</div>
 <div class="section">
 <h3>🌴 PalmGrow Investment Plans</h3>
 <div class="notice">Choose your investment amount and submit your deposit for administrator review.</div>
@@ -563,6 +583,9 @@ td{vertical-align:middle}
 
 <!-- EMPLOYEE POSITION PAGE -->
 <div id="page-employee-position" class="hidden">
+<div class="page-back-bar">
+<button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
+</div>
 <div class="section">
 <h3>🌴 Employee Position – M1 to M9</h3>
 <p style="font-size:13px;color:var(--muted);margin-bottom:14px">
@@ -608,6 +631,9 @@ Loading employee levels...
 
 <!-- EMPLOYEE TASKS PAGE -->
 <div id="page-employee-tasks" class="hidden">
+<div class="page-back-bar">
+<button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
+</div>
 <div class="section">
 <h3>🌱 Employee Daily Tasks</h3>
 <p style="font-size:13px;color:var(--muted);margin-bottom:14px">
@@ -639,6 +665,9 @@ Your assigned agricultural tasks appear here on working days. Mark each task com
 
 <!-- DEPOSIT PAGE -->
 <div id="page-deposit" class="hidden">
+<div class="page-back-bar">
+<button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
+</div>
 <div class="section">
 <h3>📥 Deposit Submission</h3>
 <div class="payment-box">
@@ -680,6 +709,9 @@ Submit this form only after making payment. Your deposit remains pending until a
 
 <!-- REFERRAL PAGE -->
 <div id="page-referral" class="hidden">
+<div class="page-back-bar">
+<button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
+</div>
 <div class="section">
 <h3>👥 Referral Program</h3>
 <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Share your referral code with people you invite to PalmGrow.</p>
@@ -692,6 +724,9 @@ Your Referral Code:<br>
 
 <!-- ADMIN PAGE -->
 <div id="page-admin" class="hidden">
+<div class="page-back-bar">
+<button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
+</div>
 <div class="section">
 <h3>🛡️ Administrator Panel – Deposit Review</h3>
 <p style="font-size:13px;color:var(--muted);margin-bottom:12px">
@@ -739,6 +774,9 @@ let loginMode = false;
 let dashboardLoading = false;
 let positionPlans = [];
 let currentPosition = null;
+
+// NAVIGATION HISTORY MANAGEMENT
+let pageHistory = ["dashboard"];
 
 function msg(id, text, type = "success") {
   const el = $(id);
@@ -830,8 +868,8 @@ $("authForm").onsubmit = async e => {
   }
 };
 
-/* NAVIGATION */
-function showPage(page) {
+/* NAVIGATION & BACK BUTTON FUNCTIONALITY */
+function showPage(page, isBackAction = false) {
   document.querySelectorAll("[id^='page-']").forEach(el => el.classList.add("hidden"));
   const target = $("page-" + page);
   if (target) target.classList.remove("hidden");
@@ -843,12 +881,35 @@ function showPage(page) {
   $("sidebar").classList.remove("open");
   $("overlay").classList.remove("show");
 
+  if (!isBackAction) {
+    if (pageHistory[pageHistory.length - 1] !== page) {
+      pageHistory.push(page);
+    }
+  }
+
+  // Show Header Back Button on all sub-pages except dashboard
+  if ($("headerBackBtn")) {
+    $("headerBackBtn").classList.toggle("hidden", page === "dashboard");
+  }
+
   if (page === "employee-tasks") loadEmployeeTasks();
   if (page === "employee-position") loadEmployeePosition();
   if (page === "deposit") loadMyDeposits();
 }
 
+function goBack() {
+  if (pageHistory.length > 1) {
+    pageHistory.pop(); // Remove current page
+    const previousPage = pageHistory[pageHistory.length - 1];
+    showPage(previousPage, true);
+  } else {
+    showPage("dashboard", true);
+  }
+}
+
 window.showPage = showPage;
+window.goBack = goBack;
+
 window.selectDeposit = amount => {
   $("depositAmount").value = String(amount);
   showPage("deposit");
