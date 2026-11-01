@@ -142,7 +142,10 @@ th{background:#f0f5f2;font-weight:600}
 
   <div class="main">
     <div class="topbar">
-      <button class="menu-btn" id="menuBtn">☰</button>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <button class="menu-btn hidden" id="backBtn" title="Go back">←</button>
+      </div>
       <div class="user-info">
         <div class="avatar" id="userAvatar">P</div>
         <div><div id="userName" style="font-weight:600">Member</div><div id="userPhone" style="font-size:12px;color:var(--muted)"></div></div>
@@ -362,6 +365,7 @@ let loginMode = false;
 let currentUser = null;
 let currentProfile = null;
 let withdrawalSetup = null;
+let pageHistory = ["dashboard"];
 
 const WITHDRAWAL_AMOUNTS = [
   1800,2800,8000,26000,75000,200000,
@@ -494,7 +498,11 @@ const PAGE_NAMES=[
   "employee-tasks","employee-position","withdraw"
 ];
 
-function showPage(page){
+function showPage(page, pushHistory = true){
+  if(pushHistory && pageHistory[pageHistory.length - 1] !== page){
+    pageHistory.push(page);
+  }
+
   PAGE_NAMES.forEach(p=>{
     const el=$("page-"+p);
     if(el)el.classList.toggle("hidden",p!==page);
@@ -505,6 +513,11 @@ function showPage(page){
   if(active)active.classList.add("active");
 
   closeSidebar();
+
+  const backBtn = $("backBtn");
+  if(backBtn){
+    backBtn.classList.toggle("hidden", pageHistory.length <= 1 || page === "dashboard");
+  }
 
   if(page==="employee-tasks")loadEmployeeTasks();
   if(page==="employee-position")loadEmployeePositionPlans();
@@ -517,6 +530,14 @@ window.showPage=showPage;
 document.querySelectorAll(".nav-item[data-page]").forEach(item=>{
   item.onclick=()=>showPage(item.dataset.page);
 });
+
+$("backBtn").onclick = () => {
+  if(pageHistory.length > 1){
+    pageHistory.pop();
+    const previousPage = pageHistory[pageHistory.length - 1];
+    showPage(previousPage, false);
+  }
+};
 
 $("menuBtn").onclick=()=>{
   $("sidebar").classList.add("open");
@@ -1608,4 +1629,4 @@ if(session)await loadDashboard();
 
 </script>
 </body>
-                               </html>
+</html>
