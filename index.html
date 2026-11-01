@@ -23,7 +23,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
 .auth-box button{width:100%;padding:13px;background:var(--green);color:#fff;border:0;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;margin-top:6px}
 .auth-box button.secondary{background:#e8f0ec;color:var(--green-dark);margin-top:10px}
 .status{margin-top:12px;padding:10px;border-radius:8px;font-size:13px}
-.success{background:#e5f5e9;color:#155b31}.error{background:#ffeded;color:#8a2222}
+.success{background:#e5f5e9;color:#155b31}
+.error{background:#ffeded;color:#8a2222}
 #app{display:none;min-height:100vh}
 .sidebar{position:fixed;top:0;left:0;bottom:0;width:240px;background:var(--green-dark);color:#fff;padding:20px 0;overflow-y:auto;z-index:100;transform:translateX(-100%);transition:transform .25s ease}
 .sidebar.open{transform:translateX(0)}
@@ -57,7 +58,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
 .user-info .avatar{width:36px;height:36px;background:var(--green);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600}
 .content{padding:16px;max-width:1100px;margin:0 auto}
 .welcome{background:linear-gradient(135deg,#0b3d2e,#147a56);color:#fff;border-radius:14px;padding:20px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.welcome h2{font-size:20px;margin-bottom:4px}.welcome p{opacity:.9;font-size:14px}
+.welcome h2{font-size:20px;margin-bottom:4px}
+.welcome p{opacity:.9;font-size:14px}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
 .stat-card{background:#fff;border-radius:12px;padding:16px;border:1px solid var(--border)}
 .stat-card .label{font-size:12px;color:var(--muted);margin-bottom:6px}
@@ -67,7 +69,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
 .section h3{font-size:16px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .plans{display:grid;grid-template-columns:1fr;gap:12px}
 .plan{border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center}
-.plan .icon{font-size:28px}.plan h4{margin:8px 0 4px;font-size:15px}
+.plan .icon{font-size:28px}
+.plan h4{margin:8px 0 4px;font-size:15px}
 .plan .price{font-size:20px;font-weight:700;color:var(--green-dark);margin:8px 0}
 .plan p{font-size:12px;color:var(--muted);margin-bottom:12px}
 .plan button{width:100%;padding:10px;background:var(--green);color:#fff;border:0;border-radius:6px;font-weight:600;cursor:pointer}
@@ -76,17 +79,36 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
 .payment-box strong{color:var(--green-dark)}
 form label{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
 form input,form select{width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px;margin-bottom:12px}
-form button{width:100%;padding:12px;background:var(--green);color:#fff;border:0;border-radius:8px;font-weight:600;cursor:pointer}
+form button,.primary-btn{width:100%;padding:12px;background:var(--green);color:#fff;border:0;border-radius:8px;font-weight:600;cursor:pointer}
+button:disabled{opacity:.6;cursor:not-allowed}
 .secondary-btn{background:#e8f0ec!important;color:var(--green-dark)!important;margin-top:10px}
+.danger-btn{background:#b42318!important;color:white!important}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--border)}
+th,td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
 th{background:#f0f5f2;font-weight:600}
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:90;display:none}
 .overlay.show{display:block}
-@media(min-width:768px){.sidebar{transform:translateX(0)}.main{margin-left:240px}.menu-btn{display:none}.stats{grid-template-columns:repeat(4,1fr)}.plans{grid-template-columns:repeat(3,1fr)}}
+.withdraw-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.withdraw-option{border:1px solid var(--border);border-radius:10px;padding:14px;background:#fff}
+.withdraw-option strong{display:block;color:var(--green-dark);font-size:18px}
+.withdraw-option span{font-size:12px;color:var(--muted)}
+.withdraw-option button{width:100%;margin-top:10px;padding:10px;border:0;border-radius:7px;background:var(--green);color:#fff;font-weight:600}
+.summary-row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px}
+.summary-row.total{font-weight:700;color:var(--green-dark);font-size:16px}
+.admin-actions{display:flex;flex-wrap:wrap;gap:6px}
+.admin-actions button{padding:7px 9px;border:0;border-radius:5px;cursor:pointer;font-weight:600}
+@media(min-width:768px){
+  .sidebar{transform:translateX(0)}
+  .main{margin-left:240px}
+  .menu-btn{display:none}
+  .stats{grid-template-columns:repeat(4,1fr)}
+  .plans{grid-template-columns:repeat(3,1fr)}
+  .withdraw-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
 </style>
 </head>
 <body>
+
 <div id="authScreen">
   <div class="auth-box">
     <h1>🌴 PalmGrow</h1>
@@ -110,13 +132,14 @@ th{background:#f0f5f2;font-weight:600}
     <div class="nav-item active" data-page="dashboard">🏠 Dashboard</div>
     <div class="nav-item" data-page="invest">💰 Make Investment</div>
     <div class="nav-item" data-page="employee-position" id="employeePositionNav" style="display:none">📈 Employee Position M1–M9</div>
-    <div class="nav-item" data-page="employee-tasks">🌱 Employee Daily Tasks</div>
+    <div class="nav-item" data-page="employee-tasks" id="employeeTasksNav" style="display:none">🌱 Employee Daily Tasks</div>
     <div class="nav-item" data-page="deposit">📥 Deposit</div>
-    <div class="nav-item" data-page="withdrawal" id="withdrawalNav">💳 Withdraw</div>
+    <div class="nav-item" data-page="withdraw">💸 Withdraw Funds</div>
     <div class="nav-item" data-page="referral">👥 Referral Program</div>
     <div class="nav-item" data-page="admin" id="adminNav" style="display:none">🛡️ Admin Panel</div>
     <div class="nav-item" id="logoutNav">🚪 Log Out</div>
   </aside>
+
   <div class="main">
     <div class="topbar">
       <button class="menu-btn" id="menuBtn">☰</button>
@@ -125,30 +148,48 @@ th{background:#f0f5f2;font-weight:600}
         <div><div id="userName" style="font-weight:600">Member</div><div id="userPhone" style="font-size:12px;color:var(--muted)"></div></div>
       </div>
     </div>
+
     <div class="content">
       <div id="page-dashboard">
-        <div class="welcome"><div><h2>Welcome, <span id="welcomeName">Member</span>!</h2><p>Your PalmGrow account overview</p></div><div>🌴 Growing together</div></div>
+        <div class="welcome">
+          <div><h2>Welcome Back, <span id="welcomeName">Member</span></h2><p>Your investment journey is growing!</p></div>
+        </div>
         <div class="stats">
-          <div class="stat-card"><div class="label">Available Balance</div><div class="value" id="availableBalance">₦0.00</div></div>
+          <div class="stat-card"><div class="label">Available Balance</div><div class="value" id="availableBalance">₦0.00</div><button onclick="showPage('deposit')">Fund Wallet</button></div>
           <div class="stat-card"><div class="label">Total Investment</div><div class="value" id="totalInvestment">₦0.00</div></div>
           <div class="stat-card"><div class="label">Total Earnings</div><div class="value" id="totalEarnings">₦0.00</div></div>
           <div class="stat-card"><div class="label">Referral Earnings</div><div class="value" id="referralEarnings">₦0.00</div></div>
         </div>
-        <div class="section"><h3>Account Information</h3><p>Name: <strong id="profileName">-</strong></p><p>Phone: <strong id="profilePhone">-</strong></p><p>Account Type: <strong id="accountType">-</strong></p><p>Referral Code: <strong id="profileReferral">-</strong></p></div>
+        <div class="section">
+          <h3>💸 Withdrawal Overview</h3>
+          <div class="summary-row"><span>Withdrawable balance</span><strong id="dashboardWithdrawable">₦0.00</strong></div>
+          <div class="summary-row"><span>Account type</span><strong id="dashboardAccountType">—</strong></div>
+          <button class="primary-btn" style="margin-top:12px" onclick="showPage('withdraw')">Go to Withdrawals</button>
+        </div>
       </div>
 
       <div id="page-employee-position" class="hidden">
-        <div class="section"><h3>📈 Employee Position M1–M9</h3><p style="color:var(--muted);font-size:13px;margin-bottom:12px">Choose an available position and follow the requirements shown for each level.</p><div id="employeePositionPlans"><p>Loading employee positions...</p></div><div id="employeePositionMessage" class="status hidden"></div></div>
+        <div class="section">
+          <h3>📈 Employee Position Plans (M1–M9)</h3>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Choose a position only if you understand the deposit requirement and have sufficient available wallet balance. Projections are estimates, not guaranteed earnings.</p>
+          <div class="notice">Your available wallet balance: <strong id="positionWalletBalance">₦0.00</strong>.</div>
+          <div id="employeePositionPlans"><p>Loading position plans...</p></div>
+          <div id="positionMessage" class="status hidden"></div>
+        </div>
       </div>
 
       <div id="page-employee-tasks" class="hidden">
         <div class="section">
           <h3>🌱 Employee Daily Tasks</h3>
-          <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Complete your assigned daily tasks and submit them for review.</p>
-          <div class="payment-box"><strong>Daily task progress</strong><br><span id="taskProgressDisplay">0 of 0 tasks completed</span></div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Your assigned practical palm-farm tasks appear here on working days. Mark each task complete only after doing the work. Task completion is self-reported.</p>
+          <div class="stat-card" style="margin-bottom:12px;text-align:center;padding:18px"><div class="label">Total Daily Task Payment</div><div class="value" id="dailyRateDisplay">₦0.00 / day</div></div>
+          <div class="notice" style="background:#e8f5e9;border:1px solid #2e7d32;color:#1b5e20;margin-bottom:12px"><strong>Progress:</strong> <span id="taskProgressDisplay">0 of 0 tasks completed</span></div>
           <div id="employeeTaskList"><p style="color:var(--muted)">Your tasks will load here.</p></div>
           <div id="taskMessage" class="status hidden" style="margin-top:12px"></div>
-          <div class="section" style="margin-top:16px;background:#f8fbf9"><h3>My Task Payment History</h3><div style="overflow-x:auto"><table><thead><tr><th>Payment</th><th>Description</th><th>Date</th></tr></thead><tbody id="employeePayrollBody"><tr><td colspan="3">No task payments displayed yet.</td></tr></tbody></table></div></div>
+          <div class="section" style="margin-top:16px;background:#f8fbf9">
+            <h3>My Task Payment History</h3>
+            <div style="overflow-x:auto"><table><thead><tr><th>Payment</th><th>Description</th><th>Date</th></tr></thead><tbody id="employeePayrollBody"><tr><td colspan="3">No task payments displayed yet.</td></tr></tbody></table></div>
+          </div>
         </div>
       </div>
 
@@ -159,8 +200,15 @@ th{background:#f0f5f2;font-weight:600}
           <div class="payment-box"><strong>Payment Details (OPay)</strong><br><br>Account Name: <strong>Ovie Ezekiel</strong><br>Account Number: <strong>7037816664</strong><br>Bank: <strong>OPay</strong></div>
           <p id="selectedPlanText" style="margin-bottom:12px;font-weight:600"></p>
           <form id="depositForm">
-            <label>Deposit Amount</label><select id="depositAmount" required><option value="">Select amount</option><option value="5000">₦5,000</option><option value="50000">₦50,000</option><option value="100000">₦100,000</option></select>
-            <label>Payment Reference</label><input id="paymentReference" maxlength="120" required placeholder="Bank transaction reference">
+            <label>Deposit Amount</label>
+            <select id="depositAmount" required>
+              <option value="">Select amount</option>
+              <option value="5000">₦5,000</option>
+              <option value="50000">₦50,000</option>
+              <option value="100000">₦100,000</option>
+            </select>
+            <label>Payment Reference</label>
+            <input id="paymentReference" maxlength="120" required placeholder="Bank transaction reference">
             <button type="submit" id="depositBtn">Submit Deposit for Review</button>
           </form>
           <div id="depositMessage" class="status hidden"></div>
@@ -170,52 +218,87 @@ th{background:#f0f5f2;font-weight:600}
         </div>
       </div>
 
-      <div id="page-withdrawal" class="hidden">
+      <div id="page-withdraw" class="hidden">
         <div class="section">
-          <h3>💳 Withdraw Funds</h3>
-          <div class="notice">Withdrawals are available on weekdays from 10:00am to 5:00pm Lagos time. One request per user per day. Investors can withdraw credited interest only; investment principal and investor available balance are not withdrawable.</div>
-          <div class="payment-box"><strong>Withdrawal fees</strong><br>Handling fee: 10% of selected amount<br>Transfer fare: ₦100<br><strong>Net amount = selected amount − fees</strong></div>
-          <h3>1. Bank Account</h3>
-          <div id="withdrawBankStatus" class="notice">Loading bank setup...</div>
-          <form id="withdrawBankForm">
-            <label>Approved Bank</label><select id="withdrawBank" required><option value="">Select bank</option><option>Access Bank Plc</option><option>UBA</option><option>OPay</option><option>PalmPay</option><option>MoMo PSB NG</option><option>Kuda Bank</option></select>
-            <label>Account Number</label><input id="withdrawAccountNumber" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" required placeholder="10-digit account number">
-            <button type="submit" id="saveWithdrawBank">Register Bank Account</button>
-          </form>
-          <div id="withdrawBankMessage" class="status hidden"></div>
-          <h3 style="margin-top:20px">2. Withdrawal PIN</h3>
-          <form id="withdrawPinForm">
-            <label>Create six-digit PIN (one-time setup)</label>
-            <input id="withdrawPin" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" required placeholder="Six-digit PIN">
-            <button type="submit">Create Withdrawal PIN</button>
-          </form>
-          <div id="withdrawPinMessage" class="status hidden"></div>
-          <h3 style="margin-top:20px">3. Request Withdrawal</h3>
-          <div class="stat-card" style="margin-bottom:12px"><div class="label" id="withdrawBalanceLabel">Withdrawable balance</div><div class="value" id="withdrawableBalance">₦0.00</div></div>
-          <form id="withdrawRequestForm">
-            <label>Choose amount</label>
-            <select id="withdrawAmount" required>
-              <option value="">Select withdrawal amount</option>
-              <option value="1800">₦1,800</option><option value="2800">₦2,800</option>
-              <option value="8000">₦8,000</option><option value="26000">₦26,000</option>
-              <option value="75000">₦75,000</option><option value="200000">₦200,000</option>
-              <option value="400000">₦400,000</option><option value="1500000">₦1,500,000</option>
-              <option value="3000000">₦3,000,000</option><option value="6000000">₦6,000,000</option>
-            </select>
-            <div class="payment-box" id="withdrawCalculation">Select an amount to calculate fees and net payment.</div>
-            <label>Confirm six-digit PIN</label>
-            <input id="withdrawConfirmPin" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" required placeholder="Enter your PIN">
-            <button type="submit" id="withdrawSubmit">Verify PIN and Request Withdrawal</button>
-          </form>
-          <div id="withdrawRequestMessage" class="status hidden"></div>
-          <h3 style="margin-top:20px">My Withdrawal History</h3>
-          <button id="loadMyWithdrawals" type="button" style="padding:10px 16px;background:var(--green);color:white;border:0;border-radius:6px">Refresh History</button>
-          <div style="overflow-x:auto;margin-top:12px"><table><thead><tr><th>Gross</th><th>Handling</th><th>Transfer</th><th>Net</th><th>Status</th><th>Date</th></tr></thead><tbody id="myWithdrawalsBody"><tr><td colspan="6">Tap Refresh History</td></tr></tbody></table></div>
+          <h3>💸 Withdraw Funds</h3>
+          <div class="notice">
+            Withdrawals are available Monday to Friday, between 10:00 AM and 5:00 PM Lagos time. The server checks the actual withdrawal time.
+          </div>
+
+          <div class="stats">
+            <div class="stat-card">
+              <div class="label">Withdrawable Balance</div>
+              <div class="value" id="withdrawAvailable">₦0.00</div>
+            </div>
+            <div class="stat-card">
+              <div class="label">Account Type</div>
+              <div class="value" id="withdrawAccountType">—</div>
+            </div>
+          </div>
+
+          <div class="section" style="background:#f8fbf9">
+            <h3>🔐 Withdrawal PIN</h3>
+            <p id="pinStatusText" style="font-size:13px;color:var(--muted);margin-bottom:12px">Checking PIN status...</p>
+            <form id="pinForm">
+              <label id="pinFormLabel">Create a six-digit withdrawal PIN</label>
+              <input id="withdrawPin" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" autocomplete="off" placeholder="Enter six-digit PIN" required>
+              <button id="pinSubmitBtn" type="submit">Create Withdrawal PIN</button>
+            </form>
+            <div id="pinMessage" class="status hidden"></div>
+          </div>
+
+          <div class="section" style="background:#f8fbf9">
+            <h3>🏦 Bank Account</h3>
+            <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Register your bank account. Withdrawals can only be sent to an account verified by PalmGrow administration.</p>
+            <div id="bankCurrentDetails" class="payment-box">Loading bank details...</div>
+            <form id="bankForm">
+              <label>Choose Bank</label>
+              <select id="withdrawBank" required>
+                <option value="">Select approved bank</option>
+                <option>Access Bank Plc</option>
+                <option>UBA</option>
+                <option>OPay</option>
+                <option>PalmPay</option>
+                <option>MoMo PSB NG</option>
+                <option>Kuda Bank</option>
+              </select>
+              <label>Account Number</label>
+              <input id="withdrawAccountNumber" type="text" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" placeholder="Enter 10-digit account number" required>
+              <button type="submit" id="bankSubmitBtn">Register Bank Account</button>
+            </form>
+            <div id="bankMessage" class="status hidden"></div>
+          </div>
+
+          <div class="section">
+            <h3>💰 Select Withdrawal Amount</h3>
+            <p style="font-size:13px;color:var(--muted);margin-bottom:12px">A 10% handling fee and ₦100 transfer fee apply to each withdrawal.</p>
+            <div id="withdrawFeePreview" class="payment-box">
+              Select an amount to see the fee and amount you will receive.
+            </div>
+            <div class="withdraw-grid" id="withdrawOptions"></div>
+            <div id="withdrawMessage" class="status hidden"></div>
+          </div>
+
+          <div class="section">
+            <h3>📜 My Withdrawal History</h3>
+            <button id="loadMyWithdrawalsBtn" class="primary-btn">Refresh Withdrawal History</button>
+            <div style="overflow-x:auto;margin-top:14px">
+              <table>
+                <thead><tr><th>Amount</th><th>Fees</th><th>Net Amount</th><th>Status</th><th>Date</th></tr></thead>
+                <tbody id="myWithdrawalsBody"><tr><td colspan="5">Click refresh to load your history.</td></tr></tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
 
       <div id="page-referral" class="hidden">
-        <div class="section"><h3>👥 Referral Program</h3><p style="margin-bottom:14px;color:var(--muted);font-size:14px">Share your referral code with friends. Earn rewards when they invest.</p><div class="payment-box">Your Referral Code:<br><strong id="referralCode" style="font-size:20px;letter-spacing:1px">LOADING...</strong></div><p style="font-size:13px;color:var(--muted)">Referral earnings will appear on your dashboard when the system is fully activated.</p></div>
+        <div class="section">
+          <h3>👥 Referral Program</h3>
+          <p style="margin-bottom:14px;color:var(--muted);font-size:14px">Share your referral code with friends. Earn rewards when they invest.</p>
+          <div class="payment-box">Your Referral Code:<br><strong id="referralCode" style="font-size:20px;letter-spacing:1px">LOADING...</strong></div>
+          <p style="font-size:13px;color:var(--muted)">Referral earnings will appear on your dashboard when the system is fully activated.</p>
+        </div>
       </div>
 
       <div id="page-admin" class="hidden">
@@ -224,14 +307,31 @@ th{background:#f0f5f2;font-weight:600}
           <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Check your actual bank records before confirming any payment.</p>
           <button id="loadDepositsBtn" style="padding:10px 16px;background:var(--green);color:white;border:0;border-radius:6px;font-weight:600;cursor:pointer">Load Pending Deposits</button>
           <div id="adminMessage" class="status hidden"></div>
-          <div style="overflow-x:auto;margin-top:14px"><table><thead><tr><th>Amount</th><th>Reference</th><th>Status</th><th>Date</th><th>Action</th></tr></thead><tbody id="adminDepositsBody"><tr><td colspan="5">Click Load Pending Deposits</td></tr></tbody></table></div>
+          <div style="overflow-x:auto;margin-top:14px">
+            <table><thead><tr><th>Amount</th><th>Reference</th><th>Status</th><th>Date</th><th>Action</th></tr></thead><tbody id="adminDepositsBody"><tr><td colspan="5">Click Load Pending Deposits</td></tr></tbody></table>
+          </div>
         </div>
+
         <div class="section">
-          <h3>💳 Admin – Withdrawals</h3>
-          <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Verify the bank transfer independently before marking a request Paid. First move it to Bank Processing. Mark Paid only after sending the net amount.</p>
-          <button id="loadAdminWithdrawals" style="padding:10px 16px;background:var(--green);color:white;border:0;border-radius:6px;font-weight:600">Load Withdrawals</button>
+          <h3>🏦 Bank Account Verification</h3>
+          <button id="loadWithdrawalBanksBtn" class="primary-btn">Load Bank Accounts Awaiting Verification</button>
+          <div id="adminBankMessage" class="status hidden"></div>
+          <div style="overflow-x:auto;margin-top:12px">
+            <table><thead><tr><th>Member</th><th>Bank</th><th>Account</th><th>Action</th></tr></thead><tbody id="adminBanksBody"><tr><td colspan="4">Click the button to load accounts.</td></tr></tbody></table>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3>💸 Withdrawal Requests</h3>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Confirm that the actual bank transfer has been made before marking a request as paid.</p>
+          <button id="loadAdminWithdrawalsBtn" class="primary-btn">Load Withdrawal Requests</button>
           <div id="adminWithdrawalMessage" class="status hidden"></div>
-          <div style="overflow-x:auto;margin-top:14px"><table><thead><tr><th>User</th><th>Type</th><th>Bank details</th><th>Gross</th><th>Fees</th><th>Net</th><th>Status</th><th>Action</th></tr></thead><tbody id="adminWithdrawalsBody"><tr><td colspan="8">Click Load Withdrawals</td></tr></tbody></table></div>
+          <div style="overflow-x:auto;margin-top:12px">
+            <table>
+              <thead><tr><th>Member</th><th>Bank Details</th><th>Gross</th><th>Fees</th><th>Net Payable</th><th>Status</th><th>Action</th></tr></thead>
+              <tbody id="adminWithdrawalsBody"><tr><td colspan="7">Click the button to load requests.</td></tr></tbody>
+            </table>
+          </div>
         </div>
       </div>
 
@@ -245,6 +345,7 @@ th{background:#f0f5f2;font-weight:600}
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </div>
@@ -255,60 +356,1256 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 const SUPABASE_URL = "https://ghdiycdzsmncmlcpdniy.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_xy6UyL2BeQFgB8LeYMHuJA_k6MdhVz9";
 const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
 const $ = id => document.getElementById(id);
 let loginMode = false;
 let currentUser = null;
+let currentProfile = null;
+let withdrawalSetup = null;
 
-function naira(v){return "₦"+Number(v||0).toLocaleString("en-NG",{minimumFractionDigits:2,maximumFractionDigits:2})}
-function msg(id,text,type="success"){const el=$(id);el.textContent=text;el.className="status "+type;el.classList.remove("hidden")}
-function escapeHtml(value){return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+const WITHDRAWAL_AMOUNTS = [
+  1800,2800,8000,26000,75000,200000,
+  400000,1500000,3000000,6000000
+];
+
+function naira(v){
+  return "₦"+Number(v||0).toLocaleString("en-NG",{
+    minimumFractionDigits:2,
+    maximumFractionDigits:2
+  });
+}
+
+function msg(id,text,type="success"){
+  const el=$(id);
+  if(!el)return;
+  el.textContent=text;
+  el.className="status "+type;
+  el.classList.remove("hidden");
+}
+
+function escapeHtml(value){
+  return String(value??"").replace(/[&<>"']/g,ch=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[ch]));
+}
+
+function rowsOf(data){
+  if(Array.isArray(data))return data;
+  if(Array.isArray(data?.data))return data.data;
+  if(Array.isArray(data?.items))return data.items;
+  if(Array.isArray(data?.withdrawals))return data.withdrawals;
+  if(Array.isArray(data?.requests))return data.requests;
+  return data ? [data] : [];
+}
+
+function objectOf(data){
+  if(Array.isArray(data))return data[0]||{};
+  if(data?.data && !Array.isArray(data.data))return data.data;
+  return data||{};
+}
+
+function dateText(value){
+  if(!value)return "—";
+  const date=new Date(value);
+  return Number.isNaN(date.getTime())?"—":date.toLocaleString();
+}
+
+function displayStatus(status){
+  return String(status||"pending").replaceAll("_"," ").toUpperCase();
+}
 
 /* EMAIL AUTHENTICATION */
+
 function updateAuthUI(){
-  $("authSub").textContent=loginMode?"Login to your PalmGrow account":"Create your PalmGrow account";
+  $("authSub").textContent=loginMode
+    ?"Login to your PalmGrow account"
+    :"Create your PalmGrow account";
   $("submitBtn").textContent=loginMode?"Login":"Create Account";
   $("nameField").classList.toggle("hidden",loginMode);
   $("referralField").classList.toggle("hidden",loginMode);
-  $("switchBtn").textContent=loginMode?"Need an account? Register":"Already have an account? Login";
+  $("switchBtn").textContent=loginMode
+    ?"Need an account? Register"
+    :"Already have an account? Login";
 }
-$("switchBtn").onclick=()=>{loginMode=!loginMode;$("authMessage").classList.add("hidden");updateAuthUI()};
+
+$("switchBtn").onclick=()=>{
+  loginMode=!loginMode;
+  $("authMessage").classList.add("hidden");
+  updateAuthUI();
+};
 
 $("authForm").onsubmit=async e=>{
   e.preventDefault();
-  const email=$("email").value.trim(),password=$("password").value;
+
+  const email=$("email").value.trim().toLowerCase();
+  const password=$("password").value;
+  const fullName=$("fullName").value.trim();
+  const referralCode=$("referralCodeInput").value.trim().toUpperCase();
+
   $("submitBtn").disabled=true;
+  $("submitBtn").textContent="Please wait...";
+
   try{
     if(loginMode){
-      const {data,error}=await supabase.auth.signInWithPassword({email,password});
+      const {error}=await supabase.auth.signInWithPassword({email,password});
       if(error)throw error;
-      currentUser=data.user;
       await loadDashboard();
     }else{
-      const full_name=$("fullName").value.trim();
-      const referral_code=$("referralCodeInput").value.trim();
-      if(!full_name)throw new Error("Enter your full name.");
-      const {data,error}=await supabase.functions.invoke("palmgrow-register",{body:{full_name,email,password,referral_code}});
-      if(error)throw error;
-      if(!data?.success)throw new Error(data?.message||"Registration failed.");
-      msg("authMessage","Account created. Please check your email if confirmation is required.");
-      loginMode=true;updateAuthUI();
+      if(fullName.length<3)throw new Error("Please enter your full name.");
+
+      const response=await fetch(`${SUPABASE_URL}/functions/v1/palmgrow-register`,{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+          "apikey":SUPABASE_PUBLISHABLE_KEY
+        },
+        body:JSON.stringify({
+          action:"register",
+          full_name:fullName,
+          email,
+          password,
+          referral_code:referralCode
+        })
+      });
+
+      const result=await response.json();
+      if(!response.ok||!result.success){
+        throw new Error(result.error||"Registration failed.");
+      }
+
+      msg("authMessage","Your account has been created successfully. You can now log in.");
+      loginMode=true;
+      updateAuthUI();
+      $("email").value=email;
+      $("password").value="";
     }
-  }catch(err){msg("authMessage",err.message,"error")}
-  finally{$("submitBtn").disabled=false}
+  }catch(err){
+    msg("authMessage",err.message||"Authentication failed.","error");
+  }finally{
+    $("submitBtn").disabled=false;
+    updateAuthUI();
+  }
 };
 
 /* NAVIGATION */
+
+const PAGE_NAMES=[
+  "dashboard","deposit","referral","admin","invest",
+  "employee-tasks","employee-position","withdraw"
+];
+
 function showPage(page){
-  document.querySelectorAll('[id^="page-"]').forEach(el=>el.classList.add("hidden"));
-  const target=$("page-"+page);if(target)target.classList.remove("hidden");
-  document.querySelectorAll(".nav-item[data-page]").forEach(el=>el.classList.toggle("active",el.dataset.page===page));
-  $("sidebar").classList.remove("open");$("overlay").classList.remove("show");
-  if(page==="employee-position")loadEmployeePositions();
+  PAGE_NAMES.forEach(p=>{
+    const el=$("page-"+p);
+    if(el)el.classList.toggle("hidden",p!==page);
+  });
+
+  document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
+  const active=document.querySelector(`.nav-item[data-page="${page}"]`);
+  if(active)active.classList.add("active");
+
+  closeSidebar();
+
   if(page==="employee-tasks")loadEmployeeTasks();
-  if(page==="deposit")loadMyDeposits();
-  if(page==="withdrawal"){loadWithdrawalSetup();loadMyWithdrawals()}
-  if(page==="admin"){loadAdminWithdrawals()}
+  if(page==="employee-position")loadEmployeePositionPlans();
+  if(page==="withdraw")loadWithdrawalPage();
+  if(page==="admin")loadAdminWithdrawalData();
 }
-document.querySelectorAll(".nav-item[data-page]").forEach(el=>el.onclick=()=>showPage(el.dataset.page));
-$("menuBtn").onclick=()=>{$("sidebar").classList.add("open");$("overlay").classList.add("show")};
-$("overlay").onclick=()=>{$("sidebar").classList.remove("open");$("overlay").classList.remove("show")};
+
+window.showPage=showPage;
+
+document.querySelectorAll(".nav-item[data-page]").forEach(item=>{
+  item.onclick=()=>showPage(item.dataset.page);
+});
+
+$("menuBtn").onclick=()=>{
+  $("sidebar").classList.add("open");
+  $("overlay").classList.add("show");
+};
+
+$("overlay").onclick=closeSidebar;
+
+function closeSidebar(){
+  $("sidebar").classList.remove("open");
+  $("overlay").classList.remove("show");
+}
+
+$("logoutNav").onclick=async()=>{
+  await supabase.auth.signOut();
+  location.reload();
+};
+
+document.querySelectorAll(".planBtn").forEach(btn=>{
+  btn.onclick=()=>{
+    $("depositAmount").value=btn.dataset.amount;
+    $("selectedPlanText").textContent=
+      btn.dataset.plan+" — "+naira(btn.dataset.amount);
+    showPage("deposit");
+  };
+});
+
+/* LOAD DASHBOARD */
+
+async function loadDashboard(){
+  const {data:{session}}=await supabase.auth.getSession();
+  if(!session)return;
+
+  currentUser=session.user;
+  $("authScreen").style.display="none";
+  $("app").style.display="block";
+
+  const {data:profile,error:profileError}=await supabase
+    .from("profiles")
+    .select("full_name,phone,role,account_type,employee_status,referral_code,available_balance,investor_interest_balance,total_investment,total_earnings,referral_earnings,daily_payout_amount")
+    .eq("id",currentUser.id)
+    .maybeSingle();
+
+  if(profileError){
+    console.error("Profile load error:",profileError.message);
+  }
+
+  currentProfile=profile||{};
+
+  const name=profile?.full_name||
+    currentUser.user_metadata?.full_name||"Member";
+
+  $("userName").textContent=name;
+  $("welcomeName").textContent=name;
+  $("userPhone").textContent=profile?.phone||"";
+  $("userAvatar").textContent=name.charAt(0).toUpperCase();
+
+  $("referralCode").textContent=
+    profile?.referral_code||
+    currentUser.id.replace(/-/g,"").slice(0,8).toUpperCase();
+
+  $("availableBalance").textContent=naira(profile?.available_balance);
+  $("totalInvestment").textContent=naira(profile?.total_investment);
+  $("totalEarnings").textContent=naira(profile?.total_earnings);
+  $("referralEarnings").textContent=naira(profile?.referral_earnings);
+
+  $("dailyRateDisplay").textContent=
+    naira(profile?.daily_payout_amount)+" / day";
+
+  const isEmployee=profile?.account_type==="employee";
+
+  $("employeeTasksNav").style.display=isEmployee?"flex":"none";
+  $("employeePositionNav").style.display=isEmployee?"flex":"none";
+  $("positionWalletBalance").textContent=naira(profile?.available_balance);
+  $("adminNav").style.display=profile?.role==="admin"?"flex":"none";
+
+  updateWithdrawalBalance();
+  showPage("dashboard");
+}
+
+function getWithdrawableBalance(){
+  if(currentProfile?.account_type==="employee"){
+    return Number(currentProfile?.available_balance||0);
+  }
+  return Number(currentProfile?.investor_interest_balance||0);
+}
+
+function updateWithdrawalBalance(){
+  const balance=getWithdrawableBalance();
+  $("dashboardWithdrawable").textContent=naira(balance);
+  $("withdrawAvailable").textContent=naira(balance);
+  $("withdrawAccountType").textContent=
+    currentProfile?.account_type==="employee"?"Employee":"Investor";
+  $("dashboardAccountType").textContent=
+    currentProfile?.account_type==="employee"?"Employee":"Investor";
+}
+
+/* EMPLOYEE M1–M9 POSITION ACTIVATION */
+
+async function loadEmployeePositionPlans(){
+  const host=$("employeePositionPlans");
+  if(!currentUser)return;
+
+  host.innerHTML="<p>Loading employee positions...</p>";
+
+  try{
+    const {data:plans,error}=await supabase
+      .from("employee_level_plans")
+      .select("level_code,deposit_amount,daily_order_limit,unit_price,daily_income_projection,monthly_income_projection,five_hundred_day_projection")
+      .eq("is_active",true)
+      .order("deposit_amount",{ascending:true});
+
+    if(error)throw error;
+
+    if(!plans||plans.length===0){
+      host.textContent="No active employee levels are available.";
+      return;
+    }
+
+    host.innerHTML="";
+
+    plans.forEach(plan=>{
+      const card=document.createElement("div");
+      card.className="position-plan";
+
+      const badge=document.createElement("span");
+      badge.className="level-badge";
+      badge.textContent="🌴 EMPLOYEE LEVEL";
+
+      const title=document.createElement("h4");
+      title.textContent="🌿 "+plan.level_code;
+
+      const price=document.createElement("div");
+      price.className="position-price";
+      price.innerHTML="<span>💰 Required joining deposit</span>";
+
+      const priceValue=document.createElement("strong");
+      priceValue.textContent=naira(plan.deposit_amount);
+      price.appendChild(priceValue);
+
+      const details=document.createElement("div");
+      details.className="position-details";
+
+      const items=[
+        ["📦 Daily order limit",String(plan.daily_order_limit??0)],
+        ["🪙 Unit price",naira(plan.unit_price)],
+        ["📅 Daily projection",naira(plan.daily_income_projection)],
+        ["🗓️ Monthly projection",naira(plan.monthly_income_projection)],
+        ["📈 500-day projection",naira(plan.five_hundred_day_projection)]
+      ];
+
+      items.forEach(([label,value])=>{
+        const box=document.createElement("div");
+        box.className="detail-box";
+
+        const labelEl=document.createElement("p");
+        labelEl.textContent=label;
+
+        const valueEl=document.createElement("strong");
+        valueEl.textContent=value;
+
+        box.append(labelEl,valueEl);
+        details.appendChild(box);
+      });
+
+      const note=document.createElement("p");
+      note.style.cssText="margin-top:12px;font-size:12px;color:#80651d";
+      note.textContent="⚠️ Projections are estimates, not guaranteed earnings. Payments depend on genuine assigned work and verified completion.";
+
+      const button=document.createElement("button");
+      button.className="join-button";
+      button.textContent="🤝 JOIN "+plan.level_code;
+      button.addEventListener("click",()=>activateEmployeePosition(plan.level_code,button));
+
+      card.append(badge,title,price,details,note,button);
+      host.appendChild(card);
+    });
+  }catch(err){
+    host.textContent="Unable to load position plans: "+err.message;
+  }
+}
+
+async function activateEmployeePosition(levelCode,button){
+  const confirmed=confirm(
+    "Join "+levelCode+"? PalmGrow will check your available wallet balance. If your balance is insufficient, no money will be deducted."
+  );
+
+  if(!confirmed)return;
+
+  button.disabled=true;
+  button.textContent="⏳ Checking wallet...";
+
+  try{
+    const idempotencyKey="web-"+crypto.randomUUID();
+
+    const {data,error}=await supabase.rpc("activate_employee_position",{
+      p_level_code:levelCode,
+      p_idempotency_key:idempotencyKey
+    });
+
+    if(error)throw error;
+
+    if(!data?.success){
+      msg("positionMessage",data?.message||"Insufficient available wallet balance.","error");
+      return;
+    }
+
+    msg("positionMessage",data?.message||("You have successfully joined "+levelCode+"."));
+    await loadDashboard();
+    await loadEmployeePositionPlans();
+  }catch(err){
+    msg("positionMessage",err.message||"Position activation was not completed.","error");
+  }finally{
+    button.disabled=false;
+    button.textContent="🤝 JOIN "+levelCode;
+  }
+}
+
+/* EMPLOYEE DAILY TASKS */
+
+function lagosDate(){
+  const parts=new Intl.DateTimeFormat("en-CA",{
+    timeZone:"Africa/Lagos",
+    year:"numeric",
+    month:"2-digit",
+    day:"2-digit"
+  }).formatToParts(new Date());
+
+  const values={};
+  parts.forEach(p=>values[p.type]=p.value);
+
+  return `${values.year}-${values.month}-${values.day}`;
+}
+
+async function loadEmployeeTasks(){
+  if(!currentUser)return;
+
+  const list=$("employeeTaskList");
+  list.innerHTML="<p>Loading your assigned tasks...</p>";
+  $("taskProgressDisplay").textContent="Loading task progress...";
+
+  try{
+    const {data:setup,error:setupError}=await supabase.rpc("ensure_daily_employee_tasks");
+    if(setupError)throw setupError;
+
+    const taskDate=setup?.task_date||lagosDate();
+
+    const {data:tasks,error}=await supabase
+      .from("agri_task_assignments")
+      .select("id,task_title,task_description,task_date,status,task_sequence")
+      .eq("employee_id",currentUser.id)
+      .eq("task_date",taskDate)
+      .order("task_sequence",{ascending:true});
+
+    if(error)throw error;
+
+    const completed=(tasks||[]).filter(t=>t.status==="completed").length;
+    const total=(tasks||[]).filter(t=>t.status!=="cancelled").length;
+
+    $("taskProgressDisplay").textContent=`${completed} of ${total} tasks completed`;
+
+    if(!tasks||tasks.length===0){
+      list.innerHTML="<div class=\"notice\">No tasks are currently assigned. Tasks are available on working days for active employees with a confirmed deposit and contract.</div>";
+    }else{
+      list.innerHTML="";
+
+      tasks.forEach(task=>{
+        if(task.status==="cancelled")return;
+
+        const card=document.createElement("div");
+        card.className="task-card"+(task.status==="completed"?" task-done":"");
+
+        const title=document.createElement("h4");
+        title.textContent=`Task ${task.task_sequence}: ${task.task_title||"Agricultural task"}`;
+
+        const description=document.createElement("p");
+        description.textContent=task.task_description||"Complete this assigned agricultural task.";
+
+        const button=document.createElement("button");
+        button.textContent=task.status==="completed"?"✓ Completed":"Complete Task";
+        button.disabled=task.status!=="pending";
+        button.addEventListener("click",()=>completeEmployeeTask(task.id,button));
+
+        card.append(title,description,button);
+        list.appendChild(card);
+      });
+    }
+
+    await loadEmployeePayroll();
+  }catch(err){
+    list.textContent="Unable to load tasks: "+err.message;
+    $("taskProgressDisplay").textContent="Tasks unavailable";
+  }
+}
+
+async function completeEmployeeTask(taskId,button){
+  button.disabled=true;
+  button.textContent="Processing...";
+
+  try{
+    const {data,error}=await supabase.rpc("complete_employee_task",{
+      p_task_id:taskId
+    });
+
+    if(error)throw error;
+
+    if(data?.success){
+      msg("taskMessage",`Task completed. ${naira(data.payment)} has been credited to your available balance.`);
+      await loadDashboard();
+      await loadEmployeeTasks();
+      showPage("employee-tasks");
+    }else{
+      msg("taskMessage",data?.message||"Task could not be completed.","error");
+      await loadEmployeeTasks();
+    }
+  }catch(err){
+    msg("taskMessage",err.message||"Unable to complete this task.","error");
+    await loadEmployeeTasks();
+  }
+}
+
+async function loadEmployeePayroll(){
+  const body=$("employeePayrollBody");
+  if(!body)return;
+
+  body.innerHTML="<tr><td colspan=\"3\">Loading payment history...</td></tr>";
+
+  const {data,error}=await supabase
+    .from("employee_payroll_ledger")
+    .select("amount,description,credited_at")
+    .eq("employee_id",currentUser.id)
+    .order("credited_at",{ascending:false})
+    .limit(30);
+
+  if(error){
+    body.innerHTML="<tr><td colspan=\"3\">Payment history is temporarily unavailable.</td></tr>";
+    return;
+  }
+
+  if(!data||data.length===0){
+    body.innerHTML="<tr><td colspan=\"3\">No task payments yet.</td></tr>";
+    return;
+  }
+
+  body.innerHTML="";
+
+  data.forEach(row=>{
+    const tr=document.createElement("tr");
+
+    [
+      naira(row.amount),
+      row.description||"Agricultural task payment",
+      dateText(row.credited_at)
+    ].forEach(value=>{
+      const td=document.createElement("td");
+      td.textContent=value;
+      tr.appendChild(td);
+    });
+
+    body.appendChild(tr);
+  });
+}
+
+/* DEPOSITS */
+
+$("depositForm").onsubmit=async e=>{
+  e.preventDefault();
+
+  const amount=Number($("depositAmount").value);
+  const reference=$("paymentReference").value.trim();
+
+  if(![5000,50000,100000].includes(amount)){
+    msg("depositMessage","Select a valid amount","error");
+    return;
+  }
+
+  if(!reference){
+    msg("depositMessage","Enter payment reference","error");
+    return;
+  }
+
+  $("depositBtn").disabled=true;
+
+  try{
+    const {error}=await supabase.from("deposit_records").insert({
+      user_id:currentUser.id,
+      amount,
+      payment_reference:reference,
+      status:"pending"
+    });
+
+    if(error)throw error;
+
+    $("paymentReference").value="";
+    msg("depositMessage","Deposit submitted. Status: PENDING. Balance will update after admin approval.");
+    loadMyDeposits();
+  }catch(err){
+    msg("depositMessage",err.message||"Submission failed","error");
+  }finally{
+    $("depositBtn").disabled=false;
+  }
+};
+
+async function loadMyDeposits(){
+  const tbody=$("myDepositsBody");
+  tbody.innerHTML="";
+
+  const {data,error}=await supabase
+    .from("deposit_records")
+    .select("amount,payment_reference,status,submitted_at")
+    .eq("user_id",currentUser.id)
+    .order("submitted_at",{ascending:false});
+
+  if(error||!data||data.length===0){
+    tbody.innerHTML='<tr><td colspan="4">No submissions yet</td></tr>';
+    return;
+  }
+
+  data.forEach(item=>{
+    const tr=document.createElement("tr");
+
+    [
+      naira(item.amount),
+      item.payment_reference||"-",
+      displayStatus(item.status),
+      dateText(item.submitted_at)
+    ].forEach(value=>{
+      const td=document.createElement("td");
+      td.textContent=value;
+      tr.appendChild(td);
+    });
+
+    tbody.appendChild(tr);
+  });
+}
+
+$("myDepositsBtn").onclick=loadMyDeposits;
+
+/* ADMIN DEPOSIT REVIEW */
+
+$("loadDepositsBtn").onclick=async()=>{
+  const tbody=$("adminDepositsBody");
+  tbody.innerHTML="";
+  msg("adminMessage","Loading...");
+
+  const {data:profile}=await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id",currentUser.id)
+    .maybeSingle();
+
+  if(!profile||profile.role!=="admin"){
+    msg("adminMessage","Admin access required","error");
+    return;
+  }
+
+  const {data,error}=await supabase
+    .from("deposit_records")
+    .select("id,amount,payment_reference,status,submitted_at,user_id")
+    .eq("status","pending")
+    .order("submitted_at",{ascending:false});
+
+  if(error){
+    msg("adminMessage",error.message,"error");
+    return;
+  }
+
+  if(!data||data.length===0){
+    tbody.innerHTML='<tr><td colspan="5">No pending deposits</td></tr>';
+    msg("adminMessage","No pending deposits found");
+    return;
+  }
+
+  data.forEach(item=>{
+    const tr=document.createElement("tr");
+
+    [
+      naira(item.amount),
+      item.payment_reference||"-",
+      displayStatus(item.status),
+      dateText(item.submitted_at)
+    ].forEach(value=>{
+      const td=document.createElement("td");
+      td.textContent=value;
+      tr.appendChild(td);
+    });
+
+    const action=document.createElement("td");
+
+    const approve=document.createElement("button");
+    approve.textContent="Confirm";
+    approve.style.cssText="background:#16a34a;color:white;border:0;padding:6px 10px;border-radius:4px;margin-right:4px";
+    approve.onclick=()=>reviewDeposit(item.id,"confirmed");
+
+    const reject=document.createElement("button");
+    reject.textContent="Reject";
+    reject.style.cssText="background:#dc2626;color:white;border:0;padding:6px 10px;border-radius:4px";
+    reject.onclick=()=>reviewDeposit(item.id,"rejected");
+
+    action.append(approve,reject);
+    tr.appendChild(action);
+    tbody.appendChild(tr);
+  });
+
+  msg("adminMessage",`Loaded ${data.length} pending deposit(s)`);
+};
+
+async function reviewDeposit(id,decision){
+  try{
+    const {error}=await supabase.rpc("admin_review_deposit",{
+      p_deposit_id:id,
+      p_decision:decision
+    });
+
+    if(error)throw error;
+
+    alert(decision==="confirmed"?"Deposit confirmed.":"Deposit rejected.");
+    $("loadDepositsBtn").click();
+  }catch(err){
+    alert("Error: "+err.message);
+  }
+}
+
+/* WITHDRAWAL SETUP */
+
+async function loadWithdrawalPage(){
+  if(!currentUser)return;
+
+  updateWithdrawalBalance();
+
+  $("withdrawOptions").innerHTML="";
+  $("withdrawFeePreview").textContent=
+    "Select an amount to see the fee and amount you will receive.";
+
+  await loadWithdrawalSetup();
+  await loadMyWithdrawals();
+  renderWithdrawalOptions();
+}
+
+async function loadWithdrawalSetup(){
+  try{
+    const {data,error}=await supabase.rpc("palmgrow_my_withdrawal_setup");
+    if(error)throw error;
+
+    withdrawalSetup=objectOf(data);
+
+    const hasPin=Boolean(
+      withdrawalSetup.has_pin||
+      withdrawalSetup.pin_created||
+      withdrawalSetup.withdrawal_pin_set||
+      withdrawalSetup.pin_is_set
+    );
+
+    $("pinStatusText").textContent=hasPin
+      ?"Your withdrawal PIN has been created. Enter it when making a withdrawal."
+      :"You have not created a withdrawal PIN yet.";
+
+    $("pinFormLabel").textContent=hasPin
+      ?"Your withdrawal PIN is already set. PIN changes require administrator assistance."
+      :"Create a six-digit withdrawal PIN";
+
+    $("pinSubmitBtn").textContent=hasPin
+      ?"PIN Already Created"
+      :"Create Withdrawal PIN";
+
+    $("pinSubmitBtn").disabled=hasPin;
+    $("withdrawPin").disabled=hasPin;
+
+    const bankName=withdrawalSetup.bank_name||"";
+    const accountNumber=withdrawalSetup.account_number||"";
+    const accountName=withdrawalSetup.account_name||"";
+    const verified=Boolean(
+      withdrawalSetup.bank_verified||
+      withdrawalSetup.is_bank_verified
+    );
+
+    if(bankName&&accountNumber){
+      $("bankCurrentDetails").textContent=
+        `${bankName} | ${accountNumber} | ${accountName||"Account name pending"} | ${verified?"VERIFIED":"AWAITING VERIFICATION"}`;
+    }else{
+      $("bankCurrentDetails").textContent="No bank account registered yet.";
+    }
+
+    if(bankName)$("withdrawBank").value=bankName;
+    if(accountNumber)$("withdrawAccountNumber").value=accountNumber;
+
+  }catch(err){
+    $("pinStatusText").textContent="Unable to check PIN status: "+err.message;
+    $("bankCurrentDetails").textContent="Unable to load bank details.";
+  }
+}
+
+/* CREATE WITHDRAWAL PIN */
+
+$("pinForm").onsubmit=async e=>{
+  e.preventDefault();
+
+  const pin=$("withdrawPin").value.trim();
+
+  if(!/^\d{6}$/.test(pin)){
+    msg("pinMessage","Your PIN must contain exactly six digits.","error");
+    return;
+  }
+
+  $("pinSubmitBtn").disabled=true;
+
+  try{
+    const {data,error}=await supabase.rpc("palmgrow_create_withdrawal_pin",{
+      p_pin:pin
+    });
+
+    if(error)throw error;
+
+    if(data?.success===false){
+      throw new Error(data.message||"Unable to create PIN.");
+    }
+
+    $("withdrawPin").value="";
+    msg("pinMessage","Your withdrawal PIN has been created successfully.");
+    await loadWithdrawalSetup();
+
+  }catch(err){
+    msg("pinMessage",err.message||"PIN creation failed.","error");
+    $("pinSubmitBtn").disabled=false;
+  }
+};
+
+/* REGISTER BANK ACCOUNT */
+
+$("bankForm").onsubmit=async e=>{
+  e.preventDefault();
+
+  const bank=$("withdrawBank").value;
+  const accountNumber=$("withdrawAccountNumber").value.trim();
+
+  if(!bank){
+    msg("bankMessage","Please select your bank.","error");
+    return;
+  }
+
+  if(!/^\d{10}$/.test(accountNumber)){
+    msg("bankMessage","Enter a valid 10-digit account number.","error");
+    return;
+  }
+
+  $("bankSubmitBtn").disabled=true;
+
+  try{
+    const {data,error}=await supabase.rpc("palmgrow_register_withdrawal_bank",{
+      p_bank_name:bank,
+      p_account_number:accountNumber
+    });
+
+    if(error)throw error;
+
+    if(data?.success===false){
+      throw new Error(data.message||"Bank registration failed.");
+    }
+
+    msg("bankMessage","Bank account submitted. It must be verified by an administrator before withdrawals can be made.");
+    await loadWithdrawalSetup();
+
+  }catch(err){
+    msg("bankMessage",err.message||"Bank registration failed.","error");
+  }finally{
+    $("bankSubmitBtn").disabled=false;
+  }
+};
+
+/* WITHDRAWAL AMOUNT OPTIONS AND FEE CALCULATOR */
+
+function calculateWithdrawal(amount){
+  const handlingFee=Number(amount)*0.10;
+  const transferFee=100;
+  const netAmount=Number(amount)-handlingFee-transferFee;
+
+  return {
+    amount:Number(amount),
+    handlingFee,
+    transferFee,
+    netAmount
+  };
+}
+
+function showWithdrawalPreview(amount){
+  const fees=calculateWithdrawal(amount);
+
+  $("withdrawFeePreview").innerHTML=`
+    <div class="summary-row"><span>Withdrawal amount</span><strong>${naira(fees.amount)}</strong></div>
+    <div class="summary-row"><span>Handling fee (10%)</span><strong>${naira(fees.handlingFee)}</strong></div>
+    <div class="summary-row"><span>Transfer fee</span><strong>${naira(fees.transferFee)}</strong></div>
+    <div class="summary-row total"><span>Amount you receive</span><strong>${naira(fees.netAmount)}</strong></div>
+  `;
+}
+
+function renderWithdrawalOptions(){
+  const host=$("withdrawOptions");
+  host.innerHTML="";
+
+  WITHDRAWAL_AMOUNTS.forEach(amount=>{
+    const fees=calculateWithdrawal(amount);
+
+    const card=document.createElement("div");
+    card.className="withdraw-option";
+
+    const title=document.createElement("strong");
+    title.textContent=naira(amount);
+
+    const detail=document.createElement("span");
+    detail.textContent="You receive "+naira(fees.netAmount)+" after fees.";
+
+    const button=document.createElement("button");
+    button.textContent="Select Amount";
+    button.onclick=()=>{
+      showWithdrawalPreview(amount);
+      requestWithdrawal(amount,button);
+    };
+
+    card.append(title,detail,button);
+    host.appendChild(card);
+  });
+}
+
+/* VERIFY PIN AND REQUEST WITHDRAWAL */
+
+async function requestWithdrawal(amount,button){
+  const fees=calculateWithdrawal(amount);
+
+  const confirmed=confirm(
+    "Withdrawal amount: "+naira(fees.amount)+
+    "\nHandling fee: "+naira(fees.handlingFee)+
+    "\nTransfer fee: "+naira(fees.transferFee)+
+    "\nYou will receive: "+naira(fees.netAmount)+
+    "\n\nContinue?"
+  );
+
+  if(!confirmed)return;
+
+  const pin=prompt("Enter your six-digit withdrawal PIN:");
+
+  if(pin===null)return;
+
+  if(!/^\d{6}$/.test(pin)){
+    msg("withdrawMessage","Enter a valid six-digit PIN.","error");
+    return;
+  }
+
+  button.disabled=true;
+  button.textContent="Processing...";
+
+  try{
+    const {data:verifyData,error:verifyError}=await supabase.rpc(
+      "palmgrow_verify_withdrawal_pin",
+      {p_pin:pin}
+    );
+
+    if(verifyError)throw verifyError;
+
+    if(verifyData?.success===false){
+      throw new Error(verifyData.message||"PIN verification failed.");
+    }
+
+    const {data,error}=await supabase.rpc(
+      "palmgrow_request_withdrawal",
+      {p_amount:amount}
+    );
+
+    if(error)throw error;
+
+    if(data?.success===false){
+      throw new Error(data.message||"Withdrawal request failed.");
+    }
+
+    msg(
+      "withdrawMessage",
+      data?.message||"Your withdrawal request has been submitted successfully."
+    );
+
+    await loadDashboard();
+    await loadWithdrawalSetup();
+    await loadMyWithdrawals();
+
+  }catch(err){
+    msg("withdrawMessage",err.message||"Withdrawal request failed.","error");
+  }finally{
+    button.disabled=false;
+    button.textContent="Select Amount";
+  }
+}
+
+/* MEMBER WITHDRAWAL HISTORY */
+
+async function loadMyWithdrawals(){
+  const body=$("myWithdrawalsBody");
+
+  body.innerHTML="<tr><td colspan=\"5\">Loading withdrawal history...</td></tr>";
+
+  try{
+    const {data,error}=await supabase.rpc("palmgrow_my_withdrawals");
+    if(error)throw error;
+
+    const records=rowsOf(data);
+
+    if(records.length===0){
+      body.innerHTML="<tr><td colspan=\"5\">No withdrawal requests found.</td></tr>";
+      return;
+    }
+
+    body.innerHTML="";
+
+    records.forEach(item=>{
+      const amount=Number(item.amount??item.gross_amount??0);
+      const handling=Number(item.handling_fee??0);
+      const transfer=Number(item.transfer_fee??0);
+      const net=Number(item.net_amount??(amount-handling-transfer));
+
+      const tr=document.createElement("tr");
+
+      [
+        naira(amount),
+        naira(handling+transfer),
+        naira(net),
+        displayStatus(item.status),
+        dateText(item.requested_at||item.created_at)
+      ].forEach(value=>{
+        const td=document.createElement("td");
+        td.textContent=value;
+        tr.appendChild(td);
+      });
+
+      body.appendChild(tr);
+    });
+
+  }catch(err){
+    body.innerHTML="<tr><td colspan=\"5\">Unable to load history: "+escapeHtml(err.message)+"</td></tr>";
+  }
+}
+
+$("loadMyWithdrawalsBtn").onclick=loadMyWithdrawals;
+
+/* ADMIN BANK VERIFICATION */
+
+$("loadWithdrawalBanksBtn").onclick=loadAdminWithdrawalBanks;
+
+async function loadAdminWithdrawalBanks(){
+  const body=$("adminBanksBody");
+  body.innerHTML="<tr><td colspan=\"4\">Loading...</td></tr>";
+
+  try{
+    const {data,error}=await supabase.rpc("palmgrow_admin_get_withdrawal_banks");
+    if(error)throw error;
+
+    const records=rowsOf(data).filter(item=>
+      !item.bank_verified&&!item.is_bank_verified
+    );
+
+    if(records.length===0){
+      body.innerHTML="<tr><td colspan=\"4\">No bank accounts awaiting verification.</td></tr>";
+      msg("adminBankMessage","No pending bank verifications.");
+      return;
+    }
+
+    body.innerHTML="";
+
+    records.forEach(item=>{
+      const userId=item.user_id||item.id;
+      const tr=document.createElement("tr");
+
+      const name=document.createElement("td");
+      name.textContent=item.full_name||item.name||userId||"Member";
+
+      const bank=document.createElement("td");
+      bank.textContent=item.bank_name||"—";
+
+      const account=document.createElement("td");
+      account.textContent=item.account_number||"—";
+
+      const action=document.createElement("td");
+      const verify=document.createElement("button");
+      verify.textContent="Verify";
+      verify.style.cssText="padding:7px 10px;background:#16a34a;color:white;border:0;border-radius:5px;cursor:pointer";
+      verify.onclick=()=>verifyWithdrawalBank(userId,verify);
+
+      action.appendChild(verify);
+      tr.append(name,bank,account,action);
+      body.appendChild(tr);
+    });
+
+    msg("adminBankMessage",`Loaded ${records.length} account(s) awaiting verification.`);
+
+  }catch(err){
+    body.innerHTML="<tr><td colspan=\"4\">"+escapeHtml(err.message)+"</td></tr>";
+    msg("adminBankMessage",err.message,"error");
+  }
+}
+
+async function verifyWithdrawalBank(userId,button){
+  if(!confirm("Have you checked the account details and confirmed they are correct?"))return;
+
+  button.disabled=true;
+  button.textContent="Verifying...";
+
+  try{
+    const {data,error}=await supabase.rpc(
+      "palmgrow_admin_verify_withdrawal_bank",
+      {p_user_id:userId}
+    );
+
+    if(error)throw error;
+
+    if(data?.success===false){
+      throw new Error(data.message||"Bank verification failed.");
+    }
+
+    msg("adminBankMessage","Bank account verified successfully.");
+    await loadAdminWithdrawalBanks();
+
+  }catch(err){
+    msg("adminBankMessage",err.message,"error");
+    button.disabled=false;
+    button.textContent="Verify";
+  }
+}
+
+/* ADMIN WITHDRAWAL REQUESTS */
+
+$("loadAdminWithdrawalsBtn").onclick=loadAdminWithdrawals;
+
+async function loadAdminWithdrawalData(){
+  if(currentProfile?.role==="admin"){
+    await loadAdminWithdrawalBanks();
+    await loadAdminWithdrawals();
+  }
+}
+
+async function loadAdminWithdrawals(){
+  const body=$("adminWithdrawalsBody");
+  body.innerHTML="<tr><td colspan=\"7\">Loading withdrawal requests...</td></tr>";
+
+  try{
+    const {data,error}=await supabase.rpc("palmgrow_admin_get_withdrawals");
+    if(error)throw error;
+
+    const records=rowsOf(data);
+
+    if(records.length===0){
+      body.innerHTML="<tr><td colspan=\"7\">No withdrawal requests found.</td></tr>";
+      msg("adminWithdrawalMessage","No withdrawal requests found.");
+      return;
+    }
+
+    body.innerHTML="";
+
+    records.forEach(item=>{
+      const id=item.id||item.withdrawal_id;
+      const amount=Number(item.amount??item.gross_amount??0);
+      const handling=Number(item.handling_fee??0);
+      const transfer=Number(item.transfer_fee??0);
+      const net=Number(item.net_amount??(amount-handling-transfer));
+
+      const tr=document.createElement("tr");
+
+      const member=document.createElement("td");
+      member.textContent=
+        (item.full_name||item.name||"Member")+
+        "\n"+(item.account_type||"");
+
+      const bank=document.createElement("td");
+      bank.textContent=
+        (item.bank_name||"No bank")+
+        "\n"+(item.account_number||"")+
+        "\n"+(item.account_name||"");
+
+      const gross=document.createElement("td");
+      gross.textContent=naira(amount);
+
+      const fees=document.createElement("td");
+      fees.textContent=naira(handling+transfer);
+
+      const netCell=document.createElement("td");
+      netCell.textContent=naira(net);
+
+      const status=document.createElement("td");
+      status.textContent=displayStatus(item.status);
+
+      const action=document.createElement("td");
+      const actions=document.createElement("div");
+      actions.className="admin-actions";
+
+      if(item.status==="pending"){
+        const processing=document.createElement("button");
+        processing.textContent="Bank Processing";
+        processing.style.background="#e5f0ff";
+        processing.onclick=()=>processWithdrawal(id,"bank_processing");
+        actions.appendChild(processing);
+      }
+
+      if(item.status==="pending"||item.status==="bank_processing"){
+        const paid=document.createElement("button");
+        paid.textContent="Mark Paid";
+        paid.style.background="#dcfce7";
+        paid.onclick=()=>{
+          const ok=confirm(
+            "Have you actually transferred "+naira(net)+
+            " to the member's bank account? Only continue after the transfer is complete."
+          );
+          if(ok)processWithdrawal(id,"paid");
+        };
+        actions.appendChild(paid);
+
+        const reject=document.createElement("button");
+        reject.textContent="Reject";
+        reject.style.background="#fee2e2";
+        reject.onclick=()=>{
+          if(confirm("Reject this withdrawal? The backend will return the gross amount to the member's wallet.")){
+            processWithdrawal(id,"rejected");
+          }
+        };
+        actions.appendChild(reject);
+      }
+
+      if(!actions.children.length){
+        actions.textContent="No action";
+      }
+
+      action.appendChild(actions);
+      tr.append(member,bank,gross,fees,netCell,status,action);
+      body.appendChild(tr);
+    });
+
+    msg("adminWithdrawalMessage",`Loaded ${records.length} withdrawal request(s).`);
+
+  }catch(err){
+    body.innerHTML="<tr><td colspan=\"7\">"+escapeHtml(err.message)+"</td></tr>";
+    msg("adminWithdrawalMessage",err.message,"error");
+  }
+}
+
+async function processWithdrawal(withdrawalId,action){
+  if(!withdrawalId){
+    msg("adminWithdrawalMessage","Withdrawal ID is missing.","error");
+    return;
+  }
+
+  const note=prompt("Enter an admin note (optional):")||"";
+
+  try{
+    const {data,error}=await supabase.rpc(
+      "palmgrow_admin_process_withdrawal",
+      {
+        p_withdrawal_id:withdrawalId,
+        p_action:action,
+        p_note:note
+      }
+    );
+
+    if(error)throw error;
+
+    if(data?.success===false){
+      throw new Error(data.message||"Withdrawal update failed.");
+    }
+
+    msg("adminWithdrawalMessage",data?.message||"Withdrawal status updated.");
+    await loadAdminWithdrawals();
+
+  }catch(err){
+    msg("adminWithdrawalMessage",err.message||"Unable to process withdrawal.","error");
+  }
+}
+
+/* SESSION INITIALIZATION */
+
+supabase.auth.onAuthStateChange((_event,session)=>{
+  if(session){
+    currentUser=session.user;
+    loadDashboard();
+  }else{
+    currentUser=null;
+    currentProfile=null;
+    $("authScreen").style.display="flex";
+    $("app").style.display="none";
+  }
+});
+
+updateAuthUI();
+
+const {data:{session}}=await supabase.auth.getSession();
+if(session)await loadDashboard();
+
+</script>
+</body>
+                               </html>
