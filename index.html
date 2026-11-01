@@ -51,20 +51,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
 .position-plan .join-button{width:100%;padding:14px;margin-top:17px;background:linear-gradient(135deg,#0b3d2e,#147a56);color:#fff;border:0;border-radius:9px;font-size:15px;font-weight:700;cursor:pointer}
 .position-plan .join-button:disabled{opacity:.6;cursor:not-allowed}
 @media(min-width:768px){#employeePositionPlans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}}
-.main{margin-left:0;min-height:100vh;padding-bottom:40px}
+.main{margin-left:0;min-height:100vh;padding-bottom:90px}
 .topbar{background:#fff;border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
 .menu-btn{background:none;border:0;font-size:22px;cursor:pointer;color:var(--green-dark);padding:4px 8px}
 .user-info{display:flex;align-items:center;gap:10px;font-size:14px}
 .user-info .avatar{width:36px;height:36px;background:var(--green);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600}
-.content{padding:16px;max-width:1100px;margin:0 auto}
-.welcome{background:linear-gradient(135deg,#0b3d2e,#147a56);color:#fff;border-radius:14px;padding:20px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.welcome h2{font-size:20px;margin-bottom:4px}
-.welcome p{opacity:.9;font-size:14px}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
-.stat-card{background:#fff;border-radius:12px;padding:16px;border:1px solid var(--border)}
-.stat-card .label{font-size:12px;color:var(--muted);margin-bottom:6px}
-.stat-card .value{font-size:18px;font-weight:700;color:var(--green-dark)}
-.stat-card button{margin-top:10px;width:100%;padding:8px;background:var(--green);color:#fff;border:0;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer}
+.content{padding:16px;max-width:480px;margin:0 auto}
+@media(min-width:768px){.content{max-width:1100px}}
 .section{background:#fff;border-radius:12px;border:1px solid var(--border);padding:18px;margin-bottom:16px}
 .section h3{font-size:16px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .plans{display:grid;grid-template-columns:1fr;gap:12px}
@@ -101,7 +94,6 @@ th{background:#f0f5f2;font-weight:600}
   .sidebar{transform:translateX(0)}
   .main{margin-left:240px}
   .menu-btn{display:none}
-  .stats{grid-template-columns:repeat(4,1fr)}
   .plans{grid-template-columns:repeat(3,1fr)}
   .withdraw-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
@@ -154,20 +146,109 @@ th{background:#f0f5f2;font-weight:600}
 
     <div class="content">
       <div id="page-dashboard">
-        <div class="welcome">
-          <div><h2>Welcome Back, <span id="welcomeName">Member</span></h2><p>Your investment journey is growing!</p></div>
+        <!-- Top Wallet Section Container -->
+        <div style="background: #0d382b; padding: 20px 20px 30px 20px; border-radius: 20px; color: white; margin-bottom: 20px;">
+            
+            <!-- Wallet Type Selector Tabs -->
+            <div style="display: flex; background: rgba(255, 255, 255, 0.15); border-radius: 20px; padding: 3px; width: fit-content; margin-bottom: 15px;">
+                <button id="flexibleTab" style="background: white; color: #0d382b; border: none; padding: 6px 16px; border-radius: 18px; font-weight: 600; font-size: 13px; cursor: pointer;">Flexible Wallet</button>
+                <button id="depositTab" style="background: transparent; color: white; border: none; padding: 6px 16px; border-radius: 18px; font-weight: 600; font-size: 13px; cursor: pointer;">Deposit Wallet</button>
+            </div>
+
+            <!-- Main Balance & Contract Info -->
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px;">
+                <div>
+                    <h1 id="walletBalanceDisplay" style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -0.5px;">₦0.00</h1>
+                    <p style="margin: 5px 0 0 0; font-size: 12px; opacity: 0.85;">Account Type: <span id="dashboardAccountType">—</span></p>
+                </div>
+                <span style="font-weight: 800; letter-spacing: 1px; font-size: 16px; color: #4ade80;">GEMT</span>
+            </div>
+
+            <!-- Action Buttons (Join Now, Recharge, Withdraw) -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                <button onclick="showPage('employee-position')" style="background: #1b4d3e; color: white; border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+                    <span>💼</span> Join Now
+                </button>
+                <button onclick="showPage('deposit')" style="background: #1b4d3e; color: white; border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+                    <span>💳</span> Recharge
+                </button>
+                <button onclick="showPage('withdraw')" style="background: #1b4d3e; color: white; border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+                    <span>📥</span> Withdraw
+                </button>
+            </div>
         </div>
-        <div class="stats">
-          <div class="stat-card"><div class="label">Available Balance</div><div class="value" id="availableBalance">₦0.00</div><button onclick="showPage('deposit')">Fund Wallet</button></div>
-          <div class="stat-card"><div class="label">Total Investment</div><div class="value" id="totalInvestment">₦0.00</div></div>
-          <div class="stat-card"><div class="label">Total Earnings</div><div class="value" id="totalEarnings">₦0.00</div></div>
-          <div class="stat-card"><div class="label">Referral Earnings</div><div class="value" id="referralEarnings">₦0.00</div></div>
+
+        <!-- Content Body Area -->
+        <div>
+            <!-- 2x3 Earnings & Metrics Grid -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
+                <div style="background: white; padding: 12px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-align: center;">
+                    <span style="font-size: 11px; color: #6b7280; display: block; margin-bottom: 4px;">Total Investment(₦)</span>
+                    <strong id="totalInvestment" style="font-size: 14px; color: #111827;">₦0.00</strong>
+                </div>
+                <div style="background: white; padding: 12px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-align: center;">
+                    <span style="font-size: 11px; color: #6b7280; display: block; margin-bottom: 4px;">Today's Earnings(₦)</span>
+                    <strong style="font-size: 14px; color: #10b981;">₦0.00</strong>
+                </div>
+                <div style="background: white; padding: 12px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-align: center;">
+                    <span style="font-size: 11px; color: #6b7280; display: block; margin-bottom: 4px;">Total Earnings(₦)</span>
+                    <strong id="totalEarnings" style="font-size: 14px; color: #111827;">₦0.00</strong>
+                </div>
+                <div style="background: white; padding: 12px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-align: center;">
+                    <span style="font-size: 11px; color: #6b7280; display: block; margin-bottom: 4px;">Withdrawable(₦)</span>
+                    <strong id="dashboardWithdrawable" style="font-size: 14px; color: #111827;">₦0.00</strong>
+                </div>
+                <div style="background: white; padding: 12px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-align: center;">
+                    <span style="font-size: 11px; color: #6b7280; display: block; margin-bottom: 4px;">Referral Bonus(₦)</span>
+                    <strong id="referralEarnings" style="font-size: 14px; color: #2563eb;">₦0.00</strong>
+                </div>
+                <div style="background: white; padding: 12px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-align: center;">
+                    <span style="font-size: 11px; color: #6b7280; display: block; margin-bottom: 4px;">Available Bal(₦)</span>
+                    <strong id="availableBalance" style="font-size: 14px; color: #111827;">₦0.00</strong>
+                </div>
+            </div>
+
+            <!-- Invite Friends / Team Promotional Banner -->
+            <div onclick="showPage('referral')" style="background: linear-gradient(135deg, #0d382b 0%, #1b4d3e 100%); border-radius: 14px; padding: 20px; color: white; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(13, 56, 43, 0.15); cursor: pointer;">
+                <div>
+                    <h2 style="margin: 0; font-size: 18px; font-weight: 700;">Invite Friends</h2>
+                    <h2 style="margin: 2px 0 0 0; font-size: 20px; font-weight: 800; color: #4ade80;">My Team</h2>
+                </div>
+                <div style="font-size: 28px;">👥</div>
+            </div>
+
+            <!-- Navigation List Items -->
+            <div style="background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                <div onclick="showPage('referral')" style="padding: 16px; border-bottom: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                    <span style="font-size: 14px; font-weight: 500; color: #1f2937; display: flex; align-items: center; gap: 10px;">👤 Referral Program</span>
+                    <span style="color: #9ca3af;">&rsaquo;</span>
+                </div>
+                <div onclick="showPage('withdraw')" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                    <span style="font-size: 14px; font-weight: 500; color: #1f2937; display: flex; align-items: center; gap: 10px;">📊 Withdrawal History</span>
+                    <span style="color: #9ca3af;">&rsaquo;</span>
+                </div>
+            </div>
         </div>
-        <div class="section">
-          <h3>💸 Withdrawal Overview</h3>
-          <div class="summary-row"><span>Withdrawable balance</span><strong id="dashboardWithdrawable">₦0.00</strong></div>
-          <div class="summary-row"><span>Account type</span><strong id="dashboardAccountType">—</strong></div>
-          <button class="primary-btn" style="margin-top:12px" onclick="showPage('withdraw')">Go to Withdrawals</button>
+
+        <!-- Fixed Bottom Navigation Bar -->
+        <div style="position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; align-items: center; padding: 8px 0; max-width: 480px; margin: 0 auto; z-index: 100;">
+            <a href="#" onclick="showPage('dashboard'); return false;" style="text-decoration: none; color: #0d382b; display: flex; flex-direction: column; align-items: center; font-size: 11px; font-weight: 600;">
+                <span style="font-size: 18px;">🏠</span> Home
+            </a>
+            <a href="#" onclick="showPage('invest'); return false;" style="text-decoration: none; color: #9ca3af; display: flex; flex-direction: column; align-items: center; font-size: 11px;">
+                <span style="font-size: 18px;">📈</span> Revenue
+            </a>
+            <div style="position: relative; top: -14px; cursor: pointer;" onclick="showPage('employee-position')">
+                <div style="width: 50px; height: 50px; background: white; border: 2px solid #0d382b; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <span style="font-size: 12px; font-weight: 800; color: #0d382b;">GEMT</span>
+                </div>
+            </div>
+            <a href="#" onclick="showPage('employee-tasks'); return false;" style="text-decoration: none; color: #9ca3af; display: flex; flex-direction: column; align-items: center; font-size: 11px;">
+                <span style="font-size: 18px;">🌱</span> Tasks
+            </a>
+            <a href="#" onclick="showPage('referral'); return false;" style="text-decoration: none; color: #9ca3af; display: flex; flex-direction: column; align-items: center; font-size: 11px;">
+                <span style="font-size: 18px;">👤</span> My
+            </a>
         </div>
       </div>
 
@@ -591,7 +672,6 @@ async function loadDashboard(){
     currentUser.user_metadata?.full_name||"Member";
 
   $("userName").textContent=name;
-  $("welcomeName").textContent=name;
   $("userPhone").textContent=profile?.phone||"";
   $("userAvatar").textContent=name.charAt(0).toUpperCase();
 
@@ -599,6 +679,7 @@ async function loadDashboard(){
     profile?.referral_code||
     currentUser.id.replace(/-/g,"").slice(0,8).toUpperCase();
 
+  $("walletBalanceDisplay").textContent=naira(profile?.available_balance);
   $("availableBalance").textContent=naira(profile?.available_balance);
   $("totalInvestment").textContent=naira(profile?.total_investment);
   $("totalEarnings").textContent=naira(profile?.total_earnings);
@@ -1072,7 +1153,6 @@ async function loadWithdrawalPage(){
   $("withdrawFeePreview").textContent=
     "Select an amount to see the fee and amount you will receive.";
 
-  // Ensure pinMessage is hidden every time the withdrawal page loads
   $("pinMessage").classList.add("hidden");
 
   await loadWithdrawalSetup();
@@ -1159,7 +1239,6 @@ $("pinForm").onsubmit=async e=>{
     }
 
     $("withdrawPin").value="";
-    // Show success message only right after creation
     msg("pinMessage","Your withdrawal PIN has been created. Enter it when making a withdrawal.");
     await loadWithdrawalSetup();
 
