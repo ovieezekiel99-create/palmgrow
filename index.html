@@ -158,12 +158,47 @@ font-weight:600;cursor:pointer;margin:2px
 .confirm-btn{background:#16a34a}
 .reject-btn{background:#dc2626}
 .admin-action:disabled{opacity:.5;cursor:not-allowed}
+
+/* M1-M9 POSITION STYLES */
+.level-card{
+border:1px solid var(--border);
+border-radius:12px;
+padding:16px;
+background:#fff;
+}
+.level-card h4{color:var(--green-dark);font-size:18px}
+.level-card .level-price{
+font-size:21px;font-weight:700;color:var(--green-dark);margin:8px 0
+}
+.level-card p{font-size:13px;color:var(--muted);margin:5px 0}
+.level-card button{
+width:100%;padding:11px;margin-top:12px;
+background:var(--green);color:#fff;border:0;
+border-radius:7px;font-weight:600;cursor:pointer
+}
+.level-card button:disabled{background:#9aa9a1;cursor:not-allowed}
+.level-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.current-position{
+background:#e8f5e9;border:1px solid #86bd91;
+border-radius:10px;padding:15px;margin-bottom:16px
+}
+.current-position strong{color:var(--green-dark)}
+.level-detail{
+display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px
+}
+.level-detail div{
+background:#fff;border:1px solid var(--border);
+border-radius:8px;padding:10px
+}
+.level-detail small{display:block;color:var(--muted);font-size:11px}
+.level-detail strong{font-size:14px;color:var(--green-dark)}
 @media(min-width:768px){
 .sidebar{transform:translateX(0)}
 .main{margin-left:240px}
 .menu-btn{display:none}
 .stats{grid-template-columns:repeat(4,1fr)}
 .plans{grid-template-columns:repeat(3,1fr)}
+.level-grid{grid-template-columns:repeat(3,1fr)}
 }
 </style>
 </head>
@@ -216,6 +251,7 @@ font-weight:600;cursor:pointer;margin:2px
 <div class="logo">🌴 Palm<span>Grow</span></div>
 <div class="nav-item active" data-page="dashboard">🏠 Dashboard</div>
 <div class="nav-item" data-page="invest">💰 Make Investment</div>
+<div class="nav-item" data-page="employee-position" id="positionNav" style="display:none">🌴 Employee Position M1–M9</div>
 <div class="nav-item" data-page="employee-tasks" id="employeeNav" style="display:none">🌱 Employee Daily Tasks</div>
 <div class="nav-item" data-page="deposit">📥 Deposit</div>
 <div class="nav-item" data-page="referral">👥 Referral Program</div>
@@ -290,6 +326,51 @@ font-weight:600;cursor:pointer;margin:2px
 <p>Premium investment plan</p>
 <button onclick="selectDeposit(100000)">Choose Plan</button>
 </div>
+</div>
+</div>
+</div>
+
+<!-- EMPLOYEE POSITION PAGE -->
+<div id="page-employee-position" class="hidden">
+<div class="section">
+<h3>🌴 Employee Position – M1 to M9</h3>
+<p style="font-size:13px;color:var(--muted);margin-bottom:14px">
+Select an employee position based on your available wallet balance. Your wallet will only be debited after the database confirms your activation.
+</p>
+
+<div id="positionStatusMessage" class="status hidden"></div>
+
+<div id="currentPositionBox" class="current-position hidden">
+<strong>Your Current Position</strong>
+<div class="level-detail">
+<div><small>Position Level</small><strong id="currentLevel">-</strong></div>
+<div><small>Locked Deposit</small><strong id="currentLockedDeposit">₦0.00</strong></div>
+<div><small>Position Status</small><strong id="currentPositionStatus">-</strong></div>
+<div><small>Activated On</small><strong id="currentPositionDate">-</strong></div>
+</div>
+</div>
+
+<div class="notice">
+<strong>Important:</strong> Daily income projections are estimates based on the plan figures. They are not guaranteed earnings. Actual payments depend on genuine assigned work and verified completion.
+</div>
+
+<h3 style="margin-top:18px">Available Employee Levels</h3>
+<div id="employeeLevelPlans" class="level-grid">
+Loading employee levels...
+</div>
+</div>
+
+<div class="section">
+<h3>📋 Position History</h3>
+<div style="overflow-x:auto">
+<table>
+<thead>
+<tr><th>Action</th><th>Previous Level</th><th>New Level</th><th>Deposit</th><th>Date</th></tr>
+</thead>
+<tbody id="positionHistoryBody">
+<tr><td colspan="5">Position history will appear here.</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -404,7 +485,7 @@ Review actual payment records before confirming any deposit. Check the customer 
 </div>
 
 <script type="module">
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
 const SUPABASE_URL = "https://ghdiycdzsmncmlcpdniy.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_xy6UyL2BeQFgB8LeYMHuJA_k6MdhVz9";
@@ -421,6 +502,8 @@ let currentUser = null;
 let currentProfile = null;
 let loginMode = false;
 let dashboardLoading = false;
+let positionPlans = [];
+let currentPosition = null;
 
 function msg(id, text, type = "success") {
   const el = $(id);
@@ -537,6 +620,7 @@ function showPage(page) {
   $("overlay").classList.remove("show");
 
   if (page === "employee-tasks") loadEmployeeTasks();
+  if (page === "employee-position") loadEmployeePosition();
   if (page === "deposit") loadMyDeposits();
 }
 
@@ -612,6 +696,7 @@ async function loadDashboard(options = {}) {
       currentUser.id.replace(/-/g, "").slice(0, 8).toUpperCase();
 
     $("employeeNav").style.display = profile.account_type === "employee" ? "flex" : "none";
+    $("positionNav").style.display = profile.account_type === "employee" ? "flex" : "none";
     $("adminNav").style.display = profile.role === "admin" ? "flex" : "none";
 
     $("dailyRateDisplay").textContent = naira(profile.daily_payout_amount) + " / day";
@@ -783,6 +868,259 @@ async function loadEmployeePayroll() {
   });
 }
 
+/* M1-M9 EMPLOYEE POSITION SYSTEM */
+
+function formatLevelName(level) {
+  return String(level || "").toUpperCase();
+}
+
+async function loadEmployeePosition() {
+  const plansBox = $("employeeLevelPlans");
+  const historyBody = $("positionHistoryBody");
+
+  plansBox.textContent = "Loading employee levels...";
+  historyBody.innerHTML = "<tr><td colspan='5'>Loading position history...</td></tr>";
+  hideMessage("positionStatusMessage");
+
+  if (!currentUser || currentProfile?.account_type !== "employee") {
+    plansBox.textContent = "This section is available to employee accounts only.";
+    historyBody.innerHTML = "<tr><td colspan='5'>Not available.</td></tr>";
+    return;
+  }
+
+  try {
+    const { data: plans, error: plansError } = await supabase
+      .from("employee_level_plans")
+      .select("id,level_code,deposit_amount,daily_order_limit,unit_price,daily_income_projection,monthly_income_projection,five_hundred_day_projection,is_active")
+      .eq("is_active", true)
+      .order("deposit_amount", { ascending: true });
+
+    if (plansError) throw plansError;
+
+    positionPlans = plans || [];
+
+    const { data: position, error: positionError } = await supabase
+      .from("employee_positions")
+      .select("id,level_code,locked_deposit,position_status,activated_at")
+      .eq("employee_id", currentUser.id)
+      .maybeSingle();
+
+    if (positionError) throw positionError;
+
+    currentPosition = position;
+
+    if (position && position.position_status === "active") {
+      $("currentPositionBox").classList.remove("hidden");
+      $("currentLevel").textContent = formatLevelName(position.level_code);
+      $("currentLockedDeposit").textContent = naira(position.locked_deposit);
+      $("currentPositionStatus").textContent = position.position_status;
+      $("currentPositionDate").textContent = position.activated_at
+        ? new Date(position.activated_at).toLocaleDateString()
+        : "-";
+    } else {
+      $("currentPositionBox").classList.add("hidden");
+    }
+
+    renderEmployeeLevelPlans();
+
+    const { data: history, error: historyError } = await supabase
+      .from("employee_position_history")
+      .select("action_type,previous_level,new_level,new_deposit,recorded_at")
+      .eq("employee_id", currentUser.id)
+      .order("recorded_at", { ascending: false })
+      .limit(30);
+
+    if (historyError) throw historyError;
+
+    if (!history || history.length === 0) {
+      historyBody.innerHTML = "<tr><td colspan='5'>No position history yet.</td></tr>";
+    } else {
+      historyBody.innerHTML = "";
+
+      history.forEach(row => {
+        const tr = document.createElement("tr");
+        const values = [
+          row.action_type || "-",
+          row.previous_level || "-",
+          row.new_level || "-",
+          naira(row.new_deposit),
+          row.recorded_at ? new Date(row.recorded_at).toLocaleString() : "-"
+        ];
+
+        values.forEach(value => {
+          const td = document.createElement("td");
+          td.textContent = value;
+          tr.appendChild(td);
+        });
+
+        historyBody.appendChild(tr);
+      });
+    }
+
+  } catch (error) {
+    console.error("Employee position loading error:", error);
+    plansBox.textContent = "Unable to load employee levels: " + error.message;
+    historyBody.innerHTML = "<tr><td colspan='5'>Unable to load position history.</td></tr>";
+  }
+}
+
+function renderEmployeeLevelPlans() {
+  const container = $("employeeLevelPlans");
+  container.innerHTML = "";
+
+  if (!positionPlans.length) {
+    container.textContent = "No active employee levels are available.";
+    return;
+  }
+
+  const balance = Number(currentProfile?.available_balance || 0);
+  const activePosition = currentPosition?.position_status === "active";
+
+  positionPlans.forEach(plan => {
+    const card = document.createElement("div");
+    card.className = "level-card";
+
+    const title = document.createElement("h4");
+    title.textContent = formatLevelName(plan.level_code);
+
+    const price = document.createElement("div");
+    price.className = "level-price";
+    price.textContent = naira(plan.deposit_amount);
+
+    const order = document.createElement("p");
+    order.textContent = `Daily order limit: ${plan.daily_order_limit}`;
+
+    const unit = document.createElement("p");
+    unit.textContent = `Unit price: ${naira(plan.unit_price)}`;
+
+    const daily = document.createElement("p");
+    daily.textContent = `Daily projection: ${naira(plan.daily_income_projection)}`;
+
+    const monthly = document.createElement("p");
+    monthly.textContent = `Monthly projection: ${naira(plan.monthly_income_projection)}`;
+
+    const longTerm = document.createElement("p");
+    longTerm.textContent = `500-day projection: ${naira(plan.five_hundred_day_projection)}`;
+
+    const button = document.createElement("button");
+
+    const currentIndex = positionPlans.findIndex(
+      item => item.level_code === currentPosition?.level_code
+    );
+    const targetIndex = positionPlans.findIndex(
+      item => item.level_code === plan.level_code
+    );
+
+    const isSameLevel = activePosition &&
+      plan.level_code === currentPosition.level_code;
+
+    const isLowerLevel = activePosition &&
+      currentIndex >= 0 && targetIndex <= currentIndex;
+
+    if (isSameLevel) {
+      button.textContent = "Your Current Level";
+      button.disabled = true;
+    } else if (isLowerLevel) {
+      button.textContent = "Lower Levels Unavailable";
+      button.disabled = true;
+    } else if (currentProfile?.employee_status !== "active") {
+      button.textContent = "Employee Account Not Active";
+      button.disabled = true;
+    } else if (balance < Number(plan.deposit_amount)) {
+      button.textContent = "Insufficient Wallet Balance";
+      button.disabled = true;
+    } else {
+      button.textContent = activePosition ? "Upgrade Position" : "Activate Position";
+      button.onclick = () => activateOrUpgradePosition(plan);
+    }
+
+    card.append(title, price, order, unit, daily, monthly, longTerm, button);
+    container.appendChild(card);
+  });
+}
+
+async function activateOrUpgradePosition(plan) {
+  if (!currentUser || !currentProfile) {
+    msg("positionStatusMessage", "Please log in again.", "error");
+    return;
+  }
+
+  if (currentProfile.account_type !== "employee") {
+    msg("positionStatusMessage", "Only employee accounts can activate an employee position.", "error");
+    return;
+  }
+
+  if (currentProfile.employee_status !== "active") {
+    msg("positionStatusMessage", "Your employee account must be active before activating a position.", "error");
+    return;
+  }
+
+  const amount = Number(plan.deposit_amount);
+  const balance = Number(currentProfile.available_balance || 0);
+
+  if (balance < amount) {
+    msg("positionStatusMessage", "Insufficient available wallet balance.", "error");
+    return;
+  }
+
+  const upgrading = currentPosition?.position_status === "active";
+
+  const actionText = upgrading
+    ? `Upgrade from ${currentPosition.level_code} to ${plan.level_code}?\n\nThe new plan deposit is ${naira(amount)}. Your existing position deposit will be refunded by the database as part of the upgrade.`
+    : `Activate ${plan.level_code} with a deposit of ${naira(amount)}?`;
+
+  if (!confirm(actionText + "\n\nPlease confirm that you want to continue.")) {
+    return;
+  }
+
+  const buttonMessage = upgrading ? "Processing upgrade..." : "Activating position...";
+  msg("positionStatusMessage", buttonMessage);
+
+  try {
+    const idempotencyKey = crypto.randomUUID();
+
+    const rpcName = upgrading
+      ? "upgrade_employee_position"
+      : "activate_employee_position";
+
+    const rpcArgs = upgrading
+      ? {
+          p_new_level_code: plan.level_code,
+          p_idempotency_key: idempotencyKey
+        }
+      : {
+          p_level_code: plan.level_code,
+          p_idempotency_key: idempotencyKey
+        };
+
+    const { data, error } = await supabase.rpc(rpcName, rpcArgs);
+
+    if (error) throw error;
+
+    if (!data?.success) {
+      throw new Error(data?.message || data?.error || "The position transaction was not completed.");
+    }
+
+    msg(
+      "positionStatusMessage",
+      upgrading
+        ? `Upgrade successful. Your position is now ${plan.level_code}.`
+        : `Position activated successfully. Your level is ${plan.level_code}.`
+    );
+
+    await loadDashboard({ navigate: false });
+    await loadEmployeePosition();
+
+  } catch (error) {
+    console.error("Position transaction error:", error);
+    msg(
+      "positionStatusMessage",
+      error.message || "Unable to complete the position transaction.",
+      "error"
+    );
+  }
+}
+
 /* DEPOSIT SUBMISSION */
 
 $("depositForm").onsubmit = async e => {
@@ -887,7 +1225,6 @@ $("loadDepositsBtn").onclick = async () => {
   }
 
   try {
-    /* First verify that the logged-in user is an administrator. */
     const { data: adminProfile, error: adminError } =
       await supabase.from("profiles")
         .select("role")
@@ -900,11 +1237,6 @@ $("loadDepositsBtn").onclick = async () => {
       throw new Error("Administrator access required.");
     }
 
-    /*
-      Secure RPC:
-      The database function performs the admin check and joins
-      deposit_records with profiles using SECURITY DEFINER.
-    */
     const { data: deposits, error: depositError } =
       await supabase.rpc("admin_get_pending_deposits");
 
@@ -921,12 +1253,10 @@ $("loadDepositsBtn").onclick = async () => {
     deposits.forEach(deposit => {
       const tr = document.createElement("tr");
 
-      /* CUSTOMER */
       const nameCell = document.createElement("td");
       nameCell.textContent = deposit.full_name || "Unknown";
       tr.appendChild(nameCell);
 
-      /* ACCOUNT TYPE */
       const accountCell = document.createElement("td");
       const badge = document.createElement("span");
 
@@ -954,7 +1284,6 @@ $("loadDepositsBtn").onclick = async () => {
       accountCell.appendChild(badge);
       tr.appendChild(accountCell);
 
-      /* PURPOSE */
       const purposeCell = document.createElement("td");
       const purposeBadge = document.createElement("span");
 
@@ -967,42 +1296,35 @@ $("loadDepositsBtn").onclick = async () => {
       purposeCell.appendChild(purposeBadge);
       tr.appendChild(purposeCell);
 
-      /* AMOUNT */
       const amountCell = document.createElement("td");
       amountCell.textContent = naira(deposit.amount);
       tr.appendChild(amountCell);
 
-      /* REFERENCE */
       const referenceCell = document.createElement("td");
       referenceCell.textContent = deposit.payment_reference || "-";
       tr.appendChild(referenceCell);
 
-      /* STATUS */
       const statusCell = document.createElement("td");
       statusCell.textContent = deposit.status || "pending";
       tr.appendChild(statusCell);
 
-      /* DATE */
       const dateCell = document.createElement("td");
       dateCell.textContent = deposit.submitted_at
         ? new Date(deposit.submitted_at).toLocaleString()
         : "-";
       tr.appendChild(dateCell);
 
-      /* ACTIONS */
       const actionCell = document.createElement("td");
 
       const approve = document.createElement("button");
       approve.textContent = "Confirm";
       approve.className = "admin-action confirm-btn";
-      approve.onclick = () =>
-        reviewDeposit(deposit.id, "confirmed");
+      approve.onclick = () => reviewDeposit(deposit.id, "confirmed");
 
       const reject = document.createElement("button");
       reject.textContent = "Reject";
       reject.className = "admin-action reject-btn";
-      reject.onclick = () =>
-        reviewDeposit(deposit.id, "rejected");
+      reject.onclick = () => reviewDeposit(deposit.id, "rejected");
 
       actionCell.append(approve, reject);
       tr.appendChild(actionCell);
@@ -1010,10 +1332,7 @@ $("loadDepositsBtn").onclick = async () => {
       tbody.appendChild(tr);
     });
 
-    msg(
-      "adminMessage",
-      `Loaded ${deposits.length} pending deposit(s).`
-    );
+    msg("adminMessage", `Loaded ${deposits.length} pending deposit(s).`);
 
   } catch (error) {
     console.error("Admin deposit loading error:", error);
@@ -1021,11 +1340,7 @@ $("loadDepositsBtn").onclick = async () => {
     tbody.innerHTML =
       "<tr><td colspan='8'>Unable to load deposit information.</td></tr>";
 
-    msg(
-      "adminMessage",
-      error.message || "Unable to load deposits.",
-      "error"
-    );
+    msg("adminMessage", error.message || "Unable to load deposits.", "error");
   }
 };
 
@@ -1071,6 +1386,7 @@ supabase.auth.onAuthStateChange((event, session) => {
     } else {
       currentUser = null;
       currentProfile = null;
+      currentPosition = null;
       $("authScreen").style.display = "flex";
       $("app").style.display = "none";
     }
@@ -1084,8 +1400,7 @@ const { data: { session } } = await supabase.auth.getSession();
 if (session) {
   currentUser = session.user;
   await loadDashboard();
-}
-</script>
-
+  }
+  </script>
 </body>
-  </html>
+</html>
