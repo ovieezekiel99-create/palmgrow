@@ -651,75 +651,90 @@ document.querySelectorAll(".planBtn").forEach(btn=>{
   };  
 });  
   
-/* LOAD DASHBOARD */  
-  
-async function loadDashboard(){  
-  const {data:{session}}=await supabase.auth.getSession();  
-  if(!session)return;  
-  
-  currentUser=session.user;  
-  $("authScreen").style.display="none";  
-  $("app").style.display="block";  
-  
-  const {data:profile,error:profileError}=await supabase  
-    .from("profiles")  
-    .select("full_name,phone,role,account_type,employee_status,referral_code,available_balance,investor_interest_balance,total_investment,total_earnings,referral_earnings,daily_payout_amount")  
-    .eq("id",currentUser.id)  
-    .maybeSingle();  
-  
-  if(profileError){  
-    console.error("Profile load error:",profileError.message);  
-  }  
-  
-  currentProfile=profile||{};  
-  
-  const name=profile?.full_name||  
-    currentUser.user_metadata?.full_name||"Member";  
-  
-  $("userName").textContent=name;  
-  $("userPhone").textContent=profile?.phone||"";  
-  $("userAvatar").textContent=name.charAt(0).toUpperCase();  
-  
-  $("referralCode").textContent=  
-    profile?.referral_code||  
-    currentUser.id.replace(/-/g,"").slice(0,8).toUpperCase();  
-  
-  $("walletBalanceDisplay").textContent=naira(profile?.available_balance);  
-  $("availableBalance").textContent=naira(profile?.available_balance);  
-  $("totalInvestment").textContent=naira(profile?.total_investment);  
-  $("totalEarnings").textContent=naira(profile?.total_earnings);  
-  $("referralEarnings").textContent=naira(profile?.referral_earnings);  
-  
-  $("dailyRateDisplay").textContent=  
-    naira(profile?.daily_payout_amount)+" / day";  
-  
-  const isEmployee=profile?.account_type==="employee";  
-  
-  $("employeeTasksNav").style.display=isEmployee?"flex":"none";  
-  $("employeePositionNav").style.display=isEmployee?"flex":"none";  
-  $("positionWalletBalance").textContent=naira(profile?.available_balance);  
-  $("adminNav").style.display=profile?.role==="admin"?"flex":"none";  
-  
-  updateWithdrawalBalance();  
-  showPage("dashboard");  
-}  
-  
-function getWithdrawableBalance(){  
-  if(currentProfile?.account_type==="employee"){  
-    return Number(currentProfile?.available_balance||0);  
-  }  
-  return Number(currentProfile?.investor_interest_balance||0);  
-}  
-  
-function updateWithdrawalBalance(){  
-  const balance=getWithdrawableBalance();  
-  $("dashboardWithdrawable").textContent=naira(balance);  
-  $("walletBalanceVal").textContent=Number(balance).toLocaleString("en-NG",{minimumFractionDigits:2,maximumFractionDigits:2});  
-  $("withdrawAccountType").textContent=  
-    currentProfile?.account_type==="employee"?"Employee":"Investor";  
-  $("dashboardAccountType").textContent=  
-    currentProfile?.account_type==="employee"?"Employee":"Investor";  
-}  
+/* LOAD DASHBOARD */
+
+async function loadDashboard(){
+  const {data:{session},error:sessionError} =
+    await supabase.auth.getSession();
+
+  if(sessionError){
+    console.error("Session error:",sessionError.message);
+    return;
+  }
+
+  if(!session)return;
+
+  currentUser=session.user;
+
+  $("authScreen").style.display="none";
+  $("app").style.display="block";
+
+  const {data:profile,error:profileError}=await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id",currentUser.id)
+    .maybeSingle();
+
+  if(profileError){
+    console.error("Profile load error:",profileError.message);
+    $("adminNav").style.display="none";
+    alert("Profile loading failed: "+profileError.message);
+    return;
+  }
+
+  if(!profile){
+    console.error("No profile found for:",currentUser.id);
+    $("adminNav").style.display="none";
+    alert("Your PalmGrow profile was not found.");
+    return;
+  }
+
+  currentProfile=profile;
+
+  const name=profile.full_name ||
+    currentUser.user_metadata?.full_name || "Member";
+
+  $("userName").textContent=name;
+  $("userPhone").textContent=profile.phone||"";
+  $("userAvatar").textContent=name.charAt(0).toUpperCase();
+
+  $("referralCode").textContent=
+    profile.referral_code ||
+    currentUser.id.replace(/-/g,"").slice(0,8).toUpperCase();
+
+  $("walletBalanceDisplay").textContent=naira(profile.available_balance);
+  $("availableBalance").textContent=naira(profile.available_balance);
+  $("totalInvestment").textContent=naira(profile.total_investment);
+  $("totalEarnings").textContent=naira(profile.total_earnings);
+  $("referralEarnings").textContent=naira(profile.referral_earnings);
+
+  $("dailyRateDisplay").textContent=
+    naira(profile.daily_payout_amount)+" / day";
+
+  const role=String(profile.role||"").trim().toLowerCase();
+  const accountType=String(profile.account_type||"").trim().toLowerCase();
+
+  const isAdmin=role==="admin";
+  const isEmployee=accountType==="employee";
+
+  $("adminNav").style.display=isAdmin?"flex":"none";
+  $("employeeTasksNav").style.display=isEmployee?"flex":"none";
+  $("employeePositionNav").style.display=isEmployee?"flex":"none";
+
+  $("positionWalletBalance").textContent=
+    naira(profile.available_balance);
+
+  updateWithdrawalBalance();
+
+  showPage("dashboard");
+
+  console.log("PalmGrow access check:",{
+    userId:currentUser.id,
+    role:profile.role,
+    accountType:profile.account_type,
+    isAdmin:isAdmin
+  });
+  }
   
 /* EMPLOYEE M1–M9 POSITION ACTIVATION */  
   
