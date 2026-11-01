@@ -1072,6 +1072,9 @@ async function loadWithdrawalPage(){
   $("withdrawFeePreview").textContent=
     "Select an amount to see the fee and amount you will receive.";
 
+  // Ensure pinMessage is hidden every time the withdrawal page loads
+  $("pinMessage").classList.add("hidden");
+
   await loadWithdrawalSetup();
   await loadMyWithdrawals();
   renderWithdrawalOptions();
@@ -1092,11 +1095,11 @@ async function loadWithdrawalSetup(){
     );
 
     $("pinStatusText").textContent=hasPin
-      ?"Your withdrawal PIN has been created. Enter it when making a withdrawal."
+      ?"Your withdrawal PIN is already set. PIN changes require administrator assistance."
       :"You have not created a withdrawal PIN yet.";
 
     $("pinFormLabel").textContent=hasPin
-      ?"Your withdrawal PIN is already set. PIN changes require administrator assistance."
+      ?"Your withdrawal PIN is already set."
       :"Create a six-digit withdrawal PIN";
 
     $("pinSubmitBtn").textContent=hasPin
@@ -1156,7 +1159,8 @@ $("pinForm").onsubmit=async e=>{
     }
 
     $("withdrawPin").value="";
-    msg("pinMessage","Your withdrawal PIN has been created successfully.");
+    // Show success message only right after creation
+    msg("pinMessage","Your withdrawal PIN has been created. Enter it when making a withdrawal.");
     await loadWithdrawalSetup();
 
   }catch(err){
