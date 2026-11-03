@@ -285,15 +285,22 @@ th{background:#f0f5f2;font-weight:600}
       <div class="payment-box"><strong>Payment Details (OPay)</strong><br><br>Account Name: <strong>Ovie Ezekiel</strong><br>Account Number: <strong>7037816664</strong><br>Bank: <strong>OPay</strong></div>  
       <p id="selectedPlanText" style="margin-bottom:12px;font-weight:600"></p>  
       <form id="depositForm">  
-        <label>Deposit Amount</label>  
-        <select id="depositAmount" required>  
-          <option value="">Select amount</option>  
-          <option value="5000">₦5,000</option>  
-          <option value="50000">₦50,000</option>  
-          <option value="100000">₦100,000</option>  
-        </select>  
-        <label>Payment Reference</label>  
-        <input id="paymentReference" maxlength="120" required placeholder="Bank transaction reference">  
+        <label>Deposit Amount (₦)</label>
+<input
+  id="depositAmount"
+  type="number"
+  min="1"
+  step="1"
+  required
+  placeholder="Enter your deposit amount"
+>
+<label>Payment Reference</label>
+<input
+  id="paymentReference"
+  maxlength="120"
+  required
+  placeholder="Bank transaction reference"
+>  
         <button type="submit" id="depositBtn">Submit Deposit for Review</button>  
       </form>  
       <div id="depositMessage" class="status hidden"></div>  
