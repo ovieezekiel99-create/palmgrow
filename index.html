@@ -1157,10 +1157,10 @@ $("depositForm").onsubmit=async e=>{
   const amount=Number($("depositAmount").value);  
   const reference=$("paymentReference").value.trim();  
   
-  if(![5000,50000,100000].includes(amount)){  
-    msg("depositMessage","Select a valid amount","error");  
-    return;  
-  }  
+  if(!Number.isFinite(amount) || amount <= 0){
+    msg("depositMessage","Enter a valid deposit amount","error");
+    return;
+  }
   
   if(!reference){  
     msg("depositMessage","Enter payment reference","error");  
