@@ -141,7 +141,7 @@ th{background:#f0f5f2;font-weight:600}
         <button class="menu-btn hidden" id="backBtn" title="Go back">←</button>  
       </div>  
       <!-- Clickable User Profile Area -->
-      <div class="user-info" id="userProfileBtn" title="Click to view/edit profile details">  
+      <div class="user-info" id="userProfileBtn" title="Click to view profile details">  
         <div class="avatar" id="userAvatar">P</div>  
         <div><div id="userName" style="font-weight:600">Member</div><div id="userPhone" style="font-size:12px;color:var(--muted)"></div></div>  
       </div>  
@@ -712,17 +712,19 @@ function setProfileFormLock(isLocked) {
   $("profGender").disabled = isLocked;
   
   const saveBtn = $("saveProfileBtn");
-  saveBtn.disabled = isLocked;
+  const msgEl = $("profileMessage");
+
   if (isLocked) {
-    saveBtn.textContent = "Details Locked (Cannot Be Edited)";
-    saveBtn.style.background = "#8a9b91";
-    saveBtn.style.cursor = "not-allowed";
-    msg("profileMessage", "Your details have been submitted and locked. Edits are no longer permitted.", "error");
+    // Completely hide the save button and the message banner when locked
+    saveBtn.classList.add("hidden");
+    msgEl.classList.add("hidden");
   } else {
+    saveBtn.classList.remove("hidden");
+    saveBtn.disabled = false;
     saveBtn.textContent = "Save Details";
     saveBtn.style.background = "var(--green)";
     saveBtn.style.cursor = "pointer";
-    $("profileMessage").classList.add("hidden");
+    msgEl.classList.add("hidden");
   }
 }
 
@@ -748,7 +750,6 @@ $("profileForm").onsubmit = async e => {
   e.preventDefault();
   
   if (isProfileFilled(currentProfile)) {
-    msg("profileMessage", "Profile is locked and cannot be edited.", "error");
     return;
   }
 
@@ -794,12 +795,8 @@ $("profileForm").onsubmit = async e => {
     $("userPhone").textContent = phone || "";
     $("userAvatar").textContent = (fullName || "M").charAt(0).toUpperCase();
 
-    msg("profileMessage", "Details saved and locked successfully!");
     setProfileFormLock(true);
-
-    setTimeout(() => {
-      $("profileModal").classList.add("hidden");
-    }, 1500);
+    $("profileModal").classList.add("hidden");
 
   } catch(err) {
     msg("profileMessage", err.message || "Failed to update profile", "error");
