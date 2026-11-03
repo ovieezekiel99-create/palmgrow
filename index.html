@@ -53,7 +53,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
 .main{margin-left:0;min-height:100vh;padding-bottom:90px}  
 .topbar{background:#fff;border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}  
 .menu-btn{background:none;border:0;font-size:22px;cursor:pointer;color:var(--green-dark);padding:4px 8px}  
-.user-info{display:flex;align-items:center;gap:10px;font-size:14px}  
+.user-info{display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer;padding:4px 8px;border-radius:8px;transition:background 0.2s}  
+.user-info:hover{background:#f0f5f2}  
 .user-info .avatar{width:36px;height:36px;background:var(--green);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600}  
 .content{padding:16px;max-width:480px;margin:0 auto}  
 @media(min-width:768px){.content{max-width:1100px}}  
@@ -89,6 +90,14 @@ th{background:#f0f5f2;font-weight:600}
 .summary-row.total{font-weight:700;color:var(--green-dark);font-size:16px}  
 .admin-actions{display:flex;flex-wrap:wrap;gap:6px}  
 .admin-actions button{padding:6px 8px;border:0;border-radius:4px;cursor:pointer;font-weight:600;font-size:11px}  
+
+/* Profile Modal Styles */
+.modal {position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:150;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal-content {background:#fff;border-radius:16px;padding:24px;width:100%;max-width:440px;box-shadow:0 10px 25px rgba(0,0,0,0.2);position:relative}
+.modal-header {display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:10px}
+.modal-header h3 {color:var(--green-dark);font-size:18px}
+.close-btn {background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted)}
+
 @media(min-width:768px){  
   .sidebar{transform:translateX(0)}  
   .main{margin-left:240px}  
@@ -131,7 +140,8 @@ th{background:#f0f5f2;font-weight:600}
         <button class="menu-btn" id="menuBtn">☰</button>  
         <button class="menu-btn hidden" id="backBtn" title="Go back">←</button>  
       </div>  
-      <div class="user-info">  
+      <!-- Clickable User Profile Area -->
+      <div class="user-info" id="userProfileBtn" title="Click to view/edit profile details">  
         <div class="avatar" id="userAvatar">P</div>  
         <div><div id="userName" style="font-weight:600">Member</div><div id="userPhone" style="font-size:12px;color:var(--muted)"></div></div>  
       </div>  
@@ -438,7 +448,43 @@ th{background:#f0f5f2;font-weight:600}
 </div>
 
   </div>  
-</div>  <script type="module">  
+</div>
+
+<!-- EMPLOYEE PROFILE MODAL -->
+<div id="profileModal" class="modal hidden">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>👤 Personal & Employee Details</h3>
+      <button class="close-btn" id="closeProfileModal">&times;</button>
+    </div>
+    <form id="profileForm">
+      <label>Full Name</label>
+      <input id="profFullName" type="text" required placeholder="Enter full name">
+      
+      <label>Phone Number</label>
+      <input id="profPhone" type="tel" required placeholder="e.g. 07037816664">
+      
+      <label>Age</label>
+      <input id="profAge" type="number" min="18" max="100" placeholder="Enter age">
+      
+      <label>Occupation</label>
+      <input id="profOccupation" type="text" placeholder="e.g. Agricultural Specialist, Trader">
+      
+      <label>Gender</label>
+      <select id="profGender">
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+      
+      <button type="submit" id="saveProfileBtn">Save Details</button>
+    </form>
+    <div id="profileMessage" class="status hidden"></div>
+  </div>
+</div>
+
+<script type="module">  
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";  
   
 const SUPABASE_URL = "https://ghdiycdzsmncmlcpdniy.supabase.co";  
@@ -651,6 +697,117 @@ document.querySelectorAll(".planBtn").forEach(btn=>{
   };  
 });  
   
+/* PROFILE MODAL & LOCKING CONTROLS */
+
+function isProfileFilled(profile) {
+  if (!profile) return false;
+  return Boolean(profile.phone && profile.age && profile.occupation && profile.gender);
+}
+
+function setProfileFormLock(isLocked) {
+  $("profFullName").disabled = isLocked;
+  $("profPhone").disabled = isLocked;
+  $("profAge").disabled = isLocked;
+  $("profOccupation").disabled = isLocked;
+  $("profGender").disabled = isLocked;
+  
+  const saveBtn = $("saveProfileBtn");
+  saveBtn.disabled = isLocked;
+  if (isLocked) {
+    saveBtn.textContent = "Details Locked (Cannot Be Edited)";
+    saveBtn.style.background = "#8a9b91";
+    saveBtn.style.cursor = "not-allowed";
+    msg("profileMessage", "Your details have been submitted and locked. Edits are no longer permitted.", "error");
+  } else {
+    saveBtn.textContent = "Save Details";
+    saveBtn.style.background = "var(--green)";
+    saveBtn.style.cursor = "pointer";
+    $("profileMessage").classList.add("hidden");
+  }
+}
+
+$("userProfileBtn").onclick = () => {
+  if(!currentProfile) return;
+  $("profFullName").value = currentProfile.full_name || "";
+  $("profPhone").value = currentProfile.phone || "";
+  $("profAge").value = currentProfile.age || "";
+  $("profOccupation").value = currentProfile.occupation || "";
+  $("profGender").value = currentProfile.gender || "";
+  
+  const locked = isProfileFilled(currentProfile);
+  setProfileFormLock(locked);
+
+  $("profileModal").classList.remove("hidden");
+};
+
+$("closeProfileModal").onclick = () => {
+  $("profileModal").classList.add("hidden");
+};
+
+$("profileForm").onsubmit = async e => {
+  e.preventDefault();
+  
+  if (isProfileFilled(currentProfile)) {
+    msg("profileMessage", "Profile is locked and cannot be edited.", "error");
+    return;
+  }
+
+  const fullName = $("profFullName").value.trim();
+  const phone = $("profPhone").value.trim();
+  const age = $("profAge").value ? Number($("profAge").value) : null;
+  const occupation = $("profOccupation").value.trim();
+  const gender = $("profGender").value;
+
+  if(!phone || !age || !occupation || !gender) {
+    msg("profileMessage", "Please fill out all details before saving.", "error");
+    return;
+  }
+
+  const confirmSubmit = confirm("Notice: Once you save your profile details, they cannot be edited again. Are you sure you want to proceed?");
+  if(!confirmSubmit) return;
+
+  $("saveProfileBtn").disabled = true;
+  $("saveProfileBtn").textContent = "Saving...";
+
+  try {
+    const { error } = await supabase
+      .from("profiles")
+      .update({
+        full_name: fullName,
+        phone: phone,
+        age: age,
+        occupation: occupation,
+        gender: gender
+      })
+      .eq("id", currentUser.id);
+
+    if (error) throw error;
+
+    // Refresh locally
+    currentProfile.full_name = fullName;
+    currentProfile.phone = phone;
+    currentProfile.age = age;
+    currentProfile.occupation = occupation;
+    currentProfile.gender = gender;
+
+    $("userName").textContent = fullName || "Member";
+    $("userPhone").textContent = phone || "";
+    $("userAvatar").textContent = (fullName || "M").charAt(0).toUpperCase();
+
+    msg("profileMessage", "Details saved and locked successfully!");
+    setProfileFormLock(true);
+
+    setTimeout(() => {
+      $("profileModal").classList.add("hidden");
+    }, 1500);
+
+  } catch(err) {
+    msg("profileMessage", err.message || "Failed to update profile", "error");
+    $("saveProfileBtn").disabled = false;
+    $("saveProfileBtn").textContent = "Save Details";
+  }
+};
+
 /* LOAD DASHBOARD */
 
 async function loadDashboard(){
@@ -727,14 +884,7 @@ async function loadDashboard(){
   updateWithdrawalBalance();
 
   showPage("dashboard");
-
-  console.log("PalmGrow access check:",{
-    userId:currentUser.id,
-    role:profile.role,
-    accountType:profile.account_type,
-    isAdmin:isAdmin
-  });
-  }
+}
   
 /* EMPLOYEE M1–M9 POSITION ACTIVATION */  
   
@@ -1278,7 +1428,7 @@ async function deleteEmployeeAccount(employeeId, employeeName){
   }  
 }  
   
-/* WITHDRAWAL SETUP & NEW VIEW LOGIC */  
+/* WITHDRAWAL SETUP & VIEW LOGIC */  
   
 async function loadWithdrawalPage(){  
   if(!currentUser)return;  
