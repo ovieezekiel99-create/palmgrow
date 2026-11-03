@@ -287,29 +287,27 @@ th{background:#f0f5f2;font-weight:600}
       <p id="selectedPlanText" style="margin-bottom:12px;font-weight:600"></p>  
       <form id="depositForm">  
         <label>Deposit Amount (₦)</label>
-        <input id="depositAmount" type="number" min="1" step="1" required placeholder="Enter your deposit amount">
-        
-        <label>Depositor Name</label>
-        <input id="depositorName" type="text" required placeholder="Name used to make payment">
-
-        <label>Payment Reference</label>
-        <input id="paymentReference" maxlength="120" required placeholder="Bank transaction reference">  
-        
+<input
+  id="depositAmount"
+  type="number"
+  min="1"
+  step="1"
+  required
+  placeholder="Enter your deposit amount"
+>
+<label>Payment Reference</label>
+<input
+  id="paymentReference"
+  maxlength="120"
+  required
+  placeholder="Bank transaction reference"
+>  
         <button type="submit" id="depositBtn">Submit Deposit for Review</button>  
       </form>  
       <div id="depositMessage" class="status hidden"></div>  
       <button class="secondary-btn" id="myDepositsBtn" style="width:100%;padding:12px;border:0;border-radius:8px;font-weight:600;cursor:pointer">View My Deposit Submissions</button>  
       <div id="myDepositsMessage" class="status hidden"></div>  
-      <div style="overflow-x:auto;margin-top:12px">
-        <table>
-          <thead>
-            <tr><th>Amount</th><th>Depositor</th><th>Reference</th><th>Status</th><th>Date</th></tr>
-          </thead>
-          <tbody id="myDepositsBody">
-            <tr><td colspan="5">No submissions yet</td></tr>
-          </tbody>
-        </table>
-      </div>  
+      <div style="overflow-x:auto;margin-top:12px"><table><thead><tr><th>Amount</th><th>Reference</th><th>Status</th><th>Date</th></tr></thead><tbody id="myDepositsBody"><tr><td colspan="4">No submissions yet</td></tr></tbody></table></div>  
     </div>  
   </div>  
 
@@ -382,7 +380,7 @@ th{background:#f0f5f2;font-weight:600}
   <div id="page-referral" class="hidden">  
     <div class="section">  
       <h3>👥 Referral Program & Structure Index</h3>  
-      <p style="margin-bottom:14px;color:var(--muted);font-size:14px">Share your referral code with friends. Earn rewards when they invest or complete daily orders across Levels 1, 2, and 3[span_0](start_span)[span_0](end_span)[span_1](start_span)[span_1](end_span).</p>  
+      <p style="margin-bottom:14px;color:var(--muted);font-size:14px">Share your referral code with friends. Earn rewards when they invest or complete daily orders across Levels 1, 2, and 3.</p>  
       <div class="payment-box">Your Referral Code:<br><strong id="referralCode" style="font-size:20px;letter-spacing:1px">LOADING...</strong></div>  
       
       <!-- Built-in Referral Estimator Calculator -->
@@ -390,15 +388,15 @@ th{background:#f0f5f2;font-weight:600}
         <h4 style="color:var(--green-dark); margin-bottom:10px; font-size:15px;">📊 Referral Bonus & Rebate Estimator</h4>
         <label>Select Referral Level Position:</label>
         <select id="calcLevelSelect" style="margin-bottom:10px;">
-          <option value="M1">M1 (Deposit: ₦18,000)[span_2](start_span)[span_2](end_span)</option>
-          <option value="M2">M2 (Deposit: ₦51,000)[span_3](start_span)[span_3](end_span)</option>
-          <option value="M3" selected>M3 (Deposit: ₦162,000)[span_4](start_span)[span_4](end_span)[span_5](start_span)[span_5](end_span)</option>
-          <option value="M4">M4 (Deposit: ₦436,800)[span_6](start_span)[span_6](end_span)</option>
-          <option value="M5">M5 (Deposit: ₦891,800)[span_7](start_span)[span_7](end_span)</option>
-          <option value="M6">M6 (Deposit: ₦1,690,000)[span_8](start_span)[span_8](end_span)</option>
-          <option value="M7">M7 (Deposit: ₦3,705,000)[span_9](start_span)[span_9](end_span)</option>
-          <option value="M8">M8 (Deposit: ₦7,080,000)[span_10](start_span)[span_10](end_span)</option>
-          <option value="M9">M9 (Deposit: ₦12,672,000)[span_11](start_span)[span_11](end_span)</option>
+          <option value="M1">M1 (Deposit: ₦18,000)</option>
+          <option value="M2">M2 (Deposit: ₦51,000)</option>
+          <option value="M3" selected>M3 (Deposit: ₦162,000)</option>
+          <option value="M4">M4 (Deposit: ₦436,800)</option>
+          <option value="M5">M5 (Deposit: ₦891,800)</option>
+          <option value="M6">M6 (Deposit: ₦1,690,000)</option>
+          <option value="M7">M7 (Deposit: ₦3,705,000)</option>
+          <option value="M8">M8 (Deposit: ₦7,080,000)</option>
+          <option value="M9">M9 (Deposit: ₦12,672,000)</option>
         </select>
         <div id="calcResultsBox" style="background:white; border:1px solid var(--border); padding:12px; border-radius:8px; font-size:13px; line-height:1.6;">
           <!-- Populated via script -->
@@ -438,7 +436,7 @@ th{background:#f0f5f2;font-weight:600}
       <button id="loadDepositsBtn" style="padding:10px 16px;background:var(--green);color:white;border:0;border-radius:6px;font-weight:600;cursor:pointer">Load Pending Deposits</button>  
       <div id="adminMessage" class="status hidden"></div>  
       <div style="overflow-x:auto;margin-top:14px">  
-        <table><thead><tr><th>Amount</th><th>Depositor</th><th>Reference</th><th>Status</th><th>Date</th></tr></thead><tbody id="adminDepositsBody"><tr><td colspan="5">Click Load Pending Deposits</td></tr></tbody></table>  
+        <table><thead><tr><th>Amount</th><th>Reference</th><th>Status</th><th>Date</th><th>Action</th></tr></thead><tbody id="adminDepositsBody"><tr><td colspan="5">Click Load Pending Deposits</td></tr></tbody></table>  
       </div>  
     </div>  
 
@@ -536,8 +534,8 @@ const PALMGROW_REFERRAL_INDEX = {
     M9: { deposit: 12672000, income1Day: 528000, level1Referral: 1267200, level2Referral: 380160, level3Referral: 126720, l1Rebate: 15840, l2Rebate: 10560, l3Rebate: 5280 }
   },
   commissionRates: {
-    referralBonus: { level1: 0.10, level2: 0.03, level3: 0.01 }, // 10%, 3%, 1%[span_12](start_span)[span_12](end_span)
-    orderRebate: { level1: 0.03, level2: 0.02, level3: 0.01 }     // 3%, 2%, 1%[span_13](start_span)[span_13](end_span)
+    referralBonus: { level1: 0.10, level2: 0.03, level3: 0.01 }, // 10%, 3%, 1%[span_0](start_span)[span_0](end_span)
+    orderRebate: { level1: 0.03, level2: 0.02, level3: 0.01 }     // 3%, 2%, 1%[span_1](start_span)[span_1](end_span)
   }
 };
 
@@ -552,16 +550,16 @@ function updateReferralEstimator() {
 
   box.innerHTML = `
     <strong>Position: ${lvl}</strong><br>
-    Deposit Required: <strong>${naira(data.deposit)}</strong>[span_14](start_span)[span_14](end_span)<br>
-    Estimated 1-Day Income: <strong>${naira(data.income1Day)}</strong>[span_15](start_span)[span_15](end_span)<br><br>
+    Deposit Required: <strong>${naira(data.deposit)}</strong><br>
+    Estimated 1-Day Income: <strong>${naira(data.income1Day)}</strong><br><br>
     <strong>Referral Bonuses (Joining):</strong><br>
-    • Level 1 Bonus (10%): <strong>${naira(data.level1Referral)}</strong>[span_16](start_span)[span_16](end_span)<br>
-    • Level 2 Bonus (3%): <strong>${naira(data.level2Referral)}</strong>[span_17](start_span)[span_17](end_span)<br>
-    • Level 3 Bonus (1%): <strong>${naira(data.level3Referral)}</strong>[span_18](start_span)[span_18](end_span)<br><br>
+    • Level 1 Bonus (10%): <strong>${naira(data.level1Referral)}</strong>[span_2](start_span)[span_2](end_span)<br>
+    • Level 2 Bonus (3%): <strong>${naira(data.level2Referral)}</strong>[span_3](start_span)[span_3](end_span)<br>
+    • Level 3 Bonus (1%): <strong>${naira(data.level3Referral)}</strong>[span_4](start_span)[span_4](end_span)<br><br>
     <strong>Daily Order Rebates:</strong><br>
-    • Level 1 Rebate (3%): <strong>${naira(data.l1Rebate)} / day</strong>[span_19](start_span)[span_19](end_span)<br>
-    • Level 2 Rebate (2%): <strong>${naira(data.l2Rebate)} / day</strong>[span_20](start_span)[span_20](end_span)<br>
-    • Level 3 Rebate (1%): <strong>${naira(data.l3Rebate)} / day</strong>[span_21](start_span)[span_21](end_span)
+    • Level 1 Rebate (3%): <strong>${naira(data.l1Rebate)} / day</strong>[span_5](start_span)[span_5](end_span)<br>
+    • Level 2 Rebate (2%): <strong>${naira(data.l2Rebate)} / day</strong>[span_6](start_span)[span_6](end_span)<br>
+    • Level 3 Rebate (1%): <strong>${naira(data.l3Rebate)} / day</strong>[span_7](start_span)[span_7](end_span)
   `;
 }
 
@@ -1261,19 +1259,13 @@ $("depositForm").onsubmit=async e=>{
   e.preventDefault();  
   
   const amount=Number($("depositAmount").value);  
-  const depositorName=$("depositorName").value.trim();  
   const reference=$("paymentReference").value.trim();  
   
   if(!Number.isSafeInteger(amount) || amount < 1){
-    msg("depositMessage","Enter a valid deposit amount in whole naira.","error");
-    return;
-  }
+  msg("depositMessage","Enter a valid deposit amount in whole naira.","error");
+  return;
+}
   
-  if(!depositorName){  
-    msg("depositMessage","Enter depositor name","error");  
-    return;  
-  }
-
   if(!reference){  
     msg("depositMessage","Enter payment reference","error");  
     return;  
@@ -1285,14 +1277,12 @@ $("depositForm").onsubmit=async e=>{
     const {error}=await supabase.from("deposit_records").insert({  
       user_id:currentUser.id,  
       amount,  
-      depositor_name:depositorName,
       payment_reference:reference,  
       status:"pending"  
     });  
   
     if(error)throw error;  
   
-    $("depositorName").value="";
     $("paymentReference").value="";  
     msg("depositMessage","Deposit submitted. Status: PENDING. Balance will update after admin approval.");  
     loadMyDeposits();  
@@ -1309,12 +1299,12 @@ async function loadMyDeposits(){
   
   const {data,error}=await supabase  
     .from("deposit_records")  
-    .select("amount,depositor_name,payment_reference,status,submitted_at")  
+    .select("amount,payment_reference,status,submitted_at")  
     .eq("user_id",currentUser.id)  
     .order("submitted_at",{ascending:false});  
   
   if(error||!data||data.length===0){  
-    tbody.innerHTML='<tr><td colspan="5">No submissions yet</td></tr>';  
+    tbody.innerHTML='<tr><td colspan="4">No submissions yet</td></tr>';  
     return;  
   }  
   
@@ -1323,7 +1313,6 @@ async function loadMyDeposits(){
   
     [  
       naira(item.amount),  
-      item.depositor_name||"-",
       item.payment_reference||"-",  
       displayStatus(item.status),  
       dateText(item.submitted_at)  
@@ -1359,7 +1348,7 @@ $("loadDepositsBtn").onclick=async()=>{
   
   const {data,error}=await supabase  
     .from("deposit_records")  
-    .select("id,amount,depositor_name,payment_reference,status,submitted_at,user_id")  
+    .select("id,amount,payment_reference,status,submitted_at,user_id")  
     .eq("status","pending")  
     .order("submitted_at",{ascending:false});  
   
@@ -1379,7 +1368,6 @@ $("loadDepositsBtn").onclick=async()=>{
   
     [  
       naira(item.amount),  
-      item.depositor_name||"-",
       item.payment_reference||"-",  
       displayStatus(item.status),  
       dateText(item.submitted_at)  
@@ -1557,32 +1545,27 @@ async function loadWithdrawalPage(){
   
 async function loadWithdrawalSetup(){  
   try{  
-    const {data, error} = await supabase.rpc("palmgrow_my_withdrawal_setup");  
-    if(error) throw error;  
+    const {data,error}=await supabase.rpc("palmgrow_my_withdrawal_setup");  
+    if(error)throw error;  
   
-    withdrawalSetup = Array.isArray(data) ? (data[0] || {}) : (data?.data || data || {});  
+    withdrawalSetup=objectOf(data);  
   
-    const bankName = withdrawalSetup.bank_name || withdrawalSetup.bank || "";  
-    const accountNumber = withdrawalSetup.account_number || withdrawalSetup.account || "";  
-    const verified = Boolean(  
-      withdrawalSetup.bank_verified ||  
+    const bankName=withdrawalSetup.bank_name||"No Bank";  
+    const accountNumber=withdrawalSetup.account_number||"";  
+    const accountName=withdrawalSetup.account_name||"";  
+    const verified=Boolean(  
+      withdrawalSetup.bank_verified||  
       withdrawalSetup.is_bank_verified  
     );  
   
-    const bankDisplay = $("bankDisplaySummary");
-    if(bankDisplay) {
-      if(bankName && accountNumber){  
-        bankDisplay.textContent = `${bankName} (${accountNumber}) - ${verified ? 'Verified' : 'Awaiting Verification'}`;  
-      } else {  
-        bankDisplay.textContent = "No bank account registered. Click to add.";  
-      }  
-    }
-  } catch(err) {  
-    console.error("Error loading withdrawal setup:", err);
-    const bankDisplay = $("bankDisplaySummary");
-    if(bankDisplay) {
-      bankDisplay.textContent = "Error loading bank details. Tap to retry.";  
-    }
+    if(bankName && accountNumber){  
+      $("bankDisplaySummary").textContent = `${bankName} (${accountNumber}) - ${verified ? 'Verified' : 'Awaiting Verification'}`;  
+    }else{  
+      $("bankDisplaySummary").textContent = "No bank account registered. Click to add.";  
+    }  
+  
+  }catch(err){  
+    $("bankDisplaySummary").textContent = "Unable to load bank details.";  
   }  
 }  
   
@@ -1870,7 +1853,7 @@ async function loadAdminWithdrawals(){
       tr.append(member,bank,gross,fees,netCell,status,action);  
       body.appendChild(tr);  
     });  
-    
+  
     msg("adminWithdrawalMessage",`Loaded ${records.length} withdrawal request(s).`);  
   
   }catch(err){  
@@ -1932,3 +1915,4 @@ if(session)await loadDashboard();
   
 </script>  </body>  
   </html>
+
