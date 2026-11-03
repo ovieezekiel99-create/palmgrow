@@ -498,6 +498,7 @@ let currentProfile = null;
 let withdrawalSetup = null;  
 let pageHistory = ["dashboard"];  
 let selectedWithdrawalAmount = null;  
+let isInitialBoot = true; // Tracks if the app is loading for the first time
   
 const WITHDRAWAL_AMOUNTS = [  
   1800,2800,8000,26000,75000,200000,  
@@ -889,12 +890,19 @@ async function loadDashboard(){
 
   updateWithdrawalBalance();
 
-  // Check URL hash on load to restore the correct page after a refresh
-  const hash = window.location.hash.replace("#", "").trim();
-  if (hash && PAGE_NAMES.includes(hash)) {
-    showPage(hash, true);
-  } else {
-    showPage("dashboard");
+  // Only check the URL hash on the initial boot/refresh load
+  if(isInitialBoot){
+    isInitialBoot = false;
+    const hash = window.location.hash.replace("#", "").trim();
+    if(hash && PAGE_NAMES.includes(hash)){
+      showPage(hash, true);
+      return;
+    }
+  }
+
+  // If no hash or not initial boot, default page handling can stay as is
+  if(document.querySelector("#app").style.display !== "none" && pageHistory.length === 1){
+    showPage("dashboard", false);
   }
 }
   
