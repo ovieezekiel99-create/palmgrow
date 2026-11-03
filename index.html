@@ -99,48 +99,85 @@ th{background:#f0f5f2;font-weight:600}
 .modal-header h3 {color:var(--green-dark);font-size:18px}
 .close-btn {background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted)}
 
-@media(min-width:768px){  
-  .sidebar{transform:translateX(0)}  
-  .main{margin-left:240px}  
-  .menu-btn{display:none}  
-  .plans{grid-template-columns:repeat(3,1fr)}  
-  .withdraw-grid{grid-template-columns:repeat(3,minmax(0,1fr))}  
-}  
-</style>  
-</head>  
-<body>  <div id="authScreen">  
-  <div class="auth-box">  
-    <h1>🌴 PalmGrow</h1>  
-    <p class="sub" id="authSub">Create your PalmGrow account</p>  
-    <form id="authForm">  
-      <div id="nameField"><label>Full Name</label><input id="fullName" type="text" autocomplete="name" placeholder="Your full name"></div>  
-      <div id="referralField"><label>Referral Code (Optional)</label><input id="referralCodeInput" type="text" placeholder="Enter referral code"></div>  
-      <label>Email Address</label><input id="email" type="email" required autocomplete="email" placeholder="Enter your email">  
-      <label>Password</label><input id="password" type="password" required minlength="6" autocomplete="current-password" placeholder="At least 6 characters">  
-      <button type="submit" id="submitBtn">Create Account</button>  
-    </form>  
-    <div id="authMessage" class="status hidden"></div>  
-    <button type="button" class="secondary" id="switchBtn">Already have an account? Login</button>  
-  </div>  
-</div>  <div id="app">  
-  <div class="overlay" id="overlay"></div>  
-  <aside class="sidebar" id="sidebar">  
-    <div class="logo">🌴 Palm<span>Grow</span></div>  
-    <div class="nav-item active" data-page="dashboard">🏠 Dashboard</div>  
-    <div class="nav-item" data-page="invest">💰 Make Investment</div>  
-    <div class="nav-item" data-page="employee-position" id="employeePositionNav" style="display:none">📈 Employee Position M1–M9</div>  
-    <div class="nav-item" data-page="employee-tasks" id="employeeTasksNav" style="display:none">🌱 Employee Daily Tasks</div>  
-    <div class="nav-item" data-page="deposit">📥 Deposit</div>  
-    <div class="nav-item" data-page="withdraw">💸 Withdraw Funds</div>  
-    <div class="nav-item" data-page="referral">👥 Referral Program</div>  
-    <div class="nav-item" data-page="admin" id="adminNav" style="display:none">🛡️ Admin Panel</div>  
-    <div class="nav-item" id="logoutNav">🚪 Log Out</div>  
-  </aside>    <div class="main">  
-    <div class="topbar">  
-      <div style="display:flex;align-items:center;gap:6px;">  
-        <button class="menu-btn" id="menuBtn">☰</button>  
-        <button class="menu-btn hidden" id="backBtn" title="Go back">←</button>  
-      </div>  
+@media(min-width:768px){
+.sidebar{transform:translateX(0)}
+.main{margin-left:240px}
+.menu-btn{display:none}
+.plans{grid-template-columns:repeat(3,1fr)}
+.withdraw-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+/* COMPACT M1–M9 POSITION CARDS */
+#employeePositionPlans {
+display: grid;
+grid-template-columns: repeat(2, minmax(0, 1fr));
+gap: 10px;
+align-items: stretch;
+}
+
+#employeePositionPlans .position-plan {
+margin: 0;
+padding: 12px;
+border-radius: 12px;
+min-width: 0;
+}
+
+#employeePositionPlans .position-plan h4 {
+margin: 6px 0;
+font-size: 16px;
+}
+
+#employeePositionPlans .position-details {
+display: grid;
+grid-template-columns: 1fr;
+gap: 6px;
+margin-top: 8px;
+}
+
+#employeePositionPlans .detail-box {
+padding: 7px;
+margin: 0;
+}
+
+#employeePositionPlans .detail-box p {
+margin: 0 0 3px;
+font-size: 11px;
+}
+
+#employeePositionPlans .detail-box strong {
+font-size: 12px;
+}
+
+#employeePositionPlans .join-button {
+width: 100%;
+padding: 9px 5px;
+font-size: 11px;
+margin-top: 8px;
+}
+
+@media (max-width: 340px) {
+#employeePositionPlans {
+grid-template-columns: 1fr;
+}
+}
+</style>
+
+</head>
+<body><div id="authScreen">
+  <div class="auth-box">
+    <h1>🌴 PalmGrow</h1>
+    <p class="sub" id="authSub">Create your PalmGrow account</p>
+    <form id="authForm">
+      <div id="nameField"><label>Full Name</label><input id="fullName" type="text" autocomplete="name" placeholder="Your full name"></div>
+      <div id="referralField"><label>Referral Code (Optional)</label><input id="referralCodeInput" type="text" placeholder="Enter referral code"></div>
+      <label>Email Address</label><input id="email" type="email" required autocomplete="email" placeholder="Enter your email">
+      <label>Password</label><input id="password" type="password" required minlength="6" autocomplete="current-password" placeholder="At least 6 characters">
+      <button type="submit" id="submitBtn">Create Account</button>
+    </form>
+    <div id="authMessage" class="status hidden"></div>
+    <button type="button" class="secondary" id="switchBtn">Already have an account? Login</button>
+  </div>
+</div>
       <!-- Clickable User Profile Area -->
       <div class="user-info" id="userProfileBtn" title="Click to view profile details">  
         <div class="avatar" id="userAvatar">P</div>  
