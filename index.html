@@ -1,4 +1,5 @@
-<!DOCTYPE html>  <html lang="en">  
+<!DOCTYPE html>  
+<html lang="en">  
 <head>  
 <meta charset="UTF-8">  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
@@ -378,10 +379,31 @@ th{background:#f0f5f2;font-weight:600}
 
   <div id="page-referral" class="hidden">  
     <div class="section">  
-      <h3>👥 Referral Program</h3>  
-      <p style="margin-bottom:14px;color:var(--muted);font-size:14px">Share your referral code with friends. Earn rewards when they invest.</p>  
+      <h3>👥 Referral Program & Structure Index</h3>  
+      <p style="margin-bottom:14px;color:var(--muted);font-size:14px">Share your referral code with friends. Earn rewards when they invest or complete daily orders across Levels 1, 2, and 3.</p>  
       <div class="payment-box">Your Referral Code:<br><strong id="referralCode" style="font-size:20px;letter-spacing:1px">LOADING...</strong></div>  
-      <p style="font-size:13px;color:var(--muted)">Referral earnings will appear on your dashboard when the system is fully activated.</p>  
+      
+      <!-- Built-in Referral Estimator Calculator -->
+      <div style="background:#f8fbf9; border:1px solid var(--border); border-radius:10px; padding:16px; margin-top:16px;">
+        <h4 style="color:var(--green-dark); margin-bottom:10px; font-size:15px;">📊 Referral Bonus & Rebate Estimator</h4>
+        <label>Select Referral Level Position:</label>
+        <select id="calcLevelSelect" style="margin-bottom:10px;">
+          <option value="M1">M1 (Deposit: ₦18,000)</option>
+          <option value="M2">M2 (Deposit: ₦51,000)</option>
+          <option value="M3" selected>M3 (Deposit: ₦162,000)</option>
+          <option value="M4">M4 (Deposit: ₦436,800)</option>
+          <option value="M5">M5 (Deposit: ₦891,800)</option>
+          <option value="M6">M6 (Deposit: ₦1,690,000)</option>
+          <option value="M7">M7 (Deposit: ₦3,705,000)</option>
+          <option value="M8">M8 (Deposit: ₦7,080,000)</option>
+          <option value="M9">M9 (Deposit: ₦12,672,000)</option>
+        </select>
+        <div id="calcResultsBox" style="background:white; border:1px solid var(--border); padding:12px; border-radius:8px; font-size:13px; line-height:1.6;">
+          <!-- Populated via script -->
+        </div>
+      </div>
+      
+      <p style="font-size:13px;color:var(--muted); margin-top:14px;">Referral earnings will appear on your dashboard automatically when your team upgrades positions.</p>  
     </div>  
   </div>  
 
@@ -497,6 +519,57 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 const SUPABASE_URL = "https://ghdiycdzsmncmlcpdniy.supabase.co";  
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_xy6UyL2BeQFgB8LeYMHuJA_k6MdhVz9";  
 const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);  
+
+/* FULL REFERRAL & REBATE INDEX CONFIGURATION */
+const PALMGROW_REFERRAL_INDEX = {
+  levels: {
+    M1: { deposit: 18000, income1Day: 600, level1Referral: 1800, level2Referral: 540, level3Referral: 180, l1Rebate: 18, l2Rebate: 12, l3Rebate: 6 },
+    M2: { deposit: 51000, income1Day: 1700, level1Referral: 5100, level2Referral: 1530, level3Referral: 510, l1Rebate: 51, l2Rebate: 34, l3Rebate: 17 },
+    M3: { deposit: 162000, income1Day: 5400, level1Referral: 16200, level2Referral: 4860, level3Referral: 1620, l1Rebate: 162, l2Rebate: 108, l3Rebate: 54 },
+    M4: { deposit: 436800, income1Day: 15600, level1Referral: 43680, level2Referral: 13104, level3Referral: 4368, l1Rebate: 468, l2Rebate: 312, l3Rebate: 156 },
+    M5: { deposit: 891800, income1Day: 31850, level1Referral: 89180, level2Referral: 26754, level3Referral: 8918, l1Rebate: 955.5, l2Rebate: 637, l3Rebate: 318.5 },
+    M6: { deposit: 1690000, income1Day: 65000, level1Referral: 169000, level2Referral: 50700, level3Referral: 16900, l1Rebate: 1950, l2Rebate: 1300, l3Rebate: 650 },
+    M7: { deposit: 3705000, income1Day: 142500, level1Referral: 370500, level2Referral: 111150, level3Referral: 37050, l1Rebate: 4275, l2Rebate: 2850, l3Rebate: 1425 },
+    M8: { deposit: 7080000, income1Day: 295000, level1Referral: 708000, level2Referral: 212400, level3Referral: 70800, l1Rebate: 8850, l2Rebate: 5900, l3Rebate: 2950 },
+    M9: { deposit: 12672000, income1Day: 528000, level1Referral: 1267200, level2Referral: 380160, level3Referral: 126720, l1Rebate: 15840, l2Rebate: 10560, l3Rebate: 5280 }
+  },
+  commissionRates: {
+    referralBonus: { level1: 0.10, level2: 0.03, level3: 0.01 }, // 10%, 3%, 1%[span_0](start_span)[span_0](end_span)
+    orderRebate: { level1: 0.03, level2: 0.02, level3: 0.01 }     // 3%, 2%, 1%[span_1](start_span)[span_1](end_span)
+  }
+};
+
+function updateReferralEstimator() {
+  const select = $("calcLevelSelect");
+  const box = $("calcResultsBox");
+  if(!select || !box) return;
+
+  const lvl = select.value;
+  const data = PALMGROW_REFERRAL_INDEX.levels[lvl];
+  if(!data) return;
+
+  box.innerHTML = `
+    <strong>Position: ${lvl}</strong><br>
+    Deposit Required: <strong>${naira(data.deposit)}</strong><br>
+    Estimated 1-Day Income: <strong>${naira(data.income1Day)}</strong><br><br>
+    <strong>Referral Bonuses (Joining):</strong><br>
+    • Level 1 Bonus (10%): <strong>${naira(data.level1Referral)}</strong>[span_2](start_span)[span_2](end_span)<br>
+    • Level 2 Bonus (3%): <strong>${naira(data.level2Referral)}</strong>[span_3](start_span)[span_3](end_span)<br>
+    • Level 3 Bonus (1%): <strong>${naira(data.level3Referral)}</strong>[span_4](start_span)[span_4](end_span)<br><br>
+    <strong>Daily Order Rebates:</strong><br>
+    • Level 1 Rebate (3%): <strong>${naira(data.l1Rebate)} / day</strong>[span_5](start_span)[span_5](end_span)<br>
+    • Level 2 Rebate (2%): <strong>${naira(data.l2Rebate)} / day</strong>[span_6](start_span)[span_6](end_span)<br>
+    • Level 3 Rebate (1%): <strong>${naira(data.l3Rebate)} / day</strong>[span_7](start_span)[span_7](end_span)
+  `;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const select = $("calcLevelSelect");
+  if(select) {
+    select.onchange = updateReferralEstimator;
+    updateReferralEstimator();
+  }
+});
   
 const $ = id => document.getElementById(id);  
 let loginMode = false;  
@@ -666,6 +739,7 @@ function showPage(page, pushHistory = true){
   if(page==="employee-position")loadEmployeePositionPlans();  
   if(page==="withdraw")loadWithdrawalPage();  
   if(page==="admin")loadAdminData();  
+  if(page==="referral")updateReferralEstimator();
 }  
   
 window.showPage=showPage;  
