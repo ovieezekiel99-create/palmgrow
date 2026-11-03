@@ -1393,12 +1393,12 @@ if(error){
     const approve=document.createElement("button");  
     approve.textContent="Confirm";  
     approve.style.cssText="background:#16a34a;color:white;border:0;padding:6px 10px;border-radius:4px;margin-right:4px";  
-    approve.onclick=()=>reviewDeposit(item.id,"confirmed");  
+    approve.onclick=()=>reviewDeposit(item.id,"confirmed",item.account_type);  
   
     const reject=document.createElement("button");  
     reject.textContent="Reject";  
     reject.style.cssText="background:#dc2626;color:white;border:0;padding:6px 10px;border-radius:4px";  
-    reject.onclick=()=>reviewDeposit(item.id,"rejected");  
+    reject.onclick=()=>reviewDeposit(item.id,"rejected",item.account_type);  
   
     action.append(approve,reject);  
     tr.appendChild(action);  
