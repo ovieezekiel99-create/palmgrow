@@ -889,7 +889,13 @@ async function loadDashboard(){
 
   updateWithdrawalBalance();
 
-  showPage("dashboard");
+  // Check URL hash on load to restore the correct page after a refresh
+  const hash = window.location.hash.replace("#", "").trim();
+  if (hash && PAGE_NAMES.includes(hash)) {
+    showPage(hash, true);
+  } else {
+    showPage("dashboard");
+  }
 }
   
 /* EMPLOYEE M1–M9 POSITION ACTIVATION */  
@@ -1423,7 +1429,7 @@ async function deleteEmployeeAccount(employeeId, employeeName){
       .eq("id", employeeId);  
   
     if(error) throw error;  
-  
+    
     alert("Employee account profile successfully deleted.");  
     loadAdminEmployees();  
   }catch(err){  
@@ -1761,7 +1767,7 @@ async function loadAdminWithdrawals(){
   
     msg("adminWithdrawalMessage",`Loaded ${records.length} withdrawal request(s).`);  
   
-}catch(err){  
+  }catch(err){  
     body.innerHTML="<tr><td colspan=\"7\">"+escapeHtml(err.message)+"</td></tr>";  
     msg("adminWithdrawalMessage",err.message,"error");  
   }  
