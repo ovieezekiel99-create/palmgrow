@@ -1408,21 +1408,28 @@ if(error){
   msg("adminMessage",`Loaded ${data.length} pending deposit(s)`);  
 };  
   
-async function reviewDeposit(id,decision){  
-  try{  
-    const {error}=await supabase.rpc("admin_review_deposit",{  
-      p_deposit_id:id,  
-      p_decision:decision  
-    });  
-  
-    if(error)throw error;  
-  
-    alert(decision==="confirmed"?"Deposit confirmed.":"Deposit rejected.");  
-    $("loadDepositsBtn").click();  
-  }catch(err){  
-    alert("Error: "+err.message);  
-  }  
-}  
+async function reviewDeposit(id,decision,accountType){
+  try{
+    let rpcName;
+    let rpcArgs;
+
+    if(decision==="confirmed" && accountType==="employee"){
+      rpcName="admin_confirm_employee_wallet_deposit";
+      rpcArgs={p_deposit_id:id};
+    }else{
+      rpcName="admin_review_deposit";
+      rpcArgs={p_deposit_id:id,p_decision:decision};
+    }
+
+    const {error}=await supabase.rpc(rpcName,rpcArgs);
+    if(error)throw error;
+
+    alert(decision==="confirmed"?"Deposit confirmed.":"Deposit rejected.");
+    $("loadDepositsBtn").click();
+  }catch(err){
+    alert("Error: "+err.message);
+  }
+}
   
 /* ADMIN EMPLOYEE MANAGEMENT */  
   
