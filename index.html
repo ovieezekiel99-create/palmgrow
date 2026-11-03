@@ -623,7 +623,7 @@ $("authForm").onsubmit=async e=>{
   }  
 };  
   
-/* NAVIGATION */  
+/* NAVIGATION & PHONE BACK BUTTON SUPPORT */  
   
 const PAGE_NAMES=[  
   "dashboard","deposit","referral","admin","invest",  
@@ -631,8 +631,11 @@ const PAGE_NAMES=[
 ];  
   
 function showPage(page, pushHistory = true){  
-  if(pushHistory && pageHistory[pageHistory.length - 1] !== page){  
-    pageHistory.push(page);  
+  if(pushHistory){  
+    if(pageHistory[pageHistory.length - 1] !== page){  
+      pageHistory.push(page);  
+      history.pushState({ page: page }, "", "#" + page);  
+    }  
   }  
   
   PAGE_NAMES.forEach(p=>{  
@@ -658,6 +661,14 @@ function showPage(page, pushHistory = true){
 }  
   
 window.showPage=showPage;  
+  
+window.onpopstate = (event) => {  
+  const targetPage = event.state?.page || "dashboard";  
+  if(pageHistory.length > 1){  
+    pageHistory.pop();  
+  }  
+  showPage(targetPage, false);  
+};  
   
 document.querySelectorAll(".nav-item[data-page]").forEach(item=>{  
   item.onclick=()=>showPage(item.dataset.page);  
@@ -715,7 +726,6 @@ function setProfileFormLock(isLocked) {
   const msgEl = $("profileMessage");
 
   if (isLocked) {
-    // Completely hide the save button and the message banner when locked
     saveBtn.classList.add("hidden");
     msgEl.classList.add("hidden");
   } else {
@@ -784,7 +794,6 @@ $("profileForm").onsubmit = async e => {
 
     if (error) throw error;
 
-    // Refresh locally
     currentProfile.full_name = fullName;
     currentProfile.phone = phone;
     currentProfile.age = age;
@@ -1351,7 +1360,6 @@ async function loadAdminEmployees(){
       const actionsDiv = document.createElement("div");  
       actionsDiv.className = "admin-actions";  
   
-      // Restrict/Unrestrict  
       const isRestricted = emp.employee_status === "restricted";  
       const restrictBtn = document.createElement("button");  
       restrictBtn.textContent = isRestricted ? "Unrestrict" : "Restrict";  
@@ -1360,7 +1368,6 @@ async function loadAdminEmployees(){
       restrictBtn.onclick = () => updateEmployeeStatus(emp.id, isRestricted ? "active" : "restricted");  
       actionsDiv.appendChild(restrictBtn);  
   
-      // Disable/Enable  
       const isDisabled = emp.employee_status === "disabled";  
       const disableBtn = document.createElement("button");  
       disableBtn.textContent = isDisabled ? "Enable" : "Disable";  
@@ -1369,7 +1376,6 @@ async function loadAdminEmployees(){
       disableBtn.onclick = () => updateEmployeeStatus(emp.id, isDisabled ? "active" : "disabled");  
       actionsDiv.appendChild(disableBtn);  
   
-      // Delete  
       const deleteBtn = document.createElement("button");  
       deleteBtn.textContent = "Delete";  
       deleteBtn.style.background = "#dc2626";  
@@ -1755,7 +1761,7 @@ async function loadAdminWithdrawals(){
   
     msg("adminWithdrawalMessage",`Loaded ${records.length} withdrawal request(s).`);  
   
-  }catch(err){  
+}catch(err){  
     body.innerHTML="<tr><td colspan=\"7\">"+escapeHtml(err.message)+"</td></tr>";  
     msg("adminWithdrawalMessage",err.message,"error");  
   }  
