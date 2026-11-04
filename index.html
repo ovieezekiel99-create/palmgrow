@@ -255,9 +255,32 @@ grid-template-columns: 1fr;
             </div>  
             <div style="font-size: 28px;">👥</div>  
         </div>  
+      <div id="app">
+  <div class="overlay" id="overlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">🌴 Palm<span>Grow</span></div>
+    <div class="nav-item active" data-page="dashboard">🏠 Dashboard</div>
+    <div class="nav-item" data-page="invest">💰 Make Investment</div>
+    <div class="nav-item" data-page="employee-position" id="employeePositionNav" style="display:none">📈 Employee Position M1–M9</div>
+    <div class="nav-item" data-page="employee-tasks" id="employeeTasksNav" style="display:none">🌱 Employee Daily Tasks</div>
+    <div class="nav-item" data-page="deposit">📥 Deposit</div>
+    <div class="nav-item" data-page="withdraw">💸 Withdraw Funds</div>
+    <div class="nav-item" data-page="referral">👥 Referral Program</div>
+    <div class="nav-item" data-page="admin" id="adminNav" style="display:none">🛡️ Admin Panel</div>
+    <div class="nav-item" id="logoutNav">🚪 Log Out</div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:6px;">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <button class="menu-btn hidden" id="backBtn" title="Go back">←</button>
+      </div>
 
         <!-- Navigation List Items -->  
-        <div style="background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">  
+    
+       <div style="background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">  
             <div onclick="showPage('referral')" style="padding: 16px; border-bottom: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">  
                 <span style="font-size: 14px; font-weight: 500; color: #1f2937; display: flex; align-items: center; gap: 10px;">👤 Referral Program</span>  
                 <span style="color: #9ca3af;">&rsaquo;</span>  
