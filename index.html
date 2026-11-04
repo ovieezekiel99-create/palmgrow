@@ -1058,7 +1058,7 @@ $("profileForm").onsubmit = async e => {
     .trim().toLowerCase();
 
   // Block disabled or inactive employees
-  if(accountType === "employee" && employeeStatus !== "active"){
+  if(accountType === "employee" && employeeStatus === "disabled"){
 
     $("app").style.display="none";
     $("authScreen").style.display="";
@@ -1100,7 +1100,11 @@ $("profileForm").onsubmit = async e => {
   const role=String(profile.role||"").trim().toLowerCase();
 
   $("adminNav").style.display=role==="admin"?"flex":"none";
-  $("employeeTasksNav").style.display=accountType==="employee"?"flex":"none";
+  const activeEmployee =
+  accountType === "employee" && employeeStatus === "active";
+
+$("employeeTasksNav").style.display=activeEmployee?"flex":"none";
+$("employeePositionNav").style.display=activeEmployee?"flex":"none";
   $("employeePositionNav").style.display=accountType==="employee"?"flex":"none";
 
   $("positionWalletBalance").textContent=naira(profile.available_balance);
