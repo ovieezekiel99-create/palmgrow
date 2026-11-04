@@ -1676,7 +1676,87 @@ async function loadWithdrawalSetup(){
     $("bankDisplaySummary").textContent = "Unable to load bank details.";
   }
 }
+// Show or hide new withdrawal PIN
+$("toggleNewPin").addEventListener("click", () => {
+  const input = $("newWithdrawalPin");
+  const showing = input.type === "password";
 
+  input.type = showing ? "text" : "password";
+  $("toggleNewPin").textContent = showing ? "Hide" : "Show";
+});
+
+// Show or hide confirmation PIN
+$("toggleConfirmPin").addEventListener("click", () => {
+  const input = $("confirmWithdrawalPin");
+  const showing = input.type === "password";
+
+  input.type = showing ? "text" : "password";
+  $("toggleConfirmPin").textContent = showing ? "Hide" : "Show";
+});
+
+// Create withdrawal PIN
+$("createWithdrawalPinBtn").addEventListener("click", async () => {
+  const pin = $("newWithdrawalPin").value.trim();
+  const confirmPin = $("confirmWithdrawalPin").value.trim();
+  const message = $("createPinMessage");
+  const button = $("createWithdrawalPinBtn");
+
+  if (!/^\d{6}$/.test(pin)) {
+    message.textContent = "PIN must contain exactly six digits.";
+    message.className = "status error";
+    return;
+  }
+
+  if (!/^\d{6}$/.test(confirmPin)) {
+    message.textContent = "Confirmation PIN must contain exactly six digits.";
+    message.className = "status error";
+    return;
+  }
+
+  if (pin !== confirmPin) {
+    message.textContent = "The two PINs do not match.";
+    message.className = "status error";
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "Creating PIN...";
+
+  try {
+    const { data, error } = await supabase.rpc(
+      "palmgrow_create_withdrawal_pin",
+      { p_pin: pin }
+    );
+
+    if (error) throw error;
+
+    if (data?.success === false) {
+      throw new Error(data.message || "PIN creation failed.");
+    }
+
+    message.textContent =
+      data?.message || "Withdrawal PIN created successfully.";
+    message.className = "status success";
+
+    $("newWithdrawalPin").value = "";
+    $("confirmWithdrawalPin").value = "";
+
+    $("newWithdrawalPin").type = "password";
+    $("confirmWithdrawalPin").type = "password";
+    $("toggleNewPin").textContent = "Show";
+    $("toggleConfirmPin").textContent = "Show";
+
+    await loadWithdrawalSetup();
+
+  } catch (err) {
+    message.textContent = err.message || "PIN creation failed.";
+    message.className = "status error";
+
+  } finally {
+    button.disabled = false;
+    button.textContent = "Create Withdrawal PIN";
+  }
+});
 // Open bank registration modal
 const bankDisplayBtn = $("selectAccountBtn");
 
