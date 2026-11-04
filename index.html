@@ -1029,35 +1029,66 @@ $("profileForm").onsubmit = async e => {
     $("saveProfileBtn").textContent = "Save Details";
   }
 };
+  async function loadDashboard(){
 
-async function loadDashboard(){
-  const {data:{session},error:sessionError} = await supabase.auth.getSession();
+  const {data:{session},error:sessionError} =
+    await supabase.auth.getSession();
+
   if(sessionError || !session) return;
 
-  currentUser=session.user;
+  currentUser = session.user;
 
-  $("authScreen").style.display="none";
-  $("app").style.display="block";
-
-  const {data:profile,error:profileError}=await supabase
+  const {data:profile,error:profileError} = await supabase
     .from("profiles")
     .select("*")
     .eq("id",currentUser.id)
     .maybeSingle();
 
   if(profileError || !profile){
+    $("app").style.display="none";
+    $("authScreen").style.display="";
     $("adminNav").style.display="none";
     return;
   }
 
-  currentProfile=profile;
-  const name=profile.full_name || currentUser.user_metadata?.full_name || "Member";
+  const accountType = String(profile.account_type || "")
+    .trim().toLowerCase();
+
+  const employeeStatus = String(profile.employee_status || "")
+    .trim().toLowerCase();
+
+  // Block disabled or inactive employees
+  if(accountType === "employee" && employeeStatus !== "active"){
+
+    $("app").style.display="none";
+    $("authScreen").style.display="";
+
+    currentUser = null;
+    currentProfile = null;
+
+    await supabase.auth.signOut();
+
+    alert("Your employee account is disabled or inactive. Please contact support.");
+
+    return;
+  }
+
+  // Load dashboard after account verification
+  currentProfile = profile;
+
+  $("authScreen").style.display="none";
+  $("app").style.display="block";
+
+  const name = profile.full_name ||
+    currentUser.user_metadata?.full_name || "Member";
 
   $("userName").textContent=name;
   $("userPhone").textContent=profile.phone||"";
   $("userAvatar").textContent=name.charAt(0).toUpperCase();
 
-  $("referralCode").textContent= profile.referral_code || currentUser.id.replace(/-/g,"").slice(0,8).toUpperCase();
+  $("referralCode").textContent =
+    profile.referral_code ||
+    currentUser.id.replace(/-/g,"").slice(0,8).toUpperCase();
 
   $("walletBalanceDisplay").textContent=naira(profile.available_balance);
   $("availableBalance").textContent=naira(profile.available_balance);
@@ -1067,18 +1098,19 @@ async function loadDashboard(){
   $("dailyRateDisplay").textContent=naira(profile.daily_payout_amount)+" / day";
 
   const role=String(profile.role||"").trim().toLowerCase();
-  const accountType=String(profile.account_type||"").trim().toLowerCase();
 
   $("adminNav").style.display=role==="admin"?"flex":"none";
   $("employeeTasksNav").style.display=accountType==="employee"?"flex":"none";
   $("employeePositionNav").style.display=accountType==="employee"?"flex":"none";
 
   $("positionWalletBalance").textContent=naira(profile.available_balance);
+
   updateWithdrawalBalance();
 
   if(isInitialBoot){
     isInitialBoot = false;
     const hash = window.location.hash.replace("#", "").trim();
+
     if(hash && PAGE_NAMES.includes(hash)){
       showPage(hash, true);
       return;
