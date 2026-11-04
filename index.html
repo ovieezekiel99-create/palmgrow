@@ -1096,16 +1096,22 @@ $("profileForm").onsubmit = async e => {
   $("totalEarnings").textContent=naira(profile.total_earnings);
   $("referralEarnings").textContent=naira(profile.referral_earnings);
   $("dailyRateDisplay").textContent=naira(profile.daily_payout_amount)+" / day";
+const role=String(profile.role||"").trim().toLowerCase();
 
-  const role=String(profile.role||"").trim().toLowerCase();
+$("adminNav").style.display=role==="admin"?"flex":"none";
 
-  $("adminNav").style.display=role==="admin"?"flex":"none";
-  const activeEmployee =
+const activeEmployee =
   accountType === "employee" && employeeStatus === "active";
 
-$("employeeTasksNav").style.display=activeEmployee?"flex":"none";
-$("employeePositionNav").style.display=activeEmployee?"flex":"none";
-  $("employeePositionNav").style.display=accountType==="employee"?"flex":"none";
+const canViewEmployeePositions =
+  accountType === "employee" &&
+  ["active", "pending_payment"].includes(employeeStatus);
+
+$("employeeTasksNav").style.display =
+  activeEmployee ? "flex" : "none";
+
+$("employeePositionNav").style.display =
+  canViewEmployeePositions ? "flex" : "none";
 
   $("positionWalletBalance").textContent=naira(profile.available_balance);
 
