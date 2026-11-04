@@ -614,6 +614,46 @@ th{background:#f0f5f2;font-weight:600}
 </div> <!-- End #app -->
 
 <!-- EMPLOYEE PROFILE MODAL -->
+  <div id="bankModal" class="modal hidden">
+  <div class="modal-content">
+    <h3>Register Withdrawal Bank</h3>
+    <p>Select your bank and enter your account number.</p>
+
+    <form id="bankForm">
+      <label>Bank Name</label>
+      <select id="bankNameInput" required>
+        <option value="">Select Bank</option>
+        <option value="Access Bank Plc">Access Bank Plc</option>
+        <option value="UBA">UBA</option>
+        <option value="OPay">OPay</option>
+        <option value="PalmPay">PalmPay</option>
+        <option value="MoMo PSB NG">MoMo PSB NG</option>
+        <option value="Kuda Bank">Kuda Bank</option>
+      </select>
+
+      <label>Account Number</label>
+      <input
+        id="bankAccountNumberInput"
+        type="text"
+        inputmode="numeric"
+        maxlength="10"
+        pattern="[0-9]{10}"
+        placeholder="Enter 10-digit account number"
+        required
+      >
+
+      <p id="bankFormMessage" class="hidden"></p>
+
+      <button type="submit" id="saveBankBtn">
+        Register Bank Account
+      </button>
+
+      <button type="button" id="closeBankModal">
+        Cancel
+      </button>
+    </form>
+  </div>
+  </div>
 <div id="profileModal" class="modal hidden">
   <div class="modal-content">
     <div class="modal-header">
