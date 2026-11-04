@@ -332,16 +332,56 @@ th{background:#f0f5f2;font-weight:600}
           <div class="payment-box"><strong>Payment Details (OPay)</strong><br><br>Account Name: <strong>Ovie Ezekiel</strong><br>Account Number: <strong>7037816664</strong><br>Bank: <strong>OPay</strong></div>  
           <p id="selectedPlanText" style="margin-bottom:12px;font-weight:600"></p>  
           <form id="depositForm">  
-            <label>Deposit Amount (₦)</label>
-            <input id="depositAmount" type="number" min="1" step="1" required placeholder="Enter your deposit amount">
-            <label>Payment Reference</label>
-            <input id="paymentReference" maxlength="120" required placeholder="Bank transaction reference">  
+            <div class="form-group">
+              <label for="depositorName">Depositor Name</label>
+              <input
+                type="text"
+                id="depositorName"
+                placeholder="Enter the name of the depositor"
+                autocomplete="name"
+                required
+              >
+            </div>
+
+            <label for="depositAmount">Deposit Amount (₦)</label>
+            <input
+              id="depositAmount"
+              type="number"
+              min="1"
+              step="1"
+              required
+              placeholder="Enter your deposit amount"
+            >
+
+            <label for="paymentReference">Payment Reference</label>
+            <input
+              id="paymentReference"
+              maxlength="120"
+              required
+              placeholder="Bank transaction reference"
+            >  
+
             <button type="submit" id="depositBtn">Submit Deposit for Review</button>  
           </form>  
           <div id="depositMessage" class="status hidden"></div>  
           <button class="secondary-btn" id="myDepositsBtn" style="width:100%;padding:12px;border:0;border-radius:8px;font-weight:600;cursor:pointer">View My Deposit Submissions</button>  
           <div id="myDepositsMessage" class="status hidden"></div>  
-          <div style="overflow-x:auto;margin-top:12px"><table><thead><tr><th>Amount</th><th>Reference</th><th>Status</th><th>Date</th></tr></thead><tbody id="myDepositsBody"><tr><td colspan="4">No submissions yet</td></tr></tbody></table></div>  
+          <div style="overflow-x:auto;margin-top:12px">
+            <table>
+              <thead>
+                <tr>
+                  <th>Depositor Name</th>
+                  <th>Amount</th>
+                  <th>Reference</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="myDepositsBody">
+                <tr><td colspan="5">No submissions yet</td></tr>
+              </tbody>
+            </table>
+          </div>  
         </div>  
       </div>  
 
@@ -1180,10 +1220,17 @@ async function loadEmployeePayroll(){
   });  
 }  
   
-$("depositForm").onsubmit=async e=>{  
+$("depositForm").onsubmit = async (e) => {  
   e.preventDefault();  
-  const amount=Number($("depositAmount").value);  
-  const reference=$("paymentReference").value.trim();  
+  
+  const depositorName = $("depositorName").value.trim();
+  if (!depositorName) {
+    msg("depositMessage", "Please enter the depositor name", "error");
+    return;
+  }
+
+  const amount = Number($("depositAmount").value);  
+  const reference = $("paymentReference").value.trim();  
   
   if(!Number.isSafeInteger(amount)||amount<1){  
     msg("depositMessage","Enter a valid deposit amount in whole naira.","error");  
@@ -1196,13 +1243,18 @@ $("depositForm").onsubmit=async e=>{
   
   $("depositBtn").disabled=true;  
   try{  
-    const {error}=await supabase.from("deposit_records").insert({  
-      user_id:currentUser.id,  
-      amount,  
-      payment_reference:reference,  
-      status:"pending"  
-    });  
+    const { error } = await supabase
+      .from("deposit_records")
+      .insert({
+        user_id: currentUser.id,
+        depositor_name: depositorName,
+        amount,
+        payment_reference: reference,
+        status: "pending"
+      });  
     if(error)throw error;  
+    $("depositorName").value="";
+    $("depositAmount").value="";
     $("paymentReference").value="";  
     msg("depositMessage","Deposit submitted. Status: PENDING.");  
     loadMyDeposits();  
@@ -1218,18 +1270,18 @@ async function loadMyDeposits(){
   tbody.innerHTML="";  
   const {data,error}=await supabase  
     .from("deposit_records")  
-    .select("amount,payment_reference,status,submitted_at")  
+    .select("depositor_name,amount,payment_reference,status,submitted_at")  
     .eq("user_id",currentUser.id)  
     .order("submitted_at",{ascending:false});  
   
   if(error||!data||data.length===0){  
-    tbody.innerHTML='<tr><td colspan="4">No submissions yet</td></tr>';  
+    tbody.innerHTML='<tr><td colspan="5">No submissions yet</td></tr>';  
     return;  
   }  
   
   data.forEach(item=>{  
     const tr=document.createElement("tr");  
-    [naira(item.amount),item.payment_reference||"-",displayStatus(item.status),dateText(item.submitted_at)].forEach(value=>{  
+    [item.depositor_name||"-",naira(item.amount),item.payment_reference||"-",displayStatus(item.status),dateText(item.submitted_at)].forEach(value=>{  
       const td=document.createElement("td");  
       td.textContent=value;  
       tr.appendChild(td);  
@@ -1262,7 +1314,7 @@ $("loadDepositsBtn").onclick=async()=>{
   
   data.forEach(item=>{  
     const tr=document.createElement("tr");  
-    [item.full_name||"Unknown",naira(item.amount),item.payment_reference||"-",displayStatus(item.status),dateText(item.submitted_at)].forEach(value=>{  
+    [item.full_name||item.depositor_name||"Unknown",naira(item.amount),item.payment_reference||"-",displayStatus(item.status),dateText(item.submitted_at)].forEach(value=>{  
       const td=document.createElement("td");  
       td.textContent=value;  
       tr.appendChild(td);  
