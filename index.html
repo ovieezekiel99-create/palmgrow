@@ -1804,22 +1804,89 @@ async function processWithdrawal(withdrawalId,action){
     msg("adminWithdrawalMessage",err.message,"error");  
   }  
 }  
-  
-supabase.auth.onAuthStateChange((_event,session)=>{  
-  if(session){  
-    currentUser=session.user;  
-    loadDashboard();  
-  }else{  
-    currentUser=null;  
-    currentProfile=null;  
-    $("authScreen").style.display="flex";  
-    $("app").style.display="none";  
-  }  
-});  
-  
-updateAuthUI();  
-const {data:{session}}=await supabase.auth.getSession();  
-if(session)await loadDashboard();  
+ // CHECK WHETHER AN EMPLOYEE ACCOUNT IS STILL ACTIVE
+async function verifyEmployeeSession(){
+
+  const {data:{session},error} =
+    await supabase.auth.getSession();
+
+  if(error || !session) return;
+
+  const {data:profile,error:profileError} = await supabase
+    .from("profiles")
+    .select("account_type,employee_status")
+    .eq("id",session.user.id)
+    .maybeSingle();
+
+  if(profileError || !profile) return;
+
+  const accountType = String(profile.account_type || "")
+    .trim().toLowerCase();
+
+  const employeeStatus = String(profile.employee_status || "")
+    .trim().toLowerCase();
+
+  if(accountType === "employee" && employeeStatus !== "active"){
+
+    $("app").style.display="none";
+    $("authScreen").style.display="flex";
+
+    currentUser=null;
+    currentProfile=null;
+
+    await supabase.auth.signOut();
+
+    alert("Your employee account has been disabled. Please contact support.");
+  }
+}
+
+
+// AUTHENTICATION LISTENER
+supabase.auth.onAuthStateChange((_event,session)=>{
+
+  if(session){
+
+    currentUser=session.user;
+
+    setTimeout(()=>{
+      loadDashboard();
+    },0);
+
+  }else{
+
+    currentUser=null;
+    currentProfile=null;
+
+    $("authScreen").style.display="flex";
+    $("app").style.display="none";
+  }
+});
+
+
+// RECHECK WHEN THE USER RETURNS TO THE APP
+document.addEventListener("visibilitychange",()=>{
+
+  if(document.visibilityState==="visible"){
+    verifyEmployeeSession();
+  }
+
+});
+
+
+// AUTOMATIC ACCOUNT CHECK EVERY 30 SECONDS
+setInterval(()=>{
+  verifyEmployeeSession();
+},30000);
+
+
+updateAuthUI();
+
+const {data:{session}}=await supabase.auth.getSession();
+
+if(session){
+  await loadDashboard();
+  } 
+
 </script>  
 </body>  
 </html>
