@@ -1663,6 +1663,13 @@ async function loadWithdrawalSetup(){
 
     withdrawalSetup=objectOf(data);
 
+    // Show PIN creation form only if PIN has not been created
+    const pinSection = $("createWithdrawalPinSection");
+
+    if(pinSection){
+      pinSection.style.display = withdrawalSetup.pin_created ? "none" : "block";
+    }
+
     const bankName=withdrawalSetup.bank_name||"No Bank";
     const accountNumber=withdrawalSetup.account_number||"";
     const verified=Boolean(withdrawalSetup.bank_verified||withdrawalSetup.is_bank_verified);
