@@ -1711,6 +1711,62 @@ async function loadWithdrawalSetup(){
     $("bankDisplaySummary").textContent = "Unable to load bank details.";
   }
 }
+  // Load Withdrawal History
+async function loadWithdrawalHistory(){
+  const message = $("withdrawalHistoryMessage");
+  const list = $("withdrawalHistoryList");
+
+  if(!currentUser){
+    message.textContent = "Please sign in to view your withdrawal records.";
+    return;
+  }
+
+  message.textContent = "Loading withdrawal records...";
+  list.innerHTML = "";
+
+  try{
+    const {data,error} = await supabase.rpc("palmgrow_my_withdrawals");
+
+    if(error) throw error;
+
+    if(!data || data.length === 0){
+      message.textContent = "You have no withdrawal records yet.";
+      return;
+    }
+
+    message.textContent = "";
+
+    list.innerHTML = data.map(record => `
+      <div style="background:#f8faf9; border:1px solid #e5e7eb; border-radius:10px; padding:15px; margin-bottom:12px;">
+
+        <div style="display:flex; justify-content:space-between; gap:10px;">
+          <strong>₦${Number(record.amount || 0).toLocaleString()}</strong>
+          <strong>${record.status || "Pending"}</strong>
+        </div>
+
+        <p style="font-size:13px; color:#666; margin:10px 0 5px;">
+          Handling Fee: ₦${Number(record.handling_fee || 0).toLocaleString()}
+        </p>
+
+        <p style="font-size:13px; color:#666; margin:5px 0;">
+          Transfer Fee: ₦${Number(record.transfer_fee || 0).toLocaleString()}
+        </p>
+
+        <p style="font-size:13px; color:#0d382b; margin:5px 0;">
+          Net Amount: ₦${Number(record.net_amount || 0).toLocaleString()}
+        </p>
+
+        <p style="font-size:12px; color:#888; margin-bottom:0;">
+          ${record.requested_at ? new Date(record.requested_at).toLocaleString() : ""}
+        </p>
+
+      </div>
+    `).join("");
+
+  }catch(err){
+    message.textContent = err.message || "Unable to load withdrawal records.";
+  }
+}
 // Show or hide new withdrawal PIN
 $("toggleNewPin").addEventListener("click", () => {
   const input = $("newWithdrawalPin");
