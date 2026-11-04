@@ -38,19 +38,74 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
 .task-card button{width:100%;padding:11px;background:var(--green);color:#fff;border:0;border-radius:7px;font-weight:600;cursor:pointer}  
 .task-card button:disabled{background:#8a9b91;cursor:not-allowed}  
 .task-done{border-color:#8ac49d;background:#f2fbf4}  
-.position-plan{position:relative;border:1px solid #dce9df;border-radius:16px;padding:20px;margin:12px 0;background:linear-gradient(145deg,#fff,#f3faf5);box-shadow:0 5px 18px rgba(11,61,46,.07);overflow:hidden}  
-.position-plan:before{content:"";position:absolute;top:0;left:0;width:100%;height:5px;background:linear-gradient(90deg,#0b3d2e,#d4af37)}  
-.position-plan h4{color:var(--green-dark);font-size:23px;margin:8px 0 14px}  
-.position-plan p{font-size:13px;color:#52675b;margin:0}  
-.position-plan .level-badge{display:inline-block;background:#e5f3e9;color:#0b5b3c;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700}  
-.position-plan .position-price{background:#fff8e5;border:1px solid #ead28a;border-radius:10px;padding:13px;margin:12px 0}  
-.position-plan .position-price strong{display:block;font-size:22px;color:#0b3d2e;margin-top:3px}  
-.position-plan .position-details{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}  
-.position-plan .detail-box{background:#fff;border:1px solid #e2ebe6;border-radius:9px;padding:11px}  
-.position-plan .detail-box strong{display:block;color:#0b3d2e;font-size:15px;margin-top:4px}  
-.position-plan .join-button{width:100%;padding:14px;margin-top:17px;background:linear-gradient(135deg,#0b3d2e,#147a56);color:#fff;border:0;border-radius:9px;font-size:15px;font-weight:700;cursor:pointer}  
-.position-plan .join-button:disabled{opacity:.6;cursor:not-allowed}  
-@media(min-width:768px){#employeePositionPlans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}}  
+
+/* STACKED EMPLOYEE LEVEL CARDS */
+#employeePositionPlans {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+#employeePositionPlans .position-plan {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  margin: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  background: linear-gradient(145deg, #fff, #f9fbf9);
+}
+
+#employeePositionPlans .position-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+#employeePositionPlans .level-badge {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--green-dark);
+}
+
+#employeePositionPlans .position-details {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+#employeePositionPlans .position-details div {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+#employeePositionPlans .position-details strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+#employeePositionPlans .join-button {
+  padding: 10px 18px;
+  background: var(--green);
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+#employeePositionPlans .join-button:disabled {
+  background: #e5f5e9;
+  color: #137333;
+  cursor: not-allowed;
+}
+
 .main{margin-left:0;min-height:100vh;padding-bottom:90px}  
 .topbar{background:#fff;border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}  
 .menu-btn{background:none;border:0;font-size:22px;cursor:pointer;color:var(--green-dark);padding:4px 8px}  
@@ -105,60 +160,6 @@ th{background:#f0f5f2;font-weight:600}
 .menu-btn{display:none}
 .plans{grid-template-columns:repeat(3,1fr)}
 .withdraw-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-}
-
-/* COMPACT M1–M9 POSITION CARDS */
-#employeePositionPlans {
-display: grid;
-grid-template-columns: repeat(2, minmax(0, 1fr));
-gap: 10px;
-align-items: stretch;
-}
-
-#employeePositionPlans .position-plan {
-margin: 0;
-padding: 12px;
-border-radius: 12px;
-min-width: 0;
-}
-
-#employeePositionPlans .position-plan h4 {
-margin: 6px 0;
-font-size: 16px;
-}
-
-#employeePositionPlans .position-details {
-display: grid;
-grid-template-columns: 1fr;
-gap: 6px;
-margin-top: 8px;
-}
-
-#employeePositionPlans .detail-box {
-padding: 7px;
-margin: 0;
-}
-
-#employeePositionPlans .detail-box p {
-margin: 0 0 3px;
-font-size: 11px;
-}
-
-#employeePositionPlans .detail-box strong {
-font-size: 12px;
-}
-
-#employeePositionPlans .join-button {
-width: 100%;
-padding: 9px 5px;
-font-size: 11px;
-margin-top: 8px;
-}
-
-@media (max-width: 340px) {
-#employeePositionPlans {
-grid-template-columns: 1fr;
-}
 }
 </style>
 </head>
@@ -299,8 +300,8 @@ grid-template-columns: 1fr;
       <!-- EMPLOYEE POSITION PAGE -->
       <div id="page-employee-position" class="hidden">  
         <div class="section">  
-          <h3>📈 Employee Position Plans (M1–M9)</h3>  
-          <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Choose a position only if you understand the deposit requirement and have sufficient available wallet balance. Projections are estimates, not guaranteed earnings.</p>  
+          <h3>📈 Employee Level</h3>  
+          <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Choose a position only if you understand the deposit requirement and have sufficient available wallet balance.</p>  
           <div class="notice">Your available wallet balance: <strong id="positionWalletBalance">₦0.00</strong>.</div>  
           <div id="employeePositionPlans"><p>Loading position plans...</p></div>  
           <div id="positionMessage" class="status hidden"></div>  
@@ -493,7 +494,7 @@ grid-template-columns: 1fr;
 
     </div> <!-- End .content -->  
 
-    <!-- Fixed Bottom Navigation Bar (Now safely inside .main) -->  
+    <!-- Fixed Bottom Navigation Bar -->  
     <div style="position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; align-items: center; padding: 8px 0; max-width: 480px; margin: 0 auto; z-index: 100;">  
         <a href="#" onclick="showPage('dashboard'); return false;" style="text-decoration: none; color: #0d382b; display: flex; flex-direction: column; align-items: center; font-size: 11px; font-weight: 600;">  
             <span style="font-size: 18px;">🏠</span> Home  
@@ -1004,58 +1005,39 @@ async function loadEmployeePositionPlans(){
       card.className="position-plan";
       const isActive=activeLevels.has(plan.level_code);
 
-      const badge=document.createElement("span");
-      badge.className="level-badge";
-      badge.textContent=isActive?"🔒 ACTIVE POSITION":"🌴 EMPLOYEE LEVEL";
+      // Left side: Badge & Details breakdown
+      const leftDiv = document.createElement("div");
+      leftDiv.className = "position-left";
 
-      const title=document.createElement("h4");
-      title.textContent="🌿 "+plan.level_code;
+      const title = document.createElement("div");
+      title.className = "level-badge";
+      title.textContent = plan.level_code; // e.g. M-1, M-2...
 
-      const price=document.createElement("div");
-      price.className="position-price";
-      price.innerHTML="<span>💰 Required joining deposit</span>";
+      const details = document.createElement("div");
+      details.className = "position-details";
 
-      const priceValue=document.createElement("strong");
-      priceValue.textContent=naira(plan.deposit_amount);
-      price.appendChild(priceValue);
+      details.innerHTML = `
+        <div>Deposit: <strong>${naira(plan.deposit_amount)}</strong></div>
+        <div>Daily Orders: <strong>${plan.daily_order_limit ?? 0}</strong></div>
+        <div>Unit Price: <strong>${naira(plan.unit_price)}</strong></div>
+        <div>Daily Income: <strong style="color:var(--green)">${naira(plan.daily_income_projection)}</strong></div>
+      `;
 
-      const details=document.createElement("div");
-      details.className="position-details";
+      leftDiv.append(title, details);
 
-      const items=[
-        ["📦 Daily order limit",String(plan.daily_order_limit??0)],
-        ["🪙 Unit price",naira(plan.unit_price)],
-        ["📅 Daily projection",naira(plan.daily_income_projection)],
-        ["🗓️ Monthly projection",naira(plan.monthly_income_projection)],
-        ["📈 500-day projection",naira(plan.five_hundred_day_projection)]
-      ];
+      // Right side: Join button
+      const button = document.createElement("button");
+      button.className = "join-button";
 
-      items.forEach(([label,value])=>{
-        const box=document.createElement("div");
-        box.className="detail-box";
-        const labelEl=document.createElement("p");
-        labelEl.textContent=label;
-        const valueEl=document.createElement("strong");
-        valueEl.textContent=value;
-        box.append(labelEl,valueEl);
-        details.appendChild(box);
-      });
-
-      const note=document.createElement("p");
-      note.style.cssText="margin-top:12px;font-size:12px;color:#80651d";
-      note.textContent="⚠️ Projections are estimates, not guaranteed earnings.";
-
-      const button=document.createElement("button");
-      button.className="join-button";
       if(isActive){
-        button.textContent="🔒 ACTIVE — ALREADY JOINED";
-        button.disabled=true;
-      }else{
-        button.textContent="🤝 JOIN "+plan.level_code;
-        button.addEventListener("click",()=>activateEmployeePosition(plan.level_code,button));
+        button.textContent = "Joined";
+        button.disabled = true;
+      } else {
+        button.textContent = "Join Now";
+        button.addEventListener("click", () => activateEmployeePosition(plan.level_code, button));
       }
 
-      card.append(badge,title,price,details,note,button);
+      card.append(leftDiv, button);
       host.appendChild(card);
     });
   }catch(err){
@@ -1090,7 +1072,7 @@ async function activateEmployeePosition(levelCode,button){
     msg("positionMessage",err.message||"Position activation was not completed.","error");  
   }finally{  
     button.disabled=false;  
-    button.textContent="🤝 JOIN "+levelCode;  
+    button.textContent="Join Now";  
   }  
 }  
   
