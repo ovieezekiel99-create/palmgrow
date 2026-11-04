@@ -500,7 +500,35 @@ th{background:#f0f5f2;font-weight:600}
             </div>  
         </div>  
       </div>  
+      <!-- WITHDRAWAL HISTORY PAGE -->
+      <div id="page-withdraw-history" class="hidden">  <div style="background:white; border-radius:12px; overflow:hidden;"><!-- Header -->
+<div style="background:#0d382b; color:white; padding:16px 20px; display:flex; align-items:center; gap:15px;">
 
+  <a href="#" onclick="showPage('withdraw'); return false;"
+     style="color:white; text-decoration:none; font-size:22px; font-weight:bold;">
+    &lsaquo;
+  </a>
+
+  <h2 style="margin:0; font-size:16px;">
+    Withdrawal History
+  </h2>
+
+</div>
+
+<!-- History Content -->
+<div style="padding:20px;">
+
+  <div id="withdrawalHistoryMessage"
+       style="text-align:center; color:#777; font-size:13px; padding:15px;">
+    Loading withdrawal records...
+  </div>
+
+  <div id="withdrawalHistoryList"></div>
+
+</div>
+
+  </div>
+      </div>
       <!-- REFERRAL PAGE -->
       <div id="page-referral" class="hidden">  
         <div class="section">  
