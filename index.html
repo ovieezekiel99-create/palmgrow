@@ -161,9 +161,11 @@ grid-template-columns: 1fr;
 }
 }
 </style>
-
 </head>
-<body><div id="authScreen">
+<body>
+
+<!-- Auth Screen -->
+<div id="authScreen">
   <div class="auth-box">
     <h1>🌴 PalmGrow</h1>
     <p class="sub" id="authSub">Create your PalmGrow account</p>
@@ -178,47 +180,72 @@ grid-template-columns: 1fr;
     <button type="button" class="secondary" id="switchBtn">Already have an account? Login</button>
   </div>
 </div>
+
+<!-- Main App Container -->
+<div id="app">
+  <div class="overlay" id="overlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">🌴 Palm<span>Grow</span></div>
+    <div class="nav-item active" data-page="dashboard">🏠 Dashboard</div>
+    <div class="nav-item" data-page="invest">💰 Make Investment</div>
+    <div class="nav-item" data-page="employee-position" id="employeePositionNav" style="display:none">📈 Employee Position M1–M9</div>
+    <div class="nav-item" data-page="employee-tasks" id="employeeTasksNav" style="display:none">🌱 Employee Daily Tasks</div>
+    <div class="nav-item" data-page="deposit">📥 Deposit</div>
+    <div class="nav-item" data-page="withdraw">💸 Withdraw Funds</div>
+    <div class="nav-item" data-page="referral">👥 Referral Program</div>
+    <div class="nav-item" data-page="admin" id="adminNav" style="display:none">🛡️ Admin Panel</div>
+    <div class="nav-item" id="logoutNav">🚪 Log Out</div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:6px;">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <button class="menu-btn hidden" id="backBtn" title="Go back">←</button>
+      </div>
+
       <!-- Clickable User Profile Area -->
       <div class="user-info" id="userProfileBtn" title="Click to view profile details">  
         <div class="avatar" id="userAvatar">P</div>  
         <div><div id="userName" style="font-weight:600">Member</div><div id="userPhone" style="font-size:12px;color:var(--muted)"></div></div>  
       </div>  
-    </div>  <div class="content">  
-  <div id="page-dashboard">  
-    <!-- Top Wallet Section Container -->  
-    <div style="background: #0d382b; padding: 20px 20px 30px 20px; border-radius: 20px; color: white; margin-bottom: 20px;">  
-          
-        <!-- Wallet Type Selector Tabs -->  
-        <div style="display: flex; background: rgba(255, 255, 255, 0.15); border-radius: 20px; padding: 3px; width: fit-content; margin-bottom: 15px;">  
-            <button id="flexibleTab" style="background: white; color: #0d382b; border: none; padding: 6px 16px; border-radius: 18px; font-weight: 600; font-size: 13px; cursor: pointer;">Flexible Wallet</button>  
-            <button id="depositTab" style="background: transparent; color: white; border: none; padding: 6px 16px; border-radius: 18px; font-weight: 600; font-size: 13px; cursor: pointer;">Deposit Wallet</button>  
-        </div>  
+    </div>
 
-        <!-- Main Balance & Contract Info -->  
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px;">  
-            <div>  
-                <h1 id="walletBalanceDisplay" style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -0.5px;">₦0.00</h1>  
-                <p style="margin: 5px 0 0 0; font-size: 12px; opacity: 0.85;">Account Type: <span id="dashboardAccountType">—</span></p>  
+    <div class="content">  
+      <!-- DASHBOARD PAGE -->
+      <div id="page-dashboard">  
+        <!-- Top Wallet Section Container -->  
+        <div style="background: #0d382b; padding: 20px 20px 30px 20px; border-radius: 20px; color: white; margin-bottom: 20px;">  
+            <!-- Wallet Type Selector Tabs -->  
+            <div style="display: flex; background: rgba(255, 255, 255, 0.15); border-radius: 20px; padding: 3px; width: fit-content; margin-bottom: 15px;">  
+                <button id="flexibleTab" style="background: white; color: #0d382b; border: none; padding: 6px 16px; border-radius: 18px; font-weight: 600; font-size: 13px; cursor: pointer;">Flexible Wallet</button>  
+                <button id="depositTab" style="background: transparent; color: white; border: none; padding: 6px 16px; border-radius: 18px; font-weight: 600; font-size: 13px; cursor: pointer;">Deposit Wallet</button>  
             </div>  
-            <span style="font-weight: 800; letter-spacing: 1px; font-size: 14px; color: #4ade80;">PalmGrow</span>  
+
+            <!-- Main Balance & Contract Info -->  
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px;">  
+                <div>  
+                    <h1 id="walletBalanceDisplay" style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -0.5px;">₦0.00</h1>  
+                    <p style="margin: 5px 0 0 0; font-size: 12px; opacity: 0.85;">Account Type: <span id="dashboardAccountType">—</span></p>  
+                </div>  
+                <span style="font-weight: 800; letter-spacing: 1px; font-size: 14px; color: #4ade80;">PalmGrow</span>  
+            </div>  
+
+            <!-- Action Buttons (Join Now, Recharge, Withdraw) -->  
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">  
+                <button onclick="showPage('employee-position')" style="background: #1b4d3e; color: white; border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px;">  
+                    <span>💼</span> Join Now  
+                </button>  
+                <button onclick="showPage('deposit')" style="background: #1b4d3e; color: white; border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px;">  
+                    <span>💳</span> Recharge  
+                </button>  
+                <button onclick="showPage('withdraw')" style="background: #1b4d3e; color: white; border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px;">  
+                    <span>📥</span> Withdraw  
+                </button>  
+            </div>  
         </div>  
 
-        <!-- Action Buttons (Join Now, Recharge, Withdraw) -->  
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">  
-            <button onclick="showPage('employee-position')" style="background: #1b4d3e; color: white; border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px;">  
-                <span>💼</span> Join Now  
-            </button>  
-            <button onclick="showPage('deposit')" style="background: #1b4d3e; color: white; border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px;">  
-                <span>💳</span> Recharge  
-            </button>  
-            <button onclick="showPage('withdraw')" style="background: #1b4d3e; color: white; border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px;">  
-                <span>📥</span> Withdraw  
-            </button>  
-        </div>  
-    </div>  
-
-    <!-- Content Body Area -->  
-    <div>  
         <!-- 2x3 Earnings & Metrics Grid -->  
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">  
             <div style="background: white; padding: 12px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-align: center;">  
@@ -255,32 +282,9 @@ grid-template-columns: 1fr;
             </div>  
             <div style="font-size: 28px;">👥</div>  
         </div>  
-      <div id="app">
-  <div class="overlay" id="overlay"></div>
-
-  <aside class="sidebar" id="sidebar">
-    <div class="logo">🌴 Palm<span>Grow</span></div>
-    <div class="nav-item active" data-page="dashboard">🏠 Dashboard</div>
-    <div class="nav-item" data-page="invest">💰 Make Investment</div>
-    <div class="nav-item" data-page="employee-position" id="employeePositionNav" style="display:none">📈 Employee Position M1–M9</div>
-    <div class="nav-item" data-page="employee-tasks" id="employeeTasksNav" style="display:none">🌱 Employee Daily Tasks</div>
-    <div class="nav-item" data-page="deposit">📥 Deposit</div>
-    <div class="nav-item" data-page="withdraw">💸 Withdraw Funds</div>
-    <div class="nav-item" data-page="referral">👥 Referral Program</div>
-    <div class="nav-item" data-page="admin" id="adminNav" style="display:none">🛡️ Admin Panel</div>
-    <div class="nav-item" id="logoutNav">🚪 Log Out</div>
-  </aside>
-
-  <div class="main">
-    <div class="topbar">
-      <div style="display:flex;align-items:center;gap:6px;">
-        <button class="menu-btn" id="menuBtn">☰</button>
-        <button class="menu-btn hidden" id="backBtn" title="Go back">←</button>
-      </div>
 
         <!-- Navigation List Items -->  
-    
-       <div style="background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">  
+        <div style="background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">  
             <div onclick="showPage('referral')" style="padding: 16px; border-bottom: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">  
                 <span style="font-size: 14px; font-weight: 500; color: #1f2937; display: flex; align-items: center; gap: 10px;">👤 Referral Program</span>  
                 <span style="color: #9ca3af;">&rsaquo;</span>  
@@ -290,9 +294,206 @@ grid-template-columns: 1fr;
                 <span style="color: #9ca3af;">&rsaquo;</span>  
             </div>  
         </div>  
-    </div>  
+      </div>  
 
-    <!-- Fixed Bottom Navigation Bar -->  
+      <!-- EMPLOYEE POSITION PAGE -->
+      <div id="page-employee-position" class="hidden">  
+        <div class="section">  
+          <h3>📈 Employee Position Plans (M1–M9)</h3>  
+          <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Choose a position only if you understand the deposit requirement and have sufficient available wallet balance. Projections are estimates, not guaranteed earnings.</p>  
+          <div class="notice">Your available wallet balance: <strong id="positionWalletBalance">₦0.00</strong>.</div>  
+          <div id="employeePositionPlans"><p>Loading position plans...</p></div>  
+          <div id="positionMessage" class="status hidden"></div>  
+        </div>  
+      </div>  
+
+      <!-- EMPLOYEE TASKS PAGE -->
+      <div id="page-employee-tasks" class="hidden">  
+        <div class="section">  
+          <h3>🌱 Employee Daily Tasks</h3>  
+          <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Your assigned practical palm-farm tasks appear here on working days. Mark each task complete only after doing the work. Task completion is self-reported.</p>  
+          <div class="stat-card" style="margin-bottom:12px;text-align:center;padding:18px"><div class="label">Total Daily Task Payment</div><div class="value" id="dailyRateDisplay">₦0.00 / day</div></div>  
+          <div class="notice" style="background:#e8f5e9;border:1px solid #2e7d32;color:#1b5e20;margin-bottom:12px"><strong>Progress:</strong> <span id="taskProgressDisplay">0 of 0 tasks completed</span></div>  
+          <div id="employeeTaskList"><p style="color:var(--muted)">Your tasks will load here.</p></div>  
+          <div id="taskMessage" class="status hidden" style="margin-top:12px"></div>  
+          <div class="section" style="margin-top:16px;background:#f8fbf9">  
+            <h3>My Task Payment History</h3>  
+            <div style="overflow-x:auto"><table><thead><tr><th>Payment</th><th>Description</th><th>Date</th></tr></thead><tbody id="employeePayrollBody"><tr><td colspan="3">No task payments displayed yet.</td></tr></tbody></table></div>  
+          </div>  
+        </div>  
+      </div>  
+
+      <!-- DEPOSIT PAGE -->
+      <div id="page-deposit" class="hidden">  
+        <div class="section">  
+          <h3>📥 Deposit Submission</h3>  
+          <div class="notice">Only submit this form after making a payment. A submission is not proof of payment.</div>  
+          <div class="payment-box"><strong>Payment Details (OPay)</strong><br><br>Account Name: <strong>Ovie Ezekiel</strong><br>Account Number: <strong>7037816664</strong><br>Bank: <strong>OPay</strong></div>  
+          <p id="selectedPlanText" style="margin-bottom:12px;font-weight:600"></p>  
+          <form id="depositForm">  
+            <label>Deposit Amount (₦)</label>
+            <input id="depositAmount" type="number" min="1" step="1" required placeholder="Enter your deposit amount">
+            <label>Payment Reference</label>
+            <input id="paymentReference" maxlength="120" required placeholder="Bank transaction reference">  
+            <button type="submit" id="depositBtn">Submit Deposit for Review</button>  
+          </form>  
+          <div id="depositMessage" class="status hidden"></div>  
+          <button class="secondary-btn" id="myDepositsBtn" style="width:100%;padding:12px;border:0;border-radius:8px;font-weight:600;cursor:pointer">View My Deposit Submissions</button>  
+          <div id="myDepositsMessage" class="status hidden"></div>  
+          <div style="overflow-x:auto;margin-top:12px"><table><thead><tr><th>Amount</th><th>Reference</th><th>Status</th><th>Date</th></tr></thead><tbody id="myDepositsBody"><tr><td colspan="4">No submissions yet</td></tr></tbody></table></div>  
+        </div>  
+      </div>  
+
+      <!-- WITHDRAW PAGE -->
+      <div id="page-withdraw" class="hidden">  
+        <div style="background: white; border-radius: 12px; overflow: hidden;">  
+            <!-- Top Header Bar -->  
+            <div style="background: #0d382b; color: white; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">  
+                <a href="#" onclick="showPage('dashboard'); return false;" style="color: white; text-decoration: none; font-size: 20px; font-weight: bold;">&lsaquo;</a>  
+                <h1 style="margin: 0; font-size: 16px; font-weight: 600;">Withdrawal</h1>  
+                <a href="#" onclick="showPage('withdraw'); return false;" style="color: white; text-decoration: none; font-size: 13px;">View Records</a>  
+            </div>  
+
+            <!-- Main Content Form Area -->  
+            <div style="padding: 20px; padding-bottom: 40px; background: white;">  
+                <!-- 1. Account Section -->  
+                <div style="margin-bottom: 20px;">  
+                    <label style="display: block; font-size: 13px; font-weight: 700; color: #0d382b; margin-bottom: 8px;">Account</label>  
+                    <div id="selectAccountBtn" style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">  
+                        <span style="font-size: 14px; color: #1f2937; display: flex; align-items: center; gap: 10px;">  
+                            <span>👤</span> <span id="bankDisplaySummary">Loading bank...</span>  
+                        </span>  
+                        <span style="color: #9ca3af; font-size: 16px;">&rsaquo;</span>  
+                    </div>  
+                </div>  
+
+                <!-- 2. Fund Password Section -->  
+                <div style="margin-bottom: 20px;">  
+                    <label style="display: block; font-size: 13px; font-weight: 700; color: #0d382b; margin-bottom: 8px;">Fund password (6-digit PIN)</label>  
+                    <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; gap: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">  
+                        <span style="color: #9ca3af; font-size: 16px;">🔒</span>  
+                        <input type="password" id="fundPasswordInput" inputmode="numeric" maxlength="6" placeholder="Please enter fund password" style="border: none; outline: none; width: 100%; font-size: 14px; color: #1f2937; background: transparent;">  
+                    </div>  
+                </div>  
+
+                <!-- 3. Withdraw Amount Section -->  
+                <div style="margin-bottom: 20px;">  
+                    <label style="display: block; font-size: 13px; font-weight: 700; color: #0d382b; margin-bottom: 8px;">Withdraw amount</label>  
+                    <!-- Balance Display Card -->  
+                    <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">  
+                        <div>  
+                            <span style="font-size: 12px; color: #6b7280; display: block; margin-bottom: 2px;">Withdrawable Balance (<span id="withdrawAccountType">—</span>)</span>  
+                            <strong style="font-size: 20px; color: #0d382b;" id="walletBalanceVal">₦0.00</strong>  
+                        </div>  
+                        <div style="background: #e6f4ea; padding: 8px 12px; border-radius: 8px; color: #137333; font-size: 18px;">💰</div>  
+                    </div>  
+                    <!-- Preset Amount Grid -->  
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;" id="amountGrid"></div>  
+                </div>  
+
+                <!-- Error / Success Feedback Container -->  
+                <div id="withdrawalFeedback" style="display: none; font-size: 13px; margin-bottom: 15px; text-align: center; padding: 10px; border-radius: 8px;"></div>  
+
+                <!-- Submit Button -->  
+                <button id="submitWithdrawalBtn" style="width: 100%; background: #0d382b; color: white; border: none; padding: 16px; border-radius: 12px; font-weight: 600; font-size: 15px; cursor: pointer; box-shadow: 0 4px 10px rgba(13, 56, 43, 0.2); margin-top: 10px;">Submit Withdrawal</button>  
+            </div>  
+        </div>  
+      </div>  
+
+      <!-- REFERRAL PAGE -->
+      <div id="page-referral" class="hidden">  
+        <div class="section">  
+          <h3>👥 Referral Program & Structure Index</h3>  
+          <p style="margin-bottom:14px;color:var(--muted);font-size:14px">Share your referral code with friends. Earn rewards when they invest or complete daily orders across Levels 1, 2, and 3.</p>  
+          <div class="payment-box">Your Referral Code:<br><strong id="referralCode" style="font-size:20px;letter-spacing:1px">LOADING...</strong></div>  
+          
+          <!-- Built-in Referral Estimator Calculator -->
+          <div style="background:#f8fbf9; border:1px solid var(--border); border-radius:10px; padding:16px; margin-top:16px;">
+            <h4 style="color:var(--green-dark); margin-bottom:10px; font-size:15px;">📊 Referral Bonus & Rebate Estimator</h4>
+            <label>Select Referral Level Position:</label>
+            <select id="calcLevelSelect" style="margin-bottom:10px;">
+              <option value="M1">M1 (Deposit: ₦18,000)</option>
+              <option value="M2">M2 (Deposit: ₦51,000)</option>
+              <option value="M3" selected>M3 (Deposit: ₦162,000)</option>
+              <option value="M4">M4 (Deposit: ₦436,800)</option>
+              <option value="M5">M5 (Deposit: ₦891,800)</option>
+              <option value="M6">M6 (Deposit: ₦1,690,000)</option>
+              <option value="M7">M7 (Deposit: ₦3,705,000)</option>
+              <option value="M8">M8 (Deposit: ₦7,080,000)</option>
+              <option value="M9">M9 (Deposit: ₦12,672,000)</option>
+            </select>
+            <div id="calcResultsBox" style="background:white; border:1px solid var(--border); padding:12px; border-radius:8px; font-size:13px; line-height:1.6;"></div>
+          </div>
+          <p style="font-size:13px;color:var(--muted); margin-top:14px;">Referral earnings will appear on your dashboard automatically when your team upgrades positions.</p>  
+        </div>  
+      </div>  
+
+      <!-- ADMIN PAGE -->
+      <div id="page-admin" class="hidden">  
+        <div class="section">  
+          <h3>🛡️ Admin Panel – Employee Account Management</h3>  
+          <p style="font-size:13px;color:var(--muted);margin-bottom:12px">View, manage, restrict, disable, or delete employee accounts that violate platform policies.</p>  
+          <button id="loadEmployeesBtn" class="primary-btn">Load Employee Accounts</button>  
+          <div id="adminEmployeeMessage" class="status hidden"></div>  
+          <div style="overflow-x:auto;margin-top:14px">  
+            <table>  
+              <thead><tr><th>Employee</th><th>Status / Level</th><th>Balance</th><th>Actions</th></tr></thead>  
+              <tbody id="adminEmployeesBody"><tr><td colspan="4">Click "Load Employee Accounts" to view members.</td></tr></tbody>  
+            </table>  
+          </div>  
+        </div>  
+
+        <div class="section">  
+          <h3>🛡️ Admin Panel – Review Deposits</h3>  
+          <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Check your actual bank records before confirming any payment.</p>  
+          <button id="loadDepositsBtn" style="padding:10px 16px;background:var(--green);color:white;border:0;border-radius:6px;font-weight:600;cursor:pointer">Load Pending Deposits</button>  
+          <div id="adminMessage" class="status hidden"></div>  
+          <div style="overflow-x:auto;margin-top:14px">  
+            <table>
+              <thead><tr><th>Depositor Name</th><th>Amount</th><th>Reference</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+              <tbody id="adminDepositsBody"><tr><td colspan="6">Click Load Pending Deposits</td></tr></tbody>
+            </table>
+          </div>  
+        </div>  
+
+        <div class="section">  
+          <h3>🏦 Bank Account Verification</h3>  
+          <button id="loadWithdrawalBanksBtn" class="primary-btn">Load Bank Accounts Awaiting Verification</button>  
+          <div id="adminBankMessage" class="status hidden"></div>  
+          <div style="overflow-x:auto;margin-top:12px">  
+            <table><thead><tr><th>Member</th><th>Bank</th><th>Account</th><th>Action</th></tr></thead><tbody id="adminBanksBody"><tr><td colspan="4">Click the button to load accounts.</td></tr></tbody></table>  
+          </div>  
+        </div>  
+
+        <div class="section">  
+          <h3>💸 Withdrawal Requests</h3>  
+          <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Confirm that the actual bank transfer has been made before marking a request as paid.</p>  
+          <button id="loadAdminWithdrawalsBtn" class="primary-btn">Load Withdrawal Requests</button>  
+          <div id="adminWithdrawalMessage" class="status hidden"></div>  
+          <div style="overflow-x:auto;margin-top:12px">  
+            <table>  
+              <thead><tr><th>Member</th><th>Bank Details</th><th>Gross</th><th>Fees</th><th>Net Payable</th><th>Status</th><th>Action</th></tr></thead>  
+              <tbody id="adminWithdrawalsBody"><tr><td colspan="7">Click the button to load requests.</td></tr></tbody>  
+            </table>  
+          </div>  
+        </div>  
+      </div>  
+
+      <!-- INVEST PAGE -->
+      <div id="page-invest" class="hidden">  
+        <div class="section">  
+          <h3>💰 Make Investment</h3>  
+          <div class="plans">  
+            <div class="plan"><div class="icon">🌱</div><h4>Starter Palm</h4><div class="price">₦5,000</div><p>Entry-level agricultural project</p><button class="planBtn" data-plan="Starter Palm" data-amount="5000">Invest Now</button></div>  
+            <div class="plan"><div class="icon">🌴</div><h4>Growth Palm</h4><div class="price">₦50,000</div><p>Medium-level project</p><button class="planBtn" data-plan="Growth Palm" data-amount="50000">Invest Now</button></div>  
+            <div class="plan"><div class="icon">🌳</div><h4>Premium Palm</h4><div class="price">₦100,000</div><p>Larger agricultural project</p><button class="planBtn" data-plan="Premium Palm" data-amount="100000">Invest Now</button></div>  
+          </div>  
+        </div>  
+      </div>  
+
+    </div> <!-- End .content -->  
+
+    <!-- Fixed Bottom Navigation Bar (Now safely inside .main) -->  
     <div style="position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; align-items: center; padding: 8px 0; max-width: 480px; margin: 0 auto; z-index: 100;">  
         <a href="#" onclick="showPage('dashboard'); return false;" style="text-decoration: none; color: #0d382b; display: flex; flex-direction: column; align-items: center; font-size: 11px; font-weight: 600;">  
             <span style="font-size: 18px;">🏠</span> Home  
@@ -312,246 +513,9 @@ grid-template-columns: 1fr;
             <span style="font-size: 18px;">👤</span> My  
         </a>  
     </div>  
-  </div>  
 
-  <div id="page-employee-position" class="hidden">  
-    <div class="section">  
-      <h3>📈 Employee Position Plans (M1–M9)</h3>  
-      <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Choose a position only if you understand the deposit requirement and have sufficient available wallet balance. Projections are estimates, not guaranteed earnings.</p>  
-      <div class="notice">Your available wallet balance: <strong id="positionWalletBalance">₦0.00</strong>.</div>  
-      <div id="employeePositionPlans"><p>Loading position plans...</p></div>  
-      <div id="positionMessage" class="status hidden"></div>  
-    </div>  
-  </div>  
-
-  <div id="page-employee-tasks" class="hidden">  
-    <div class="section">  
-      <h3>🌱 Employee Daily Tasks</h3>  
-      <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Your assigned practical palm-farm tasks appear here on working days. Mark each task complete only after doing the work. Task completion is self-reported.</p>  
-      <div class="stat-card" style="margin-bottom:12px;text-align:center;padding:18px"><div class="label">Total Daily Task Payment</div><div class="value" id="dailyRateDisplay">₦0.00 / day</div></div>  
-      <div class="notice" style="background:#e8f5e9;border:1px solid #2e7d32;color:#1b5e20;margin-bottom:12px"><strong>Progress:</strong> <span id="taskProgressDisplay">0 of 0 tasks completed</span></div>  
-      <div id="employeeTaskList"><p style="color:var(--muted)">Your tasks will load here.</p></div>  
-      <div id="taskMessage" class="status hidden" style="margin-top:12px"></div>  
-      <div class="section" style="margin-top:16px;background:#f8fbf9">  
-        <h3>My Task Payment History</h3>  
-        <div style="overflow-x:auto"><table><thead><tr><th>Payment</th><th>Description</th><th>Date</th></tr></thead><tbody id="employeePayrollBody"><tr><td colspan="3">No task payments displayed yet.</td></tr></tbody></table></div>  
-      </div>  
-    </div>  
-  </div>  
-
-  <div id="page-deposit" class="hidden">  
-    <div class="section">  
-      <h3>📥 Deposit Submission</h3>  
-      <div class="notice">Only submit this form after making a payment. A submission is not proof of payment.</div>  
-      <div class="payment-box"><strong>Payment Details (OPay)</strong><br><br>Account Name: <strong>Ovie Ezekiel</strong><br>Account Number: <strong>7037816664</strong><br>Bank: <strong>OPay</strong></div>  
-      <p id="selectedPlanText" style="margin-bottom:12px;font-weight:600"></p>  
-      <form id="depositForm">  
-        <label>Deposit Amount (₦)</label>
-<input
-  id="depositAmount"
-  type="number"
-  min="1"
-  step="1"
-  required
-  placeholder="Enter your deposit amount"
->
-<label>Payment Reference</label>
-<input
-  id="paymentReference"
-  maxlength="120"
-  required
-  placeholder="Bank transaction reference"
->  
-        <button type="submit" id="depositBtn">Submit Deposit for Review</button>  
-      </form>  
-      <div id="depositMessage" class="status hidden"></div>  
-      <button class="secondary-btn" id="myDepositsBtn" style="width:100%;padding:12px;border:0;border-radius:8px;font-weight:600;cursor:pointer">View My Deposit Submissions</button>  
-      <div id="myDepositsMessage" class="status hidden"></div>  
-      <div style="overflow-x:auto;margin-top:12px"><table><thead><tr><th>Amount</th><th>Reference</th><th>Status</th><th>Date</th></tr></thead><tbody id="myDepositsBody"><tr><td colspan="4">No submissions yet</td></tr></tbody></table></div>  
-    </div>  
-  </div>  
-
-  <div id="page-withdraw" class="hidden">  
-    <div style="max-width: 480px; margin: 0 auto; background: #f3f4f6; min-height: 100vh; font-family: sans-serif; box-sizing: border-box; display: flex; flex-direction: column;">  
-          
-        <!-- Top Header Bar -->  
-        <div style="background: #0d382b; color: white; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 12px 12px 0 0;">  
-            <a href="#" onclick="showPage('dashboard'); return false;" style="color: white; text-decoration: none; font-size: 20px; font-weight: bold;">&lsaquo;</a>  
-            <h1 style="margin: 0; font-size: 16px; font-weight: 600;">Withdrawal</h1>  
-            <a href="#" onclick="showPage('withdraw'); return false;" style="color: white; text-decoration: none; font-size: 13px;">View Records</a>  
-        </div>  
-
-        <!-- Main Content Form Area -->  
-        <div style="padding: 20px; flex: 1; padding-bottom: 40px; background: white; border-radius: 0 0 12px 12px;">  
-
-            <!-- 1. Account Section -->  
-            <div style="margin-bottom: 20px;">  
-                <label style="display: block; font-size: 13px; font-weight: 700; color: #0d382b; margin-bottom: 8px;">Account</label>  
-                <div id="selectAccountBtn" style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">  
-                    <span style="font-size: 14px; color: #1f2937; display: flex; align-items: center; gap: 10px;">  
-                        <span>👤</span> <span id="bankDisplaySummary">Loading bank...</span>  
-                    </span>  
-                    <span style="color: #9ca3af; font-size: 16px;">&rsaquo;</span>  
-                </div>  
-            </div>  
-
-            <!-- 2. Fund Password Section -->  
-            <div style="margin-bottom: 20px;">  
-                <label style="display: block; font-size: 13px; font-weight: 700; color: #0d382b; margin-bottom: 8px;">Fund password (6-digit PIN)</label>  
-                <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; gap: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">  
-                    <span style="color: #9ca3af; font-size: 16px;">🔒</span>  
-                    <input type="password" id="fundPasswordInput" inputmode="numeric" maxlength="6" placeholder="Please enter fund password" style="border: none; outline: none; width: 100%; font-size: 14px; color: #1f2937; background: transparent;">  
-                </div>  
-            </div>  
-
-            <!-- 3. Withdraw Amount Section -->  
-            <div style="margin-bottom: 20px;">  
-                <label style="display: block; font-size: 13px; font-weight: 700; color: #0d382b; margin-bottom: 8px;">Withdraw amount</label>  
-                  
-                <!-- Balance Display Card -->  
-                <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">  
-                    <div>  
-                        <span style="font-size: 12px; color: #6b7280; display: block; margin-bottom: 2px;">Withdrawable Balance (<span id="withdrawAccountType">—</span>)</span>  
-                        <strong style="font-size: 20px; color: #0d382b;" id="walletBalanceVal">₦0.00</strong>  
-                    </div>  
-                    <div style="background: #e6f4ea; padding: 8px 12px; border-radius: 8px; color: #137333; font-size: 18px;">  
-                        💰  
-                    </div>  
-                </div>  
-
-                <!-- Preset Amount Grid (3 columns) -->  
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;" id="amountGrid">  
-                    <!-- Dynamically populated preset buttons -->  
-                </div>  
-            </div>  
-
-            <!-- Error / Success Feedback Container -->  
-            <div id="withdrawalFeedback" style="display: none; font-size: 13px; margin-bottom: 15px; text-align: center; padding: 10px; border-radius: 8px;"></div>  
-
-            <!-- Submit Button -->  
-            <button id="submitWithdrawalBtn" style="width: 100%; background: #0d382b; color: white; border: none; padding: 16px; border-radius: 12px; font-weight: 600; font-size: 15px; cursor: pointer; box-shadow: 0 4px 10px rgba(13, 56, 43, 0.2); margin-top: 10px;">  
-                Submit Withdrawal  
-            </button>  
-
-        </div>  
-    </div>  
-  </div>  
-
-  <div id="page-referral" class="hidden">  
-    <div class="section">  
-      <h3>👥 Referral Program & Structure Index</h3>  
-      <p style="margin-bottom:14px;color:var(--muted);font-size:14px">Share your referral code with friends. Earn rewards when they invest or complete daily orders across Levels 1, 2, and 3.</p>  
-      <div class="payment-box">Your Referral Code:<br><strong id="referralCode" style="font-size:20px;letter-spacing:1px">LOADING...</strong></div>  
-      
-      <!-- Built-in Referral Estimator Calculator -->
-      <div style="background:#f8fbf9; border:1px solid var(--border); border-radius:10px; padding:16px; margin-top:16px;">
-        <h4 style="color:var(--green-dark); margin-bottom:10px; font-size:15px;">📊 Referral Bonus & Rebate Estimator</h4>
-        <label>Select Referral Level Position:</label>
-        <select id="calcLevelSelect" style="margin-bottom:10px;">
-          <option value="M1">M1 (Deposit: ₦18,000)</option>
-          <option value="M2">M2 (Deposit: ₦51,000)</option>
-          <option value="M3" selected>M3 (Deposit: ₦162,000)</option>
-          <option value="M4">M4 (Deposit: ₦436,800)</option>
-          <option value="M5">M5 (Deposit: ₦891,800)</option>
-          <option value="M6">M6 (Deposit: ₦1,690,000)</option>
-          <option value="M7">M7 (Deposit: ₦3,705,000)</option>
-          <option value="M8">M8 (Deposit: ₦7,080,000)</option>
-          <option value="M9">M9 (Deposit: ₦12,672,000)</option>
-        </select>
-        <div id="calcResultsBox" style="background:white; border:1px solid var(--border); padding:12px; border-radius:8px; font-size:13px; line-height:1.6;">
-          <!-- Populated via script -->
-        </div>
-      </div>
-      
-      <p style="font-size:13px;color:var(--muted); margin-top:14px;">Referral earnings will appear on your dashboard automatically when your team upgrades positions.</p>  
-    </div>  
-  </div>  
-
-  <div id="page-admin" class="hidden">  
-    <div class="section">  
-      <h3>🛡️ Admin Panel – Employee Account Management</h3>  
-      <p style="font-size:13px;color:var(--muted);margin-bottom:12px">View, manage, restrict, disable, or delete employee accounts that violate platform policies.</p>  
-      <button id="loadEmployeesBtn" class="primary-btn">Load Employee Accounts</button>  
-      <div id="adminEmployeeMessage" class="status hidden"></div>  
-      <div style="overflow-x:auto;margin-top:14px">  
-        <table>  
-          <thead>  
-            <tr>  
-              <th>Employee</th>  
-              <th>Status / Level</th>  
-              <th>Balance</th>  
-              <th>Actions</th>  
-            </tr>  
-          </thead>  
-          <tbody id="adminEmployeesBody">  
-            <tr><td colspan="4">Click "Load Employee Accounts" to view members.</td></tr>  
-          </tbody>  
-        </table>  
-      </div>  
-    </div>  
-
-    <div class="section">  
-      <h3>🛡️ Admin Panel – Review Deposits</h3>  
-      <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Check your actual bank records before confirming any payment.</p>  
-      <button id="loadDepositsBtn" style="padding:10px 16px;background:var(--green);color:white;border:0;border-radius:6px;font-weight:600;cursor:pointer">Load Pending Deposits</button>  
-      <div id="adminMessage" class="status hidden"></div>  
-      <div style="overflow-x:auto;margin-top:14px">  
-        <table>
-<thead>
-<tr>
-<th>Depositor Name</th>
-<th>Amount</th>
-<th>Reference</th>
-<th>Status</th>
-<th>Date</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody id="adminDepositsBody">
-<tr><td colspan="6">Click Load Pending Deposits</td></tr>
-</tbody>
-</table>
-      </div>  
-    </div>  
-
-    <div class="section">  
-      <h3>🏦 Bank Account Verification</h3>  
-      <button id="loadWithdrawalBanksBtn" class="primary-btn">Load Bank Accounts Awaiting Verification</button>  
-      <div id="adminBankMessage" class="status hidden"></div>  
-      <div style="overflow-x:auto;margin-top:12px">  
-        <table><thead><tr><th>Member</th><th>Bank</th><th>Account</th><th>Action</th></tr></thead><tbody id="adminBanksBody"><tr><td colspan="4">Click the button to load accounts.</td></tr></tbody></table>  
-      </div>  
-    </div>  
-
-    <div class="section">  
-      <h3>💸 Withdrawal Requests</h3>  
-      <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Confirm that the actual bank transfer has been made before marking a request as paid.</p>  
-      <button id="loadAdminWithdrawalsBtn" class="primary-btn">Load Withdrawal Requests</button>  
-      <div id="adminWithdrawalMessage" class="status hidden"></div>  
-      <div style="overflow-x:auto;margin-top:12px">  
-        <table>  
-          <thead><tr><th>Member</th><th>Bank Details</th><th>Gross</th><th>Fees</th><th>Net Payable</th><th>Status</th><th>Action</th></tr></thead>  
-          <tbody id="adminWithdrawalsBody"><tr><td colspan="7">Click the button to load requests.</td></tr></tbody>  
-        </table>  
-      </div>  
-    </div>  
-  </div>  
-
-  <div id="page-invest" class="hidden">  
-    <div class="section">  
-      <h3>💰 Make Investment</h3>  
-      <div class="plans">  
-        <div class="plan"><div class="icon">🌱</div><h4>Starter Palm</h4><div class="price">₦5,000</div><p>Entry-level agricultural project</p><button class="planBtn" data-plan="Starter Palm" data-amount="5000">Invest Now</button></div>  
-        <div class="plan"><div class="icon">🌴</div><h4>Growth Palm</h4><div class="price">₦50,000</div><p>Medium-level project</p><button class="planBtn" data-plan="Growth Palm" data-amount="50000">Invest Now</button></div>  
-        <div class="plan"><div class="icon">🌳</div><h4>Premium Palm</h4><div class="price">₦100,000</div><p>Larger agricultural project</p><button class="planBtn" data-plan="Premium Palm" data-amount="100000">Invest Now</button></div>  
-      </div>  
-    </div>  
-  </div>  
-
-</div>
-
-  </div>  
-</div>
+  </div> <!-- End .main -->  
+</div> <!-- End #app -->
 
 <!-- EMPLOYEE PROFILE MODAL -->
 <div id="profileModal" class="modal hidden">
@@ -608,8 +572,8 @@ const PALMGROW_REFERRAL_INDEX = {
     M9: { deposit: 12672000, income1Day: 528000, level1Referral: 1267200, level2Referral: 380160, level3Referral: 126720, l1Rebate: 15840, l2Rebate: 10560, l3Rebate: 5280 }
   },
   commissionRates: {
-    referralBonus: { level1: 0.10, level2: 0.03, level3: 0.01 }, // 10%, 3%, 1%[span_0](start_span)[span_0](end_span)
-    orderRebate: { level1: 0.03, level2: 0.02, level3: 0.01 }     // 3%, 2%, 1%[span_1](start_span)[span_1](end_span)
+    referralBonus: { level1: 0.10, level2: 0.03, level3: 0.01 },
+    orderRebate: { level1: 0.03, level2: 0.02, level3: 0.01 }
   }
 };
 
@@ -627,13 +591,13 @@ function updateReferralEstimator() {
     Deposit Required: <strong>${naira(data.deposit)}</strong><br>
     Estimated 1-Day Income: <strong>${naira(data.income1Day)}</strong><br><br>
     <strong>Referral Bonuses (Joining):</strong><br>
-    • Level 1 Bonus (10%): <strong>${naira(data.level1Referral)}</strong>[span_2](start_span)[span_2](end_span)<br>
-    • Level 2 Bonus (3%): <strong>${naira(data.level2Referral)}</strong>[span_3](start_span)[span_3](end_span)<br>
-    • Level 3 Bonus (1%): <strong>${naira(data.level3Referral)}</strong>[span_4](start_span)[span_4](end_span)<br><br>
+    • Level 1 Bonus (10%): <strong>${naira(data.level1Referral)}</strong><br>
+    • Level 2 Bonus (3%): <strong>${naira(data.level2Referral)}</strong><br>
+    • Level 3 Bonus (1%): <strong>${naira(data.level3Referral)}</strong><br><br>
     <strong>Daily Order Rebates:</strong><br>
-    • Level 1 Rebate (3%): <strong>${naira(data.l1Rebate)} / day</strong>[span_5](start_span)[span_5](end_span)<br>
-    • Level 2 Rebate (2%): <strong>${naira(data.l2Rebate)} / day</strong>[span_6](start_span)[span_6](end_span)<br>
-    • Level 3 Rebate (1%): <strong>${naira(data.l3Rebate)} / day</strong>[span_7](start_span)[span_7](end_span)
+    • Level 1 Rebate (3%): <strong>${naira(data.l1Rebate)} / day</strong><br>
+    • Level 2 Rebate (2%): <strong>${naira(data.l2Rebate)} / day</strong><br>
+    • Level 3 Rebate (1%): <strong>${naira(data.l3Rebate)} / day</strong>
   `;
 }
 
@@ -652,7 +616,7 @@ let currentProfile = null;
 let withdrawalSetup = null;  
 let pageHistory = ["dashboard"];  
 let selectedWithdrawalAmount = null;  
-let isInitialBoot = true; // Tracks if the app is loading for the first time
+let isInitialBoot = true;
   
 const WITHDRAWAL_AMOUNTS = [  
   1800,2800,8000,26000,75000,200000,  
@@ -705,8 +669,6 @@ function displayStatus(status){
   return String(status||"pending").replaceAll("_"," ").toUpperCase();  
 }  
   
-/* EMAIL AUTHENTICATION */  
-  
 function updateAuthUI(){  
   $("authSub").textContent=loginMode  
     ?"Login to your PalmGrow account"  
@@ -727,7 +689,6 @@ $("switchBtn").onclick=()=>{
   
 $("authForm").onsubmit=async e=>{  
   e.preventDefault();  
-  
   const email=$("email").value.trim().toLowerCase();  
   const password=$("password").value;  
   const fullName=$("fullName").value.trim();  
@@ -743,7 +704,6 @@ $("authForm").onsubmit=async e=>{
       await loadDashboard();  
     }else{  
       if(fullName.length<3)throw new Error("Please enter your full name.");  
-  
       const response=await fetch(`${SUPABASE_URL}/functions/v1/palmgrow-register`,{  
         method:"POST",  
         headers:{  
@@ -777,8 +737,6 @@ $("authForm").onsubmit=async e=>{
     updateAuthUI();  
   }  
 };  
-  
-/* NAVIGATION & PHONE BACK BUTTON SUPPORT */  
   
 const PAGE_NAMES=[  
   "dashboard","deposit","referral","admin","invest",  
@@ -863,8 +821,6 @@ document.querySelectorAll(".planBtn").forEach(btn=>{
     showPage("deposit");  
   };  
 });  
-  
-/* PROFILE MODAL & LOCKING CONTROLS */
 
 function isProfileFilled(profile) {
   if (!profile) return false;
@@ -914,10 +870,7 @@ $("closeProfileModal").onclick = () => {
 
 $("profileForm").onsubmit = async e => {
   e.preventDefault();
-  
-  if (isProfileFilled(currentProfile)) {
-    return;
-  }
+  if (isProfileFilled(currentProfile)) return;
 
   const fullName = $("profFullName").value.trim();
   const phone = $("profPhone").value.trim();
@@ -939,13 +892,7 @@ $("profileForm").onsubmit = async e => {
   try {
     const { error } = await supabase
       .from("profiles")
-      .update({
-        full_name: fullName,
-        phone: phone,
-        age: age,
-        occupation: occupation,
-        gender: gender
-      })
+      .update({ full_name: fullName, phone: phone, age: age, occupation: occupation, gender: gender })
       .eq("id", currentUser.id);
 
     if (error) throw error;
@@ -962,7 +909,6 @@ $("profileForm").onsubmit = async e => {
 
     setProfileFormLock(true);
     $("profileModal").classList.add("hidden");
-
   } catch(err) {
     msg("profileMessage", err.message || "Failed to update profile", "error");
     $("saveProfileBtn").disabled = false;
@@ -970,18 +916,9 @@ $("profileForm").onsubmit = async e => {
   }
 };
 
-/* LOAD DASHBOARD */
-
 async function loadDashboard(){
-  const {data:{session},error:sessionError} =
-    await supabase.auth.getSession();
-
-  if(sessionError){
-    console.error("Session error:",sessionError.message);
-    return;
-  }
-
-  if(!session)return;
+  const {data:{session},error:sessionError} = await supabase.auth.getSession();
+  if(sessionError || !session) return;
 
   currentUser=session.user;
 
@@ -994,58 +931,37 @@ async function loadDashboard(){
     .eq("id",currentUser.id)
     .maybeSingle();
 
-  if(profileError){
-    console.error("Profile load error:",profileError.message);
+  if(profileError || !profile){
     $("adminNav").style.display="none";
-    alert("Profile loading failed: "+profileError.message);
-    return;
-  }
-
-  if(!profile){
-    console.error("No profile found for:",currentUser.id);
-    $("adminNav").style.display="none";
-    alert("Your PalmGrow profile was not found.");
     return;
   }
 
   currentProfile=profile;
-
-  const name=profile.full_name ||
-    currentUser.user_metadata?.full_name || "Member";
+  const name=profile.full_name || currentUser.user_metadata?.full_name || "Member";
 
   $("userName").textContent=name;
   $("userPhone").textContent=profile.phone||"";
   $("userAvatar").textContent=name.charAt(0).toUpperCase();
 
-  $("referralCode").textContent=
-    profile.referral_code ||
-    currentUser.id.replace(/-/g,"").slice(0,8).toUpperCase();
+  $("referralCode").textContent= profile.referral_code || currentUser.id.replace(/-/g,"").slice(0,8).toUpperCase();
 
   $("walletBalanceDisplay").textContent=naira(profile.available_balance);
   $("availableBalance").textContent=naira(profile.available_balance);
   $("totalInvestment").textContent=naira(profile.total_investment);
   $("totalEarnings").textContent=naira(profile.total_earnings);
   $("referralEarnings").textContent=naira(profile.referral_earnings);
-
-  $("dailyRateDisplay").textContent=
-    naira(profile.daily_payout_amount)+" / day";
+  $("dailyRateDisplay").textContent=naira(profile.daily_payout_amount)+" / day";
 
   const role=String(profile.role||"").trim().toLowerCase();
   const accountType=String(profile.account_type||"").trim().toLowerCase();
 
-  const isAdmin=role==="admin";
-  const isEmployee=accountType==="employee";
+  $("adminNav").style.display=role==="admin"?"flex":"none";
+  $("employeeTasksNav").style.display=accountType==="employee"?"flex":"none";
+  $("employeePositionNav").style.display=accountType==="employee"?"flex":"none";
 
-  $("adminNav").style.display=isAdmin?"flex":"none";
-  $("employeeTasksNav").style.display=isEmployee?"flex":"none";
-  $("employeePositionNav").style.display=isEmployee?"flex":"none";
-
-  $("positionWalletBalance").textContent=
-    naira(profile.available_balance);
-
+  $("positionWalletBalance").textContent=naira(profile.available_balance);
   updateWithdrawalBalance();
 
-  // Only check the URL hash on the initial boot/refresh load
   if(isInitialBoot){
     isInitialBoot = false;
     const hash = window.location.hash.replace("#", "").trim();
@@ -1055,124 +971,100 @@ async function loadDashboard(){
     }
   }
 
-  // If no hash or not initial boot, default page handling can stay as is
   if(document.querySelector("#app").style.display !== "none" && pageHistory.length === 1){
     showPage("dashboard", false);
   }
 }
   
-/* EMPLOYEE M1–M9 POSITION ACTIVATION */  
-  async function loadEmployeePositionPlans(){
-const host=$("employeePositionPlans");
-if(!currentUser)return;
+async function loadEmployeePositionPlans(){
+  const host=$("employeePositionPlans");
+  if(!currentUser)return;
 
-host.innerHTML="<p>Loading employee positions...</p>";
+  host.innerHTML="<p>Loading employee positions...</p>";
 
-try{
-const [{data:plans,error:plansError},{data:positions,error:positionsError}]=await Promise.all([
-supabase
-.from("employee_level_plans")
-.select("level_code,deposit_amount,daily_order_limit,unit_price,daily_income_projection,monthly_income_projection,five_hundred_day_projection")
-.eq("is_active",true)
-.order("deposit_amount",{ascending:true}),
+  try{
+    const [{data:plans,error:plansError},{data:positions,error:positionsError}]=await Promise.all([
+      supabase.from("employee_level_plans").select("level_code,deposit_amount,daily_order_limit,unit_price,daily_income_projection,monthly_income_projection,five_hundred_day_projection").eq("is_active",true).order("deposit_amount",{ascending:true}),
+      supabase.from("employee_positions").select("level_code,position_status").eq("employee_id",currentUser.id)
+    ]);
 
-  supabase
-    .from("employee_positions")
-    .select("level_code,position_status")
-    .eq("employee_id",currentUser.id)
-]);
+    if(plansError)throw plansError;
+    if(positionsError)throw positionsError;
 
-if(plansError)throw plansError;
-if(positionsError)throw positionsError;
+    if(!plans||plans.length===0){
+      host.textContent="No active employee levels are available.";
+      return;
+    }
 
-if(!plans||plans.length===0){
-  host.textContent="No active employee levels are available.";
-  return;
-}
+    const activeLevels=new Set((positions||[]).filter(p=>p.position_status==="active").map(p=>p.level_code));
+    host.innerHTML="";
 
-const activeLevels=new Set(
-  (positions||[])
-    .filter(position=>position.position_status==="active")
-    .map(position=>position.level_code)
-);
+    plans.forEach(plan=>{
+      const card=document.createElement("div");
+      card.className="position-plan";
+      const isActive=activeLevels.has(plan.level_code);
 
-host.innerHTML="";
+      const badge=document.createElement("span");
+      badge.className="level-badge";
+      badge.textContent=isActive?"🔒 ACTIVE POSITION":"🌴 EMPLOYEE LEVEL";
 
-plans.forEach(plan=>{
-  const card=document.createElement("div");
-  card.className="position-plan";
+      const title=document.createElement("h4");
+      title.textContent="🌿 "+plan.level_code;
 
-  const isActive=activeLevels.has(plan.level_code);
+      const price=document.createElement("div");
+      price.className="position-price";
+      price.innerHTML="<span>💰 Required joining deposit</span>";
 
-  const badge=document.createElement("span");
-  badge.className="level-badge";
-  badge.textContent=isActive?"🔒 ACTIVE POSITION":"🌴 EMPLOYEE LEVEL";
+      const priceValue=document.createElement("strong");
+      priceValue.textContent=naira(plan.deposit_amount);
+      price.appendChild(priceValue);
 
-  const title=document.createElement("h4");
-  title.textContent="🌿 "+plan.level_code;
+      const details=document.createElement("div");
+      details.className="position-details";
 
-  const price=document.createElement("div");
-  price.className="position-price";
-  price.innerHTML="<span>💰 Required joining deposit</span>";
+      const items=[
+        ["📦 Daily order limit",String(plan.daily_order_limit??0)],
+        ["🪙 Unit price",naira(plan.unit_price)],
+        ["📅 Daily projection",naira(plan.daily_income_projection)],
+        ["🗓️ Monthly projection",naira(plan.monthly_income_projection)],
+        ["📈 500-day projection",naira(plan.five_hundred_day_projection)]
+      ];
 
-  const priceValue=document.createElement("strong");
-  priceValue.textContent=naira(plan.deposit_amount);
-  price.appendChild(priceValue);
+      items.forEach(([label,value])=>{
+        const box=document.createElement("div");
+        box.className="detail-box";
+        const labelEl=document.createElement("p");
+        labelEl.textContent=label;
+        const valueEl=document.createElement("strong");
+        valueEl.textContent=value;
+        box.append(labelEl,valueEl);
+        details.appendChild(box);
+      });
 
-  const details=document.createElement("div");
-  details.className="position-details";
+      const note=document.createElement("p");
+      note.style.cssText="margin-top:12px;font-size:12px;color:#80651d";
+      note.textContent="⚠️ Projections are estimates, not guaranteed earnings.";
 
-  const items=[
-    ["📦 Daily order limit",String(plan.daily_order_limit??0)],
-    ["🪙 Unit price",naira(plan.unit_price)],
-    ["📅 Daily projection",naira(plan.daily_income_projection)],
-    ["🗓️ Monthly projection",naira(plan.monthly_income_projection)],
-    ["📈 500-day projection",naira(plan.five_hundred_day_projection)]
-  ];
+      const button=document.createElement("button");
+      button.className="join-button";
+      if(isActive){
+        button.textContent="🔒 ACTIVE — ALREADY JOINED";
+        button.disabled=true;
+      }else{
+        button.textContent="🤝 JOIN "+plan.level_code;
+        button.addEventListener("click",()=>activateEmployeePosition(plan.level_code,button));
+      }
 
-  items.forEach(([label,value])=>{
-    const box=document.createElement("div");
-    box.className="detail-box";
-
-    const labelEl=document.createElement("p");
-    labelEl.textContent=label;
-
-    const valueEl=document.createElement("strong");
-    valueEl.textContent=value;
-
-    box.append(labelEl,valueEl);
-    details.appendChild(box);
-  });
-
-  const note=document.createElement("p");
-  note.style.cssText="margin-top:12px;font-size:12px;color:#80651d";
-  note.textContent="⚠️ Projections are estimates, not guaranteed earnings. Payments depend on genuine assigned work and verified completion.";
-
-  const button=document.createElement("button");
-  button.className="join-button";
-
-  if(isActive){
-    button.textContent="🔒 ACTIVE — ALREADY JOINED";
-    button.disabled=true;
-  }else{
-    button.textContent="🤝 JOIN "+plan.level_code;
-    button.addEventListener("click",()=>activateEmployeePosition(plan.level_code,button));
+      card.append(badge,title,price,details,note,button);
+      host.appendChild(card);
+    });
+  }catch(err){
+    host.textContent="Unable to load position plans: "+err.message;
   }
-
-  card.append(badge,title,price,details,note,button);
-  host.appendChild(card);
-});
-
-}catch(err){
-host.textContent="Unable to load position plans: "+err.message;
-}
 }  
   
 async function activateEmployeePosition(levelCode,button){  
-  const confirmed=confirm(  
-    "Join "+levelCode+"? PalmGrow will check your available wallet balance. If your balance is insufficient, no money will be deducted."  
-  );  
-  
+  const confirmed=confirm("Join "+levelCode+"? PalmGrow will check your available wallet balance.");  
   if(!confirmed)return;  
   
   button.disabled=true;  
@@ -1180,14 +1072,12 @@ async function activateEmployeePosition(levelCode,button){
   
   try{  
     const idempotencyKey="web-"+crypto.randomUUID();  
-  
     const {data,error}=await supabase.rpc("activate_employee_position",{  
       p_level_code:levelCode,  
       p_idempotency_key:idempotencyKey  
     });  
   
     if(error)throw error;  
-  
     if(!data?.success){  
       msg("positionMessage",data?.message||"Insufficient available wallet balance.","error");  
       return;  
@@ -1204,25 +1094,15 @@ async function activateEmployeePosition(levelCode,button){
   }  
 }  
   
-/* EMPLOYEE DAILY TASKS */  
-  
 function lagosDate(){  
-  const parts=new Intl.DateTimeFormat("en-CA",{  
-    timeZone:"Africa/Lagos",  
-    year:"numeric",  
-    month:"2-digit",  
-    day:"2-digit"  
-  }).formatToParts(new Date());  
-  
+  const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Africa/Lagos",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());  
   const values={};  
   parts.forEach(p=>values[p.type]=p.value);  
-  
   return `${values.year}-${values.month}-${values.day}`;  
 }  
   
 async function loadEmployeeTasks(){  
   if(!currentUser)return;  
-  
   const list=$("employeeTaskList");  
   list.innerHTML="<p>Loading your assigned tasks...</p>";  
   $("taskProgressDisplay").textContent="Loading task progress...";  
@@ -1232,7 +1112,6 @@ async function loadEmployeeTasks(){
     if(setupError)throw setupError;  
   
     const taskDate=setup?.task_date||lagosDate();  
-  
     const {data:tasks,error}=await supabase  
       .from("agri_task_assignments")  
       .select("id,task_title,task_description,task_date,status,task_sequence")  
@@ -1244,73 +1123,55 @@ async function loadEmployeeTasks(){
   
     const completed=(tasks||[]).filter(t=>t.status==="completed").length;  
     const total=(tasks||[]).filter(t=>t.status!=="cancelled").length;  
-  
     $("taskProgressDisplay").textContent=`${completed} of ${total} tasks completed`;  
   
     if(!tasks||tasks.length===0){  
-      list.innerHTML="<div class=\"notice\">No tasks are currently assigned. Tasks are available on working days for active employees with a confirmed deposit and contract.</div>";  
+      list.innerHTML="<div class=\"notice\">No tasks are currently assigned.</div>";  
     }else{  
       list.innerHTML="";  
-  
       tasks.forEach(task=>{  
         if(task.status==="cancelled")return;  
-  
         const card=document.createElement("div");  
         card.className="task-card"+(task.status==="completed"?" task-done":"");  
-  
         const title=document.createElement("h4");  
         title.textContent=`Task ${task.task_sequence}: ${task.task_title||"Agricultural task"}`;  
-  
         const description=document.createElement("p");  
         description.textContent=task.task_description||"Complete this assigned agricultural task.";  
-  
         const button=document.createElement("button");  
         button.textContent=task.status==="completed"?"✓ Completed":"Complete Task";  
         button.disabled=task.status!=="pending";  
         button.addEventListener("click",()=>completeEmployeeTask(task.id,button));  
-  
         card.append(title,description,button);  
         list.appendChild(card);  
       });  
     }  
-  
     await loadEmployeePayroll();  
   }catch(err){  
     list.textContent="Unable to load tasks: "+err.message;  
-    $("taskProgressDisplay").textContent="Tasks unavailable";  
   }  
 }  
   
 async function completeEmployeeTask(taskId,button){  
   button.disabled=true;  
   button.textContent="Processing...";  
-  
   try{  
-    const {data,error}=await supabase.rpc("complete_employee_task",{  
-      p_task_id:taskId  
-    });  
-  
+    const {data,error}=await supabase.rpc("complete_employee_task",{p_task_id:taskId});  
     if(error)throw error;  
-  
     if(data?.success){  
-      msg("taskMessage",`Task completed. ${naira(data.payment)} has been credited to your available balance.`);  
+      msg("taskMessage",`Task completed. ${naira(data.payment)} has been credited.`);  
       await loadDashboard();  
       await loadEmployeeTasks();  
-      showPage("employee-tasks");  
     }else{  
       msg("taskMessage",data?.message||"Task could not be completed.","error");  
-      await loadEmployeeTasks();  
     }  
   }catch(err){  
     msg("taskMessage",err.message||"Unable to complete this task.","error");  
-    await loadEmployeeTasks();  
   }  
 }  
   
 async function loadEmployeePayroll(){  
   const body=$("employeePayrollBody");  
   if(!body)return;  
-  
   body.innerHTML="<tr><td colspan=\"3\">Loading payment history...</td></tr>";  
   
   const {data,error}=await supabase  
@@ -1320,55 +1181,38 @@ async function loadEmployeePayroll(){
     .order("credited_at",{ascending:false})  
     .limit(30);  
   
-  if(error){  
-    body.innerHTML="<tr><td colspan=\"3\">Payment history is temporarily unavailable.</td></tr>";  
-    return;  
-  }  
-  
-  if(!data||data.length===0){  
+  if(error||!data||data.length===0){  
     body.innerHTML="<tr><td colspan=\"3\">No task payments yet.</td></tr>";  
     return;  
   }  
   
   body.innerHTML="";  
-  
   data.forEach(row=>{  
     const tr=document.createElement("tr");  
-  
-    [  
-      naira(row.amount),  
-      row.description||"Agricultural task payment",  
-      dateText(row.credited_at)  
-    ].forEach(value=>{  
+    [naira(row.amount),row.description||"Task payment",dateText(row.credited_at)].forEach(value=>{  
       const td=document.createElement("td");  
       td.textContent=value;  
       tr.appendChild(td);  
     });  
-  
     body.appendChild(tr);  
   });  
 }  
   
-/* DEPOSITS */  
-  
 $("depositForm").onsubmit=async e=>{  
   e.preventDefault();  
-  
   const amount=Number($("depositAmount").value);  
   const reference=$("paymentReference").value.trim();  
   
-  if(!Number.isSafeInteger(amount) || amount < 1){
-  msg("depositMessage","Enter a valid deposit amount in whole naira.","error");
-  return;
-}
-  
+  if(!Number.isSafeInteger(amount)||amount<1){  
+    msg("depositMessage","Enter a valid deposit amount in whole naira.","error");  
+    return;  
+  }  
   if(!reference){  
     msg("depositMessage","Enter payment reference","error");  
     return;  
   }  
   
   $("depositBtn").disabled=true;  
-  
   try{  
     const {error}=await supabase.from("deposit_records").insert({  
       user_id:currentUser.id,  
@@ -1376,11 +1220,9 @@ $("depositForm").onsubmit=async e=>{
       payment_reference:reference,  
       status:"pending"  
     });  
-  
     if(error)throw error;  
-  
     $("paymentReference").value="";  
-    msg("depositMessage","Deposit submitted. Status: PENDING. Balance will update after admin approval.");  
+    msg("depositMessage","Deposit submitted. Status: PENDING.");  
     loadMyDeposits();  
   }catch(err){  
     msg("depositMessage",err.message||"Submission failed","error");  
@@ -1392,7 +1234,6 @@ $("depositForm").onsubmit=async e=>{
 async function loadMyDeposits(){  
   const tbody=$("myDepositsBody");  
   tbody.innerHTML="";  
-  
   const {data,error}=await supabase  
     .from("deposit_records")  
     .select("amount,payment_reference,status,submitted_at")  
@@ -1406,48 +1247,30 @@ async function loadMyDeposits(){
   
   data.forEach(item=>{  
     const tr=document.createElement("tr");  
-  
-    [  
-      naira(item.amount),  
-      item.payment_reference||"-",  
-      displayStatus(item.status),  
-      dateText(item.submitted_at)  
-    ].forEach(value=>{  
+    [naira(item.amount),item.payment_reference||"-",displayStatus(item.status),dateText(item.submitted_at)].forEach(value=>{  
       const td=document.createElement("td");  
       td.textContent=value;  
       tr.appendChild(td);  
     });  
-  
     tbody.appendChild(tr);  
   });  
 }  
   
 $("myDepositsBtn").onclick=loadMyDeposits;  
   
-/* ADMIN DEPOSIT REVIEW */  
-  
 $("loadDepositsBtn").onclick=async()=>{  
   const tbody=$("adminDepositsBody");  
   tbody.innerHTML="";  
   msg("adminMessage","Loading...");  
   
-  const {data:profile}=await supabase  
-    .from("profiles")  
-    .select("role")  
-    .eq("id",currentUser.id)  
-    .maybeSingle();  
-  
+  const {data:profile}=await supabase.from("profiles").select("role").eq("id",currentUser.id).maybeSingle();  
   if(!profile||profile.role!=="admin"){  
     msg("adminMessage","Admin access required","error");  
     return;  
   }  
   
   const {data,error}=await supabase.rpc("admin_get_pending_deposits");
-
-if(error){
-  msg("adminMessage",error.message,"error");
-  return;
-}
+  if(error){msg("adminMessage",error.message,"error");return;}  
   
   if(!data||data.length===0){  
     tbody.innerHTML='<tr><td colspan="6">No pending deposits</td></tr>';  
@@ -1457,21 +1280,13 @@ if(error){
   
   data.forEach(item=>{  
     const tr=document.createElement("tr");  
-  
-    [
-  item.full_name||"Unknown",
-  naira(item.amount),
-  item.payment_reference||"-",
-  displayStatus(item.status),
-  dateText(item.submitted_at)
-].forEach(value=>{
+    [item.full_name||"Unknown",naira(item.amount),item.payment_reference||"-",displayStatus(item.status),dateText(item.submitted_at)].forEach(value=>{  
       const td=document.createElement("td");  
       td.textContent=value;  
       tr.appendChild(td);  
     });  
   
     const action=document.createElement("td");  
-  
     const approve=document.createElement("button");  
     approve.textContent="Confirm";  
     approve.style.cssText="background:#16a34a;color:white;border:0;padding:6px 10px;border-radius:4px;margin-right:4px";  
@@ -1486,22 +1301,13 @@ if(error){
     tr.appendChild(action);  
     tbody.appendChild(tr);  
   });  
-  
   msg("adminMessage",`Loaded ${data.length} pending deposit(s)`);  
 };  
   
 async function reviewDeposit(id,decision,accountType){
   try{
-    let rpcName;
-    let rpcArgs;
-
-    if(decision==="confirmed" && accountType==="employee"){
-      rpcName="admin_confirm_employee_wallet_deposit";
-      rpcArgs={p_deposit_id:id};
-    }else{
-      rpcName="admin_review_deposit";
-      rpcArgs={p_deposit_id:id,p_decision:decision};
-    }
+    let rpcName = (decision==="confirmed" && accountType==="employee") ? "admin_confirm_employee_wallet_deposit" : "admin_review_deposit";
+    let rpcArgs = (rpcName==="admin_confirm_employee_wallet_deposit") ? {p_deposit_id:id} : {p_deposit_id:id,p_decision:decision};
 
     const {error}=await supabase.rpc(rpcName,rpcArgs);
     if(error)throw error;
@@ -1513,8 +1319,6 @@ async function reviewDeposit(id,decision,accountType){
   }
 }
   
-/* ADMIN EMPLOYEE MANAGEMENT */  
-  
 $("loadEmployeesBtn").onclick = loadAdminEmployees;  
   
 async function loadAdminEmployees(){  
@@ -1523,12 +1327,7 @@ async function loadAdminEmployees(){
   msg("adminEmployeeMessage", "Loading employees...");  
   
   try{  
-    const {data, error} = await supabase  
-      .from("profiles")  
-      .select("id, full_name, phone, account_type, employee_status, available_balance")  
-      .eq("account_type", "employee")  
-      .order("full_name", {ascending: true});  
-  
+    const {data, error} = await supabase.from("profiles").select("id, full_name, phone, account_type, employee_status, available_balance").eq("account_type", "employee").order("full_name", {ascending: true});  
     if(error) throw error;  
   
     if(!data || data.length === 0){  
@@ -1538,10 +1337,8 @@ async function loadAdminEmployees(){
     }  
   
     tbody.innerHTML = "";  
-  
     data.forEach(emp => {  
       const tr = document.createElement("tr");  
-  
       const infoTd = document.createElement("td");  
       infoTd.innerHTML = `<strong>${escapeHtml(emp.full_name || "Member")}</strong><br><span style="color:var(--muted);font-size:11px">${escapeHtml(emp.phone || "No phone")}</span>`;  
   
@@ -1582,7 +1379,6 @@ async function loadAdminEmployees(){
       tr.append(infoTd, statusTd, balTd, actionTd);  
       tbody.appendChild(tr);  
     });  
-  
     msg("adminEmployeeMessage", `Loaded ${data.length} employee account(s).`);  
   }catch(err){  
     tbody.innerHTML = "<tr><td colspan=\"4\">Unable to load employees.</td></tr>";  
@@ -1591,17 +1387,10 @@ async function loadAdminEmployees(){
 }  
   
 async function updateEmployeeStatus(employeeId, newStatus){  
-  if(!confirm(`Are you sure you want to set this employee's status to "${newStatus.toUpperCase()}"?`)) return;  
-  
+  if(!confirm(`Update status to "${newStatus.toUpperCase()}"?`)) return;  
   try{  
-    const {error} = await supabase  
-      .from("profiles")  
-      .update({ employee_status: newStatus })  
-      .eq("id", employeeId);  
-  
+    const {error} = await supabase.from("profiles").update({ employee_status: newStatus }).eq("id", employeeId);  
     if(error) throw error;  
-  
-    alert(`Employee status successfully updated to ${newStatus.toUpperCase()}`);  
     loadAdminEmployees();  
   }catch(err){  
     alert("Failed to update status: " + err.message);  
@@ -1609,36 +1398,22 @@ async function updateEmployeeStatus(employeeId, newStatus){
 }  
   
 async function deleteEmployeeAccount(employeeId, employeeName){  
-  if(!confirm(`WARNING: Permanently delete employee account for "${employeeName || 'Member'}"? This action cannot be undone.`)) return;  
-  
+  if(!confirm(`Delete employee account for "${employeeName || 'Member'}"?`)) return;  
   try{  
-    const {error} = await supabase  
-      .from("profiles")  
-      .delete()  
-      .eq("id", employeeId);  
-  
+    const {error} = await supabase.from("profiles").delete().eq("id", employeeId);  
     if(error) throw error;  
-    
-    alert("Employee account profile successfully deleted.");  
     loadAdminEmployees();  
   }catch(err){  
     alert("Failed to delete account: " + err.message);  
   }  
 }  
   
-/* WITHDRAWAL SETUP & VIEW LOGIC */  
-  
 async function loadWithdrawalPage(){  
   if(!currentUser)return;  
-  
   updateWithdrawalBalance();  
   selectedWithdrawalAmount = null;  
-  
   const feedbackEl = $("withdrawalFeedback");  
-  if(feedbackEl){  
-    feedbackEl.style.display = "none";  
-  }  
-  
+  if(feedbackEl) feedbackEl.style.display = "none";  
   await loadWithdrawalSetup();  
   renderWithdrawalPresetGrid();  
 }  
@@ -1647,27 +1422,32 @@ async function loadWithdrawalSetup(){
   try{  
     const {data,error}=await supabase.rpc("palmgrow_my_withdrawal_setup");  
     if(error)throw error;  
-  
     withdrawalSetup=objectOf(data);  
   
     const bankName=withdrawalSetup.bank_name||"No Bank";  
     const accountNumber=withdrawalSetup.account_number||"";  
-    const accountName=withdrawalSetup.account_name||"";  
-    const verified=Boolean(  
-      withdrawalSetup.bank_verified||  
-      withdrawalSetup.is_bank_verified  
-    );  
+    const verified=Boolean(withdrawalSetup.bank_verified||withdrawalSetup.is_bank_verified);  
   
     if(bankName && accountNumber){  
       $("bankDisplaySummary").textContent = `${bankName} (${accountNumber}) - ${verified ? 'Verified' : 'Awaiting Verification'}`;  
     }else{  
       $("bankDisplaySummary").textContent = "No bank account registered. Click to add.";  
     }  
-  
   }catch(err){  
     $("bankDisplaySummary").textContent = "Unable to load bank details.";  
   }  
 }  
+
+function updateWithdrawalBalance() {
+  if (currentProfile) {
+    const balEl = $("walletBalanceVal");
+    const typeEl = $("withdrawAccountType");
+    const dashTypeEl = $("dashboardAccountType");
+    if(balEl) balEl.textContent = naira(currentProfile.available_balance);
+    if(typeEl) typeEl.textContent = currentProfile.account_type || "Flexible";
+    if(dashTypeEl) dashTypeEl.textContent = currentProfile.account_type || "Flexible";
+  }
+}
   
 function renderWithdrawalPresetGrid(){  
   const grid = $("amountGrid");  
@@ -1677,7 +1457,7 @@ function renderWithdrawalPresetGrid(){
   WITHDRAWAL_AMOUNTS.forEach(amount => {  
     const btn = document.createElement("button");  
     btn.type = "button";  
-    btn.style.cssText = "background: white; border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px 8px; text-align: center; cursor: pointer; font-weight: 600; font-size: 14px; color: #1f2937; transition: all 0.2s;";  
+    btn.style.cssText = "background: white; border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px 8px; text-align: center; cursor: pointer; font-weight: 600; font-size: 14px; color: #1f2937;";  
     btn.textContent = naira(amount);  
   
     btn.onclick = () => {  
@@ -1691,7 +1471,6 @@ function renderWithdrawalPresetGrid(){
       btn.style.color = "#137333";  
       selectedWithdrawalAmount = amount;  
     };  
-  
     grid.appendChild(btn);  
   });  
 }  
@@ -1707,7 +1486,6 @@ $("submitWithdrawalBtn").onclick = async () => {
     feedback.textContent = "Please select a withdrawal amount.";  
     return;  
   }  
-  
   if(!/^\d{6}$/.test(pin)){  
     feedback.style.display = "block";  
     feedback.style.background = "#ffeded";  
@@ -1721,25 +1499,13 @@ $("submitWithdrawalBtn").onclick = async () => {
   feedback.style.display = "none";  
   
   try{  
-    const {data:verifyData, error:verifyError} = await supabase.rpc(  
-      "palmgrow_verify_withdrawal_pin",  
-      {p_pin: pin}  
-    );  
-  
+    const {data:verifyData, error:verifyError} = await supabase.rpc("palmgrow_verify_withdrawal_pin", {p_pin: pin});  
     if(verifyError) throw verifyError;  
-    if(verifyData?.success === false){  
-      throw new Error(verifyData.message || "Invalid fund password / PIN.");  
-    }  
+    if(verifyData?.success === false) throw new Error(verifyData.message || "Invalid PIN.");  
   
-    const {data, error} = await supabase.rpc(  
-      "palmgrow_request_withdrawal",  
-      {p_amount: selectedWithdrawalAmount}  
-    );  
-  
+    const {data, error} = await supabase.rpc("palmgrow_request_withdrawal", {p_amount: selectedWithdrawalAmount});  
     if(error) throw error;  
-    if(data?.success === false){  
-      throw new Error(data.message || "Withdrawal request failed.");  
-    }  
+    if(data?.success === false) throw new Error(data.message || "Withdrawal failed.");  
   
     feedback.style.display = "block";  
     feedback.style.background = "#e5f5e9";  
@@ -1751,7 +1517,6 @@ $("submitWithdrawalBtn").onclick = async () => {
     await loadDashboard();  
     await loadWithdrawalSetup();  
     renderWithdrawalPresetGrid();  
-  
   }catch(err){  
     feedback.style.display = "block";  
     feedback.style.background = "#ffeded";  
@@ -1763,91 +1528,58 @@ $("submitWithdrawalBtn").onclick = async () => {
   }  
 };  
   
-/* ADMIN BANK VERIFICATION */  
-  
 $("loadWithdrawalBanksBtn").onclick=loadAdminWithdrawalBanks;  
   
 async function loadAdminWithdrawalBanks(){  
   const body=$("adminBanksBody");  
   body.innerHTML="<tr><td colspan=\"4\">Loading...</td></tr>";  
-  
   try{  
     const {data,error}=await supabase.rpc("palmgrow_admin_get_withdrawal_banks");  
     if(error)throw error;  
-  
-    const records=rowsOf(data).filter(item=>  
-      !item.bank_verified&&!item.is_bank_verified  
-    );  
-  
+    const records=rowsOf(data).filter(item=>!item.bank_verified&&!item.is_bank_verified);  
     if(records.length===0){  
       body.innerHTML="<tr><td colspan=\"4\">No bank accounts awaiting verification.</td></tr>";  
       msg("adminBankMessage","No pending bank verifications.");  
       return;  
     }  
-  
     body.innerHTML="";  
-  
     records.forEach(item=>{  
       const userId=item.user_id||item.id;  
       const tr=document.createElement("tr");  
-  
-      const name=document.createElement("td");  
-      name.textContent=item.full_name||item.name||userId||"Member";  
-  
-      const bank=document.createElement("td");  
-      bank.textContent=item.bank_name||"—";  
-  
-      const account=document.createElement("td");  
-      account.textContent=item.account_number||"—";  
-  
+      const name=document.createElement("td"); name.textContent=item.full_name||item.name||userId||"Member";  
+      const bank=document.createElement("td"); bank.textContent=item.bank_name||"—";  
+      const account=document.createElement("td"); account.textContent=item.account_number||"—";  
       const action=document.createElement("td");  
       const verify=document.createElement("button");  
       verify.textContent="Verify";  
       verify.style.cssText="padding:7px 10px;background:#16a34a;color:white;border:0;border-radius:5px;cursor:pointer";  
       verify.onclick=()=>verifyWithdrawalBank(userId,verify);  
-  
       action.appendChild(verify);  
       tr.append(name,bank,account,action);  
       body.appendChild(tr);  
     });  
-  
-    msg("adminBankMessage",`Loaded ${records.length} account(s) awaiting verification.`);  
-  
+    msg("adminBankMessage",`Loaded ${records.length} account(s).`);  
   }catch(err){  
     body.innerHTML="<tr><td colspan=\"4\">"+escapeHtml(err.message)+"</td></tr>";  
-    msg("adminBankMessage",err.message,"error");  
   }  
 }  
   
 async function verifyWithdrawalBank(userId,button){  
-  if(!confirm("Have you checked the account details and confirmed they are correct?"))return;  
-  
+  if(!confirm("Verify account details?"))return;  
   button.disabled=true;  
   button.textContent="Verifying...";  
-  
   try{  
-    const {data,error}=await supabase.rpc(  
-      "palmgrow_admin_verify_withdrawal_bank",  
-      {p_user_id:userId}  
-    );  
-  
+    const {data,error}=await supabase.rpc("palmgrow_admin_verify_withdrawal_bank",{p_user_id:userId});  
     if(error)throw error;  
-  
-    if(data?.success===false){  
-      throw new Error(data.message||"Bank verification failed.");  
-    }  
-  
-    msg("adminBankMessage","Bank account verified successfully.");  
+    if(data?.success===false)throw new Error(data.message||"Failed.");  
+    msg("adminBankMessage","Bank account verified.");  
     await loadAdminWithdrawalBanks();  
-  
   }catch(err){  
     msg("adminBankMessage",err.message,"error");  
     button.disabled=false;  
     button.textContent="Verify";  
   }  
 }  
-  
-/* ADMIN WITHDRAWAL REQUESTS */  
   
 $("loadAdminWithdrawalsBtn").onclick=loadAdminWithdrawals;  
   
@@ -1861,22 +1593,16 @@ async function loadAdminData(){
   
 async function loadAdminWithdrawals(){  
   const body=$("adminWithdrawalsBody");  
-  body.innerHTML="<tr><td colspan=\"7\">Loading withdrawal requests...</td></tr>";  
-  
+  body.innerHTML="<tr><td colspan=\"7\">Loading...</td></tr>";  
   try{  
     const {data,error}=await supabase.rpc("palmgrow_admin_get_withdrawals");  
     if(error)throw error;  
-  
     const records=rowsOf(data);  
-  
     if(records.length===0){  
-      body.innerHTML="<tr><td colspan=\"7\">No withdrawal requests found.</td></tr>";  
-      msg("adminWithdrawalMessage","No withdrawal requests found.");  
+      body.innerHTML="<tr><td colspan=\"7\">No requests found.</td></tr>";  
       return;  
     }  
-  
     body.innerHTML="";  
-  
     records.forEach(item=>{  
       const id=item.id||item.withdrawal_id;  
       const amount=Number(item.amount??item.gross_amount??0);  
@@ -1885,29 +1611,12 @@ async function loadAdminWithdrawals(){
       const net=Number(item.net_amount??(amount-handling-transfer));  
   
       const tr=document.createElement("tr");  
-  
-      const member=document.createElement("td");  
-      member.textContent=  
-        (item.full_name||item.name||"Member")+  
-        "\n"+(item.account_type||"");  
-  
-      const bank=document.createElement("td");  
-      bank.textContent=  
-        (item.bank_name||"No bank")+  
-        "\n"+(item.account_number||"")+  
-        "\n"+(item.account_name||"");  
-  
-      const gross=document.createElement("td");  
-      gross.textContent=naira(amount);  
-  
-      const fees=document.createElement("td");  
-      fees.textContent=naira(handling+transfer);  
-  
-      const netCell=document.createElement("td");  
-      netCell.textContent=naira(net);  
-  
-      const status=document.createElement("td");  
-      status.textContent=displayStatus(item.status);  
+      const member=document.createElement("td"); member.textContent=(item.full_name||item.name||"Member")+"\n"+(item.account_type||"");  
+      const bank=document.createElement("td"); bank.textContent=(item.bank_name||"No bank")+"\n"+(item.account_number||"");  
+      const gross=document.createElement("td"); gross.textContent=naira(amount);  
+      const fees=document.createElement("td"); fees.textContent=naira(handling+transfer);  
+      const netCell=document.createElement("td"); netCell.textContent=naira(net);  
+      const status=document.createElement("td"); status.textContent=displayStatus(item.status);  
   
       const action=document.createElement("td");  
       const actions=document.createElement("div");  
@@ -1916,85 +1625,40 @@ async function loadAdminWithdrawals(){
       if(item.status==="pending"){  
         const processing=document.createElement("button");  
         processing.textContent="Bank Processing";  
-        processing.style.background="#e5f0ff";  
         processing.onclick=()=>processWithdrawal(id,"bank_processing");  
         actions.appendChild(processing);  
       }  
-  
       if(item.status==="pending"||item.status==="bank_processing"){  
         const paid=document.createElement("button");  
         paid.textContent="Mark Paid";  
-        paid.style.background="#dcfce7";  
-        paid.onclick=()=>{  
-          const ok=confirm(  
-            "Have you actually transferred "+naira(net)+  
-            " to the member's bank account? Only continue after the transfer is complete."  
-          );  
-          if(ok)processWithdrawal(id,"paid");  
-        };  
+        paid.onclick=()=> { if(confirm("Confirm bank transfer of "+naira(net)+"?")) processWithdrawal(id,"paid"); };  
         actions.appendChild(paid);  
   
         const reject=document.createElement("button");  
         reject.textContent="Reject";  
-        reject.style.background="#fee2e2";  
-        reject.onclick=()=>{  
-          if(confirm("Reject this withdrawal? The backend will return the gross amount to the member's wallet.")){  
-            processWithdrawal(id,"rejected");  
-          }  
-        };  
+        reject.onclick=()=> { if(confirm("Reject withdrawal?")) processWithdrawal(id,"rejected"); };  
         actions.appendChild(reject);  
       }  
-  
-      if(!actions.children.length){  
-        actions.textContent="No action";  
-      }  
-  
       action.appendChild(actions);  
       tr.append(member,bank,gross,fees,netCell,status,action);  
       body.appendChild(tr);  
     });  
-  
-    msg("adminWithdrawalMessage",`Loaded ${records.length} withdrawal request(s).`);  
-  
   }catch(err){  
     body.innerHTML="<tr><td colspan=\"7\">"+escapeHtml(err.message)+"</td></tr>";  
-    msg("adminWithdrawalMessage",err.message,"error");  
   }  
 }  
   
 async function processWithdrawal(withdrawalId,action){  
-  if(!withdrawalId){  
-    msg("adminWithdrawalMessage","Withdrawal ID is missing.","error");  
-    return;  
-  }  
-  
   const note=prompt("Enter an admin note (optional):")||"";  
-  
   try{  
-    const {data,error}=await supabase.rpc(  
-      "palmgrow_admin_process_withdrawal",  
-      {  
-        p_withdrawal_id:withdrawalId,  
-        p_action:action,  
-        p_note:note  
-      }  
-    );  
-  
+    const {data,error}=await supabase.rpc("palmgrow_admin_process_withdrawal",{p_withdrawal_id:withdrawalId,p_action:action,p_note:note});  
     if(error)throw error;  
-  
-    if(data?.success===false){  
-      throw new Error(data.message||"Withdrawal update failed.");  
-    }  
-  
-    msg("adminWithdrawalMessage",data?.message||"Withdrawal status updated.");  
+    if(data?.success===false)throw new Error(data.message||"Failed.");  
     await loadAdminWithdrawals();  
-  
   }catch(err){  
-    msg("adminWithdrawalMessage",err.message||"Unable to process withdrawal.","error");  
+    msg("adminWithdrawalMessage",err.message,"error");  
   }  
 }  
-  
-/* SESSION INITIALIZATION */  
   
 supabase.auth.onAuthStateChange((_event,session)=>{  
   if(session){  
@@ -2009,10 +1673,8 @@ supabase.auth.onAuthStateChange((_event,session)=>{
 });  
   
 updateAuthUI();  
-  
 const {data:{session}}=await supabase.auth.getSession();  
 if(session)await loadDashboard();  
-  
-</script>  </body>  
-  </html>
-
+</script>  
+</body>  
+</html>
