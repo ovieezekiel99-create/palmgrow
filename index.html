@@ -106,6 +106,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
   cursor: not-allowed;
 }
 
+/* ADMIN PANEL TABS & CARDS */
+.admin-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+}
+.admin-tab-btn {
+  padding: 10px 16px;
+  background: #e8f0ec;
+  color: var(--green-dark);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.admin-tab-btn.active {
+  background: var(--green);
+  color: white;
+  border-color: var(--green);
+}
+.admin-panel-section {
+  display: none;
+}
+.admin-panel-section.active {
+  display: block;
+}
+
 .main{margin-left:0;min-height:100vh;padding-bottom:90px}  
 .topbar{background:#fff;border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}  
 .menu-btn{background:none;border:0;font-size:22px;cursor:pointer;color:var(--green-dark);padding:4px 8px}  
@@ -469,54 +501,77 @@ th{background:#f0f5f2;font-weight:600}
         </div>  
       </div>  
 
-      <!-- ADMIN PAGE -->
+      <!-- ADMIN PAGE (REORGANIZED WITH TABS) -->
       <div id="page-admin" class="hidden">  
         <div class="section">  
-          <h3>🛡️ Admin Panel – Employee Account Management</h3>  
-          <p style="font-size:13px;color:var(--muted);margin-bottom:12px">View, manage, restrict, disable, or delete employee accounts that violate platform policies.</p>  
-          <button id="loadEmployeesBtn" class="primary-btn">Load Employee Accounts</button>  
-          <div id="adminEmployeeMessage" class="status hidden"></div>  
-          <div style="overflow-x:auto;margin-top:14px">  
-            <table>  
-              <thead><tr><th>Employee</th><th>Status / Level</th><th>Balance</th><th>Actions</th></tr></thead>  
-              <tbody id="adminEmployeesBody"><tr><td colspan="4">Click "Load Employee Accounts" to view members.</td></tr></tbody>  
-            </table>  
-          </div>  
-        </div>  
+          <h3>🛡️ Admin Control Center</h3>  
+          <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Manage platform operations, employee accounts, deposits, and payouts efficiently.</p>  
+          
+          <!-- Admin Navigation Sub-Tabs -->
+          <div class="admin-tabs">
+            <button class="admin-tab-btn active" data-admin-tab="deposits">📥 Review Deposits</button>
+            <button class="admin-tab-btn" data-admin-tab="employees">👥 Employees</button>
+            <button class="admin-tab-btn" data-admin-tab="banks">🏦 Bank Verifications</button>
+            <button class="admin-tab-btn" data-admin-tab="withdrawals">💸 Withdrawals</button>
+          </div>
 
-        <div class="section">  
-          <h3>🛡️ Admin Panel – Review Deposits</h3>  
-          <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Check your actual bank records before confirming any payment.</p>  
-          <button id="loadDepositsBtn" style="padding:10px 16px;background:var(--green);color:white;border:0;border-radius:6px;font-weight:600;cursor:pointer">Load Pending Deposits</button>  
-          <div id="adminMessage" class="status hidden"></div>  
-          <div style="overflow-x:auto;margin-top:14px">  
-            <table>
-              <thead><tr><th>Depositor Name</th><th>Amount</th><th>Reference</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
-              <tbody id="adminDepositsBody"><tr><td colspan="6">Click Load Pending Deposits</td></tr></tbody>
-            </table>
-          </div>  
-        </div>  
+          <!-- TAB 1: REVIEW DEPOSITS -->
+          <div class="admin-panel-section active" id="admin-tab-deposits">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <h4 style="font-size:15px; color:var(--green-dark);">Pending Deposit Requests</h4>
+              <button id="loadDepositsBtn" style="padding:8px 14px; background:var(--green); color:white; border:0; border-radius:6px; font-weight:600; cursor:pointer; font-size:12px;">Refresh List</button>
+            </div>
+            <div id="adminMessage" class="status hidden"></div>  
+            <div style="overflow-x:auto;">  
+              <table>
+                <thead><tr><th>Depositor Name</th><th>Amount</th><th>Reference</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+                <tbody id="adminDepositsBody"><tr><td colspan="6">Click "Refresh List" to load pending deposits.</td></tr></tbody>
+              </table>
+            </div>
+          </div>
 
-        <div class="section">  
-          <h3>🏦 Bank Account Verification</h3>  
-          <button id="loadWithdrawalBanksBtn" class="primary-btn">Load Bank Accounts Awaiting Verification</button>  
-          <div id="adminBankMessage" class="status hidden"></div>  
-          <div style="overflow-x:auto;margin-top:12px">  
-            <table><thead><tr><th>Member</th><th>Bank</th><th>Account</th><th>Action</th></tr></thead><tbody id="adminBanksBody"><tr><td colspan="4">Click the button to load accounts.</td></tr></tbody></table>  
-          </div>  
-        </div>  
+          <!-- TAB 2: EMPLOYEE ACCOUNTS -->
+          <div class="admin-panel-section" id="admin-tab-employees">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <h4 style="font-size:15px; color:var(--green-dark);">Employee Management</h4>
+              <button id="loadEmployeesBtn" class="admin-tab-btn" style="margin:0; padding:8px 14px; font-size:12px;">Load Employees</button>
+            </div>
+            <div id="adminEmployeeMessage" class="status hidden"></div>  
+            <div style="overflow-x:auto;">  
+              <table>  
+                <thead><tr><th>Employee</th><th>Status / Level</th><th>Balance</th><th>Actions</th></tr></thead>  
+                <tbody id="adminEmployeesBody"><tr><td colspan="4">Click "Load Employees" to view members.</td></tr></tbody>  
+              </table>  
+            </div>
+          </div>
 
-        <div class="section">  
-          <h3>💸 Withdrawal Requests</h3>  
-          <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Confirm that the actual bank transfer has been made before marking a request as paid.</p>  
-          <button id="loadAdminWithdrawalsBtn" class="primary-btn">Load Withdrawal Requests</button>  
-          <div id="adminWithdrawalMessage" class="status hidden"></div>  
-          <div style="overflow-x:auto;margin-top:12px">  
-            <table>  
-              <thead><tr><th>Member</th><th>Bank Details</th><th>Gross</th><th>Fees</th><th>Net Payable</th><th>Status</th><th>Action</th></tr></thead>  
-              <tbody id="adminWithdrawalsBody"><tr><td colspan="7">Click the button to load requests.</td></tr></tbody>  
-            </table>  
-          </div>  
+          <!-- TAB 3: BANK VERIFICATIONS -->
+          <div class="admin-panel-section" id="admin-tab-banks">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <h4 style="font-size:15px; color:var(--green-dark);">Bank Accounts Awaiting Verification</h4>
+              <button id="loadWithdrawalBanksBtn" class="admin-tab-btn" style="margin:0; padding:8px 14px; font-size:12px;">Load Accounts</button>
+            </div>
+            <div id="adminBankMessage" class="status hidden"></div>  
+            <div style="overflow-x:auto;">  
+              <table><thead><tr><th>Member</th><th>Bank</th><th>Account</th><th>Action</th></tr></thead><tbody id="adminBanksBody"><tr><td colspan="4">Click "Load Accounts" to check.</td></tr></tbody></table>  
+            </div>
+          </div>
+
+          <!-- TAB 4: WITHDRAWAL REQUESTS -->
+          <div class="admin-panel-section" id="admin-tab-withdrawals">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <h4 style="font-size:15px; color:var(--green-dark);">Withdrawal Requests</h4>
+              <button id="loadAdminWithdrawalsBtn" class="admin-tab-btn" style="margin:0; padding:8px 14px; font-size:12px;">Load Requests</button>
+            </div>
+            <div id="adminWithdrawalMessage" class="status hidden"></div>  
+            <div style="overflow-x:auto;">  
+              <table>  
+                <thead><tr><th>Member</th><th>Bank Details</th><th>Gross</th><th>Fees</th><th>Net Payable</th><th>Status</th><th>Action</th></tr></thead>  
+                <tbody id="adminWithdrawalsBody"><tr><td colspan="7">Click "Load Requests" to view.</td></tr></tbody>  
+              </table>  
+            </div>
+          </div>
+
         </div>  
       </div>  
 
@@ -648,6 +703,24 @@ document.addEventListener("DOMContentLoaded", () => {
     select.onchange = updateReferralEstimator;
     updateReferralEstimator();
   }
+
+  // Admin Panel Tab Switcher Logic
+  document.querySelectorAll(".admin-tab-btn[data-admin-tab]").forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll(".admin-tab-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".admin-panel-section").forEach(s => s.classList.remove("active"));
+
+      btn.classList.add("active");
+      const targetSection = document.getElementById("admin-tab-" + btn.dataset.adminTab);
+      if(targetSection) {
+        targetSection.classList.add("active");
+        if(btn.dataset.adminTab === "deposits") $("loadDepositsBtn").click();
+        if(btn.dataset.adminTab === "employees") loadAdminEmployees();
+        if(btn.dataset.adminTab === "banks") loadAdminWithdrawalBanks();
+        if(btn.dataset.adminTab === "withdrawals") loadAdminWithdrawals();
+      }
+    };
+  });
 });
   
 const $ = id => document.getElementById(id);  
@@ -1353,10 +1426,12 @@ async function reviewDeposit(id,decision,accountType){
   }
 }
   
-$("loadEmployeesBtn").onclick = loadAdminEmployees;  
+const loadEmployeesBtnEl = $("loadEmployeesBtn");
+if(loadEmployeesBtnEl) loadEmployeesBtnEl.onclick = loadAdminEmployees;  
   
 async function loadAdminEmployees(){  
   const tbody = $("adminEmployeesBody");  
+  if(!tbody) return;
   tbody.innerHTML = "<tr><td colspan=\"4\">Loading employee accounts...</td></tr>";  
   msg("adminEmployeeMessage", "Loading employees...");  
   
@@ -1562,10 +1637,12 @@ $("submitWithdrawalBtn").onclick = async () => {
   }  
 };  
   
-$("loadWithdrawalBanksBtn").onclick=loadAdminWithdrawalBanks;  
+const loadWithdrawalBanksBtnEl = $("loadWithdrawalBanksBtn");
+if(loadWithdrawalBanksBtnEl) loadWithdrawalBanksBtnEl.onclick = loadAdminWithdrawalBanks;  
   
 async function loadAdminWithdrawalBanks(){  
   const body=$("adminBanksBody");  
+  if(!body) return;
   body.innerHTML="<tr><td colspan=\"4\">Loading...</td></tr>";  
   try{  
     const {data,error}=await supabase.rpc("palmgrow_admin_get_withdrawal_banks");  
@@ -1615,7 +1692,8 @@ async function verifyWithdrawalBank(userId,button){
   }  
 }  
   
-$("loadAdminWithdrawalsBtn").onclick=loadAdminWithdrawals;  
+const loadAdminWithdrawalsBtnEl = $("loadAdminWithdrawalsBtn");
+if(loadAdminWithdrawalsBtnEl) loadAdminWithdrawalsBtnEl.onclick = loadAdminWithdrawals;  
   
 async function loadAdminData(){  
   if(currentProfile?.role==="admin"){  
@@ -1627,6 +1705,7 @@ async function loadAdminData(){
   
 async function loadAdminWithdrawals(){  
   const body=$("adminWithdrawalsBody");  
+  if(!body) return;
   body.innerHTML="<tr><td colspan=\"7\">Loading...</td></tr>";  
   try{  
     const {data,error}=await supabase.rpc("palmgrow_admin_get_withdrawals");  
