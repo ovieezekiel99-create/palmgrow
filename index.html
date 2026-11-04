@@ -1628,25 +1628,117 @@ async function loadWithdrawalPage(){
   renderWithdrawalPresetGrid();  
 }  
   
-async function loadWithdrawalSetup(){  
-  try{  
-    const {data,error}=await supabase.rpc("palmgrow_my_withdrawal_setup");  
-    if(error)throw error;  
-    withdrawalSetup=objectOf(data);  
-  
-    const bankName=withdrawalSetup.bank_name||"No Bank";  
-    const accountNumber=withdrawalSetup.account_number||"";  
-    const verified=Boolean(withdrawalSetup.bank_verified||withdrawalSetup.is_bank_verified);  
-  
-    if(bankName && accountNumber){  
-      $("bankDisplaySummary").textContent = `${bankName} (${accountNumber}) - ${verified ? 'Verified' : 'Awaiting Verification'}`;  
-    }else{  
-      $("bankDisplaySummary").textContent = "No bank account registered. Click to add.";  
-    }  
-  }catch(err){  
-    $("bankDisplaySummary").textContent = "Unable to load bank details.";  
-  }  
-}  
+async function loadWithdrawalSetup(){
+  try{
+    const {data,error}=await supabase.rpc("palmgrow_my_withdrawal_setup");
+    if(error)throw error;
+
+    withdrawalSetup=objectOf(data);
+
+    const bankName=withdrawalSetup.bank_name||"No Bank";
+    const accountNumber=withdrawalSetup.account_number||"";
+    const verified=Boolean(withdrawalSetup.bank_verified||withdrawalSetup.is_bank_verified);
+
+    if(bankName && accountNumber){
+      $("bankDisplaySummary").textContent = `${bankName} (${accountNumber}) - ${verified ? 'Verified' : 'Awaiting Verification'}`;
+    }else{
+      $("bankDisplaySummary").textContent = "No bank account registered. Click to add.";
+    }
+  }catch(err){
+    $("bankDisplaySummary").textContent = "Unable to load bank details.";
+  }
+}
+
+// Open bank registration modal
+const bankDisplayBtn = $("selectAccountBtn");
+
+if (bankDisplayBtn) {
+  bankDisplayBtn.addEventListener("click", () => {
+    if (!currentUser) {
+      alert("Please sign in first.");
+      return;
+    }
+
+    const hasBank = Boolean(
+      withdrawalSetup?.bank_name &&
+      withdrawalSetup?.account_number
+    );
+
+    if (hasBank) {
+      alert("A withdrawal bank account is already registered. Contact admin for assistance.");
+      return;
+    }
+
+    $("bankForm").reset();
+    $("bankFormMessage").textContent = "";
+    $("bankFormMessage").className = "hidden";
+    $("bankModal").classList.remove("hidden");
+  });
+}
+
+// Close bank registration modal
+$("closeBankModal").addEventListener("click", () => {
+  $("bankModal").classList.add("hidden");
+});
+
+// Register withdrawal bank account
+$("bankForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const bankName = $("bankNameInput").value;
+  const accountNumber = $("bankAccountNumberInput").value.trim();
+  const message = $("bankFormMessage");
+  const saveButton = $("saveBankBtn");
+
+  if (!bankName) {
+    message.textContent = "Please select your bank.";
+    message.className = "status error";
+    return;
+  }
+
+  if (!/^\d{10}$/.test(accountNumber)) {
+    message.textContent = "Account number must contain exactly 10 digits.";
+    message.className = "status error";
+    return;
+  }
+
+  saveButton.disabled = true;
+  saveButton.textContent = "Registering...";
+
+  try {
+    const { data, error } = await supabase.rpc(
+      "palmgrow_register_withdrawal_bank",
+      {
+        p_bank_name: bankName,
+        p_account_number: accountNumber
+      }
+    );
+
+    if (error) throw error;
+
+    if (data?.success === false) {
+      throw new Error(data.message || "Bank registration failed.");
+    }
+
+    message.textContent =
+      data?.message || "Bank details registered. Admin verification is required.";
+    message.className = "status success";
+
+    await loadWithdrawalSetup();
+
+    setTimeout(() => {
+      $("bankModal").classList.add("hidden");
+    }, 1500);
+
+  } catch (err) {
+    message.textContent = err.message || "Bank registration failed.";
+    message.className = "status error";
+
+  } finally {
+    saveButton.disabled = false;
+    saveButton.textContent = "Register Bank Account";
+  }
+});
 
 function updateWithdrawalBalance() {
   if (currentProfile) {
