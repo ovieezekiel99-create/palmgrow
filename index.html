@@ -1830,7 +1830,7 @@ async function verifyEmployeeSession(){
   const employeeStatus = String(profile.employee_status || "")
     .trim().toLowerCase();
 
-  if(accountType === "employee" && employeeStatus !== "active"){
+  if(accountType === "employee" && employeeStatus === "disabled"){
 
     $("app").style.display="none";
     $("authScreen").style.display="flex";
