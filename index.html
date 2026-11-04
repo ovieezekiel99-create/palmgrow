@@ -1238,55 +1238,74 @@ function lagosDate(){
   return `${values.year}-${values.month}-${values.day}`;  
 }  
   
-async function loadEmployeeTasks(){  
-  if(!currentUser)return;  
-  const list=$("employeeTaskList");  
-  list.innerHTML="<p>Loading your assigned tasks...</p>";  
-  $("taskProgressDisplay").textContent="Loading task progress...";  
-  
-  try{  
-    const {data:setup,error:setupError}=await supabase.rpc("ensure_daily_employee_tasks");  
-    if(setupError)throw setupError;  
-  
-    const taskDate=setup?.task_date||lagosDate();  
-    const {data:tasks,error}=await supabase  
-      .from("agri_task_assignments")  
-      .select("id,task_title,task_description,task_date,status,task_sequence")  
-      .eq("employee_id",currentUser.id)  
-      .eq("task_date",taskDate)  
-      .order("task_sequence",{ascending:true});  
-  
-    if(error)throw error;  
-  
-    const completed=(tasks||[]).filter(t=>t.status==="completed").length;  
-    const total=(tasks||[]).filter(t=>t.status!=="cancelled").length;  
-    $("taskProgressDisplay").textContent=`${completed} of ${total} tasks completed`;  
-  
-    if(!tasks||tasks.length===0){  
-      list.innerHTML="<div class=\"notice\">No tasks are currently assigned.</div>";  
-    }else{  
-      list.innerHTML="";  
-      tasks.forEach(task=>{  
-        if(task.status==="cancelled")return;  
-        const card=document.createElement("div");  
-        card.className="task-card"+(task.status==="completed"?" task-done":"");  
-        const title=document.createElement("h4");  
-        title.textContent=`Task ${task.task_sequence}: ${task.task_title||"Agricultural task"}`;  
-        const description=document.createElement("p");  
-        description.textContent=task.task_description||"Complete this assigned agricultural task.";  
-        const button=document.createElement("button");  
-        button.textContent=task.status==="completed"?"✓ Completed":"Complete Task";  
-        button.disabled=task.status!=="pending";  
-        button.addEventListener("click",()=>completeEmployeeTask(task.id,button));  
-        card.append(title,description,button);  
-        list.appendChild(card);  
-      });  
-    }  
-    await loadEmployeePayroll();  
-  }catch(err){  
-    list.textContent="Unable to load tasks: "+err.message;  
-  }  
-}  
+async function loadEmployeeTasks(){
+  if(!currentUser)return;
+
+  const list=$("employeeTaskList");
+  list.innerHTML="<p>Loading your assigned tasks...</p>";
+  $("taskProgressDisplay").textContent="Loading task progress...";
+
+  try{
+    const {data:setup,error:setupError}=await supabase.rpc("ensure_daily_employee_tasks");
+    if(setupError)throw setupError;
+
+    const taskDate=setup?.task_date||lagosDate();
+
+    const {data:tasks,error}=await supabase
+      .from("agri_task_assignments")
+      .select("id,task_title,task_description,task_date,status,task_sequence,task_payment")
+      .eq("employee_id",currentUser.id)
+      .eq("task_date",taskDate)
+      .order("task_sequence",{ascending:true});
+
+    if(error)throw error;
+
+    const activeTasks=(tasks||[]).filter(t=>t.status!=="cancelled");
+
+    const completed=activeTasks.filter(t=>t.status==="completed").length;
+    const total=activeTasks.length;
+
+    const dailyTotal=activeTasks.reduce(
+      (sum,t)=>sum+Number(t.task_payment||0),0
+    );
+
+    $("dailyRateDisplay").textContent=naira(dailyTotal)+" / day";
+    $("taskProgressDisplay").textContent=`${completed} of ${total} tasks completed`;
+
+    if(!tasks||tasks.length===0){
+      list.innerHTML="<div class=\"notice\">No tasks are currently assigned.</div>";
+    }else{
+      list.innerHTML="";
+
+      tasks.forEach(task=>{
+        if(task.status==="cancelled")return;
+
+        const card=document.createElement("div");
+        card.className="task-card"+(task.status==="completed"?" task-done":"");
+
+        const title=document.createElement("h4");
+        title.textContent=`Task ${task.task_sequence}: ${task.task_title||"Agricultural task"}`;
+
+        const description=document.createElement("p");
+        description.textContent=task.task_description||"Complete this assigned agricultural task.";
+
+        const button=document.createElement("button");
+        button.textContent=task.status==="completed"?"✓ Completed":"Complete Task";
+        button.disabled=task.status!=="pending";
+        button.addEventListener("click",()=>completeEmployeeTask(task.id,button));
+
+        card.append(title,description,button);
+        list.appendChild(card);
+      });
+    }
+
+    await loadEmployeePayroll();
+
+  }catch(err){
+    list.textContent="Unable to load tasks: "+err.message;
+  }
+}
+
   
 async function completeEmployeeTask(taskId,button){  
   button.disabled=true;  
