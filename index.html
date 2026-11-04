@@ -439,6 +439,34 @@ th{background:#f0f5f2;font-weight:600}
                         <span style="color: #9ca3af; font-size: 16px;">&rsaquo;</span>  
                     </div>  
                 </div>  
+              <!-- Withdrawal PIN Creation Section -->
+<div id="createWithdrawalPinSection" style="display:none; margin-bottom:20px; padding:16px; background:#f0f8f3; border:1px solid #c8e6d0; border-radius:12px;">
+
+  <h3 style="color:#0d382b; margin-top:0;">Create Withdrawal PIN</h3>
+
+  <p style="font-size:13px; color:#555;">
+    Create a six-digit PIN to secure your withdrawals.
+  </p>
+
+  <label>Create PIN</label>
+  <div style="display:flex; gap:8px; margin-bottom:12px;">
+    <input id="newWithdrawalPin" type="password" inputmode="numeric" maxlength="6" placeholder="Enter six-digit PIN" style="flex:1; padding:12px; border:1px solid #ccc; border-radius:8px;">
+    <button type="button" id="toggleNewPin">Show</button>
+  </div>
+
+  <label>Confirm PIN</label>
+  <div style="display:flex; gap:8px; margin-bottom:12px;">
+    <input id="confirmWithdrawalPin" type="password" inputmode="numeric" maxlength="6" placeholder="Confirm six-digit PIN" style="flex:1; padding:12px; border:1px solid #ccc; border-radius:8px;">
+    <button type="button" id="toggleConfirmPin">Show</button>
+  </div>
+
+  <div id="createPinMessage" class="status hidden"></div>
+
+  <button type="button" id="createWithdrawalPinBtn">
+    Create Withdrawal PIN
+  </button>
+
+</div>
 
                 <!-- 2. Fund Password Section -->  
                 <div style="margin-bottom: 20px;">  
