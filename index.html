@@ -1306,16 +1306,128 @@ async function loadEmployeePositionPlans(){
 
         button.addEventListener("click", () => {
           activateEmployeePosition(plan.level_code, button);
+async function loadEmployeePositionPlans(){
+  const host = $("employeePositionPlans");
+  if(!currentUser) return;
+
+  host.innerHTML = "<p>Loading employee positions...</p>";
+
+  try{
+    const [
+      {data:plans, error:plansError},
+      {data:currentLevel, error:levelError}
+    ] = await Promise.all([
+      supabase
+        .from("employee_level_plans")
+        .select("level_code,deposit_amount,daily_order_limit,unit_price,daily_income_projection,monthly_income_projection,five_hundred_day_projection")
+        .eq("is_active",true)
+        .order("deposit_amount",{ascending:true}),
+
+      supabase.rpc("palmgrow_my_current_employee_level")
+    ]);
+
+    if(plansError) throw plansError;
+    if(levelError) throw levelError;
+
+    if(!plans || plans.length === 0){
+      host.textContent = "No active employee levels are available.";
+      return;
+    }
+
+    const currentLevelCode = currentLevel || "M0";
+    const currentLevelNumber = Number(
+      currentLevelCode.substring(1)
+    );
+
+    host.innerHTML = "";
+
+    // Display current employee level
+    const currentLevelBox = document.createElement("div");
+    currentLevelBox.style.cssText = `
+      background:#e8f5ed;
+      border:1px solid #b7d9c2;
+      border-radius:10px;
+      padding:15px;
+      margin-bottom:18px;
+      color:#0b3d2e;
+    `;
+
+    const levelHeading = document.createElement("div");
+    levelHeading.textContent = "YOUR CURRENT EMPLOYEE LEVEL";
+    levelHeading.style.cssText = `
+      font-size:12px;
+      font-weight:600;
+      margin-bottom:6px;
+    `;
+
+    const levelValue = document.createElement("strong");
+    levelValue.textContent = currentLevelCode;
+    levelValue.style.cssText = `
+      font-size:24px;
+      font-weight:800;
+    `;
+
+    const levelStatus = document.createElement("div");
+    levelStatus.textContent = currentLevelNumber > 0
+      ? "Your employee position is active."
+      : "You have not joined an employee position yet.";
+
+    levelStatus.style.cssText = `
+      font-size:12px;
+      margin-top:5px;
+    `;
+
+    currentLevelBox.append(
+      levelHeading,
+      levelValue,
+      levelStatus
+    );
+
+    host.appendChild(currentLevelBox);
+
+    // Display all available employee levels
+    plans.forEach(plan => {
+      const card = document.createElement("div");
+      card.className = "position-plan";
+
+      const planLevelNumber = Number(
+        plan.level_code.substring(1)
+      );
+
+      const leftDiv = document.createElement("div");
+      leftDiv.className = "position-left";
+
+      const title = document.createElement("div");
+      title.className = "level-badge";
+      title.textContent = plan.level_code;
+
+      const details = document.createElement("div");
+      details.className = "position-details";
+
+      details.innerHTML = `
+        <div>Deposit: <strong>${naira(plan.deposit_amount)}</strong></div>
+        <div>Daily Orders: <strong>${plan.daily_order_limit ?? 0}</strong></div>
+        <div>Unit Price: <strong>${naira(plan.unit_price)}</strong></div>
+        <div>Daily Income: <strong style="color:var(--green)">${naira(plan.daily_income_projection)}</strong></div>
+      `;
+
+      leftDiv.append(title, details);
+
+      const button = document.createElement("button");
+      button.className = "join-button";
+
+      if(currentLevelNumber === 0){
+        button.textContent = "Join Now";
+
+        button.addEventListener("click", () => {
+          activateEmployeePosition(plan.level_code, button);
         });
 
-      }else if(plan.level_code === currentPosition.level_code){
+      }else if(planLevelNumber === currentLevelNumber){
         button.textContent = "Joined";
         button.disabled = true;
 
-      }else if(
-        currentLevelNumber > 0 &&
-        planLevelNumber > currentLevelNumber
-      ){
+      }else if(planLevelNumber > currentLevelNumber){
         button.textContent = "Upgrade";
 
         button.addEventListener("click", () => {
@@ -1332,7 +1444,8 @@ async function loadEmployeePositionPlans(){
     });
 
   }catch(err){
-    host.textContent = "Unable to load position plans: " + err.message;
+    host.textContent =
+      "Unable to load position plans: " + err.message;
   }
 }
   
