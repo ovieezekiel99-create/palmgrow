@@ -1227,85 +1227,8 @@ $("employeePositionNav").style.display =
   if(document.querySelector("#app").style.display !== "none" && pageHistory.length === 1){
     showPage("dashboard", false);
   }
-}
-  
-async function loadEmployeePositionPlans(){
-  const host = $("employeePositionPlans");
-  if(!currentUser) return;
-
-  host.innerHTML = "<p>Loading employee positions...</p>";
-
-  try{
-    const [
-      {data:plans, error:plansError},
-      {data:positions, error:positionsError}
-    ] = await Promise.all([
-      supabase
-        .from("employee_level_plans")
-        .select("level_code,deposit_amount,daily_order_limit,unit_price,daily_income_projection,monthly_income_projection,five_hundred_day_projection")
-        .eq("is_active",true)
-        .order("deposit_amount",{ascending:true}),
-
-      supabase
-        .from("employee_positions")
-        .select("level_code,position_status")
-        .eq("employee_id",currentUser.id)
-    ]);
-
-    if(plansError) throw plansError;
-    if(positionsError) throw positionsError;
-
-    if(!plans || plans.length === 0){
-      host.textContent = "No active employee levels are available.";
-      return;
-    }
-
-    // Find the employee's current active position
-    const currentPosition = (positions || []).find(
-      p => p.position_status === "active"
-    );
-
-    const currentLevelNumber = currentPosition
-      ? Number(currentPosition.level_code.substring(1))
-      : 0;
-
-    host.innerHTML = "";
-
-    plans.forEach(plan => {
-      const card = document.createElement("div");
-      card.className = "position-plan";
-
-      const planLevelNumber = Number(plan.level_code.substring(1));
-
-      // Left side: Badge and plan details
-      const leftDiv = document.createElement("div");
-      leftDiv.className = "position-left";
-
-      const title = document.createElement("div");
-      title.className = "level-badge";
-      title.textContent = plan.level_code;
-
-      const details = document.createElement("div");
-      details.className = "position-details";
-
-      details.innerHTML = `
-        <div>Deposit: <strong>${naira(plan.deposit_amount)}</strong></div>
-        <div>Daily Orders: <strong>${plan.daily_order_limit ?? 0}</strong></div>
-        <div>Unit Price: <strong>${naira(plan.unit_price)}</strong></div>
-        <div>Daily Income: <strong style="color:var(--green)">${naira(plan.daily_income_projection)}</strong></div>
-      `;
-
-      leftDiv.append(title, details);
-
-      // Right side: Correct action button
-      const button = document.createElement("button");
-      button.className = "join-button";
-
-      if(!currentPosition){
-        button.textContent = "Join Now";
-
-        button.addEventListener("click", () => {
-          activateEmployeePosition(plan.level_code, button);
+}  
+      
 async function loadEmployeePositionPlans(){
   const host = $("employeePositionPlans");
   if(!currentUser) return;
