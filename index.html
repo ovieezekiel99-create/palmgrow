@@ -1327,7 +1327,63 @@ async function activateEmployeePosition(levelCode,button){
     button.textContent="Join Now";  
   }  
 }  
-  
+  // Upgrade an existing employee position
+async function upgradeEmployeePosition(levelCode, button){
+  const confirmed = confirm(
+    "Upgrade to " + levelCode +
+    "? PalmGrow will check your wallet balance, deduct the new position deposit and refund your previous position deposit."
+  );
+
+  if(!confirmed) return;
+
+  const originalText = button.textContent;
+  const originalDisabled = button.disabled;
+
+  button.disabled = true;
+  button.textContent = "⏳ Processing upgrade...";
+
+  try{
+    const idempotencyKey = "upgrade-" + crypto.randomUUID();
+
+    const {data, error} = await supabase.rpc(
+      "upgrade_employee_position",
+      {
+        p_new_level_code: levelCode,
+        p_idempotency_key: idempotencyKey
+      }
+    );
+
+    if(error) throw error;
+
+    if(!data?.success){
+      msg(
+        "positionMessage",
+        data?.message || "Position upgrade was not completed.",
+        "error"
+      );
+      return;
+    }
+
+    msg(
+      "positionMessage",
+      data.message || ("Successfully upgraded to " + levelCode + ".")
+    );
+
+    await loadDashboard();
+    await loadEmployeePositionPlans();
+
+  }catch(err){
+    msg(
+      "positionMessage",
+      err.message || "Position upgrade was not completed.",
+      "error"
+    );
+
+  }finally{
+    button.textContent = originalText;
+    button.disabled = originalDisabled;
+  }
+  }
 function lagosDate(){  
   const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Africa/Lagos",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());  
   const values={};  
