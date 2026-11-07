@@ -958,58 +958,6 @@ function displayStatus(status){
   return String(status||"pending").replaceAll("_"," ").toUpperCase();  
 }  
   
-function updateAuthUI(){  
-  $("authSub").textContent=loginMode  
-    ?"Login to your PalmGrow account"  
-    :"Create your PalmGrow account";  
-  $("submitBtn").textContent=loginMode?"Login":"Create Account";  
-  $("nameField").classList.toggle("hidden",loginMode);  
-  $("referralField").classList.toggle("hidden",loginMode);  
-  $("switchBtn").textContent=loginMode  
-    ?"Need an account? Register"  
-    :"Already have an account? Login";  
-}  
-  
-$("switchBtn").onclick=()=>{  
-  loginMode=!loginMode;  
-  $("authMessage").classList.add("hidden");  
-  updateAuthUI();  
-};  
-  
-$("authForm").onsubmit=async e=>{  
-  e.preventDefault();  
-  const email=$("email").value.trim().toLowerCase();  
-  const password=$("password").value;  
-  const fullName=$("fullName").value.trim();  
-  const referralCode=$("referralCodeInput").value.trim().toUpperCase();  
-  
-  $("submitBtn").disabled=true;  
-  $("submitBtn").textContent="Please wait...";  
-  
-  try{  
-    if(loginMode){  
-      const {error}=await supabase.auth.signInWithPassword({email,password});  
-      if(error)throw error;  
-      await loadDashboard();  
-    }else{  
-      if(fullName.length<3)throw new Error("Please enter your full name.");  
-      const response=await fetch(`${SUPABASE_URL}/functions/v1/palmgrow-register`,{  
-        method:"POST",  
-        headers:{  
-          "Content-Type":"application/json",  
-          "apikey":SUPABASE_PUBLISHABLE_KEY  
-        },  
-        body:JSON.stringify({  
-          action:"register",  
-          full_name:fullName,  
-          email,  
-          password,  
-          referral_code:referralCode  
-        })  
-      });  
-  
-      const result=await response.json();  
-      if(!response.ok||!result.success){  
 function updateAuthUI(){
   $("authSub").textContent = loginMode
     ? "Login to your PalmGrow account"
@@ -1053,6 +1001,7 @@ function setupPasswordToggle(inputId, buttonId){
 
     input.type = showing ? "text" : "password";
     button.textContent = showing ? "Hide" : "Show";
+
     button.setAttribute(
       "aria-label",
       showing ? "Hide password" : "Show password"
@@ -1068,16 +1017,24 @@ setupPasswordToggle(
 );
 
 
+// Switch between Login and Registration
 $("switchBtn").onclick = () => {
   loginMode = !loginMode;
 
   $("authMessage").classList.add("hidden");
   $("confirmPassword").value = "";
 
+  $("password").type = "password";
+  $("confirmPassword").type = "password";
+
+  $("togglePassword").textContent = "Show";
+  $("toggleConfirmPassword").textContent = "Show";
+
   updateAuthUI();
 };
 
 
+// Authentication form
 $("authForm").onsubmit = async e => {
   e.preventDefault();
 
@@ -1091,6 +1048,7 @@ $("authForm").onsubmit = async e => {
   $("submitBtn").textContent = "Please wait...";
 
   try{
+
     if(loginMode){
 
       const {error} = await supabase.auth.signInWithPassword({
