@@ -1522,50 +1522,6 @@ async function loadEmployeePositionPlans(){
 
     host.innerHTML = "";
 
-    // Display current employee level
-    const currentLevelBox = document.createElement("div");
-    currentLevelBox.style.cssText = `
-      background:#e8f5ed;
-      border:1px solid #b7d9c2;
-      border-radius:10px;
-      padding:15px;
-      margin-bottom:18px;
-      color:#0b3d2e;
-    `;
-
-    const levelHeading = document.createElement("div");
-    levelHeading.textContent = "YOUR CURRENT EMPLOYEE LEVEL";
-    levelHeading.style.cssText = `
-      font-size:12px;
-      font-weight:600;
-      margin-bottom:6px;
-    `;
-
-    const levelValue = document.createElement("strong");
-    levelValue.textContent = currentLevelCode;
-    levelValue.style.cssText = `
-      font-size:24px;
-      font-weight:800;
-    `;
-
-    const levelStatus = document.createElement("div");
-    levelStatus.textContent = currentLevelNumber > 0
-      ? "Your employee position is active."
-      : "You have not joined an employee position yet.";
-
-    levelStatus.style.cssText = `
-      font-size:12px;
-      margin-top:5px;
-    `;
-
-    currentLevelBox.append(
-      levelHeading,
-      levelValue,
-      levelStatus
-    );
-
-    host.appendChild(currentLevelBox);
-
     // Display all available employee levels
     plans.forEach(plan => {
       const card = document.createElement("div");
