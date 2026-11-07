@@ -1330,6 +1330,59 @@ $("profileForm").onsubmit = async e => {
     $("saveProfileBtn").textContent = "Save Details";
   }
 };
+  // LOAD CURRENT EMPLOYEE LEVEL ON DASHBOARD
+async function loadDashboardEmployeeLevel(){
+
+  const card = $("dashboardEmployeeLevelCard");
+  const value = $("dashboardEmployeeLevelValue");
+  const status = $("dashboardEmployeeLevelStatus");
+
+  if(!card || !value || !status) return;
+
+  const accountType = String(currentProfile?.account_type || "")
+    .trim()
+    .toLowerCase();
+
+  // Hide the card for non-employee accounts
+  if(accountType !== "employee"){
+    card.classList.add("hidden");
+    return;
+  }
+
+  card.classList.remove("hidden");
+
+  value.textContent = "Loading...";
+  status.textContent = "Checking your employee position...";
+
+  try{
+
+    const {data, error} = await supabase.rpc(
+      "palmgrow_my_current_employee_level"
+    );
+
+    if(error) throw error;
+
+    const levelCode = String(data || "M0")
+      .trim()
+      .toUpperCase();
+
+    value.textContent = levelCode;
+
+    const levelNumber = Number(levelCode.substring(1));
+
+    status.textContent = levelNumber > 0
+      ? "Your current employee position."
+      : "You have not joined an employee position yet.";
+
+  }catch(err){
+
+    value.textContent = "Unavailable";
+    status.textContent = "Unable to load your employee level.";
+
+    console.error("Dashboard employee level error:", err);
+
+  }
+}
   async function loadDashboard(){
 
   const {data:{session},error:sessionError} =
