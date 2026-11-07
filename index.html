@@ -1450,6 +1450,7 @@ async function loadDashboardEmployeeLevel(){
   $("totalEarnings").textContent=naira(profile.total_earnings);
   $("referralEarnings").textContent=naira(profile.referral_earnings);
   $("dailyRateDisplay").textContent=naira(profile.daily_payout_amount)+" / day";
+    await loadDashboardEmployeeLevel();
 const role=String(profile.role||"").trim().toLowerCase();
 
 $("adminNav").style.display=role==="admin"?"flex":"none";
