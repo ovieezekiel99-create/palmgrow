@@ -202,15 +202,64 @@ th{background:#f0f5f2;font-weight:600}
   <div class="auth-box">
     <h1>🌴 PalmGrow</h1>
     <p class="sub" id="authSub">Create your PalmGrow account</p>
+
     <form id="authForm">
-      <div id="nameField"><label>Full Name</label><input id="fullName" type="text" autocomplete="name" placeholder="Your full name"></div>
-      <div id="referralField"><label>Referral Code (Optional)</label><input id="referralCodeInput" type="text" placeholder="Enter referral code"></div>
-      <label>Email Address</label><input id="email" type="email" required autocomplete="email" placeholder="Enter your email">
-      <label>Password</label><input id="password" type="password" required minlength="6" autocomplete="current-password" placeholder="At least 6 characters">
-      <button type="submit" id="submitBtn">Create Account</button>
+
+      <div id="nameField">
+        <label>Full Name</label>
+        <input id="fullName" type="text"
+          autocomplete="name"
+          placeholder="Your full name">
+      </div>
+
+      <div id="referralField">
+        <label>Referral Code (Optional)</label>
+        <input id="referralCodeInput" type="text"
+          placeholder="Enter referral code">
+      </div>
+
+      <label>Email Address</label>
+      <input id="email" type="email" required
+        autocomplete="email"
+        placeholder="Enter your email">
+
+      <label>Password</label>
+      <div class="password-field">
+        <input id="password" type="password"
+          required minlength="8"
+          autocomplete="new-password"
+          placeholder="At least 8 characters">
+
+        <button type="button"
+          class="password-toggle"
+          id="togglePassword">Show</button>
+      </div>
+
+      <div id="confirmPasswordField">
+        <label>Confirm Password</label>
+        <div class="password-field">
+          <input id="confirmPassword" type="password"
+            required minlength="8"
+            autocomplete="new-password"
+            placeholder="Enter password again">
+
+          <button type="button"
+            class="password-toggle"
+            id="toggleConfirmPassword">Show</button>
+        </div>
+      </div>
+
+      <button type="submit" id="submitBtn">
+        Create Account
+      </button>
+
     </form>
+
     <div id="authMessage" class="status hidden"></div>
-    <button type="button" class="secondary" id="switchBtn">Already have an account? Login</button>
+
+    <button type="button" class="secondary" id="switchBtn">
+      Already have an account? Login
+    </button>
   </div>
 </div>
 
