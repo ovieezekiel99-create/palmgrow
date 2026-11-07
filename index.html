@@ -1099,23 +1099,23 @@ $("authForm").onsubmit = async e => {
         throw new Error(result.error || "Registration failed.");
       }
 
-      msg(
-        "authMessage",
-        "Your account has been created successfully. You can now log in."
-      );
+      // Automatically sign in the newly registered member
 
-      loginMode = true;
-      updateAuthUI();
+const { error: loginError } = await supabase.auth.signInWithPassword({
+  email,
+  password
+});
 
-      $("email").value = email;
-      $("password").value = "";
-      $("confirmPassword").value = "";
+if (loginError) {
+  throw new Error(
+    "Your account was created, but automatic login failed. Please log in manually."
+  );
+}
 
-      $("password").type = "password";
-      $("confirmPassword").type = "password";
+// Open the new member's dashboard
+await loadDashboard();
 
-      $("togglePassword").textContent = "Show";
-      $("toggleConfirmPassword").textContent = "Show";
+      
     }
 
   }catch(err){
