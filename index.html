@@ -620,33 +620,159 @@ th{background:#f0f5f2;font-weight:600}
 
   </div>
       </div>
+      
       <!-- REFERRAL PAGE -->
-      <div id="page-referral" class="hidden">  
-        <div class="section">  
-          <h3>👥 Referral Program & Structure Index</h3>  
-          <p style="margin-bottom:14px;color:var(--muted);font-size:14px">Share your referral code with friends. Earn rewards when they invest or complete daily orders across Levels 1, 2, and 3.</p>  
-          <div class="payment-box">Your Referral Code:<br><strong id="referralCode" style="font-size:20px;letter-spacing:1px">LOADING...</strong></div>  
-          
-          <!-- Built-in Referral Estimator Calculator -->
-          <div style="background:#f8fbf9; border:1px solid var(--border); border-radius:10px; padding:16px; margin-top:16px;">
-            <h4 style="color:var(--green-dark); margin-bottom:10px; font-size:15px;">📊 Referral Bonus & Rebate Estimator</h4>
-            <label>Select Referral Level Position:</label>
-            <select id="calcLevelSelect" style="margin-bottom:10px;">
-              <option value="M1">M1 (Deposit: ₦18,000)</option>
-              <option value="M2">M2 (Deposit: ₦51,000)</option>
-              <option value="M3" selected>M3 (Deposit: ₦162,000)</option>
-              <option value="M4">M4 (Deposit: ₦436,800)</option>
-              <option value="M5">M5 (Deposit: ₦891,800)</option>
-              <option value="M6">M6 (Deposit: ₦1,690,000)</option>
-              <option value="M7">M7 (Deposit: ₦3,705,000)</option>
-              <option value="M8">M8 (Deposit: ₦7,080,000)</option>
-              <option value="M9">M9 (Deposit: ₦12,672,000)</option>
-            </select>
-            <div id="calcResultsBox" style="background:white; border:1px solid var(--border); padding:12px; border-radius:8px; font-size:13px; line-height:1.6;"></div>
-          </div>
-          <p style="font-size:13px;color:var(--muted); margin-top:14px;">Referral earnings will appear on your dashboard automatically when your team upgrades positions.</p>  
-        </div>  
-      </div>  
+<div id="page-referral" class="hidden">
+
+  <div class="referral-hero">
+    <div class="referral-hero-copy">
+      <span class="referral-kicker" style="color:#f3d46a;">
+        PALMGROW COMMUNITY
+      </span>
+      <h2>Referral Program</h2>
+      <p>
+        Invite friends, grow your team and earn attractive
+        commissions through the PalmGrow referral programme!
+      </p>
+    </div>
+    <div style="font-size:55px;position:relative;z-index:1;">🌴</div>
+  </div>
+
+  <div class="referral-team-card">
+    <div class="referral-team-icon">👥</div>
+    <div>
+      <strong>My Team</strong>
+      <span>Active Referrals</span>
+    </div>
+    <b id="activeReferralCount">0</b>
+  </div>
+
+  <div class="referral-level-section">
+    <div class="referral-rates-title">
+      Referral Commission Rates
+    </div>
+
+    <div class="referral-rate-card">
+      <div class="referral-rate-grid">
+        <div><span>Level 1</span><strong>10%</strong></div>
+        <div><span>Level 2</span><strong>3%</strong></div>
+        <div><span>Level 3</span><strong>1%</strong></div>
+        <div><span>Level 4</span><strong>0.7%</strong></div>
+        <div><span>Level 5</span><strong>0.4%</strong></div>
+      </div>
+    </div>
+
+    <div class="referral-total-pill">Total: 15.1%</div>
+
+    <p class="referral-intro">
+      Referral activation bonuses apply to eligible new
+      M1–M9 positions only. Upgrades do not qualify.
+      All rewards are subject to eligibility checks and
+      verified qualifying business revenue.
+    </p>
+  </div>
+
+  <div class="referral-link-section">
+    <span class="referral-kicker">YOUR INVITATION</span>
+    <h3>Your Personal Referral Link</h3>
+
+    <p class="referral-intro">
+      Invite friends to register on PalmGrow using your
+      personal referral link.
+    </p>
+
+    <div class="referral-code-display">
+      <span>Your Referral Code</span>
+      <strong id="referralCode">LOADING...</strong>
+    </div>
+
+    <div class="referral-link-field">
+      <input
+        type="text"
+        id="personalReferralLink"
+        readonly
+        placeholder="Your referral link will appear here"
+        aria-label="Your personal referral link"
+      >
+
+      <button
+        type="button"
+        id="copyReferralLinkBtn"
+        onclick="copyPalmGrowReferralLink()"
+      >Copy</button>
+    </div>
+
+    <button
+      type="button"
+      class="referral-share-button"
+      onclick="sharePalmGrowReferralLink()"
+    >
+      Share Link Now
+    </button>
+
+    <div
+      id="referralFeedback"
+      class="referral-feedback"
+      aria-live="polite"
+    ></div>
+  </div>
+
+  <div class="referral-invite-banner">
+    <div>
+      <strong style="display:block;color:#173d2b;font-size:16px;">
+        Invite Friends Today!
+      </strong>
+      <span style="font-size:12px;color:#65776b;">
+        Grow your PalmGrow community.
+      </span>
+    </div>
+
+    <button
+      type="button"
+      onclick="sharePalmGrowReferralLink()"
+      style="background:#0b573b;color:white;border:0;
+      border-radius:8px;padding:11px 15px;font-weight:700;"
+    >
+      Invite Now
+    </button>
+  </div>
+
+  <div class="referral-why-section">
+    <h3>Why Refer?</h3>
+
+    <div class="referral-why-item">
+      <span>💰</span>
+      <div>
+        <strong>Earn up to 15.1%</strong>
+        <p class="referral-intro">
+          Earn eligible referral commissions across five levels.
+        </p>
+      </div>
+    </div>
+
+    <div class="referral-why-item">
+      <span>👥</span>
+      <div>
+        <strong>Grow Your Team</strong>
+        <p class="referral-intro">
+          Invite friends and build your referral community.
+        </p>
+      </div>
+    </div>
+
+    <div class="referral-why-item">
+      <span>🌱</span>
+      <div>
+        <strong>Long-Term Opportunities</strong>
+        <p class="referral-intro">
+          Enjoy eligible rewards as your community grows.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- END REFERRAL PAGE -->
 
       <!-- ADMIN PAGE (REORGANIZED WITH TABS) -->
       <div id="page-admin" class="hidden">  
