@@ -967,49 +967,107 @@ const SUPABASE_URL = "https://ghdiycdzsmncmlcpdniy.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_xy6UyL2BeQFgB8LeYMHuJA_k6MdhVz9";  
 const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);  
 
-/* FULL REFERRAL & REBATE INDEX CONFIGURATION */
-const PALMGROW_REFERRAL_INDEX = {
-  levels: {
-    M1: { deposit: 18000, income1Day: 600, level1Referral: 1800, level2Referral: 540, level3Referral: 180, l1Rebate: 18, l2Rebate: 12, l3Rebate: 6 },
-    M2: { deposit: 51000, income1Day: 1700, level1Referral: 5100, level2Referral: 1530, level3Referral: 510, l1Rebate: 51, l2Rebate: 34, l3Rebate: 17 },
-    M3: { deposit: 162000, income1Day: 5400, level1Referral: 16200, level2Referral: 4860, level3Referral: 1620, l1Rebate: 162, l2Rebate: 108, l3Rebate: 54 },
-    M4: { deposit: 436800, income1Day: 15600, level1Referral: 43680, level2Referral: 13104, level3Referral: 4368, l1Rebate: 468, l2Rebate: 312, l3Rebate: 156 },
-    M5: { deposit: 891800, income1Day: 31850, level1Referral: 89180, level2Referral: 26754, level3Referral: 8918, l1Rebate: 955.5, l2Rebate: 637, l3Rebate: 318.5 },
-    M6: { deposit: 1690000, income1Day: 65000, level1Referral: 169000, level2Referral: 50700, level3Referral: 16900, l1Rebate: 1950, l2Rebate: 1300, l3Rebate: 650 },
-    M7: { deposit: 3705000, income1Day: 142500, level1Referral: 370500, level2Referral: 111150, level3Referral: 37050, l1Rebate: 4275, l2Rebate: 2850, l3Rebate: 1425 },
-    M8: { deposit: 7080000, income1Day: 295000, level1Referral: 708000, level2Referral: 212400, level3Referral: 70800, l1Rebate: 8850, l2Rebate: 5900, l3Rebate: 2950 },
-    M9: { deposit: 12672000, income1Day: 528000, level1Referral: 1267200, level2Referral: 380160, level3Referral: 126720, l1Rebate: 15840, l2Rebate: 10560, l3Rebate: 5280 }
-  },
-  commissionRates: {
-    referralBonus: { level1: 0.10, level2: 0.03, level3: 0.01 },
-    orderRebate: { level1: 0.03, level2: 0.02, level3: 0.01 }
+/* PALMGROW REFERRAL LINK FUNCTIONS */
+
+function getPalmGrowReferralCode() {
+  return (
+    currentProfile?.referral_code ||
+    currentUser?.id?.replace(/-/g, "").slice(0, 8).toUpperCase() ||
+    ""
+  );
+}
+
+function refreshPalmGrowReferralUI() {
+  const code = getPalmGrowReferralCode();
+
+  const codeElement = $("referralCode");
+  const linkElement = $("personalReferralLink");
+
+  if (codeElement) {
+    codeElement.textContent = code || "UNAVAILABLE";
+  }
+
+  if (linkElement && code) {
+    const referralURL = new URL(window.location.href);
+    referralURL.searchParams.set("ref", code);
+    linkElement.value = referralURL.toString();
+  }
+}
+
+window.copyPalmGrowReferralLink = async function() {
+  refreshPalmGrowReferralUI();
+
+  const linkElement = $("personalReferralLink");
+  const feedback = $("referralFeedback");
+
+  if (!linkElement || !linkElement.value) {
+    if (feedback) feedback.textContent =
+      "Your referral link is not available yet.";
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(linkElement.value);
+
+    if (feedback) feedback.textContent =
+      "Referral link copied successfully!";
+
+  } catch (error) {
+    linkElement.focus();
+    linkElement.select();
+
+    const copied = document.execCommand("copy");
+
+    if (feedback) {
+      feedback.textContent = copied
+        ? "Referral link copied successfully!"
+        : "Please copy the link manually.";
+    }
   }
 };
 
-function updateReferralEstimator() {
-  const select = $("calcLevelSelect");
-  const box = $("calcResultsBox");
-  if(!select || !box) return;
+window.sharePalmGrowReferralLink = async function() {
+  refreshPalmGrowReferralUI();
 
-  const lvl = select.value;
-  const data = PALMGROW_REFERRAL_INDEX.levels[lvl];
-  if(!data) return;
+  const linkElement = $("personalReferralLink");
+  const feedback = $("referralFeedback");
 
-  box.innerHTML = `
-    <strong>Position: ${lvl}</strong><br>
-    Deposit Required: <strong>${naira(data.deposit)}</strong><br>
-    Estimated 1-Day Income: <strong>${naira(data.income1Day)}</strong><br><br>
-    <strong>Referral Bonuses (Joining):</strong><br>
-    • Level 1 Bonus (10%): <strong>${naira(data.level1Referral)}</strong><br>
-    • Level 2 Bonus (3%): <strong>${naira(data.level2Referral)}</strong><br>
-    • Level 3 Bonus (1%): <strong>${naira(data.level3Referral)}</strong><br><br>
-    <strong>Daily Order Rebates:</strong><br>
-    • Level 1 Rebate (3%): <strong>${naira(data.l1Rebate)} / day</strong><br>
-    • Level 2 Rebate (2%): <strong>${naira(data.l2Rebate)} / day</strong><br>
-    • Level 3 Rebate (1%): <strong>${naira(data.l3Rebate)} / day</strong>
-  `;
-}
+  if (!linkElement || !linkElement.value) {
+    if (feedback) feedback.textContent =
+      "Your referral link is not available yet.";
+    return;
+  }
 
+  const shareData = {
+    title: "Join PalmGrow",
+    text: "Join me on PalmGrow. Register using my referral link:",
+    url: linkElement.value
+  };
+
+  try {
+    if (navigator.share) {
+      await navigator.share(shareData);
+    } else {
+      await window.copyPalmGrowReferralLink();
+    }
+  } catch (error) {
+    if (error.name !== "AbortError" && feedback) {
+      feedback.textContent = "Unable to open sharing options.";
+    }
+  }
+};
+
+function prefillPalmGrowReferralCode() {
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get("ref");
+
+  const input = $("referralCodeInput");
+
+  if (code && input) {
+    input.value = code.trim().toUpperCase();
+  }
+    }
+   
 document.addEventListener("DOMContentLoaded", () => {
   const select = $("calcLevelSelect");
   if(select) {
