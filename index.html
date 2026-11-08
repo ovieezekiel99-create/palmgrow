@@ -1069,11 +1069,7 @@ function prefillPalmGrowReferralCode() {
     }
    
 document.addEventListener("DOMContentLoaded", () => {
-  const select = $("calcLevelSelect");
-  if(select) {
-    select.onchange = updateReferralEstimator;
-    updateReferralEstimator();
-  }
+  prefillPalmGrowReferralCode();
 
   // Admin Panel Tab Switcher Logic
   document.querySelectorAll(".admin-tab-btn[data-admin-tab]").forEach(btn => {
