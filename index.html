@@ -2674,69 +2674,101 @@ async function processWithdrawal(withdrawalId,action){
     msg("adminWithdrawalMessage",err.message,"error");  
   }  
 }  
- // CHECK WHETHER AN EMPLOYEE ACCOUNT IS STILL ACTIVE
-async function verifyEmployeeSession(){
 
-  const {data:{session},error} =
-    await supabase.auth.getSession();
+// CHECK WHETHER AN EMPLOYEE ACCOUNT IS STILL ACTIVE
+let employeeSessionCheckRunning = false;
 
-  if(error || !session) return;
+async function verifyEmployeeSession() {
+  if (employeeSessionCheckRunning) return;
 
-  const {data:profile,error:profileError} = await supabase
-    .from("profiles")
-    .select("account_type,employee_status")
-    .eq("id",session.user.id)
-    .maybeSingle();
+  employeeSessionCheckRunning = true;
 
-  if(profileError || !profile) return;
+  try {
+    const {
+      data: { session },
+      error
+    } = await supabase.auth.getSession();
 
-  const accountType = String(profile.account_type || "")
-    .trim().toLowerCase();
+    if (error || !session) return;
 
-  const employeeStatus = String(profile.employee_status || "")
-    .trim().toLowerCase();
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("account_type, employee_status")
+      .eq("id", session.user.id)
+      .maybeSingle();
 
-  if(accountType === "employee" && employeeStatus === "disabled"){
+    // Do not sign out a user just because of a temporary
+    // database or network error.
+    if (profileError || !profile) return;
 
-    $("app").style.display="none";
-    $("authScreen").style.display="flex";
+    const accountType = String(profile.account_type || "")
+      .trim()
+      .toLowerCase();
 
-    currentUser=null;
-    currentProfile=null;
+    const employeeStatus = String(profile.employee_status || "")
+      .trim()
+      .toLowerCase();
 
-    await supabase.auth.signOut();
+    if (
+      accountType === "employee" &&
+      employeeStatus === "disabled"
+    ) {
+      $("app").style.display = "none";
+      $("authScreen").style.display = "flex";
 
-    alert("Your employee account has been disabled. Please contact support.");
+      currentUser = null;
+      currentProfile = null;
+
+      await supabase.auth.signOut();
+
+      alert(
+        "Your employee account has been disabled. Please contact support."
+      );
+    }
+
+  } catch (err) {
+    console.error("Employee session check failed:", err);
+
+  } finally {
+    employeeSessionCheckRunning = false;
   }
 }
 
 
 // AUTHENTICATION LISTENER
-supabase.auth.onAuthStateChange((_event,session)=>{
+supabase.auth.onAuthStateChange((event, session) => {
 
-  if(session){
+  if (session) {
+    currentUser = session.user;
 
-    currentUser=session.user;
+    // Load the dashboard only at initial session or sign-in.
+    // Token refresh events will not reload it unnecessarily.
+    if (event === "INITIAL_SESSION" || event === "SIGNED_IN") {
 
-    setTimeout(()=>{
-      loadDashboard();
-    },0);
+      setTimeout(async () => {
+        await verifyEmployeeSession();
 
-  }else{
+        // If the employee was disabled, do not load the dashboard.
+        if (currentUser) {
+          await loadDashboard();
+        }
+      }, 0);
+    }
 
-    currentUser=null;
-    currentProfile=null;
+  } else {
+    currentUser = null;
+    currentProfile = null;
 
-    $("authScreen").style.display="flex";
-    $("app").style.display="none";
+    $("authScreen").style.display = "flex";
+    $("app").style.display = "none";
   }
 });
 
 
 // RECHECK WHEN THE USER RETURNS TO THE APP
-document.addEventListener("visibilitychange",()=>{
+document.addEventListener("visibilitychange", () => {
 
-  if(document.visibilityState==="visible"){
+  if (document.visibilityState === "visible") {
     verifyEmployeeSession();
   }
 
@@ -2744,19 +2776,16 @@ document.addEventListener("visibilitychange",()=>{
 
 
 // AUTOMATIC ACCOUNT CHECK EVERY 30 SECONDS
-setInterval(()=>{
+setInterval(() => {
   verifyEmployeeSession();
-},30000);
+}, 30000);
 
 
 updateAuthUI();
 
-const {data:{session}}=await supabase.auth.getSession();
+// Do not add another getSession()/loadDashboard() block here.
+// INITIAL_SESSION from the authentication listener handles startup.
 
-if(session){
-  await loadDashboard();
-  } 
-
-</script>  
-</body>  
+</script>
+</body>
 </html>
