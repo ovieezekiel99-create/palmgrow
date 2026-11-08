@@ -1607,10 +1607,7 @@ async function loadDashboardEmployeeLevel(){
   $("userPhone").textContent=profile.phone||"";
   $("userAvatar").textContent=name.charAt(0).toUpperCase();
 
-  $("referralCode").textContent =
-    profile.referral_code ||
-    currentUser.id.replace(/-/g,"").slice(0,8).toUpperCase();
-
+  refreshPalmGrowReferralUI();
   $("walletBalanceDisplay").textContent=naira(profile.available_balance);
   $("availableBalance").textContent=naira(profile.available_balance);
   $("totalInvestment").textContent=naira(profile.total_investment);
