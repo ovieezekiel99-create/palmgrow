@@ -7,6 +7,83 @@
 <title>PalmGrow | Dashboard</title>  
 
 <style>  
+    /* PALMGROW - STRONG PREMIUM EMERALD BACKGROUND */
+/* REFERRAL PAGE EXCLUDED */
+
+#page-dashboard,
+#page-invest,
+#page-deposit,
+#page-admin,
+#page-withdraw,
+#page-withdraw-history,
+#page-employee-position,
+#page-employee-tasks {
+  background:
+    radial-gradient(
+      circle at 95% 5%,
+      rgba(255, 215, 100, 0.35),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 5% 90%,
+      rgba(36, 160, 105, 0.45),
+      transparent 35%
+    ),
+    linear-gradient(
+      145deg,
+      #03291e 0%,
+      #075239 45%,
+      #0b704b 75%,
+      #043626 100%
+    ) !important;
+
+  border: 2px solid #d4af37 !important;
+  border-radius: 22px !important;
+  padding: 15px !important;
+  min-height: 75vh;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+}
+
+/* Make page headings stand out on green */
+#page-dashboard > h3,
+#page-invest > h3,
+#page-deposit > h3,
+#page-admin > h3 {
+  color: #f8df91;
+}
+
+/* Keep content cards bright and readable */
+#page-dashboard .section,
+#page-invest .section,
+#page-deposit .section,
+#page-admin .section,
+#page-employee-position .section {
+  background: linear-gradient(145deg, #ffffff, #edf6ef);
+  border: 2px solid #d4af37;
+  border-radius: 17px;
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.18);
+}
+
+/* Strong gold frame around investment plans */
+#page-invest .plan {
+  border: 2px solid #d4af37;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+/* Mobile display */
+@media (max-width: 480px) {
+  #page-dashboard,
+  #page-invest,
+  #page-deposit,
+  #page-admin,
+  #page-withdraw,
+  #page-withdraw-history,
+  #page-employee-position,
+  #page-employee-tasks {
+    padding: 10px !important;
+    border-radius: 17px !important;
+  }
+}
     /* =====================================
    PALMGROW PREMIUM WEBSITE DESIGN
    REFERRAL PAGE EXCLUDED
