@@ -1907,6 +1907,9 @@ async function loadDashboardEmployeeLevel(){
 }
   async function loadDashboard(){
 
+  // Keep the app hidden while restoring the correct page
+  $("app").style.display="none";
+
   const {data:{session},error:sessionError} =
     await supabase.auth.getSession();
 
@@ -1947,14 +1950,12 @@ async function loadDashboardEmployeeLevel(){
     alert("Your employee account is disabled or inactive. Please contact support.");
 
     return;
-
   }
 
   // Load dashboard after account verification
   currentProfile = profile;
 
   $("authScreen").style.display="none";
-  $("app").style.display="block";
 
   const name = profile.full_name ||
     currentUser.user_metadata?.full_name || "Member";
@@ -1964,50 +1965,55 @@ async function loadDashboardEmployeeLevel(){
   $("userAvatar").textContent=name.charAt(0).toUpperCase();
 
   await refreshPalmGrowReferralUI();
+
   $("walletBalanceDisplay").textContent=naira(profile.available_balance);
   $("availableBalance").textContent=naira(profile.available_balance);
   $("totalInvestment").textContent=naira(profile.total_investment);
   $("totalEarnings").textContent=naira(profile.total_earnings);
   $("referralEarnings").textContent=naira(profile.referral_earnings);
   $("dailyRateDisplay").textContent=naira(profile.daily_payout_amount)+" / day";
-    await loadDashboardEmployeeLevel();
 
-const role=String(profile.role||"").trim().toLowerCase();
+  await loadDashboardEmployeeLevel();
 
-$("adminNav").style.display=role==="admin"?"flex":"none";
+  const role=String(profile.role||"").trim().toLowerCase();
 
-const activeEmployee =
-  accountType === "employee" && employeeStatus === "active";
+  $("adminNav").style.display=role==="admin"?"flex":"none";
 
-const canViewEmployeePositions =
-  accountType === "employee" &&
-  ["active", "pending_payment"].includes(employeeStatus);
+  const activeEmployee =
+    accountType === "employee" && employeeStatus === "active";
 
-$("employeeTasksNav").style.display =
-  activeEmployee ? "flex" : "none";
+  const canViewEmployeePositions =
+    accountType === "employee" &&
+    ["active", "pending_payment"].includes(employeeStatus);
 
-$("employeePositionNav").style.display =
-  canViewEmployeePositions ? "flex" : "none";
+  $("employeeTasksNav").style.display =
+    activeEmployee ? "flex" : "none";
+
+  $("employeePositionNav").style.display =
+    canViewEmployeePositions ? "flex" : "none";
 
   $("positionWalletBalance").textContent=naira(profile.available_balance);
 
   updateWithdrawalBalance();
 
+  // Restore the previous page before showing the app
   if(isInitialBoot){
     isInitialBoot = false;
+
     const hash = window.location.hash.replace("#", "").trim();
 
     if(hash && PAGE_NAMES.includes(hash)){
-      showPage(hash, true);
-      return;
+      showPage(hash, false);
+    }else{
+      showPage("dashboard", false);
     }
-  }
-
-  if(document.querySelector("#app").style.display !== "none" && pageHistory.length === 1){
+  }else if(pageHistory.length === 1){
     showPage("dashboard", false);
   }
 
-}  
+  // Display the app only after the correct page is ready
+  $("app").style.display="block";
+    }
      
 async function loadEmployeePositionPlans(){
   const host = $("employeePositionPlans");
