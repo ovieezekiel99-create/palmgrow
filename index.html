@@ -2225,7 +2225,7 @@ async function loadEmployeeTasks(){
     if(error)throw error;
 
     const activeTasks=(tasks||[]).filter(t=>t.status!=="cancelled");
-    const pendingTasks=activeTasks.filter(t=>t.status==="pending");
+    const visibleTasks=activeTasks.filter(t=>t.status!=="completed");
     const completed=activeTasks.filter(t=>t.status==="completed").length;
     const total=activeTasks.length;
 
