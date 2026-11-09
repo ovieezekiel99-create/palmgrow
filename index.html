@@ -1063,7 +1063,7 @@ window.copyPalmGrowReferralLink = async function() {
 };
 
 window.sharePalmGrowReferralLink = async function() {
-  refreshPalmGrowReferralUI();
+  await refreshPalmGrowReferralUI();
 
   const linkElement = $("personalReferralLink");
   const feedback = $("referralFeedback");
