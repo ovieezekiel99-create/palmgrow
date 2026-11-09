@@ -2225,7 +2225,7 @@ async function loadEmployeeTasks(){
     if(error)throw error;
 
     const activeTasks=(tasks||[]).filter(t=>t.status!=="cancelled");
-
+    const pendingTasks=activeTasks.filter(t=>t.status==="pending");
     const completed=activeTasks.filter(t=>t.status==="completed").length;
     const total=activeTasks.length;
 
@@ -2236,32 +2236,39 @@ async function loadEmployeeTasks(){
     $("dailyRateDisplay").textContent=naira(dailyTotal)+" / day";
     $("taskProgressDisplay").textContent=`${completed} of ${total} tasks completed`;
 
-    if(!tasks||tasks.length===0){
-      list.innerHTML="<div class=\"notice\">No tasks are currently assigned.</div>";
-    }else{
-      list.innerHTML="";
-
-      tasks.forEach(task=>{
-        if(task.status==="cancelled")return;
-
-        const card=document.createElement("div");
-        card.className="task-card"+(task.status==="completed"?" task-done":"");
-
-        const title=document.createElement("h4");
-        title.textContent=`Task ${task.task_sequence}: ${task.task_title||"Agricultural task"}`;
-
-        const description=document.createElement("p");
-        description.textContent=task.task_description||"Complete this assigned agricultural task.";
-
-        const button=document.createElement("button");
-        button.textContent=task.status==="completed"?"✓ Completed":"Complete Task";
-        button.disabled=task.status!=="pending";
-        button.addEventListener("click",()=>completeEmployeeTask(task.id,button));
-
-        card.append(title,description,button);
-        list.appendChild(card);
-      });
+    if(pendingTasks.length===0){
+      list.innerHTML=completed>0
+        ? "<div class=\"notice\">All assigned tasks for today have been completed. Well done!</div>"
+        : "<div class=\"notice\">No tasks are currently assigned.</div>";
+      return;
     }
+
+    list.innerHTML="";
+
+    pendingTasks.forEach(task=>{
+      const card=document.createElement("div");
+      card.className="task-card";
+
+      const title=document.createElement("h4");
+      title.textContent=`Task ${task.task_sequence}: ${task.task_title||"Agricultural task"}`;
+
+      const description=document.createElement("p");
+      description.textContent=task.task_description||"Complete this assigned agricultural task.";
+
+      const button=document.createElement("button");
+      button.textContent="Complete Task";
+      button.disabled=false;
+      button.addEventListener("click",()=>completeEmployeeTask(task.id,button));
+
+      card.append(title,description,button);
+      list.appendChild(card);
+    });
+
+  }catch(err){
+    list.innerHTML="<div class=\"notice\">Unable to load your tasks. Please try again.</div>";
+    msg("taskMessage",err.message||"Unable to load employee tasks.","error");
+  }
+}
 
     await loadEmployeePayroll();
 
