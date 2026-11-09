@@ -1031,7 +1031,7 @@ async function refreshPalmGrowReferralUI() {
   }
 }
 window.copyPalmGrowReferralLink = async function() {
-  refreshPalmGrowReferralUI();
+  await refreshPalmGrowReferralUI();
 
   const linkElement = $("personalReferralLink");
   const feedback = $("referralFeedback");
