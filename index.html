@@ -917,51 +917,80 @@ th{background:#f0f5f2;font-weight:600}
       </div>
       
       <!-- REFERRAL PAGE -->
-<div id="page-referral" class="hidden" style="position:relative;">
+<div id="page-referral" class="hidden">
+<div class="referral-picture">
+  <img
+    src="1794192101869.jpg"
+    alt="PalmGrow Referral"
+    style="width:100%;height:auto;display:block;border-radius:16px;"
+  >
+</div>
+    <div class="referral-team-grid">
+    <div class="referral-team-card">
+    <div class="referral-team-icon">👥</div>
+    <div>
+      <strong>My Team</strong>
+      <span>Total Referrals</span>
+    </div>
+    <b id="referralTotalCount">0</b>
+  </div>
 
-  <!-- PICTURE IS THE MAIN DESIGN -->
-  <div style="position:relative;width:100%;border-radius:16px;overflow:hidden;line-height:0;">
-    <img src="1794192101869.jpg" alt="PalmGrow Referral" style="width:100%;height:auto;display:block;border-radius:16px;">
+  <div class="referral-team-card">
+    <div class="referral-team-icon">🌱</div>
+    <div>
+      <strong>Active Team</strong>
+      <span>Active Referrals (M1–M9)</span>
+    </div>
+    <b id="activeReferralCount">0</b>
+  </div>
+ </div>     
 
-    <!-- MY TEAM / ACTIVE TEAM - fitted into picture's My Team pill -->
-    <div style="position:absolute;top:26.8%;left:50%;transform:translateX(-50%);width:64%;display:flex;gap:6px;line-height:1.4;z-index:3;">
-      <div style="flex:1;display:flex;align-items:center;gap:6px;background:transparent;padding:0;">
-        <div style="min-width:0;">
-          <strong style="display:block;font-size:11px;color:#0b3d2e;line-height:1.1;">My Team</strong>
-          <span style="display:block;font-size:9px;color:#555;line-height:1.1;">Total</span>
-        </div>
-        <b id="referralTotalCount" style="margin-left:auto;font-size:15px;color:#0b3d2e;">0</b>
-      </div>
-      <div style="flex:1;display:flex;align-items:center;gap:6px;background:transparent;padding:0;">
-        <div style="min-width:0;">
-          <strong style="display:block;font-size:11px;color:#0b3d2e;line-height:1.1;">Active Team</strong>
-          <span style="display:block;font-size:9px;color:#555;line-height:1.1;">Active</span>
-        </div>
-        <b id="activeReferralCount" style="margin-left:auto;font-size:15px;color:#0b3d2e;">0</b>
-      </div>
+   <div class="referral-link-section">
+    <span class="referral-kicker">YOUR INVITATION</span>
+    <h3>Your Personal Referral Link</h3>
+
+    <p class="referral-intro">
+      Invite friends to register on PalmGrow using your
+      personal referral link.
+    </p>
+
+    <div class="referral-code-display">
+      <span>Your Referral Code</span>
+      <strong id="referralCode">LOADING...</strong>
     </div>
 
-    <!-- COPY - fitted exactly into Copy column on picture -->
-    <button type="button" id="copyReferralLinkBtn" onclick="copyPalmGrowReferralLink()" aria-label="Copy referral link" style="position:absolute;top:57.9%;right:4%;width:22%;height:4.1%;z-index:4;background:transparent;border:0;color:transparent;cursor:pointer;">Copy</button>
+    <div class="referral-link-field" style="display:flex;align-items:center;gap:8px;">
+  <input
+    type="text"
+    id="personalReferralLink"
+    readonly
+    placeholder="Your referral link will appear here"
+    aria-label="Your personal referral link"
+    style="flex:1;min-width:0;"
+  >
 
-    <!-- SHARE LINK NOW - fitted exactly into Share column on picture -->
-    <!-- Full width of the green Share bar, not just middle -->
-    <button type="button" id="shareReferralLinkBtn" class="referral-share-button" onclick="sharePalmGrowReferralLink()" aria-label="Share link now" style="position:absolute;top:62.7%;left:5%;width:90%;height:4.3%;z-index:4;background:transparent;border:0;color:transparent;cursor:pointer;">Share Link Now</button>
+  <button
+    type="button"
+    id="copyReferralLinkBtn"
+    onclick="copyPalmGrowReferralLink()"
+  >Copy</button>
+</div>
+      
+    <button
+      type="button"
+      class="referral-share-button"
+      onclick="sharePalmGrowReferralLink()"
+    >
+      Share Link Now
+    </button>
 
-    <!-- INVITE FRIENDS TODAY / INVITE NOW - fitted exactly into Invite Now column on picture -->
-    <!-- Right-side small green button inside the Invite bar -->
-    <button type="button" id="inviteFriendsBtn" onclick="sharePalmGrowReferralLink()" aria-label="Invite friends today" style="position:absolute;top:73.6%;right:5%;width:24%;height:4.2%;z-index:4;background:transparent;border:0;color:transparent;cursor:pointer;">Invite Now</button>
-
+    <div
+      id="referralFeedback"
+      class="referral-feedback"
+      aria-live="polite"
+    ></div>
   </div>
-
-  <!-- HIDDEN FIELDS -->
-  <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
-    <span id="referralCode">LOADING...</span>
-    <input type="text" id="personalReferralLink" readonly>
-  </div>
-
-  <div id="referralFeedback" aria-live="polite" style="margin-top:8px;font-size:12px;text-align:center;"></div>
-
+    
 </div>
 <!-- END REFERRAL PAGE -->
 
@@ -1045,7 +1074,8 @@ th{background:#f0f5f2;font-weight:600}
           <h3>💰 Make Investment</h3>  
           <div class="plans">  
             <div class="plan"><div class="icon">🌱</div><h4>Starter Palm</h4><div class="price">₦5,000</div><p>Entry-level agricultural project</p><button class="planBtn" data-plan="Starter Palm" data-amount="5000">Invest Now</button></div>  
-            <div class="plan"><div class="icon">🌴</div><h4>Growth Palm</h4><div class="price">₦50,000</div><p>Medium-level project</p><button class="planBtn" data-plan="Growth Palm" data-amount="50000">Invest Now</button></div>  
+            <div class="plan"><div class="
+icon">🌴</div><h4>Growth Palm</h4><div class="price">₦50,000</div><p>Medium-level project</p><button class="planBtn" data-plan="Growth Palm" data-amount="50000">Invest Now</button></div>  
             <div class="plan"><div class="icon">🌳</div><h4>Premium Palm</h4><div class="price">₦100,000</div><p>Larger agricultural project</p><button class="planBtn" data-plan="Premium Palm" data-amount="100000">Invest Now</button></div>  
           </div>  
         </div>  
