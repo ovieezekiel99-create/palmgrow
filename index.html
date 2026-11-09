@@ -1395,7 +1395,11 @@ function showPage(page, pushHistory = true){
   if(page==="withdraw")loadWithdrawalPage(); 
   if(page==="withdraw-history")loadWithdrawalHistory();
   if(page==="admin")loadAdminData();  
-  if(page==="referral")refreshPalmGrowReferralUI();
+  if(page==="referral"){
+  refreshPalmGrowReferralUI().catch(error => {
+    console.error("Referral page loading error:", error);
+  });
+}
 }  
   
 window.showPage=showPage;  
