@@ -986,7 +986,7 @@ function getPalmGrowReferralCode() {
   );
 }
 
-function refreshPalmGrowReferralUI() {
+async function refreshPalmGrowReferralUI() {
   const code = getPalmGrowReferralCode();
 
   const codeElement = $("referralCode");
@@ -1001,8 +1001,35 @@ function refreshPalmGrowReferralUI() {
     referralURL.searchParams.set("ref", code);
     linkElement.value = referralURL.toString();
   }
-}
 
+  // Load referral counts from Supabase
+  const totalElement = $("referralTotalCount");
+  const activeElement = $("activeReferralCount");
+
+  if (totalElement) totalElement.textContent = "0";
+  if (activeElement) activeElement.textContent = "0";
+
+  const { data, error } = await supabase.rpc(
+    "palmgrow_my_referral_counts"
+  );
+
+  if (error) {
+    console.error("Referral count loading error:", error);
+    return;
+  }
+
+  const counts = Array.isArray(data) ? data[0] : data;
+
+  if (counts) {
+    if (totalElement) {
+      totalElement.textContent = Number(counts.total_referrals || 0);
+    }
+
+    if (activeElement) {
+      activeElement.textContent = Number(counts.active_referrals || 0);
+    }
+  }
+}
 window.copyPalmGrowReferralLink = async function() {
   refreshPalmGrowReferralUI();
 
