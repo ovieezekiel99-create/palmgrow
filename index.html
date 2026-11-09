@@ -7,6 +7,140 @@
 <title>PalmGrow | Dashboard</title>  
 
 <style>  
+    
+/* PALMGROW - FULL EMPLOYEE DAILY TASKS PAGE BACKGROUND */
+
+#page-employee-tasks {
+  min-height: calc(100vh - 120px);
+  padding: 12px;
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      circle at 95% 8%,
+      rgba(212, 175, 55, 0.20),
+      transparent 28%
+    ),
+    linear-gradient(
+      145deg,
+      #052f23,
+      #0b5139 55%,
+      #073d2b
+    );
+}
+
+/* Remove the white outer container */
+#page-employee-tasks > .section {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 8px !important;
+  margin: 0 !important;
+}
+
+/* Page heading */
+#page-employee-tasks > .section > h3 {
+  color: #f5d879;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+/* Introduction text */
+#page-employee-tasks > .section > p {
+  color: rgba(255, 255, 255, 0.9) !important;
+  line-height: 1.7;
+}
+
+/* Daily payment card */
+#page-employee-tasks .stat-card {
+  background: #ffffff;
+  border: 1px solid #d4af37;
+  border-radius: 14px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+#page-employee-tasks .stat-card .label {
+  color: #52665a;
+}
+
+#page-employee-tasks .stat-card .value {
+  color: #0b5139;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+/* Task progress notice */
+#page-employee-tasks .notice {
+  background: #fff8e5 !important;
+  border: 1px solid #d4af37 !important;
+  color: #17452f !important;
+  border-radius: 12px;
+}
+
+/* Individual daily task cards */
+#page-employee-tasks .task-card {
+  background: #ffffff;
+  border: 1px solid #d4af37;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.12);
+}
+
+#page-employee-tasks .task-card h4 {
+  color: #0b5139;
+}
+
+#page-employee-tasks .task-card p {
+  color: #52665a;
+}
+
+#page-employee-tasks .task-card button {
+  background: #0f5c42;
+  color: #ffffff;
+  border-radius: 9px;
+}
+
+#page-employee-tasks .task-card button:disabled {
+  background: #8a9b91;
+}
+
+/* Task payment history */
+#page-employee-tasks .section .section {
+  background: #ffffff !important;
+  border: 1px solid #d4af37 !important;
+  border-radius: 14px;
+  padding: 15px !important;
+  margin-top: 16px;
+}
+
+#page-employee-tasks .section .section h3 {
+  color: #0b5139;
+}
+
+#page-employee-tasks table {
+  background: #ffffff;
+  color: #173b2b;
+}
+
+#page-employee-tasks th {
+  background: #e8f2eb;
+  color: #0b5139;
+}
+
+#page-employee-tasks td {
+  color: #263d31;
+}
+
+/* Mobile screen adjustment */
+@media (max-width: 480px) {
+  #page-employee-tasks {
+    padding: 10px;
+  }
+
+  #page-employee-tasks > .section > h3 {
+    font-size: 18px;
+  }
+}
+
     /* PALMGROW REFERRAL PAGE DESIGN */
 #page-referral {
   display: flex;
