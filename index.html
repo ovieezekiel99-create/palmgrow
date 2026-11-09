@@ -923,23 +923,23 @@ th{background:#f0f5f2;font-weight:600}
   <div style="position:relative;width:100%;border-radius:16px;overflow:hidden;line-height:0;">
     <img src="IMG-20261109-WA2980.jpg" alt="PalmGrow Referral" style="width:100%;height:auto;display:block;border-radius:16px;">
 
-    <!-- MY TEAM / ACTIVE TEAM - fitted into picture's My Team pill -->
-    <div style="position:absolute;top:26.8%;left:50%;transform:translateX(-50%);width:64%;display:flex;gap:6px;line-height:1.4;z-index:3;">
-      <div style="flex:1;display:flex;align-items:center;gap:6px;background:transparent;padding:0;">
-        <div style="min-width:0;">
-          <strong style="display:block;font-size:11px;color:#0b3d2e;line-height:1.1;">My Team</strong>
-          <span style="display:block;font-size:9px;color:#555;line-height:1.1;">Total</span>
-        </div>
-        <b id="referralTotalCount" style="margin-left:auto;font-size:15px;color:#0b3d2e;">0</b>
-      </div>
-      <div style="flex:1;display:flex;align-items:center;gap:6px;background:transparent;padding:0;">
-        <div style="min-width:0;">
-          <strong style="display:block;font-size:11px;color:#0b3d2e;line-height:1.1;">Active Team</strong>
-          <span style="display:block;font-size:9px;color:#555;line-height:1.1;">Active</span>
-        </div>
-        <b id="activeReferralCount" style="margin-left:auto;font-size:15px;color:#0b3d2e;">0</b>
-      </div>
+    <!-- MY TEAM / ACTIVE TEAM - 0 now close to Total / Active -->
+<div style="position:absolute;top:27.2%;left:50%;transform:translateX(-50%);width:66%;display:flex;gap:14px;line-height:1.2;z-index:3;">
+  <div style="display:flex;align-items:center;gap:5px;background:transparent;padding:0;">
+    <div style="min-width:0;">
+      <strong style="display:block;font-size:11px;color:#0b3d2e;line-height:1.1;">My Team</strong>
+      <span style="display:block;font-size:9px;color:#555;line-height:1.1;">Total</span>
     </div>
+    <b id="referralTotalCount" style="font-size:15px;color:#0b3d2e;margin-left:2px;">0</b>
+  </div>
+  <div style="display:flex;align-items:center;gap:5px;background:transparent;padding:0;">
+    <div style="min-width:0;">
+      <strong style="display:block;font-size:11px;color:#0b3d2e;line-height:1.1;">Active Team</strong>
+      <span style="display:block;font-size:9px;color:#555;line-height:1.1;">Active</span>
+    </div>
+    <b id="activeReferralCount" style="font-size:15px;color:#0b3d2e;margin-left:2px;">0</b>
+  </div>
+</div>
 
     <!-- COPY - fitted exactly into Copy column on picture -->
     <button type="button" id="copyReferralLinkBtn" onclick="copyPalmGrowReferralLink()" aria-label="Copy referral link" style="position:absolute;top:57.9%;right:4%;width:22%;height:4.1%;z-index:4;background:transparent;border:0;color:transparent;cursor:pointer;">Copy</button>
