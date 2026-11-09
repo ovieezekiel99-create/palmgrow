@@ -7,6 +7,175 @@
 <title>PalmGrow | Dashboard</title>  
 
 <style>  
+    /* =====================================
+   PALMGROW PREMIUM WEBSITE DESIGN
+   REFERRAL PAGE EXCLUDED
+===================================== */
+
+/* Main page backgrounds */
+#page-dashboard,
+#page-invest,
+#page-deposit,
+#page-admin,
+#page-withdraw,
+#page-withdraw-history {
+  background:
+    radial-gradient(circle at top right,
+      rgba(212,175,55,0.12), transparent 35%),
+    linear-gradient(145deg, #edf5ef, #f8faf8);
+  border: 1px solid #d6e5da;
+  border-radius: 20px;
+  padding: 12px;
+  margin-bottom: 18px;
+  box-shadow: 0 8px 24px rgba(7,61,43,0.07);
+}
+
+/* Premium frames around content cards */
+#page-dashboard .section,
+#page-invest .section,
+#page-deposit .section,
+#page-admin .section {
+  background: linear-gradient(145deg, #ffffff, #f7fbf8);
+  border: 1px solid #d4af37;
+  border-radius: 17px;
+  padding: 17px;
+  margin-bottom: 16px;
+  box-shadow: 0 5px 16px rgba(7,61,43,0.09);
+}
+
+/* Page headings */
+#page-dashboard h3,
+#page-invest h3,
+#page-deposit h3,
+#page-admin h3 {
+  color: #073d2b;
+  font-weight: 800;
+}
+
+/* Investment plan cards */
+#page-invest .plan {
+  background: linear-gradient(145deg, #ffffff, #f0f7f2);
+  border: 1px solid #d4af37;
+  border-radius: 16px;
+  padding: 17px;
+  box-shadow: 0 5px 14px rgba(7,61,43,0.09);
+}
+
+/* Tables */
+#page-dashboard table,
+#page-invest table,
+#page-deposit table,
+#page-admin table,
+#page-withdraw-history table {
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#page-dashboard th,
+#page-invest th,
+#page-deposit th,
+#page-admin th,
+#page-withdraw-history th {
+  background: #e5f1e9;
+  color: #073d2b;
+}
+
+#page-dashboard td,
+#page-invest td,
+#page-deposit td,
+#page-admin td,
+#page-withdraw-history td {
+  color: #263d31;
+}
+
+/* Form frames */
+#page-deposit input,
+#page-deposit select,
+#page-admin input,
+#page-admin select {
+  border: 1px solid #cbdccf;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+#page-deposit input:focus,
+#page-deposit select:focus,
+#page-admin input:focus,
+#page-admin select:focus {
+  outline: none;
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.13);
+}
+
+/* Premium buttons */
+#page-invest .plan button,
+#page-deposit form button,
+#page-admin .primary-btn {
+  background: linear-gradient(135deg, #073d2b, #147a56);
+  border: 1px solid #d4af37;
+  border-radius: 10px;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* Locked investment buttons */
+#page-invest .plan button:disabled {
+  background: #dfe9e2;
+  color: #52715e;
+  border: 1px solid #c5d8ca;
+  cursor: not-allowed;
+}
+
+/* Withdrawal page frames */
+#page-withdraw > div,
+#page-withdraw-history > div {
+  border: 1px solid #d4af37;
+  border-radius: 17px;
+  box-shadow: 0 6px 18px rgba(7,61,43,0.10);
+}
+
+/* Dashboard wallet frame */
+#page-dashboard #walletBalanceDisplay {
+  color: #ffffff;
+}
+
+/* Dashboard summary cards */
+#page-dashboard [id="totalInvestment"],
+#page-dashboard [id="totalEarnings"],
+#page-dashboard [id="dashboardWithdrawable"],
+#page-dashboard [id="referralEarnings"],
+#page-dashboard [id="availableBalance"] {
+  font-weight: 800;
+}
+
+/* Smooth appearance */
+#page-dashboard .section,
+#page-invest .plan,
+#page-deposit .section,
+#page-admin .section {
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+/* Mobile spacing */
+@media (max-width: 480px) {
+  #page-dashboard,
+  #page-invest,
+  #page-deposit,
+  #page-admin,
+  #page-withdraw,
+  #page-withdraw-history {
+    padding: 9px;
+    border-radius: 15px;
+  }
+
+  #page-dashboard .section,
+  #page-invest .section,
+  #page-deposit .section,
+  #page-admin .section {
+    padding: 13px;
+  }
+}
     
 /* PALMGROW - FULL EMPLOYEE DAILY TASKS PAGE BACKGROUND */
 
