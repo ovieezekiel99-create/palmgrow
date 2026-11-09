@@ -1878,8 +1878,9 @@ $("employeePositionNav").style.display =
     }
   }
 
-  if(document.querySelector("#app").style.display !== "none" && pageHistory.length === 1){
-    showPage("dashboard", false);
+  // Don't force dashboard - keep the page from the Refresh Fix
+if(document.querySelector("#app").style.display !== "none" && pageHistory.length === 0){
+  showPage("dashboard", false);
   }
 }  
       
