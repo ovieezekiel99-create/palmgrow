@@ -2240,40 +2240,34 @@ async function loadEmployeeTasks(){
       list.innerHTML=completed>0
         ? "<div class=\"notice\">All assigned tasks for today have been completed. Well done!</div>"
         : "<div class=\"notice\">No tasks are currently assigned.</div>";
-      return;
+    }else{
+      list.innerHTML="";
+
+      pendingTasks.forEach(task=>{
+        const card=document.createElement("div");
+        card.className="task-card";
+
+        const title=document.createElement("h4");
+        title.textContent=`Task ${task.task_sequence}: ${task.task_title||"Agricultural task"}`;
+
+        const description=document.createElement("p");
+        description.textContent=task.task_description||"Complete this assigned agricultural task.";
+
+        const button=document.createElement("button");
+        button.textContent="Complete Task";
+        button.disabled=false;
+        button.addEventListener("click",()=>completeEmployeeTask(task.id,button));
+
+        card.append(title,description,button);
+        list.appendChild(card);
+      });
     }
-
-    list.innerHTML="";
-
-    pendingTasks.forEach(task=>{
-      const card=document.createElement("div");
-      card.className="task-card";
-
-      const title=document.createElement("h4");
-      title.textContent=`Task ${task.task_sequence}: ${task.task_title||"Agricultural task"}`;
-
-      const description=document.createElement("p");
-      description.textContent=task.task_description||"Complete this assigned agricultural task.";
-
-      const button=document.createElement("button");
-      button.textContent="Complete Task";
-      button.disabled=false;
-      button.addEventListener("click",()=>completeEmployeeTask(task.id,button));
-
-      card.append(title,description,button);
-      list.appendChild(card);
-    });
-
-  }catch(err){
-    list.innerHTML="<div class=\"notice\">Unable to load your tasks. Please try again.</div>";
-    msg("taskMessage",err.message||"Unable to load employee tasks.","error");
-  }
-}
 
     await loadEmployeePayroll();
 
   }catch(err){
     list.textContent="Unable to load tasks: "+err.message;
+    msg("taskMessage",err.message||"Unable to load employee tasks.","error");
   }
 }
  
