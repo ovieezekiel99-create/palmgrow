@@ -1585,7 +1585,15 @@ function showPage(page, pushHistory = true){
   });
 }
 }  
-  
+    
+// FIX REFRESH: On load, start on the page from the link, not Dashboard
+(function(){
+  var startPage = location.hash ? location.hash.replace('#','') : 'dashboard';
+  if (!PAGE_NAMES.includes(startPage)) startPage = 'dashboard';
+  pageHistory = [startPage];
+  showPage(startPage, false);
+})();
+    
 window.showPage=showPage;  
   
 window.onpopstate = (event) => {  
