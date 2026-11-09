@@ -598,6 +598,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
 }
 
 /* SMALL PHONE SCREENS */
+@media (min-width: 600px) {
+  #employeePositionPlans {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+    }
 
 @media (max-width: 380px) {
   #employeePositionPlans .position-plan {
