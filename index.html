@@ -959,22 +959,23 @@ th{background:#f0f5f2;font-weight:600}
       <strong id="referralCode">LOADING...</strong>
     </div>
 
-    <div class="referral-link-field">
-      <input
-        type="text"
-        id="personalReferralLink"
-        readonly
-        placeholder="Your referral link will appear here"
-        aria-label="Your personal referral link"
-      >
+    <div class="referral-link-field" style="display:flex;align-items:center;gap:8px;">
+  <input
+    type="text"
+    id="personalReferralLink"
+    readonly
+    placeholder="Your referral link will appear here"
+    aria-label="Your personal referral link"
+    style="flex:1;min-width:0;"
+  >
 
-      <button
-        type="button"
-        id="copyReferralLinkBtn"
-        onclick="copyPalmGrowReferralLink()"
-      >Copy</button>
-    </div>
-
+  <button
+    type="button"
+    id="copyReferralLinkBtn"
+    onclick="copyPalmGrowReferralLink()"
+  >Copy</button>
+</div>
+      
     <button
       type="button"
       class="referral-share-button"
