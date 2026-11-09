@@ -2236,14 +2236,14 @@ async function loadEmployeeTasks(){
     $("dailyRateDisplay").textContent=naira(dailyTotal)+" / day";
     $("taskProgressDisplay").textContent=`${completed} of ${total} tasks completed`;
 
-    if(pendingTasks.length===0){
+    if(visibleTasks.length===0){
       list.innerHTML=completed>0
         ? "<div class=\"notice\">All assigned tasks for today have been completed. Well done!</div>"
         : "<div class=\"notice\">No tasks are currently assigned.</div>";
     }else{
       list.innerHTML="";
 
-      pendingTasks.forEach(task=>{
+      visibleTasks.forEach(task=>{
         const card=document.createElement("div");
         card.className="task-card";
 
