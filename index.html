@@ -919,7 +919,7 @@ th{background:#f0f5f2;font-weight:600}
       <!-- REFERRAL PAGE -->
 <div id="page-referral" class="hidden" style="position:relative;">
 
-  <!-- PICTURE IS THE MAIN DESIGN - All 3 clickable areas are overlaid on this picture. No banner below. -->
+  <!-- PICTURE IS THE MAIN DESIGN -->
   <div style="position:relative;width:100%;border-radius:16px;overflow:hidden;line-height:0;">
     <img src="1794192101869.jpg" alt="PalmGrow Referral" style="width:100%;height:auto;display:block;border-radius:16px;">
 
@@ -941,18 +941,20 @@ th{background:#f0f5f2;font-weight:600}
       </div>
     </div>
 
-    <!-- COPY - existing function copyPalmGrowReferralLink() -->
-    <button type="button" id="copyReferralLinkBtn" onclick="copyPalmGrowReferralLink()" aria-label="Copy referral link" style="position:absolute;top:58.2%;right:3.5%;width:20%;height:3.4%;z-index:4;background:transparent;border:0;color:transparent;cursor:pointer;">Copy</button>
+    <!-- COPY - fitted exactly into Copy column on picture -->
+    <button type="button" id="copyReferralLinkBtn" onclick="copyPalmGrowReferralLink()" aria-label="Copy referral link" style="position:absolute;top:57.9%;right:4%;width:22%;height:4.1%;z-index:4;background:transparent;border:0;color:transparent;cursor:pointer;">Copy</button>
 
-    <!-- SHARE LINK NOW - existing function sharePalmGrowReferralLink() -->
-    <button type="button" id="shareReferralLinkBtn" class="referral-share-button" onclick="sharePalmGrowReferralLink()" aria-label="Share link now" style="position:absolute;top:63.2%;left:13%;width:74%;height:3.6%;z-index:4;background:transparent;border:0;color:transparent;cursor:pointer;">Share Link Now</button>
+    <!-- SHARE LINK NOW - fitted exactly into Share column on picture -->
+    <!-- Full width of the green Share bar, not just middle -->
+    <button type="button" id="shareReferralLinkBtn" class="referral-share-button" onclick="sharePalmGrowReferralLink()" aria-label="Share link now" style="position:absolute;top:62.7%;left:5%;width:90%;height:4.3%;z-index:4;background:transparent;border:0;color:transparent;cursor:pointer;">Share Link Now</button>
 
-    <!-- INVITE FRIENDS TODAY / INVITE NOW - part of picture design, clickable with existing share function -->
-    <button type="button" id="inviteFriendsBtn" onclick="sharePalmGrowReferralLink()" aria-label="Invite friends today" style="position:absolute;top:73.3%;right:3.5%;width:23%;height:3.6%;z-index:4;background:transparent;border:0;color:transparent;cursor:pointer;">Invite Now</button>
+    <!-- INVITE FRIENDS TODAY / INVITE NOW - fitted exactly into Invite Now column on picture -->
+    <!-- Right-side small green button inside the Invite bar -->
+    <button type="button" id="inviteFriendsBtn" onclick="sharePalmGrowReferralLink()" aria-label="Invite friends today" style="position:absolute;top:73.6%;right:5%;width:24%;height:4.2%;z-index:4;background:transparent;border:0;color:transparent;cursor:pointer;">Invite Now</button>
 
   </div>
 
-  <!-- HIDDEN FIELDS - Off-screen, NOT display:none, so existing JS can read/write value. No visible duplicate buttons. -->
+  <!-- HIDDEN FIELDS -->
   <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
     <span id="referralCode">LOADING...</span>
     <input type="text" id="personalReferralLink" readonly>
@@ -962,7 +964,6 @@ th{background:#f0f5f2;font-weight:600}
 
 </div>
 <!-- END REFERRAL PAGE -->
-
 
       <!-- ADMIN PAGE (REORGANIZED WITH TABS) -->
       <div id="page-admin" class="hidden">  
