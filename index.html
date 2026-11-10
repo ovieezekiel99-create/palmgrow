@@ -4453,6 +4453,113 @@ setInterval(() => {
 
 updateAuthUI();
 
+<script>
+(function () {
+    const chat = document.getElementById("palmGrowAgentChat");
+    const input = document.getElementById("palmGrowAgentInput");
+    const sendButton = document.getElementById("palmGrowAgentSend");
+
+    if (!chat || !input || !sendButton) return;
+
+    function addMessage(message, sender) {
+        const bubble = document.createElement("div");
+
+        bubble.style.padding = "12px";
+        bubble.style.borderRadius = "10px";
+        bubble.style.marginBottom = "12px";
+        bubble.style.maxWidth = "90%";
+        bubble.style.whiteSpace = "pre-wrap";
+        bubble.style.overflowWrap = "anywhere";
+
+        if (sender === "user") {
+            bubble.style.background = "#dce9f7";
+            bubble.style.marginLeft = "auto";
+        } else {
+            bubble.style.background = "#e3f1e7";
+            bubble.style.marginRight = "auto";
+        }
+
+        const heading = document.createElement("strong");
+        heading.textContent = sender === "user"
+            ? "You"
+            : "🌴 PalmGrow Assistant";
+
+        const paragraph = document.createElement("p");
+        paragraph.textContent = message;
+        paragraph.style.margin = "6px 0 0";
+
+        bubble.appendChild(heading);
+        bubble.appendChild(paragraph);
+        chat.appendChild(bubble);
+
+        chat.scrollTop = chat.scrollHeight;
+    }
+
+    function getAnswer(question) {
+        const q = question.toLowerCase();
+
+        // Deposits
+        if (/deposit|fund account|payment|pay into|bank transfer/.test(q)) {
+            return "DEPOSITS\n\nOpen the Deposit page in your PalmGrow dashboard. Follow the payment instructions displayed there and submit the required payment details or proof.\n\nYour deposit should only be treated as successful after it has been verified and reflected in your account. If it is delayed, contact support with your transaction reference. Never share your password or OTP.";
+        }
+
+        // Withdrawals
+        if (/withdraw|withdrawal|cash out|bank account|withdrawal pin/.test(q)) {
+            return "WITHDRAWALS\n\nOpen the Withdraw page in your dashboard. Make sure your bank details and withdrawal PIN are properly registered before requesting a withdrawal.\n\nCheck the fees and net amount displayed before confirming. You can check your withdrawal history for the request status. Never share your withdrawal PIN with anyone.";
+        }
+
+        // Referral programme
+        if (/referr|bonus|commission|rebate|level 1|level 2|level 3|level 4|level 5|l1|l2|l3|l4|l5/.test(q)) {
+            return "REFERRALS AND BONUSES\n\nPalmGrow has five referral levels:\n\nL1: 10%\nL2: 3%\nL3: 1%\nL4: 0.7%\nL5: 0.4%\n\nDaily order rebate rates:\nL1: 3%\nL2: 2%\nL3: 1%\nL4: 0.7%\nL5: 0.4%\n\nActivation bonuses apply to eligible successful joins into M1–M9, not upgrades. Eligibility and genuine business revenue funding conditions must be met. Check your Referral Program page for your referral information.";
+        }
+
+        // Employee positions
+        if (/employee|position|upgrade|m0|m1|m2|m3|m4|m5|m6|m7|m8|m9|daily task/.test(q)) {
+            return "EMPLOYEE POSITIONS\n\nPalmGrow employee positions and their join amounts are:\n\nM0: Registered but not activated\nM1: ₦18,000\nM2: ₦51,000\nM3: ₦162,000\nM4: ₦436,800\nM5: ₦891,800\nM6: ₦1,690,000\nM7: ₦3,705,000\nM8: ₦7,080,000\nM9: ₦12,672,000\n\nM0 is not an active employee position. To join or upgrade, check the Employee Position page for the applicable requirements. Your available balance must cover the full new position amount.";
+        }
+
+        // Registration and login
+        if (/register|registration|sign up|signup|create account|login|log in|sign in|password|forgot password|reset password/.test(q)) {
+            return "REGISTRATION AND LOGIN\n\nTo register, open the PalmGrow registration area and complete the required details. Use an email address and phone number you can access.\n\nTo log in, enter your registered login details. If you forget your password, use the password reset option on the login page.\n\nNever share your password, OTP or login code with anyone.";
+        }
+
+        // Investment questions
+        if (/invest|investment|starter palm|growth palm|premium palm|plan/.test(q)) {
+            return "INVESTMENT INFORMATION\n\nOpen the Make Investment page to see the available PalmGrow plans, amounts and terms. Read the displayed conditions carefully before making an investment. Your account balances and investment records should be checked on your dashboard.";
+        }
+
+        // Navigation and general support
+        if (/dashboard|where|find|navigate|page|support|help|contact|kyc|verify|verification|success stor|news|about/.test(q)) {
+            return "PALMGROW WEBSITE SUPPORT\n\nUse the left sidebar to navigate PalmGrow:\n\n• Dashboard – account overview\n• Make Investment – investment plans\n• Deposit – add funds\n• Withdraw Funds – request withdrawals\n• Referral Program – referral information\n• Employee Position – employee levels\n• Employee Daily Tasks – available tasks, if enabled\n• Talk to Agent – ask support questions\n\nYou can also visit PalmGrow Hub for Success Stories, PalmGrow News, Palm Industry News and About PalmGrow.\n\nTell me the name of the page or feature you need help with.";
+        }
+
+        return "Thank you for contacting PalmGrow Support.\n\nI don't have a prepared answer for that question yet. Please try asking in a different way or mention whether your question is about deposits, withdrawals, referrals, employee positions, registration or website navigation.\n\nFor private account or transaction issues, use the appropriate PalmGrow page and contact the official support team.";
+    }
+
+    function sendMessage() {
+        const question = input.value.trim();
+
+        if (!question) return;
+
+        addMessage(question, "user");
+        input.value = "";
+
+        const answer = getAnswer(question);
+
+        addMessage(answer, "agent");
+    }
+
+    sendButton.addEventListener("click", sendMessage);
+
+    input.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            sendMessage();
+        }
+    });
+})();
+</script>
+
 </script>
 </body>
 </html>
