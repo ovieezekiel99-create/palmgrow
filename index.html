@@ -188,71 +188,82 @@
     }
     
 /* =====================================
-   PALMGROW SUCCESS STORIES - 3D NOTEBOOK
+   PALMGROW SUCCESS STORIES - PREMIUM COMPACT DESIGN
    ===================================== */
 
-#hub-panel-stories {
-  padding: 12px;
-  border-radius: 22px;
+#page-hub-stories {
+  padding: 8px !important;
+  border-radius: 16px;
   background:
-    radial-gradient(circle at 10% 10%, rgba(212,175,55,.28), transparent 30%),
+    radial-gradient(circle at 10% 10%, rgba(212,175,55,.2), transparent 30%),
     linear-gradient(145deg, #03291e, #075239 55%, #021f17);
-  border: 2px solid #d4af37;
-  box-shadow: 0 15px 35px rgba(0,0,0,.28);
-  min-height: 75vh;
+  border: 1.5px solid #d4af37;
   color: white;
+  min-height: 0;
+}
+
+#page-hub-stories > .page-header {
+  margin: 0 0 5px;
+  padding: 0;
+}
+
+#page-hub-stories > .page-header h2 {
+  font-size: 17px;
+  margin: 0 0 3px;
+  color: #f5d879;
+}
+
+#page-hub-stories > .page-header p {
+  display: none;
+}
+
+#page-hub-stories > button {
+  padding: 6px 10px;
+  margin: 0 0 7px;
+  font-size: 11px;
+  border-radius: 7px;
 }
 
 .success-book-heading {
   text-align: center;
-  padding: 20px 8px;
+  padding: 3px 5px;
 }
 
 .success-book-heading h2 {
   color: #f5d879;
-  font-size: 23px;
-  margin-bottom: 7px;
+  font-size: 16px;
+  margin: 0;
 }
 
 .success-book-heading p {
-  color: #e5eee8;
-  font-size: 12px;
+  display: none;
 }
 
 .success-book-stage {
-  perspective: 1600px;
+  perspective: 1200px;
+  width: 100%;
   max-width: 760px;
-  margin: 12px auto;
-  padding: 8px;
+  margin: 5px auto;
+  padding: 3px;
 }
 
 .success-book {
   position: relative;
-  padding: 12px;
-  border-radius: 14px;
+  padding: 5px;
+  border-radius: 11px;
   background: linear-gradient(90deg, #6b471e, #d4af37 8%, #8c672d 50%, #d4af37 92%, #6b471e);
-  box-shadow: 0 20px 35px rgba(0,0,0,.4);
+  box-shadow: 0 8px 18px rgba(0,0,0,.3);
 }
 
 .success-book-page {
   position: relative;
-  min-height: 560px;
-  padding: 25px 20px;
+  min-height: 0;
+  padding: 10px 10px 10px 24px;
   color: #3b3020;
-  background:
-    repeating-linear-gradient(
-      to bottom,
-      #fffdf4 0px,
-      #fffdf4 30px,
-      #e9e0cb 31px,
-      #fffdf4 32px
-    );
-  border: 2px solid #e1c987;
+  background: #fffdf4;
+  border: 1px solid #e1c987;
   border-radius: 5px;
-  box-shadow:
-    inset 7px 0 12px rgba(120,85,35,.10),
-    0 5px 15px rgba(0,0,0,.2);
-  transform-origin: left center;
+  box-shadow: inset 5px 0 9px rgba(120,85,35,.10);
 }
 
 .success-book-page::before {
@@ -260,57 +271,57 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 35px;
+  left: 17px;
   width: 1px;
-  background: rgba(190,80,70,.28);
+  background: rgba(190,80,70,.25);
 }
 
 .success-page-title {
   text-align: center;
   color: #145239;
-  font-size: 17px;
+  font-size: 13px;
   font-weight: 800;
-  margin: 0 0 16px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #d4af37;
+  margin: 0 0 7px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #d4af37;
 }
 
 .success-testimonial {
   position: relative;
-  margin: 12px 0;
-  padding: 12px 13px;
-  border: 1.5px solid #c9a64e;
-  border-radius: 10px;
-  background: rgba(255,255,255,.78);
-  box-shadow: 0 4px 9px rgba(90,65,25,.12);
+  margin: 6px 0;
+  padding: 8px 9px;
+  border: 1px solid #c9a64e;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(90,65,25,.1);
 }
 
 .success-testimonial::before {
   content: "❝";
   display: block;
   color: #b28a32;
-  font-size: 22px;
+  font-size: 17px;
   line-height: 1;
 }
 
 .success-testimonial p {
   font-family: Georgia, serif;
-  font-size: 12px;
-  line-height: 1.65;
+  font-size: 11px;
+  line-height: 1.4;
   color: #403729;
-  margin: 5px 0 9px;
+  margin: 3px 0 5px;
 }
 
 .success-testimonial strong {
   display: block;
   color: #075239;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .success-testimonial small {
   display: block;
   color: #80672f;
-  font-size: 10px;
+  font-size: 9px;
   margin-top: 2px;
 }
 
@@ -318,21 +329,22 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  max-width: 760px;
-  margin: 15px auto;
+  gap: 7px;
+  width: 100%;
+  max-width: 420px;
+  margin: 7px auto 3px;
 }
 
 .success-book-controls button {
   flex: 1;
-  padding: 12px 8px;
+  min-width: 0;
+  padding: 8px 5px;
   border: 1px solid #f5d879;
-  border-radius: 9px;
+  border-radius: 7px;
   background: linear-gradient(145deg, #d4af37, #f5d879);
   color: #173b2b;
   font-weight: 800;
-  font-size: 13px;
-  box-shadow: 0 4px 10px rgba(0,0,0,.2);
+  font-size: 11px;
   cursor: pointer;
 }
 
@@ -343,34 +355,53 @@
 
 .success-page-number {
   color: #f5d879;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
   white-space: nowrap;
 }
 
+#hubBookRange {
+  margin: 3px 0 !important;
+  font-size: 10px !important;
+}
+
 @media(max-width:480px) {
+  #page-hub-stories {
+    padding: 7px !important;
+  }
+
   .success-book-page {
-    min-height: 600px;
-    padding: 20px 13px;
+    padding: 8px 7px 8px 21px;
   }
 
   .success-book-page::before {
-    left: 25px;
+    left: 14px;
   }
 
   .success-testimonial {
-    padding: 9px;
-    margin: 9px 0;
+    padding: 7px;
+    margin: 5px 0;
   }
 
   .success-testimonial p {
-    font-size: 11px;
+    font-size: 10px;
+    line-height: 1.35;
   }
 
-  .success-book-heading h2 {
-    font-size: 20px;
+  .success-book-controls {
+    gap: 5px;
+  }
+
+  .success-book-controls button {
+    padding: 8px 3px;
+    font-size: 10px;
+  }
+
+  .success-page-number {
+    font-size: 10px;
   }
 }
+
 
     /* PALMGROW - STRONG PREMIUM EMERALD BACKGROUND */
 /* REFERRAL PAGE EXCLUDED */
