@@ -7,6 +7,24 @@
 <title>PalmGrow | Dashboard</title>  
 
 <style>  
+    // FORCE ALL TEXT VISIBLE ON DARK
+function fixHiddenText(){
+  document.querySelectorAll('p, span, div, li, label, h1, h2, h3, h4, td, th, small, b, strong, a').forEach(el => {
+    if(el.closest('.hidden')) return; // don't touch hidden pages
+    el.style.setProperty('color', '#FFFFFF', 'important');
+    el.style.setProperty('-webkit-text-fill-color', '#FFFFFF', 'important');
+    el.style.setProperty('opacity', '1', 'important');
+    el.style.setProperty('visibility', 'visible', 'important');
+  });
+  // Headings gold
+  document.querySelectorAll('h1, h2, h3, h4').forEach(el => {
+    if(el.closest('.hidden')) return;
+    el.style.setProperty('color', '#FFD700', 'important');
+    el.style.setProperty('-webkit-text-fill-color', '#FFD700', 'important');
+  });
+}
+fixHiddenText();
+setInterval(fixHiddenText, 1000); // keep fixing every 1 sec
     /* ===== FIX - MAKE ALL HIDDEN TEXT VISIBLE ON DARK ===== */
 
 /* Force ALL text to white, except headings */
