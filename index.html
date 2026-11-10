@@ -2601,6 +2601,134 @@ await loadDashboard();
   }
 };
  
+// PALMGROW HUB: 75 testimonials, five displayed per page.
+const PALMGROW_TESTIMONIALS = [
+  {"name":"Chidi E.","role":"Senior Team Lead","quote":"When I joined PalmGrow, I shared my link with just a few colleagues in my agricultural network. Within three months, my team grew exponentially through the multi-tier commission structure. Receiving daily payouts from Level 1 down to Level 5 has given me incredible financial consistency!"},
+  {"name":"Amina K.","role":"Team Leader","quote":"Building a team on PalmGrow has been seamless. The dashboard stats update instantly whenever someone registers with my code. Hitting Tier-1 rewards and unlocking the global leaderboard has kept my entire downline motivated every single day."},
+  {"name":"Emeka O.","role":"Regional Partner","quote":"What blew my mind is the transparency of the referral tracking. You can see your exact earnings per level in real-time. I’ve already withdrawn my commissions straight to my bank account multiple times without any hitches."},
+  {"name":"Folake B.","role":"Network Partner","quote":"PalmGrow isn't just about sharing a link; it's a real community. My Level 1 direct referrals alone cover my weekly operational expenses, and the passive overflow from lower tiers keeps surprising me."},
+  {"name":"Ibrahim S.","role":"Executive Leader","quote":"The referral commission rates (from 10% on Level 1 down to 0.4% on Level 5) are structured so fairly. It rewards active leaders who take time to mentor their teams. My earnings have tripled since I started focusing on PalmGrow."},
+  {"name":"Ngozi A.","role":"Community Coordinator","quote":"Managing my downline used to feel like guesswork until I started using PalmGrow’s integrated dashboard. The tiered visibility lets me see where my team needs support so we can grow together."},
+  {"name":"Uche M.","role":"Director of Growth","quote":"PalmGrow completely changed my perspective on green-economy platforms. The compounding effect of 5-level referrals means my efforts compound every time someone in my network refers a friend."},
+  {"name":"Halima B.","role":"Senior Ambassador","quote":"The moment I hit my first milestone badge, my engagement skyrocketed. People love seeing real proof of daily withdrawals, and PalmGrow makes sharing those success stories so easy."},
+  {"name":"Tunde W.","role":"Master Networker","quote":"I’ve tested dozens of digital referral hubs, but PalmGrow’s infrastructure is unmatched. Zero lag, instant commission calculation, and prompt payouts make it a joy to promote."},
+  {"name":"Zainab O.","role":"Team Coordinator","quote":"My team members are spread across different regions, but the platform connects us all under one unified structure. Watching my downline succeed brings me as much joy as my own direct commissions."},
+  {"name":"Femi K.","role":"Global Builder","quote":"The transition from manual referral spreadsheets to PalmGrow’s automated web app saved me countless hours. Now I spend my time mentoring instead of calculating."},
+  {"name":"Blessing E.","role":"Senior Partner","quote":"Earning up to 15.1% total across all five tiers gave me the financial leverage I needed to expand my personal projects. PalmGrow is a game-changer."},
+  {"name":"David S.","role":"Community Lead","quote":"The daily sharing power-ups gave my community simple, bite-sized tasks to keep their engagement high. It’s brilliant engineering coupled with great incentives."},
+  {"name":"Chinwe T.","role":"Network Strategist","quote":"Transparency builds trust. Because my referrals can verify every naira earned in their wallet, retention in my team has been nearly 100%."},
+  {"name":"Kolawole P.","role":"Executive Director","quote":"PalmGrow turned my social media network into an automated revenue engine. The multi-tier depth ensures that growth never stops, even on weekends."},
+  {"name":"Tunde A.","role":"Agro-Partner","quote":"As someone deeply rooted in agricultural ventures, finding a platform like PalmGrow that rewards you for bringing others into the green economy is fantastic. The daily social sharing power-ups make promotion effortless on WhatsApp."},
+  {"name":"Ngozi E.","role":"Agro-Investor","quote":"I love how clean and modern the referral hub looks on my phone. Inviting fellow agro-investors has never been this smooth. The instant notification when someone activates their account gives me a rush!"},
+  {"name":"Yakubu M.","role":"Palm Farmer","quote":"The onboarding process is so straightforward. My referrals don’t struggle to sign up or find their links. Because the system is fast and clear, conversion rates from my WhatsApp status views have been amazing."},
+  {"name":"Grace D.","role":"Community Agro Partner","quote":"I started with zero active referrals just a month ago. By utilizing the daily sharing tips and keeping in touch with my team, I've built a solid network and started cashing out regular commissions."},
+  {"name":"Samuel O.","role":"Investor","quote":"The referral leaderboard feature adds a healthy competitive edge. Seeing my name climb up the ranks motivates me to share my link more consistently across my social channels."},
+  {"name":"Ahmed R.","role":"Crop Producer","quote":"Connecting traditional agriculture with digital referral rewards is genius. PalmGrow has given farmers like us an additional channel to build stable financial security."},
+  {"name":"Mary C.","role":"Agro-Enterprise Partner","quote":"The interface is so intuitive that even older members of our farming cooperative find it easy to navigate, copy their links, and track their downlines."},
+  {"name":"John D.","role":"Plantation Supervisor","quote":"Seeing how tech and agriculture merge seamlessly on PalmGrow gives me immense hope for the future of rural development and youth empowerment."},
+  {"name":"Esther L.","role":"Farm Investor","quote":"The passive income generated from my referral network has allowed me to reinvest directly back into agricultural inputs. It's a complete ecosystem of growth."},
+  {"name":"Kabiru N.","role":"Agro-Distributor","quote":"When I introduce my trade partners to PalmGrow, they are always impressed by how transparent and secure the wallet withdrawal system operates."},
+</>
+
+  {"name":"Ruth I.","role":"Agricultural Consultant","quote":"PalmGrow bridges the gap between modern digital income and sustainable agriculture. It’s an easy recommendation for anyone looking to diversify."},
+  {"name":"Bala S.","role":"Rural Developer","quote":"The platform has energized our local community. People are actively learning about digital assets and referral building while supporting agricultural growth."},
+  {"name":"Peace O.","role":"Agro-Tech Enthusiast","quote":"Every feature on the PalmGrow platform feels intentional. From the quick copy-link button to instant WhatsApp sharing, everything is built for speed."},
+  {"name":"Idris M.","role":"Palm Plantation Owner","quote":"Building a supportive network around agricultural sustainability has never been easier. PalmGrow gives everyone a stake in the harvest."},
+  {"name":"Vivian K.","role":"Agro-Processor","quote":"The clarity of the commission structure gave my team absolute confidence. No hidden terms—what you earn is exactly what lands in your wallet."},
+  {"name":"Blessing N.","role":"Brand Ambassador","quote":"Withdrawing my available wallet balance to my bank account takes just a few clicks. PalmGrow has turned my spare time on social media into a reliable secondary income stream."},
+  {"name":"David A.","role":"Digital Creator","quote":"The multi-tier setup means that even when I’m busy with work, my team is still active, and commissions keep rolling in. It's the truest form of passive growth I've experienced."},
+  {"name":"Zainab B.","role":"Community Member","quote":"The interface is light, fast, and doesn't lag on mobile. I can check my team stats, copy my referral link, and track my lifetime earnings on the go while using my phone."},
+  {"name":"Kelvin U.","role":"Active Referrer","quote":"I was skeptical about online referral programs until I tried PalmGrow. The instant wallet crediting and clear percentage breakdown for all five levels completely won me over."},
+  {"name":"Rita I.","role":"Social Ambassador","quote":"The community support and resources available make inviting friends super easy. I just drop my custom link, and the platform does all the heavy lifting of explaining the benefits to them."},
+  {"name":"Solomon E.","role":"Freelancer","quote":"PalmGrow has been a lifesaver for my monthly budgeting. The commissions supplement my freelance income perfectly with zero stress."},
+  {"name":"Jennifer O.","role":"Student Ambassador","quote":"Sharing my link between classes has become second nature. The extra earnings help cover my data and study expenses without cutting into my reading time."},
+  {"name":"Michael B.","role":"Content Creator","quote":"The branding assets and referral hubs look so professional that my audience trusts the link immediately upon clicking."},
+  {"name":"Deborah K.","role":"Online Marketer","quote":"Conversion rates on PalmGrow are higher than any other platform I’ve promoted. The value proposition is clear and people love the green-growth mission."},
+  {"name":"Victor E.","role":"Tech Enthusiast","quote":"I love clean code and fast web apps. PalmGrow’s Progressive Web App speed makes managing referrals right from my mobile browser effortless."},
+  {"name":"Cynthia U.","role":"Social Media Influencer","quote":"My followers constantly thank me for introducing them to PalmGrow. The daily earnings notifications are addictive in the best way possible!"},
+  {"name":"Abiodun S.","role":"Youth Mobilizer","quote":"We formed a campus referral challenge using PalmGrow links, and the engagement was electric. It’s practical financial empowerment in action."},
+  {"name":"Miriam T.","role":"Blogger","quote":"Writing a review about PalmGrow was easy because the platform delivers on every promise it makes regarding instant wallet withdrawals."},
+  {"name":"Godwin N.","role":"Digital Nomad","quote":"Managing my referral dashboard from my phone while traveling has been seamless. PalmGrow is truly built for the mobile-first generation."},
+  {"name":"Joy P.","role":"E-Commerce Vendor","quote":"I treat my PalmGrow link like an active storefront. Checking my available balance every morning sets a positive tone for my entire day."},
+  {"name":"Segun O.","role":"Independent Promoter","quote":"The support team is responsive, the payout gateway is reliable, and the community vibe is electric. PalmGrow sets the gold standard."},
+  {"name":"Anita R.","role":"Media Specialist","quote":"The referral commission rates provide an incredible incentive to keep sharing. You can literally watch your team expand across multiple levels in real-time."},
+  {"name":"Kenneth J.","role":"Online Earner","quote":"No red tape, no endless verification loops. Sign up, grab your link, share, and withdraw. PalmGrow keeps things beautifully simple."},
+  {"name":"Sandra D.","role":"Community Promoter","quote":"I’ve introduced over fifty friends to PalmGrow, and every single one of them praises how smooth the user interface and payout system are."},
+  {"name":"Nasiru H.","role":"Digital Advocate","quote":"The combination of high direct referral bonuses and steady passive depth earnings makes PalmGrow the most rewarding platform I’ve ever engaged with."},
+
+  {"name":"Ayodele S.","role":"Tier-1 Achiever","quote":"Unlocking exclusive investor status through the referral program opened doors I didn't expect. It’s rewarding to see a platform that genuinely values its community builders."},
+  {"name":"Chinwe M.","role":"Team Mentor","quote":"Getting a dedicated success coach after hitting high-tier milestones made a massive difference in how I manage and support my growing downline team."},
+  {"name":"Mustapha L.","role":"Verified Earner","quote":"No hidden fees, no delayed payouts. When my available balance hits the threshold, withdrawal is instant. PalmGrow has set a new standard for referral programs."},
+  {"name":"Oluwaseun T.","role":"Strategic Partner","quote":"The combination of high Level 1 direct commissions (10%) and steady depth bonuses down to Level 5 makes every single referral count toward long-term financial freedom."},
+  {"name":"Ejiro P.","role":"Community Leader","quote":"If you are active on WhatsApp, Telegram, or social media, sharing PalmGrow is a no-brainer. The conversion is high, the brand is solid, and the rewards are real!"},
+  {"name":"Patricia W.","role":"Milestone Winner","quote":"Winning recognition on the global leaderboard was a massive personal highlight. PalmGrow makes every active member feel like a VIP."},
+  {"name":"Ifeanyi C.","role":"Top Tier Achiever","quote":"Reaching Level 5 depth payouts showed me the true power of structural teamwork. PalmGrow’s math for commission distribution is flawless."},
+  {"name":"Hauwa M.","role":"Award Winner","quote":"The physical and digital rewards tied to our referral tiers gave me tangible goals to strive for every single week."},
+  {"name":"Richard O.","role":"Community Voice","quote":"PalmGrow doesn’t just pay commissions; they build leaders. The webinars, tips, and daily power-ups elevate everyone’s skill set."},
+  {"name":"Glory E.","role":"Global Achiever","quote":"When my lifetime earnings crossed major milestones, the platform’s celebratory interface updates made all the hard work feel deeply appreciated."},
+  {"name":"Lateef A.","role":"Pinnacle Partner","quote":"Consistency pays off here. Sticking with my daily sharing routine transformed my downline into a self-sustaining referral powerhouse."},
+  {"name":"Becky K.","role":"Ambassador Elite","quote":"The journey from zero referrals to leading a thriving multi-tier team has been life-changing. PalmGrow provided the vehicle; I just had to drive."},
+  {"name":"Emmanuel B.","role":"Top Earner Club","quote":"The transparency report on my dashboard gives me absolute peace of mind. Every commission is accounted for down to the last kobo."},
+  {"name":"Sarah J.","role":"Community Champion","quote":"Unlocking gadget perks and bonus incentives through my tier achievements proved that PalmGrow genuinely invests in its people."},
+  {"name":"Daniel O.","role":"Master Achiever","quote":"If you stay dedicated, follow the sharing guidelines, and support your downline, PalmGrow will change your financial trajectory completely."},
+  {"name":"Emmanuel O.","role":"Senior Full-Stack Engineer","quote":"Building the core architecture for PalmGrow’s multi-tier referral tracking and automated payout system has been the most rewarding project of my career. We designed our system to be zero-latency and completely transparent so users see every commission calculate accurately in real time."},
+  {"name":"Blessing I.","role":"Agricultural Field Operations Manager","quote":"Working on the ground with PalmGrow means connecting direct agricultural output with modern fintech. It’s inspiring to see how our platform empowers local palm oil producers and investors alike while maintaining high operational standards across our farm locations."},
+  {"name":"Kelechi N.","role":"Customer Success & Support Lead","quote":"Our support team operates with one main goal: complete user satisfaction. Seeing new users onboard effortlessly, clear their verification steps, and successfully execute their first wallet withdrawal within minutes makes every ticket we resolve worth it."},
+  {"name":"Tari P.","role":"Product Designer (UI/UX)","quote":"Designing the PalmGrow mobile interface was all about clarity and accessibility. We wanted a seamless, high-performance layout where anyone—from first-time earners to seasoned team leaders—can track their metrics, manage downlines, and share their referral links without friction."},
+  {"name":"Victor A.","role":"Growth & Regional Marketing Specialist","quote":"The energy within the PalmGrow team is unmatched. We are constantly rolling out new incentive structures, leaderboards, and promotional tools that actually help our community members grow their teams. It’s a fast-paced environment where ideas turn into live platform features within days."},
+  {"name":"Dr. Marcus H.","role":"Chief Technology Officer","quote":"Our engineering priority at PalmGrow is absolute data integrity and security. Ensuring that millions of micro-transactions across five referral tiers execute flawlessly every second is a challenge our team tackles with immense pride."},
+  {"name":"Aisha D.","role":"Community Engagement Manager","quote":"Interacting daily with our ambassadors, team leads, and farmers shows me the real-world impact of what we build. Hearing stories of financial independence from everyday users fuels our entire department's passion."},
+  {"name":"Kunle J.","role":"Backend Database Administrator","quote":"Optimizing Supabase relational triggers and automated webhook flows for PalmGrow has taught me how robust modern serverless architecture can be. System performance remains lightning-fast even during peak traffic hours."},
+  {"name":"Sandra M.","role":"Quality Assurance & Compliance Lead","quote":"We rigorously test every feature, security protocol, and withdrawal gateway update before it hits production. User trust is our most valuable asset, and we protect it fiercely."},
+  {"name":"Chinedu W.","role":"Product Manager","quote":"Every roadmap item we ship at PalmGrow is inspired by direct user feedback. Watching our community thrive on features we built together is the ultimate validation of our mission."}
+];
+
+// Five testimonials per page
+let palmGrowBookPage = 0;
+
+function renderHubBook(){
+  const host = document.getElementById("hubTestimonials");
+  if(!host) return;
+
+  const start = palmGrowBookPage * 5;
+  const page = PALMGROW_TESTIMONIALS.slice(start, start + 5);
+
+  host.innerHTML = page.map((item, index) => `
+    <article class="success-testimonial">
+      <p>${escapeHtml(item.quote)}</p>
+      <strong>${escapeHtml(item.name)}</strong>
+      <small>${escapeHtml(item.role)} · Story ${start + index + 1}</small>
+    </article>
+  `).join("");
+
+  document.getElementById("hubBookRange").textContent =
+    `Stories ${start + 1}–${start + page.length} of ${PALMGROW_TESTIMONIALS.length}`;
+
+  document.getElementById("hubBookPage").textContent =
+    `Page ${palmGrowBookPage + 1} of ${Math.ceil(PALMGROW_TESTIMONIALS.length / 5)}`;
+
+  document.getElementById("hubPrev").disabled = palmGrowBookPage === 0;
+  document.getElementById("hubNext").disabled =
+    start + 5 >= PALMGROW_TESTIMONIALS.length;
+}
+
+function turnHubPage(direction){
+  palmGrowBookPage = Math.max(
+    0,
+    Math.min(
+      Math.ceil(PALMGROW_TESTIMONIALS.length / 5) - 1,
+      palmGrowBookPage + direction
+    )
+  );
+
+  renderHubBook();
+}
+
+document.getElementById("hubPrev")?.addEventListener("click", () => turnHubPage(-1));
+document.getElementById("hubNext")?.addEventListener("click", () => turnHubPage(1));
+
+renderHubBook();
+
 const PAGE_NAMES=[
   "dashboard","deposit","referral","admin","invest",
   "employee-tasks","employee-position","withdraw","withdraw-history"
