@@ -2852,15 +2852,25 @@ const PALMGROW_TESTIMONIALS = [
   {"name":"Chinedu W.","role":"Product Manager","quote":"Every roadmap item we ship at PalmGrow is inspired by direct user feedback. Watching our community thrive on features we built together is the ultimate validation of our mission."}
 ];
 
-// Five testimonials per page
+// 30-page PalmGrow Success Stories book
 let palmGrowBookPage = 0;
+const PALMGROW_BOOK_PAGES = 30;
 
 function renderHubBook(){
   const host = document.getElementById("hubTestimonials");
   if(!host) return;
 
-  const start = palmGrowBookPage * 5;
-  const page = PALMGROW_TESTIMONIALS.slice(start, start + 5);
+  const total = PALMGROW_TESTIMONIALS.length;
+
+  const start = Math.floor(
+    palmGrowBookPage * total / PALMGROW_BOOK_PAGES
+  );
+
+  const end = Math.floor(
+    (palmGrowBookPage + 1) * total / PALMGROW_BOOK_PAGES
+  );
+
+  const page = PALMGROW_TESTIMONIALS.slice(start, end);
 
   host.innerHTML = page.map((item, index) => `
     <article class="success-testimonial">
@@ -2871,21 +2881,23 @@ function renderHubBook(){
   `).join("");
 
   document.getElementById("hubBookRange").textContent =
-    `Stories ${start + 1}–${start + page.length} of ${PALMGROW_TESTIMONIALS.length}`;
+    `Stories ${start + 1}–${end} of ${total}`;
 
   document.getElementById("hubBookPage").textContent =
-    `Page ${palmGrowBookPage + 1} of ${Math.ceil(PALMGROW_TESTIMONIALS.length / 5)}`;
+    `Page ${palmGrowBookPage + 1} of ${PALMGROW_BOOK_PAGES}`;
 
-  document.getElementById("hubPrev").disabled = palmGrowBookPage === 0;
+  document.getElementById("hubPrev").disabled =
+    palmGrowBookPage === 0;
+
   document.getElementById("hubNext").disabled =
-    start + 5 >= PALMGROW_TESTIMONIALS.length;
+    palmGrowBookPage === PALMGROW_BOOK_PAGES - 1;
 }
 
 function turnHubPage(direction){
   palmGrowBookPage = Math.max(
     0,
     Math.min(
-      Math.ceil(PALMGROW_TESTIMONIALS.length / 5) - 1,
+      PALMGROW_BOOK_PAGES - 1,
       palmGrowBookPage + direction
     )
   );
