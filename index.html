@@ -1527,12 +1527,43 @@ th{background:#f0f5f2;font-weight:600}
         <p>Stories, information, support and updates from the PalmGrow community and the wider oil-palm sector.</p>
     </div>
 
-    <div class="hub-tabs" role="tablist">
-        <button class="hub-tab active" type="button" onclick="showHubSection('stories')">⭐ Success Stories</button>
-        <button class="hub-tab" type="button" onclick="showHubSection('about')">🌿 About PalmGrow</button>
-        <button class="hub-tab" type="button" onclick="showHubSection('agent')">💬 Talk to Agent</button>
-        <button class="hub-tab" type="button" onclick="showHubSection('updates')">📢 PalmGrow News</button>
-        <button class="hub-tab" type="button" onclick="showHubSection('industry')">🌱 Palm Industry News</button>
+    <div class="hub-menu-grid">
+
+    <div class="hub-menu-card" onclick="showPage('hub-stories')">
+        <div class="hub-menu-icon">🏆</div>
+        <h3>Success Stories</h3>
+        <p>Read experiences from the PalmGrow community.</p>
+        <span>Explore Stories →</span>
+    </div>
+
+    <div class="hub-menu-card" onclick="showPage('hub-agent')">
+        <div class="hub-menu-icon">💬</div>
+        <h3>Talk to Agent</h3>
+        <p>Get help and support with your account.</p>
+        <span>Get Support →</span>
+    </div>
+
+    <div class="hub-menu-card" onclick="showPage('hub-updates')">
+        <div class="hub-menu-icon">📢</div>
+        <h3>PalmGrow News</h3>
+        <p>Stay informed about official announcements.</p>
+        <span>Read Updates →</span>
+    </div>
+
+    <div class="hub-menu-card" onclick="showPage('hub-industry')">
+        <div class="hub-menu-icon">🌴</div>
+        <h3>Palm Industry News</h3>
+        <p>Discover news from the oil-palm industry.</p>
+        <span>Explore News →</span>
+    </div>
+
+    <div class="hub-menu-card" onclick="showPage('hub-about')">
+        <div class="hub-menu-icon">🌿</div>
+        <h3>About PalmGrow</h3>
+        <p>Learn about PalmGrow and its purpose.</p>
+        <span>Learn More →</span>
+    </div>
+
     </div>
 
     <section class="hub-panel active" id="hub-panel-stories">
