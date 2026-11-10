@@ -7,6 +7,36 @@
 <title>PalmGrow | Dashboard</title>  
 
 <style>  
+  /* REMOVE ALL GREEN */
+* {
+  --green: #000 !important;
+  --primary: #000 !important;
+  --success: #fff !important;
+}
+
+a, span, p, h1, h2, h3, h4, div, button, .btn {
+  border-color: #1a1a1a !important;
+}
+
+/* Any green text -> white */
+[style*="green"], [style*="#00"], [style*="rgb(0, 128"],
+.text-green, .green, .success, .text-success, .bg-green, .bg-success {
+  color: #fff !important;
+  background-color: #000 !important;
+  border-color: #1a1a1a !important;
+}
+
+/* Any green button / background -> black with white text */
+button, .btn, .btn-primary, .btn-success, .bg-primary {
+  background-color: #000 !important;
+  color: #fff !important;
+  border: 1px solid #333 !important;
+}
+
+/* Green amounts / prices -> white */
+.price, .amount, .money, .income, .deposit {
+  color: #fff !important;
+}
   /* FULL BLACK THEME */
 * {
   background-color: #000 !important;
