@@ -3207,10 +3207,7 @@ async function loadDashboardEmployeeLevel(){
 
 }
   async function loadDashboard(){
-
-  // Keep the app hidden while restoring the correct page
-  $("app").style.display="none";
-
+      
   const {data:{session},error:sessionError} =
     await supabase.auth.getSession();
 
