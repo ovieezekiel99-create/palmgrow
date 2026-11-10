@@ -7,6 +7,67 @@
 <title>PalmGrow | Dashboard</title>  
 
 <style>  
+    /* ===== PALMGROW - FULL DARK MODE ===== */
+body, #app, .app, main, .page, [id^="page-"] {
+  background: #0A120B !important;
+  background-color: #0A120B !important;
+  color: #FFFFFF !important;
+}
+
+/* All cards, boxes, sections */
+.card, .box, .section, .panel, .container,
+.pg-about, .pg-card, .pg-about-hero,
+.dashboard-card, .stat-card, .info-card {
+  background: #14261A !important;
+  background-color: #14261A !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important;
+}
+
+/* Headings stay gold for beauty */
+h1, h2, h3, h4, .title {
+  color: #FFD700 !important;
+}
+h1 span { color: #FFD700 !important; }
+
+/* Normal text white / light grey */
+p, li, span, label, div {
+  color: #E8F5E9 !important;
+}
+small, .muted, .subtitle {
+  color: #A8B8AA !important;
+}
+
+/* Inputs */
+input, select, textarea {
+  background: #0A120B !important;
+  color: #fff !important;
+  border: 1px solid #2A4A30 !important;
+}
+input::placeholder { color: #8A9A8B !important; }
+
+/* Buttons - keep gold/green pop */
+button, .btn, .pg-cta {
+  background: linear-gradient(90deg, #FFD700, #1A6B2A) !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+/* Nav / Sidebar / Header */
+nav, .sidebar, header, .topbar, .nav-item {
+  background: #0D1F11 !important;
+  color: #fff !important;
+  border-color: rgba(255,255,255,0.1) !important;
+}
+.nav-item.active {
+  background: #1A6B2A !important;
+  color: #FFD700 !important;
+}
+
+/* Tables */
+table { background: #14261A !important; color: #fff !important; }
+td, th { border-color: rgba(255,255,255,0.1) !important; color: #fff !important; }
     /* PALMGROW HUB MENU DESIGN */
 .hub-menu-grid {
     display: grid;
