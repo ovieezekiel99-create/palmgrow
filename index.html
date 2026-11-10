@@ -7,6 +7,59 @@
 <title>PalmGrow | Dashboard</title>  
 
 <style>  
+    /* ===== FIX - MAKE ALL HIDDEN TEXT VISIBLE ON DARK ===== */
+
+/* Force ALL text to white, except headings */
+* {
+  color: #FFFFFF !important;
+}
+
+/* Headings back to gold */
+h1, h2, h3, h4, h5, .title, .pg-card h2 {
+  color: #FFD700 !important;
+}
+
+/* Small text / descriptions - light grey, not dark */
+small, .muted, .subtitle, .desc, .pg-about-desc, .pg-card p, .pg-card li {
+  color: #E8F5E9 !important;
+}
+
+/* Links */
+a, a span {
+  color: #FFD700 !important;
+}
+
+/* Buttons - text must be WHITE on gold/green, not gold */
+button, .btn, .pg-cta, .nav-item, .nav-item span {
+  color: #FFFFFF !important;
+}
+button *, .btn * {
+  color: #FFFFFF !important;
+}
+
+/* Fix for any box that still has WHITE background from before */
+[style*="white"], [style*="#fff"], [style*="#FFF"] {
+  background: #14261A !important;
+  color: #FFFFFF !important;
+}
+
+/* Inputs - make typing visible */
+input, select, textarea {
+  background: #0A120B !important;
+  color: #FFFFFF !important;
+  border: 1px solid #FFD700 !important;
+}
+input::placeholder {
+  color: #CCCCCC !important;
+}
+
+/* Fix for text inside gold badges / gold cards */
+.pg-value, .badge, .tag {
+  color: #0A120B !important;
+}
+.pg-value *, .badge *, .tag * {
+  color: #0A120B !important;
+    }
     /* ===== PALMGROW - FULL DARK MODE ===== */
 body, #app, .app, main, .page, [id^="page-"] {
   background: #0A120B !important;
