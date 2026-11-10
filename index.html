@@ -2792,7 +2792,10 @@ function showPage(page, pushHistory = true){
     console.error("Referral page loading error:", error);
   });
 }
-}  
+    if(page==="hub"){
+  showHubSection("stories");
+    }
+  }  
  function showHubSection(section){
   document.querySelectorAll(".hub-tab").forEach(tab=>{
     tab.classList.toggle(
