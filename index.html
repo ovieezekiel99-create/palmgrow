@@ -1507,7 +1507,86 @@ th{background:#f0f5f2;font-weight:600}
     </div>
 
 </div>
+          <!-- PALMGROW HUB CONTENT: OPENS INSIDE HOME -->
+<div id="palmGrowHubContent" class="hidden">
 
+    <div class="hub-hero">
+        <h2>🌴 PalmGrow Hub</h2>
+        <p>Stories, information, support and updates from the PalmGrow community and the wider oil-palm sector.</p>
+    </div>
+
+    <div class="hub-tabs" role="tablist">
+        <button class="hub-tab active" type="button" onclick="showHubSection('stories')">⭐ Success Stories</button>
+        <button class="hub-tab" type="button" onclick="showHubSection('about')">🌿 About PalmGrow</button>
+        <button class="hub-tab" type="button" onclick="showHubSection('agent')">💬 Talk to Agent</button>
+        <button class="hub-tab" type="button" onclick="showHubSection('updates')">📢 PalmGrow News</button>
+        <button class="hub-tab" type="button" onclick="showHubSection('industry')">🌱 Palm Industry News</button>
+    </div>
+
+    <section class="hub-panel active" id="hub-panel-stories">
+        <div class="hub-info-card">
+            <h3>Testimonials</h3>
+        </div>
+
+        <div class="hub-notebook">
+            <div class="hub-book-head">
+                <strong>📖 PalmGrow Stories Notebook</strong>
+                <span id="hubBookRange">Stories will appear here</span>
+            </div>
+
+            <div id="hubTestimonials">
+                <p>Testimonials will load here.</p>
+            </div>
+
+            <div class="hub-book-controls">
+                <button type="button" id="hubPrev" disabled>← Previous</button>
+                <span id="hubBookPage">Page 1</span>
+                <button type="button" id="hubNext">Next →</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="hub-panel" id="hub-panel-about">
+        <div class="hub-info-card">
+            <h3>About PalmGrow</h3>
+            <p>PalmGrow is an agricultural participation and digital community platform focused on the oil-palm value chain.</p>
+            <p>Our focus is clear information, responsible participation, agricultural development and transparent account processes.</p>
+        </div>
+    </section>
+
+    <section class="hub-panel" id="hub-panel-agent">
+        <div class="hub-info-card">
+            <h3>Talk to a PalmGrow Agent</h3>
+            <p>Need help with your account, deposits, withdrawals, referrals or platform navigation?</p>
+            <div class="hub-empty">
+                Official support contact will be added here.
+                <br>
+                Never share your password, login code or withdrawal PIN.
+            </div>
+        </div>
+    </section>
+
+    <section class="hub-panel" id="hub-panel-updates">
+        <div class="hub-info-card">
+            <h3>News about PalmGrow</h3>
+            <div class="hub-empty">
+                Verified PalmGrow announcements will appear here.
+            </div>
+        </div>
+    </section>
+
+    <section class="hub-panel" id="hub-panel-industry">
+        <div class="hub-info-card">
+            <h3>Oil Palm & Agriculture News</h3>
+            <div class="hub-empty">
+                Verified oil-palm and agriculture news will appear here.
+            </div>
+        </div>
+    </section>
+
+</div>
+<!-- END PALMGROW HUB CONTENT -->
+        
       <!-- EMPLOYEE POSITION PAGE -->
       <div id="page-employee-position" class="hidden">  
         <div class="section">  
