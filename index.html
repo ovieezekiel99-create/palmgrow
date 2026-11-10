@@ -2952,31 +2952,7 @@ function showPage(page, pushHistory = true){
   });
 }
   }  
- function showHubSection(section){
-  document.querySelectorAll(".hub-tab").forEach(tab=>{
-    tab.classList.toggle(
-      "active",
-      tab.textContent.includes(
-        section === "stories" ? "Success Stories" :
-        section === "about" ? "About PalmGrow" :
-        section === "agent" ? "Talk to Agent" :
-        section === "updates" ? "PalmGrow News" :
-        "Palm Industry News"
-      )
-    );
-  });
 
-  document.querySelectorAll(".hub-panel").forEach(panel=>{
-    panel.classList.toggle(
-      "active",
-      panel.id === "hub-panel-" + section
-    );
-  });
-
-  if(section === "stories" && typeof renderHubBook === "function"){
-    renderHubBook();
-  }
-    }
 window.showPage=showPage;  
 window.onpopstate = (event) => {  
   const targetPage = event.state?.page || "dashboard";  
