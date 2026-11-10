@@ -2897,8 +2897,6 @@ function turnHubPage(direction){
 document.getElementById("hubPrev")?.addEventListener("click", () => turnHubPage(-1));
 document.getElementById("hubNext")?.addEventListener("click", () => turnHubPage(1));
 
-renderHubBook();
-
 const PAGE_NAMES=[
   "dashboard",
   "hub",
@@ -2940,7 +2938,7 @@ function showPage(page, pushHistory = true){
   if(backBtn){  
     backBtn.classList.toggle("hidden", pageHistory.length <= 1 || page === "dashboard");  
   }  
- 
+   if(page==="hub-stories")renderHubBook();
   if(page==="employee-tasks")loadEmployeeTasks();  
   if(page==="employee-position")loadEmployeePositionPlans();  
   if(page==="withdraw")loadWithdrawalPage();
