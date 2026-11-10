@@ -2916,19 +2916,7 @@ const PAGE_NAMES=[
   "withdraw",
   "withdraw-history"
 ];
-       function togglePalmGrowHub(){
-  const hub = document.getElementById("palmGrowHubContent");
-
-  if(!hub) return;
-
-  hub.classList.toggle("hidden");
-
-  if(!hub.classList.contains("hidden")){
-    showHubSection("stories");
-    hub.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-    }
- 
+       
 function showPage(page, pushHistory = true){  
   if(pushHistory){  
     if(pageHistory[pageHistory.length - 1] !== page){  
