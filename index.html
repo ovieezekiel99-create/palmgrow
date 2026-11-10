@@ -1713,12 +1713,13 @@ th{background:#f0f5f2;font-weight:600}
 
 </div>
 <!-- END SUCCESS STORIES PAGE -->
-        <!-- PALMGROW HUB: TALK TO AGENT PAGE -->
+      
+<!-- PALMGROW HUB: TALK TO AGENT PAGE -->
 <div id="page-hub-agent" class="hidden">
 
     <div class="page-header">
-        <h2>💬 Talk to a PalmGrow Agent</h2>
-        <p>We're here to help you.</p>
+        <h2>💬 Talk to PalmGrow Assistant</h2>
+        <p>Get help with your PalmGrow account.</p>
     </div>
 
     <button type="button" onclick="showPage('hub')">
@@ -1726,17 +1727,48 @@ th{background:#f0f5f2;font-weight:600}
     </button>
 
     <div class="hub-info-card">
-        <h3>Talk to a PalmGrow Agent</h3>
-        <p>Need help with your account, deposits, withdrawals, referrals or platform navigation?</p>
-        <div class="hub-empty">
-            Official support contact will be added here.
-            <br>
-            Never share your password, login code or withdrawal PIN.
+
+        <h3>🌴 PalmGrow Support Assistant</h3>
+        <p>Ask questions about your account, deposits, withdrawals, referrals, employee positions and more.</p>
+
+        <div id="palmGrowAgentChat"
+             style="background:#f5f8f5; border:1px solid #dce8df; border-radius:12px; padding:15px; margin-top:15px; min-height:250px;">
+
+            <div style="background:#e3f1e7; padding:12px; border-radius:10px; margin-bottom:12px;">
+                <strong>🌴 PalmGrow Assistant</strong>
+                <p style="margin:6px 0 0;">
+                    Hello! Welcome to PalmGrow Support.
+                    How can I help you today?
+                </p>
+            </div>
+
         </div>
+
+        <div style="margin-top:15px;">
+            <textarea
+                id="palmGrowAgentInput"
+                rows="3"
+                placeholder="Type your question here..."
+                style="width:100%; padding:12px; border:1px solid #ccc; border-radius:10px; box-sizing:border-box; resize:vertical;">
+            </textarea>
+
+            <button
+                type="button"
+                id="palmGrowAgentSend"
+                style="width:100%; margin-top:10px; padding:13px; background:#075c35; color:white; border:0; border-radius:10px; font-weight:bold;">
+                Send Message
+            </button>
+        </div>
+
+        <p style="font-size:12px; margin-top:12px;">
+            For your security, never share your password, OTP, login code or withdrawal PIN.
+        </p>
+
     </div>
 
 </div>
 <!-- END TALK TO AGENT PAGE -->
+
         <!-- PALMGROW HUB: PALMGROW NEWS PAGE -->
 <div id="page-hub-updates" class="hidden">
 
