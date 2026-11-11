@@ -2004,7 +2004,30 @@ th {
   cursor:pointer;
   font-weight:600;
 }
- 
+
+/* PALMGROW — FORCE BLACK BOTTOM NAVIGATION */
+
+div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space-around"] {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  border-top: 1px solid #333333 !important;
+}
+
+div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space-around"] a {
+  background: transparent !important;
+  color: #b0b0b0 !important;
+}
+
+div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space-around"] > div > div {
+  background: #151515 !important;
+  border: 2px solid #777777 !important;
+  box-shadow: none !important;
+}
+
+div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space-around"] > div > div span {
+  color: #ffffff !important;
+}
+
 </style>
 </head>
 <body>
