@@ -1388,7 +1388,335 @@ th{background:#f0f5f2;font-weight:600}
   cursor: pointer;
   font-weight: 600;
  }
- 
+
+  
+/* =====================================
+   PALMGROW FINAL BLACK THEME OVERRIDE
+   Visual styling only — preserve all logic
+===================================== */
+
+:root {
+  --green-dark: #000000;
+  --green: #111111;
+  --green-light: #202020;
+  --gold: #bdbdbd;
+  --bg: #000000;
+  --card: #111111;
+  --text: #ffffff;
+  --muted: #aaaaaa;
+  --border: #303030;
+  color-scheme: dark;
+}
+
+html,
+body,
+#app {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+#authScreen,
+.auth-box,
+.main,
+.content,
+.page,
+.section,
+.wrapper {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+.card,
+.plan,
+.plan-card,
+.task-card,
+.position-plan,
+.position-details,
+.withdrawal-card,
+.payment-box,
+.notice,
+.section-card,
+.summary-card {
+  background: #151515 !important;
+  color: #ffffff !important;
+  border-color: #303030 !important;
+  box-shadow: 0 5px 18px rgba(0,0,0,.55) !important;
+}
+
+h1, h2, h3, h4, h5, p, label,
+.section-title, .page-title {
+  color: #ffffff;
+}
+
+small,
+.muted,
+.text-muted,
+.description,
+.subtitle {
+  color: #aaaaaa !important;
+}
+
+a {
+  color: #dddddd !important;
+}
+
+button,
+.btn,
+.btn-primary,
+.btn-success,
+.join-button,
+.menu-btn {
+  background: linear-gradient(145deg, #292929, #111111) !important;
+  color: #ffffff !important;
+  border: 1px solid #444444 !important;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,.06),
+              0 4px 10px rgba(0,0,0,.5) !important;
+}
+
+button:disabled,
+.btn:disabled {
+  background: #292929 !important;
+  color: #888888 !important;
+  border-color: #383838 !important;
+  opacity: .75;
+}
+
+input,
+textarea,
+select {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border: 1px solid #444444 !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #888888 !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #aaaaaa !important;
+}
+
+/* Dashboard and wallet */
+#dashboardEmployeeLevelCard,
+#dashboardEmployeeLevelCard * {
+  color: #ffffff !important;
+}
+
+#dashboardEmployeeLevelCard {
+  background: linear-gradient(145deg, #202020, #080808) !important;
+  border-color: #383838 !important;
+}
+
+.wallet,
+.wallet-card,
+.wallet-section,
+.balance-card {
+  background: #151515 !important;
+  color: #ffffff !important;
+  border-color: #333333 !important;
+}
+
+.metric-card,
+.metrics-card,
+.dashboard-card {
+  background: #151515 !important;
+  color: #ffffff !important;
+  border: 1px solid #303030 !important;
+}
+
+.metric-card *,
+.metrics-card *,
+.dashboard-card * {
+  color: #ffffff !important;
+}
+
+/* Invite and hub panels */
+.invite-card,
+.hub-card,
+.hub-menu,
+.success-stories,
+.testimonial-card {
+  background: #151515 !important;
+  color: #ffffff !important;
+  border-color: #333333 !important;
+}
+
+/* Employee tasks and position plans */
+.task-card,
+#employeeTaskList .notice,
+#employeeTaskList .task-card,
+.position-plan,
+.level-badge,
+.position-details {
+  background: #151515 !important;
+  color: #ffffff !important;
+  border-color: #383838 !important;
+}
+
+.task-card h4,
+.task-card p,
+.position-plan *,
+.position-details * {
+  color: #ffffff !important;
+}
+
+/* Deposit and withdrawal pages */
+#depositForm,
+#withdrawalHistoryList,
+#withdrawalHistoryList > div,
+#amountGrid button,
+#bankModal,
+#bankForm,
+#createWithdrawalPinSection {
+  background: #151515 !important;
+  color: #ffffff !important;
+  border-color: #383838 !important;
+}
+
+#withdrawalHistoryList p {
+  color: #aaaaaa !important;
+}
+
+#withdrawalHistoryList strong {
+  color: #ffffff !important;
+}
+
+#amountGrid button {
+  background: #222222 !important;
+  color: #ffffff !important;
+  border: 1px solid #444444 !important;
+}
+
+#amountGrid button:focus,
+#amountGrid button:active {
+  background: #383838 !important;
+  border-color: #aaaaaa !important;
+  color: #ffffff !important;
+}
+
+/* Tables */
+table {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border-color: #333333 !important;
+}
+
+th {
+  background: #222222 !important;
+  color: #ffffff !important;
+}
+
+td {
+  background: #151515 !important;
+  color: #eeeeee !important;
+  border-color: #333333 !important;
+}
+
+tr {
+  border-color: #333333 !important;
+}
+
+/* Admin panels and tabs */
+.admin-actions,
+.admin-tabs,
+.admin-panel,
+.admin-card {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border-color: #333333 !important;
+}
+
+.admin-actions button {
+  background: #292929 !important;
+  color: #ffffff !important;
+  border: 1px solid #444444 !important;
+}
+
+/* Modal windows */
+.modal,
+.modal-content,
+.profile-modal,
+#bankModal > div {
+  background: #151515 !important;
+  color: #ffffff !important;
+  border-color: #383838 !important;
+}
+
+/* Chat messages */
+#palmGrowAgentChat > div {
+  background: #202020 !important;
+  color: #ffffff !important;
+  border: 1px solid #383838 !important;
+}
+
+#palmGrowAgentChat strong,
+#palmGrowAgentChat p {
+  color: #ffffff !important;
+}
+
+/* Navigation */
+.sidebar,
+nav,
+.bottom-nav,
+.bottom-navigation,
+.mobile-nav,
+.bottom-bar {
+  background: #050505 !important;
+  color: #ffffff !important;
+  border-color: #303030 !important;
+}
+
+.sidebar *,
+nav *,
+.bottom-nav *,
+.bottom-navigation *,
+.mobile-nav *,
+.bottom-bar * {
+  color: #ffffff !important;
+}
+
+.active,
+.active-page,
+.nav-link.active {
+  background: #292929 !important;
+  color: #ffffff !important;
+}
+
+/* Status messages */
+.status.success,
+.success,
+.text-success,
+.text-green {
+  color: #dddddd !important;
+}
+
+.status.error,
+.error {
+  color: #ffaaaa !important;
+}
+
+/* Remove coloured shadows and gradients */
+.card,
+.section,
+.plan,
+.plan-card,
+.wallet-card,
+.hub-card {
+  box-shadow: 0 5px 18px rgba(0,0,0,.55) !important;
+}
+
+/* Keep images visible and unchanged */
+img {
+  filter: none;
+}
+
+/* Browser theme */
+  
 </style>
 </head>
 <body>
