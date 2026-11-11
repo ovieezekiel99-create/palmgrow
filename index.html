@@ -1170,17 +1170,17 @@ header,
     font-size: 9px;
   }
 }
-
+ 
 :root {
-  --green-dark:#061f19;
-  --green:#0b4935;
-  --green-light:#126448;
-  --gold:#d4af37;
-  --bg:#071510;
-  --card:#10271e;
-  --text:#f1f5f2;
-  --muted:#a8b9af;
-  --border:#294438;
+  --green-dark:#000000;
+  --green:#202020;
+  --green-light:#303030;
+  --gold:#ffffff;
+  --bg:#000000;
+  --card:#151515;
+  --text:#ffffff;
+  --muted:#b0b0b0;
+  --border:#383838;
 }
 
 * {
@@ -1190,7 +1190,7 @@ header,
 }
 
 html {
-  background:#071510;
+  background:#000000;
   color-scheme:dark;
 }
 
@@ -1212,7 +1212,7 @@ body {
   align-items:center;
   justify-content:center;
   padding:20px;
-  background:linear-gradient(135deg,#061f19,#0b4935);
+  background:linear-gradient(135deg,#000000,#181818);
 }
 
 .auth-box {
@@ -1222,13 +1222,13 @@ body {
   max-width:400px;
   border-radius:16px;
   padding:28px 24px;
-  box-shadow:0 20px 40px rgba(0,0,0,.4);
+  box-shadow:0 20px 40px rgba(0,0,0,.7);
 }
 
 .auth-box h1 {
   font-size:22px;
   margin-bottom:6px;
-  color:var(--gold);
+  color:#ffffff;
 }
 
 .auth-box .sub {
@@ -1252,16 +1252,16 @@ body {
   border-radius:8px;
   font-size:15px;
   margin-bottom:14px;
-  background:#091b14;
+  background:#080808;
   color:var(--text);
 }
 
 .auth-box button {
   width:100%;
   padding:13px;
-  background:var(--green);
+  background:#303030;
   color:#fff;
-  border:0;
+  border:1px solid #505050;
   border-radius:8px;
   font-size:15px;
   font-weight:600;
@@ -1270,7 +1270,7 @@ body {
 }
 
 .auth-box button.secondary {
-  background:#294438;
+  background:#202020;
   color:var(--text);
   margin-top:10px;
 }
@@ -1283,13 +1283,15 @@ body {
 }
 
 .success {
-  background:#123d29;
-  color:#a9edbd;
+  background:#202020;
+  color:#ffffff;
+  border:1px solid #505050;
 }
 
 .error {
-  background:#451d20;
-  color:#ffc0c0;
+  background:#252525;
+  color:#d0d0d0;
+  border:1px solid #555555;
 }
 
 #app {
@@ -1305,7 +1307,7 @@ body {
   left:0;
   bottom:0;
   width:240px;
-  background:var(--green-dark);
+  background:#080808;
   color:#fff;
   padding:20px 0;
   overflow-y:auto;
@@ -1328,7 +1330,7 @@ body {
 }
 
 .sidebar .logo span {
-  color:var(--gold);
+  color:#ffffff;
 }
 
 .nav-item {
@@ -1345,7 +1347,7 @@ body {
 .nav-item:hover,
 .nav-item.active {
   background:rgba(255,255,255,.08);
-  border-left-color:var(--gold);
+  border-left-color:#ffffff;
   color:#fff;
 }
 
@@ -1359,7 +1361,7 @@ body {
 }
 
 .task-card h4 {
-  color:var(--gold);
+  color:#ffffff;
   margin-bottom:6px;
 }
 
@@ -1372,150 +1374,152 @@ body {
 .task-card button {
   width:100%;
   padding:11px;
-  background:var(--green);
+  background:#303030;
   color:#fff;
-  border:0;
+  border:1px solid #505050;
   border-radius:7px;
   font-weight:600;
   cursor:pointer;
 }
 
 .task-card button:disabled {
-  background:#52675c;
+  background:#252525;
+  color:#888888;
+  border-color:#383838;
   cursor:not-allowed;
 }
 
 .task-done {
-  border-color:#397b52;
-  background:#123326;
+  border-color:#606060;
+  background:#1c1c1c;
 }
 
 
 /* PALMGROW PREMIUM EMPLOYEE LEVEL DESIGN */
 
 #page-employee-position .section {
-  background: linear-gradient(160deg, #ffffff, #f3f8f4);
-  border: 1px solid #dce9df;
-  border-radius: 20px;
-  padding: 18px;
+  background:linear-gradient(160deg,#151515,#202020);
+  border:1px solid #383838;
+  border-radius:20px;
+  padding:18px;
 }
 
 #page-employee-position h3 {
-  color: #073d2b;
-  font-size: 21px;
-  font-weight: 800;
-  margin-bottom: 10px;
+  color:#ffffff;
+  font-size:21px;
+  font-weight:800;
+  margin-bottom:10px;
 }
 
 #page-employee-position .notice {
-  background: linear-gradient(135deg, #073d2b, #116b48);
-  color: #fff;
-  border: 1px solid #c9a64b;
-  border-radius: 14px;
-  padding: 16px;
-  margin: 15px 0 20px;
-  box-shadow: 0 5px 15px rgba(7,61,43,0.12);
+  background:linear-gradient(135deg,#111111,#292929);
+  color:#ffffff;
+  border:1px solid #505050;
+  border-radius:14px;
+  padding:16px;
+  margin:15px 0 20px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.35);
 }
 
 #page-employee-position .notice strong {
-  color: #f4d47c;
-  font-size: 17px;
+  color:#ffffff;
+  font-size:17px;
 }
 
 /* LEVEL CARD */
 
 #employeePositionPlans {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-  margin-top: 18px;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+  margin-top:18px;
 }
 
 #employeePositionPlans .position-plan {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  background: linear-gradient(145deg, #ffffff, #f2f8f3);
-  border: 1px solid #d5e4d9;
-  border-left: 5px solid #c9a64b;
-  border-radius: 17px;
-  padding: 17px 15px;
-  margin: 0;
-  box-shadow: 0 5px 15px rgba(7,61,43,0.07);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  background:linear-gradient(145deg,#181818,#242424);
+  border:1px solid #444444;
+  border-left:5px solid #777777;
+  border-radius:17px;
+  padding:17px 15px;
+  margin:0;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+  transition:transform 0.2s ease,box-shadow 0.2s ease;
 }
 
 #employeePositionPlans .position-plan:active {
-  transform: scale(0.985);
+  transform:scale(0.985);
 }
 
 /* LEVEL BADGE */
 
 #employeePositionPlans .position-left {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  min-width: 0;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  min-width:0;
 }
 
 #employeePositionPlans .level-badge {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 53px;
-  height: 53px;
-  padding: 5px;
-  border-radius: 15px;
-  background: linear-gradient(145deg, #073d2b, #16734c);
-  color: #f4d47c;
-  border: 1px solid #c9a64b;
-  font-size: 16px;
-  font-weight: 800;
-  box-shadow: 0 4px 10px rgba(7,61,43,0.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-width:53px;
+  height:53px;
+  padding:5px;
+  border-radius:15px;
+  background:linear-gradient(145deg,#202020,#383838);
+  color:#ffffff;
+  border:1px solid #666666;
+  font-size:16px;
+  font-weight:800;
+  box-shadow:0 4px 10px rgba(0,0,0,0.4);
 }
 
 /* LEVEL DETAILS */
 
 #employeePositionPlans .position-details {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
 }
 
 #employeePositionPlans .position-details div {
-  font-size: 12px;
-  color: #64756b;
-  line-height: 1.4;
+  font-size:12px;
+  color:#b0b0b0;
+  line-height:1.4;
 }
 
 #employeePositionPlans .position-details strong {
-  color: #073d2b;
-  font-weight: 800;
+  color:#ffffff;
+  font-weight:800;
 }
 
 /* JOIN AND UPGRADE BUTTON */
 
 #employeePositionPlans .join-button {
-  padding: 11px 15px;
-  background: linear-gradient(135deg, #073d2b, #16804e);
-  color: #fff;
-  border: 1px solid #c9a64b;
-  border-radius: 11px;
-  font-size: 12px;
-  font-weight: 800;
-  cursor: pointer;
-  white-space: nowrap;
-  box-shadow: 0 4px 9px rgba(7,61,43,0.15);
+  padding:11px 15px;
+  background:linear-gradient(135deg,#292929,#444444);
+  color:#ffffff;
+  border:1px solid #666666;
+  border-radius:11px;
+  font-size:12px;
+  font-weight:800;
+  cursor:pointer;
+  white-space:nowrap;
+  box-shadow:0 4px 9px rgba(0,0,0,0.3);
 }
 
 #employeePositionPlans .join-button:disabled {
-  background: linear-gradient(135deg, #e5f3e9, #f5faf6);
-  color: #137333;
-  border: 1px solid #b9d8c2;
-  box-shadow: none;
-  cursor: not-allowed;
+  background:linear-gradient(135deg,#242424,#303030);
+  color:#888888;
+  border:1px solid #444444;
+  box-shadow:none;
+  cursor:not-allowed;
 }
 
 /* SMALL PHONE SCREENS */
