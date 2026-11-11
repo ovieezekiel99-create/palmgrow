@@ -4826,32 +4826,51 @@ function updateWithdrawalBalance() {
   }
 }
  
-function renderWithdrawalPresetGrid(){  
-  const grid = $("amountGrid");  
-  if(!grid)return;  
-  grid.innerHTML = "";  
- 
-  WITHDRAWAL_AMOUNTS.forEach(amount => {  
-    const btn = document.createElement("button");  
-    btn.type = "button";  
-    btn.style.cssText = "background: white; border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px 8px; text-align: center; cursor: pointer; font-weight: 600; font-size: 14px; color: #1f2937;";  
-    btn.textContent = naira(amount);  
- 
-    btn.onclick = () => {  
-      document.querySelectorAll("#amountGrid button").forEach(b => {  
-        b.style.background = "white";  
-        b.style.borderColor = "#e5e7eb";  
-        b.style.color = "#1f2937";  
-      });  
-      btn.style.background = "#e6f4ea";  
-      btn.style.borderColor = "#137333";  
-      btn.style.color = "#137333";  
-      selectedWithdrawalAmount = amount;  
-    };  
-    grid.appendChild(btn);  
-  });  
-}  
- 
+function renderWithdrawalPresetGrid(){
+  const grid = $("amountGrid");
+  if(!grid)return;
+  grid.innerHTML = "";
+
+  WITHDRAWAL_AMOUNTS.forEach(amount => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+
+    btn.style.cssText = `
+      background: #151515;
+      border: 2px solid #555555;
+      border-radius: 10px;
+      padding: 12px 8px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      color: #ffffff;
+    `;
+
+    btn.textContent = naira(amount);
+
+    btn.onclick = () => {
+      document.querySelectorAll("#amountGrid button").forEach(b => {
+        b.style.background = "#151515";
+        b.style.borderColor = "#555555";
+        b.style.color = "#ffffff";
+        b.textContent = naira(WITHDRAWAL_AMOUNTS[
+          Array.from(grid.children).indexOf(b)
+        ]);
+      });
+
+      btn.style.background = "#ffffff";
+      btn.style.borderColor = "#ffffff";
+      btn.style.color = "#000000";
+      btn.textContent = "✓ " + naira(amount);
+
+      selectedWithdrawalAmount = amount;
+    };
+
+    grid.appendChild(btn);
+  });
+}
+
 $("submitWithdrawalBtn").onclick = async () => {  
   const pin = $("fundPasswordInput").value.trim();  
   const feedback = $("withdrawalFeedback");  
