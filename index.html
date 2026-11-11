@@ -3708,7 +3708,15 @@ function showPage(page, pushHistory = true){
     backBtn.classList.toggle("hidden", pageHistory.length <= 1 || page === "dashboard");  
   }  
    if(page==="hub-stories")renderHubBook();
-  if(page==="employee-tasks")loadEmployeeTasks();  
+   if(page==="employee-tasks"){
+  console.log("Daily Tasks page opened");
+  const taskPage = $("page-employee-tasks");
+  console.log("Page found:", !!taskPage);
+  console.log("Page hidden:", taskPage?.classList.contains("hidden"));
+  loadEmployeeTasks().catch(error => {
+    console.error("Daily Tasks loading failed:", error);
+  });
+ }
   if(page==="employee-position")loadEmployeePositionPlans();  
   if(page==="withdraw")loadWithdrawalPage();
   if(page==="withdraw-history")loadWithdrawalHistory();
