@@ -890,30 +890,9 @@ header,
   }
 }
 
-    /* PALMGROW REFERRAL PAGE DESIGN */
-#page-referral {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.referral-team-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  width: 100%;
-}
+    
+/* PALMGROW REFERRAL PAGE - BLACK PREMIUM DESIGN */
 
-.referral-team-grid .referral-team-card {
-  min-width: 0;
-  margin: 0;
-}
-
-@media (max-width: 480px) {
-  .referral-team-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-    }
 #page-referral.hidden {
   display: none !important;
 }
@@ -930,9 +909,9 @@ header,
   border-radius: 18px;
   color: #fff;
   background:
-  linear-gradient(rgba(4,45,30,.72), rgba(4,45,30,.72)),
-  url('1794192101869.jpg') center/cover no-repeat;
-  box-shadow: 0 8px 22px rgba(7,61,43,.16);
+    linear-gradient(rgba(0,0,0,.72), rgba(0,0,0,.72)),
+    url('1794192101869.jpg') center/cover no-repeat;
+  box-shadow: 0 8px 22px rgba(0,0,0,.4);
 }
 
 .referral-hero::after {
@@ -957,6 +936,7 @@ header,
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 2px;
+  color: #cccccc;
 }
 
 .referral-hero h2 {
@@ -977,10 +957,10 @@ header,
   align-items: center;
   gap: 13px;
   padding: 17px;
-  background: #fff;
-  border: 1px solid var(--border);
+  background: #181818;
+  border: 1px solid #383838;
   border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,.035);
+  box-shadow: 0 4px 12px rgba(0,0,0,.35);
 }
 
 .referral-team-icon {
@@ -991,7 +971,7 @@ header,
   justify-content: center;
   flex-shrink: 0;
   border-radius: 12px;
-  background: #e8f4ed;
+  background: #292929;
   font-size: 23px;
 }
 
@@ -1002,31 +982,32 @@ header,
 }
 
 .referral-team-card strong {
-  color: var(--green-dark);
+  color: #ffffff;
   font-size: 14px;
 }
 
 .referral-team-card span {
-  color: var(--muted);
+  color: #aaaaaa;
   font-size: 11px;
 }
 
 .referral-team-card > b {
   margin-left: auto;
-  color: var(--green-dark);
+  color: #ffffff;
   font-size: 25px;
 }
 
 .referral-level-section {
   padding: 18px;
   border-radius: 16px;
-  background: linear-gradient(145deg, #073d2b, #10583d);
-  box-shadow: 0 7px 18px rgba(7,61,43,.14);
+  background: linear-gradient(145deg, #080808, #222222);
+  border: 1px solid #444444;
+  box-shadow: 0 7px 18px rgba(0,0,0,.45);
 }
 
 .referral-rates-title {
   margin-bottom: 14px;
-  color: #f5d879;
+  color: #ffffff;
   font-size: 16px;
   font-weight: 800;
 }
@@ -1035,7 +1016,7 @@ header,
   padding: 14px 10px;
   border: 1px solid rgba(255,255,255,.15);
   border-radius: 12px;
-  background: rgba(255,255,255,.08);
+  background: rgba(255,255,255,.06);
 }
 
 .referral-rate-grid {
@@ -1057,7 +1038,7 @@ header,
 }
 
 .referral-rate-grid strong {
-  color: #f5d879;
+  color: #ffffff;
   font-size: 17px;
 }
 
@@ -1066,8 +1047,9 @@ header,
   margin: 14px auto 8px;
   padding: 7px 15px;
   border-radius: 30px;
-  color: #073d2b;
-  background: #f5d879;
+  color: #ffffff;
+  background: #333333;
+  border: 1px solid #666666;
   font-size: 13px;
   font-weight: 800;
 }
@@ -1082,20 +1064,21 @@ header,
 
 .referral-link-section {
   padding: 18px;
-  border: 1px solid var(--border);
+  border: 1px solid #383838;
   border-radius: 15px;
-  background: #fff;
+  background: #181818;
+  color: #ffffff;
 }
 
 .referral-link-section h3 {
   margin-bottom: 7px;
-  color: var(--green-dark);
+  color: #ffffff;
   font-size: 16px;
 }
 
 .referral-link-section p {
   margin-bottom: 12px;
-  color: var(--muted);
+  color: #aaaaaa;
   font-size: 12px;
 }
 
@@ -1104,10 +1087,10 @@ header,
   width: 100%;
   min-width: 0;
   padding: 11px;
-  border: 1px solid var(--border);
+  border: 1px solid #444444;
   border-radius: 8px;
-background: #f6faf7;
-  color: var(--green-dark);
+  background: #101010;
+  color: #ffffff;
   font-size: 12px;
 }
 
@@ -1119,9 +1102,9 @@ background: #f6faf7;
   width: 100%;
   margin-top: 6px;
   padding: 10px;
-  border: 0;
+  border: 1px solid #555555;
   border-radius: 8px;
-  background: var(--green);
+  background: linear-gradient(145deg, #333333, #111111);
   color: #fff;
   font-size: 13px;
   font-weight: 700;
@@ -1139,25 +1122,28 @@ background: #f6faf7;
   width: 100%;
   margin-top: 8px;
   padding: 11px;
-  background: var(--green);
+  background: #292929;
+  border: 1px solid #555555;
   color: #fff;
 }
- 
+
 #referralFeedback {
   margin-top: 8px;
   font-size: 12px;
+  color: #cccccc;
 }
 
 .referral-benefits {
   padding: 18px;
-  border: 1px solid var(--border);
+  border: 1px solid #383838;
   border-radius: 15px;
-  background: #fff;
+  background: #181818;
+  color: #ffffff;
 }
 
 .referral-benefits h3 {
   margin-bottom: 12px;
-  color: var(--green-dark);
+  color: #ffffff;
   font-size: 16px;
 }
 
@@ -1166,14 +1152,14 @@ background: #f6faf7;
   align-items: flex-start;
   gap: 9px;
   margin: 10px 0;
-  color: var(--text);
+  color: #dddddd;
   font-size: 12px;
   line-height: 1.5;
 }
 
 @media(max-width:360px) {
   .referral-rate-grid {
-      gap: 2px;
+    gap: 2px;
   }
 
   .referral-rate-grid strong {
@@ -1183,8 +1169,7 @@ background: #f6faf7;
   .referral-rate-grid span {
     font-size: 9px;
   }
-  }
-
+}
 
 :root {
   --green-dark:#061f19;
