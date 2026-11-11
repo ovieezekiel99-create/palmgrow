@@ -2418,20 +2418,29 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
       
 <!-- PALMGROW HUB: TALK TO AGENT PAGE -->
 <div id="page-hub-agent" class="hidden">
-    <button type="button" onclick="showPage('hub')">
+
+    <button
+        type="button"
+        onclick="showPage('hub')"
+        style="background:#202020;color:#ffffff;border:1px solid #555555;border-radius:8px;padding:10px 14px;font-weight:600;">
         ← Back to PalmGrow Hub
     </button>
- <div class="hub-info-card">
- <h3>🌴 PalmGrow Support Assistant</h3>
-        <p>Ask questions about your account, deposits, withdrawals, referrals, employee positions and more.</p>
+
+    <div class="hub-info-card" style="background:#101010;color:#ffffff;border:1px solid #333333;padding:16px;border-radius:12px;margin-top:15px;">
+
+        <h3 style="color:#ffffff;">🌴 PalmGrow Support Assistant</h3>
+
+        <p style="color:#cccccc;line-height:1.6;">
+            Ask questions about your account, deposits, withdrawals, referrals, employee positions and more.
+        </p>
 
         <div id="palmGrowAgentChat"
-             style="background:#f5f8f5; border:1px solid #dce8df; border-radius:12px; padding:15px; margin-top:15px; min-height:250px;">
+             style="background:#080808;color:#ffffff;border:1px solid #444444;border-radius:12px;padding:15px;margin-top:15px;min-height:250px;">
 
-            <div style="background:#e3f1e7; padding:12px; border-radius:10px; margin-bottom:12px;">
-                <strong>🌴 PalmGrow Assistant</strong>
-                <p style="margin:6px 0 0;">
-                    Hello! Welcome to PalmGrow Support I am Jones.
+            <div style="background:#202020;color:#ffffff;border:1px solid #555555;padding:12px;border-radius:10px;margin-bottom:12px;">
+                <strong style="color:#ffffff;">🌴 PalmGrow Assistant</strong>
+                <p style="margin:6px 0 0;color:#ffffff;line-height:1.6;">
+                    Hello! Welcome to PalmGrow Support. I am Jones.
                     How can I help you today?
                 </p>
             </div>
@@ -2439,22 +2448,24 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
         </div>
 
         <div style="margin-top:15px;">
+
             <textarea
                 id="palmGrowAgentInput"
                 rows="3"
                 placeholder="Type your question here..."
-                style="width:100%; padding:12px; border:1px solid #ccc; border-radius:10px; box-sizing:border-box; resize:vertical;">
+                style="width:100%;padding:12px;background:#080808;color:#ffffff;border:1px solid #555555;border-radius:10px;box-sizing:border-box;resize:vertical;font-size:15px;">
             </textarea>
 
             <button
                 type="button"
                 id="palmGrowAgentSend"
-                style="width:100%; margin-top:10px; padding:13px; background:#075c35; color:white; border:0; border-radius:10px; font-weight:bold;">
+                style="width:100%;margin-top:10px;padding:13px;background:#ffffff;color:#000000;border:1px solid #ffffff;border-radius:10px;font-weight:bold;font-size:15px;">
                 Send Message
             </button>
+
         </div>
 
-        <p style="font-size:12px; margin-top:12px;">
+        <p style="font-size:12px;margin-top:12px;color:#b0b0b0;line-height:1.5;">
             For your security, never share your password, OTP, login code or withdrawal PIN.
         </p>
 
