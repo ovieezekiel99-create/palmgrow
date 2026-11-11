@@ -4379,7 +4379,26 @@ async function loadEmployeePayroll(){
     body.appendChild(tr);  
   });  
 }  
- 
+
+function toggleEmployeeTaskHistory(){
+  const dailyView = $("employeeDailyTasksView");
+  const historyView = $("employeeTaskHistoryView");
+  const button = $("taskHistoryToggleBtn");
+
+  if(!dailyView || !historyView || !button)return;
+
+  const showingHistory = historyView.classList.contains("hidden");
+
+  dailyView.classList.toggle("hidden", showingHistory);
+  historyView.classList.toggle("hidden", !showingHistory);
+
+  button.textContent = showingHistory ? "Back to Tasks" : "Task History";
+
+  if(showingHistory){
+    loadEmployeePayroll();
+  }
+}
+
 $("depositForm").onsubmit = async (e) => {  
   e.preventDefault();  
  
