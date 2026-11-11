@@ -3,292 +3,202 @@
 <head>  
 <meta charset="UTF-8">  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
- <meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#0b3d2e">  
 <title>PalmGrow | Dashboard</title>  
 
 <style>  
- 
-/* PALMGROW — PURE BLACK THEME */
-
-:root {
-  --green-dark: #000000;
-  --green: #111111;
-  --green-light: #1a1a1a;
-  --gold: #cccccc;
-  --bg: #000000;
-  --card: #111111;
-  --text: #ffffff;
-  --muted: #aaaaaa;
-  --border: #292929;
-}
-
-* {
-  box-sizing: border-box;
-  border-color: #292929 !important;
-}
-
-html,
-body,
-#app {
-  background: #000000 !important;
-  color: #ffffff !important;
-}
-
-.container,
-.main,
-.page,
-.wrapper {
-  background-color: #000000 !important;
-  color: #ffffff !important;
-}
-
-.card,
-.plan-card,
-.box,
-.section,
-.header,
-.footer,
-.navbar {
-  background: #111111 !important;
-  color: #ffffff !important;
-  border: 1px solid #292929 !important;
-  box-shadow: none !important;
-}
-
-h1, h2, h3, h4, p, span, div, a, li, label {
-  color: #ffffff;
-}
-
-button,
-.btn,
-.btn-primary,
-.btn-success {
-  background: #1a1a1a !important;
-  color: #ffffff !important;
-  border: 1px solid #333333 !important;
-}
-
-input,
-textarea,
-select {
-  background: #111111 !important;
-  color: #ffffff !important;
-  border: 1px solid #333333 !important;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: #888888 !important;
-}
-
-/* Bottom navigation */
-.bottom-nav,
-.bottom-navigation,
-.mobile-nav,
-.bottom-bar,
-nav.bottom-nav,
-nav.mobile-nav {
-  background: #000000 !important;
-  color: #ffffff !important;
-  border-color: #292929 !important;
-  box-shadow: none !important;
-}
-
-.bottom-nav *,
-.bottom-navigation *,
-.mobile-nav *,
-.bottom-bar * {
-  color: #ffffff !important;
-}
-
-/* Active navigation */
-.bottom-nav .active,
-.bottom-navigation .active,
-.mobile-nav .active,
-.bottom-bar .active {
-  background: #222222 !important;
-  color: #ffffff !important;
-}
-
-/* Success and amount text */
-.success,
-.text-success,
-.text-green,
-.price,
-.amount,
-.money,
-.income,
-.deposit {
-  color: #ffffff !important;
-}
-
-  /* REMOVE ALL GREEN */
-* {
-  --green: #000 !important;
-  --primary: #000 !important;
-  --success: #fff !important;
-}
-
-a, span, p, h1, h2, h3, h4, div, button, .btn {
-  border-color: #1a1a1a !important;
-}
-
-/* Any green text -> white */
-[style*="green"], [style*="#00"], [style*="rgb(0, 128"],
-.text-green, .green, .success, .text-success, .bg-green, .bg-success {
-  color: #fff !important;
-  background-color: #000 !important;
-  border-color: #1a1a1a !important;
-}
-
-/* Any green button / background -> black with white text */
-button, .btn, .btn-primary, .btn-success, .bg-primary {
-  background-color: #000 !important;
-  color: #fff !important;
-  border: 1px solid #333 !important;
-}
-
-/* Green amounts / prices -> white */
-.price, .amount, .money, .income, .deposit {
-  color: #fff !important;
-}
-  
-/* PALMGROW — PURE BLACK BOTTOM NAVIGATION */
-
-.bottom-nav,
-.bottom-navigation,
-.mobile-nav,
-.bottom-bar,
-nav.bottom-nav,
-nav.mobile-nav {
-  background: #000000 !important;
-  background-color: #000000 !important;
-  background-image: none !important;
-  border: 1px solid #222222 !important;
-  box-shadow: none !important;
-  color: #ffffff !important;
-}
-
-.bottom-nav *,
-.bottom-navigation *,
-.mobile-nav *,
-.bottom-bar *,
-nav.bottom-nav *,
-nav.mobile-nav * {
-  background-color: transparent;
-  color: #b0b0b0 !important;
-  border-color: #333333 !important;
-}
-
-.bottom-nav .active,
-.bottom-navigation .active,
-.mobile-nav .active,
-.bottom-bar .active,
-.bottom-nav button.active,
-.bottom-navigation button.active,
-.mobile-nav button.active,
-.bottom-bar button.active {
-  background: #222222 !important;
-  color: #ffffff !important;
-}
-
-/* ===== PALMGROW - FULL BLACK MODE ===== */
-
-/* Nav / Sidebar / Header */
-nav,
-.sidebar,
-header,
-.topbar,
-.nav-item {
-  background:#000000 !important;
-  background-image:none !important;
-  color:#ffffff !important;
-  border-color:#333333 !important;
-}
-
-.nav-item.active,
-.nav-item:hover {
-  background:#292929 !important;
-  color:#ffffff !important;
-  border-color:#777777 !important;
-}
-
-/* PALMGROW HUB MENU DESIGN */
+    /* PALMGROW HUB MENU DESIGN */
 .hub-menu-grid {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:14px;
-  margin-top:20px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 20px;
 }
 
 .hub-menu-card {
-  background:#151515 !important;
-  border:1px solid #383838 !important;
-  border-radius:18px;
-  padding:20px 14px;
-  color:#ffffff !important;
-  text-align:center;
-  cursor:pointer;
-  box-shadow:0 5px 16px rgba(0,0,0,.4);
-  transition:transform .2s ease,border-color .2s ease;
+    background: linear-gradient(145deg, #0b4b35, #073323);
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    border-radius: 18px;
+    padding: 20px 14px;
+    color: #ffffff;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.18);
+    transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .hub-menu-card:active {
-  transform:scale(.97);
+    transform: scale(0.97);
 }
 
 .hub-menu-icon {
-  width:58px;
-  height:58px;
-  margin:0 auto 12px;
-  border-radius:50%;
-  background:#242424 !important;
-  border:1px solid #555555 !important;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  color:#ffffff !important;
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid #d4af37;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
 }
 
 .hub-menu-card h3 {
-  color:#ffffff !important;
-  font-size:15px;
-  margin:8px 0;
+    color: #f5d879;
+    font-size: 15px;
+    margin: 8px 0;
 }
 
 .hub-menu-card p {
-  color:#cccccc !important;
-  font-size:12px;
-  line-height:1.5;
-  margin:6px 0 12px;
+    color: #e0e9e3;
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 6px 0 12px;
 }
 
 .hub-menu-card span {
-  display:inline-block;
-  color:#ffffff !important;
-  font-size:12px;
-  font-weight:700;
+    display: inline-block;
+    color: #f5d879;
+    font-size: 12px;
+    font-weight: 700;
 }
 
-@media (max-width:360px) {
-  .hub-menu-grid {
-    grid-template-columns:1fr;
-  }
+@media (max-width: 360px) {
+    .hub-menu-grid {
+        grid-template-columns: 1fr;
+    }
 }
+    /* PALMGROW HUB DESIGN */
+.hub-hero {
+  background: linear-gradient(130deg,#0b382b,#176047);
+  color: #fff;
+  border-radius: 18px;
+  padding: 22px;
+  margin-bottom: 16px;
+}
+.hub-hero h2 { margin: 0 0 7px; font-size: 23px; }
+.hub-hero p { margin: 0; color: #e3f2e9; font-size: 13px; line-height: 1.6; }
+
+.hub-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 2px 1px 12px;
+  margin-bottom: 8px;
+}
+.hub-tab {
+  white-space: nowrap;
+  border: 1px solid #d6e5dc;
+  background: #fff;
+  color: #174a37;
+  padding: 10px 13px;
+  border-radius: 22px;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+}
+.hub-tab.active {
+  background: #0d4935;
+  color: #fff;
+  border-color: #0d4935;
+}
+.hub-panel { display: none; }
+.hub-panel.active { display: block; }
+
+.hub-notebook {
+  background: linear-gradient(115deg,#f3ead6,#fffdf7 12%,#fffdf7 88%,#e9dfca);
+  border: 1px solid #d9c9a8;
+  border-radius: 18px;
+  padding: 17px;
+  box-shadow: 0 12px 28px #172f2417;
+  position: relative;
+  overflow: hidden;
+}
+.hub-book-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 0 0 13px 12px;
+  border-bottom: 1px solid #e4d8c1;
+  color: #254a38;
+}
+.hub-testimonial {
+  margin: 13px 0 0 12px;
+  padding: 13px 14px;
+  background: #fff;
+  border: 1px solid #eee4d2;
+  border-radius: 11px;
+  box-shadow: 0 3px 8px #4d38200a;
+}
+.hub-person { font-weight: 800; color: #174b36; font-size: 13px; }
+.hub-role { font-size: 11px; color: #92743e; margin: 2px 0 8px; }
+.hub-testimonial blockquote {
+  margin: 0;
+  color: #38483e;
+  font-size: 12px;
+  line-height: 1.65;
+}
+.hub-book-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0 0 12px;
+}
+.hub-book-controls button {
+  border: 0;
+  border-radius: 9px;
+  padding: 10px 14px;
+  background: #14543d;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+.hub-info-card {
+  background: #fff;
+  border: 1px solid #e3ebe5;
+  border-radius: 14px;
+  padding: 17px;
+  margin-bottom: 12px;
+}
+.hub-info-card h3 { margin: 0 0 8px; color: #124b35; }
+.hub-info-card p, .hub-info-card li {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #526158;
+}
+.hub-empty {
+  border: 1px dashed #b9cfc0;
+  background: #f6faf7;
+  border-radius: 13px;
+  padding: 20px;
+  text-align: center;
+  color: #52665a;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.hub-news-table-wrap { overflow-x: auto; margin: 12px 0; }
+.hub-news-table { min-width: 520px; }
+@media(max-width:600px) {
+  .hub-notebook { padding: 13px; }
+  .hub-testimonial { padding: 11px; }
+  .hub-testimonial blockquote { font-size: 12px; }
+    }
     
 /* =====================================
-   PALMGROW SUCCESS STORIES - BLACK PREMIUM DESIGN
-===================================== */
+   PALMGROW SUCCESS STORIES - PREMIUM COMPACT DESIGN
+   ===================================== */
 
 #page-hub-stories {
   padding: 8px !important;
   border-radius: 16px;
   background:
-    radial-gradient(circle at 10% 10%, rgba(180,180,180,.08), transparent 30%),
-    linear-gradient(145deg, #080808, #171717 55%, #000000);
-  border: 1.5px solid #444444;
-  color: #ffffff;
+    radial-gradient(circle at 10% 10%, rgba(212,175,55,.2), transparent 30%),
+    linear-gradient(145deg, #03291e, #075239 55%, #021f17);
+  border: 1.5px solid #d4af37;
+  color: white;
   min-height: 0;
 }
 
@@ -300,7 +210,7 @@ header,
 #page-hub-stories > .page-header h2 {
   font-size: 17px;
   margin: 0 0 3px;
-  color: #ffffff;
+  color: #f5d879;
 }
 
 #page-hub-stories > .page-header p {
@@ -320,7 +230,7 @@ header,
 }
 
 .success-book-heading h2 {
-  color: #ffffff;
+  color: #f5d879;
   font-size: 16px;
   margin: 0;
 }
@@ -341,19 +251,19 @@ header,
   position: relative;
   padding: 5px;
   border-radius: 11px;
-  background: linear-gradient(90deg, #222222, #777777 8%, #333333 50%, #777777 92%, #222222);
-  box-shadow: 0 8px 18px rgba(0,0,0,.6);
+  background: linear-gradient(90deg, #6b471e, #d4af37 8%, #8c672d 50%, #d4af37 92%, #6b471e);
+  box-shadow: 0 8px 18px rgba(0,0,0,.3);
 }
 
 .success-book-page {
   position: relative;
   min-height: 0;
   padding: 10px 10px 10px 24px;
-  color: #eeeeee;
-  background: #151515;
-  border: 1px solid #444444;
+  color: #3b3020;
+  background: #fffdf4;
+  border: 1px solid #e1c987;
   border-radius: 5px;
-  box-shadow: inset 5px 0 9px rgba(255,255,255,.03);
+  box-shadow: inset 5px 0 9px rgba(120,85,35,.10);
 }
 
 .success-book-page::before {
@@ -363,33 +273,33 @@ header,
   bottom: 0;
   left: 17px;
   width: 1px;
-  background: rgba(180,180,180,.2);
+  background: rgba(190,80,70,.25);
 }
 
 .success-page-title {
   text-align: center;
-  color: #ffffff;
+  color: #145239;
   font-size: 13px;
   font-weight: 800;
   margin: 0 0 7px;
   padding-bottom: 5px;
-  border-bottom: 1px solid #555555;
+  border-bottom: 1px solid #d4af37;
 }
 
 .success-testimonial {
   position: relative;
   margin: 6px 0;
   padding: 8px 9px;
-  border: 1px solid #444444;
+  border: 1px solid #c9a64e;
   border-radius: 8px;
-  background: #202020;
-  box-shadow: 0 2px 6px rgba(0,0,0,.4);
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(90,65,25,.1);
 }
 
 .success-testimonial::before {
   content: "❝";
   display: block;
-  color: #bbbbbb;
+  color: #b28a32;
   font-size: 17px;
   line-height: 1;
 }
@@ -398,19 +308,19 @@ header,
   font-family: Georgia, serif;
   font-size: 11px;
   line-height: 1.4;
-  color: #eeeeee;
+  color: #403729;
   margin: 3px 0 5px;
 }
 
 .success-testimonial strong {
   display: block;
-  color: #ffffff;
+  color: #075239;
   font-size: 11px;
 }
 
 .success-testimonial small {
   display: block;
-  color: #aaaaaa;
+  color: #80672f;
   font-size: 9px;
   margin-top: 2px;
 }
@@ -429,10 +339,10 @@ header,
   flex: 1;
   min-width: 0;
   padding: 8px 5px;
-  border: 1px solid #555555;
+  border: 1px solid #f5d879;
   border-radius: 7px;
-  background: linear-gradient(145deg, #333333, #111111);
-  color: #ffffff;
+  background: linear-gradient(145deg, #d4af37, #f5d879);
+  color: #173b2b;
   font-weight: 800;
   font-size: 11px;
   cursor: pointer;
@@ -444,7 +354,7 @@ header,
 }
 
 .success-page-number {
-  color: #cccccc;
+  color: #f5d879;
   font-size: 11px;
   font-weight: 800;
   white-space: nowrap;
@@ -492,10 +402,9 @@ header,
   }
 }
 
-/* =====================================
-   PALMGROW - PREMIUM BLACK BACKGROUND
-   REFERRAL PAGE EXCLUDED
-===================================== */
+
+    /* PALMGROW - STRONG PREMIUM EMERALD BACKGROUND */
+/* REFERRAL PAGE EXCLUDED */
 
 #page-dashboard,
 #page-invest,
@@ -508,102 +417,53 @@ header,
   background:
     radial-gradient(
       circle at 95% 5%,
-      rgba(200, 200, 200, 0.08),
+      rgba(255, 215, 100, 0.35),
       transparent 32%
     ),
     radial-gradient(
       circle at 5% 90%,
-      rgba(100, 100, 100, 0.12),
+      rgba(36, 160, 105, 0.45),
       transparent 35%
     ),
     linear-gradient(
       145deg,
-      #000000 0%,
-      #101010 45%,
-      #1b1b1b 75%,
-      #050505 100%
+      #03291e 0%,
+      #075239 45%,
+      #0b704b 75%,
+      #043626 100%
     ) !important;
 
-  border: 2px solid #383838 !important;
+  border: 2px solid #d4af37 !important;
   border-radius: 22px !important;
   padding: 15px !important;
   min-height: 75vh;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
 }
 
-/* Page headings */
+/* Make page headings stand out on green */
 #page-dashboard > h3,
 #page-invest > h3,
 #page-deposit > h3,
 #page-admin > h3 {
-  color: #ffffff !important;
+  color: #f8df91;
 }
 
-/* Content cards */
+/* Keep content cards bright and readable */
 #page-dashboard .section,
 #page-invest .section,
 #page-deposit .section,
 #page-admin .section,
 #page-employee-position .section {
-  background: linear-gradient(145deg, #202020, #111111) !important;
-  color: #ffffff !important;
-  border: 1px solid #444444 !important;
+  background: linear-gradient(145deg, #ffffff, #edf6ef);
+  border: 2px solid #d4af37;
   border-radius: 17px;
-  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.18);
 }
 
-/* WITHDRAWAL PAGE — VISIBLE WHITE AND SILVER TEXT */
-
-#page-withdraw,
-#page-withdraw-history {
-  color: #ffffff !important;
-}
-
-#page-withdraw h1,
-#page-withdraw h2,
-#page-withdraw h3,
-#page-withdraw h4,
-#page-withdraw-history h1,
-#page-withdraw-history h2,
-#page-withdraw-history h3,
-#page-withdraw-history h4 {
-  color: #ffffff !important;
-}
-
-#page-withdraw .section,
-#page-withdraw-history .section {
-  background: #181818 !important;
-  color: #ffffff !important;
-  border: 1px solid #444444 !important;
-}
-
-#page-withdraw p,
-#page-withdraw label,
-#page-withdraw span,
-#page-withdraw-history p,
-#page-withdraw-history label,
-#page-withdraw-history span {
-  color: #cccccc;
-}
-
-#page-withdraw input,
-#page-withdraw select,
-#page-withdraw textarea {
-  background: #101010 !important;
-  color: #ffffff !important;
-  border: 1px solid #555555 !important;
-}
-
-#page-withdraw input::placeholder {
-  color: #999999 !important;
-}
-
-/* Investment plans */
+/* Strong gold frame around investment plans */
 #page-invest .plan {
-  background: #151515 !important;
-  color: #ffffff !important;
-  border: 2px solid #444444 !important;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+  border: 2px solid #d4af37;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
 }
 
 /* Mobile display */
@@ -620,9 +480,8 @@ header,
     border-radius: 17px !important;
   }
 }
-
-/* =====================================
-   PALMGROW PREMIUM BLACK WEBSITE DESIGN
+    /* =====================================
+   PALMGROW PREMIUM WEBSITE DESIGN
    REFERRAL PAGE EXCLUDED
 ===================================== */
 
@@ -635,14 +494,13 @@ header,
 #page-withdraw-history {
   background:
     radial-gradient(circle at top right,
-      rgba(200,200,200,0.08), transparent 35%),
-    linear-gradient(145deg, #080808, #151515);
-  border: 1px solid #383838;
+      rgba(212,175,55,0.12), transparent 35%),
+    linear-gradient(145deg, #edf5ef, #f8faf8);
+  border: 1px solid #d6e5da;
   border-radius: 20px;
   padding: 12px;
   margin-bottom: 18px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
-  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(7,61,43,0.07);
 }
 
 /* Premium frames around content cards */
@@ -650,13 +508,12 @@ header,
 #page-invest .section,
 #page-deposit .section,
 #page-admin .section {
-  background: linear-gradient(145deg, #202020, #111111);
-  color: #ffffff;
-  border: 1px solid #444444;
+  background: linear-gradient(145deg, #ffffff, #f7fbf8);
+  border: 1px solid #d4af37;
   border-radius: 17px;
   padding: 17px;
   margin-bottom: 16px;
-  box-shadow: 0 5px 16px rgba(0,0,0,0.45);
+  box-shadow: 0 5px 16px rgba(7,61,43,0.09);
 }
 
 /* Page headings */
@@ -664,18 +521,17 @@ header,
 #page-invest h3,
 #page-deposit h3,
 #page-admin h3 {
-  color: #ffffff;
+  color: #073d2b;
   font-weight: 800;
 }
 
 /* Investment plan cards */
 #page-invest .plan {
-  background: linear-gradient(145deg, #222222, #111111);
-  color: #ffffff;
-  border: 1px solid #555555;
+  background: linear-gradient(145deg, #ffffff, #f0f7f2);
+  border: 1px solid #d4af37;
   border-radius: 16px;
   padding: 17px;
-  box-shadow: 0 5px 14px rgba(0,0,0,0.45);
+  box-shadow: 0 5px 14px rgba(7,61,43,0.09);
 }
 
 /* Tables */
@@ -684,8 +540,7 @@ header,
 #page-deposit table,
 #page-admin table,
 #page-withdraw-history table {
-  background: #111111;
-  color: #ffffff;
+  background: #ffffff;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -695,8 +550,8 @@ header,
 #page-deposit th,
 #page-admin th,
 #page-withdraw-history th {
-  background: #292929;
-  color: #ffffff;
+  background: #e5f1e9;
+  color: #073d2b;
 }
 
 #page-dashboard td,
@@ -704,9 +559,7 @@ header,
 #page-deposit td,
 #page-admin td,
 #page-withdraw-history td {
-  background: #181818;
-  color: #eeeeee;
-  border-color: #383838;
+  color: #263d31;
 }
 
 /* Form frames */
@@ -714,10 +567,9 @@ header,
 #page-deposit select,
 #page-admin input,
 #page-admin select {
-  border: 1px solid #444444;
+  border: 1px solid #cbdccf;
   border-radius: 10px;
-  background: #111111;
-  color: #ffffff;
+  background: #ffffff;
 }
 
 #page-deposit input:focus,
@@ -725,16 +577,16 @@ header,
 #page-admin input:focus,
 #page-admin select:focus {
   outline: none;
-  border-color: #aaaaaa;
-  box-shadow: 0 0 0 3px rgba(180,180,180,0.12);
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.13);
 }
 
 /* Premium buttons */
 #page-invest .plan button,
 #page-deposit form button,
 #page-admin .primary-btn {
-  background: linear-gradient(135deg, #333333, #111111);
-  border: 1px solid #555555;
+  background: linear-gradient(135deg, #073d2b, #147a56);
+  border: 1px solid #d4af37;
   border-radius: 10px;
   color: #ffffff;
   font-weight: 700;
@@ -742,18 +594,18 @@ header,
 
 /* Locked investment buttons */
 #page-invest .plan button:disabled {
-  background: #292929;
-  color: #aaaaaa;
-  border: 1px solid #444444;
+  background: #dfe9e2;
+  color: #52715e;
+  border: 1px solid #c5d8ca;
   cursor: not-allowed;
 }
 
 /* Withdrawal page frames */
 #page-withdraw > div,
 #page-withdraw-history > div {
-  border: 1px solid #444444;
+  border: 1px solid #d4af37;
   border-radius: 17px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  box-shadow: 0 6px 18px rgba(7,61,43,0.10);
 }
 
 /* Dashboard wallet frame */
@@ -768,7 +620,6 @@ header,
 #page-dashboard [id="referralEarnings"],
 #page-dashboard [id="availableBalance"] {
   font-weight: 800;
-  color: #ffffff;
 }
 
 /* Smooth appearance */
@@ -798,8 +649,8 @@ header,
     padding: 13px;
   }
 }
- 
-/* PALMGROW - FULL BLACK EMPLOYEE DAILY TASKS PAGE */
+    
+/* PALMGROW - FULL EMPLOYEE DAILY TASKS PAGE BACKGROUND */
 
 #page-employee-tasks {
   min-height: calc(100vh - 120px);
@@ -808,17 +659,15 @@ header,
   background:
     radial-gradient(
       circle at 95% 8%,
-      rgba(200, 200, 200, 0.08),
+      rgba(212, 175, 55, 0.20),
       transparent 28%
     ),
     linear-gradient(
       145deg,
-      #050505,
-      #171717 55%,
-      #080808
-    ) !important;
-  border: 1px solid #383838;
-  color: #ffffff;
+      #052f23,
+      #0b5139 55%,
+      #073d2b
+    );
 }
 
 /* Remove the white outer container */
@@ -832,102 +681,95 @@ header,
 
 /* Page heading */
 #page-employee-tasks > .section > h3 {
-  color: #ffffff !important;
+  color: #f5d879;
   font-size: 20px;
   margin-bottom: 12px;
 }
 
 /* Introduction text */
 #page-employee-tasks > .section > p {
-  color: #cccccc !important;
+  color: rgba(255, 255, 255, 0.9) !important;
   line-height: 1.7;
 }
 
 /* Daily payment card */
 #page-employee-tasks .stat-card {
-  background: #181818 !important;
-  color: #ffffff !important;
-  border: 1px solid #444444;
+  background: #ffffff;
+  border: 1px solid #d4af37;
   border-radius: 14px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }
 
 #page-employee-tasks .stat-card .label {
-  color: #aaaaaa !important;
+  color: #52665a;
 }
 
 #page-employee-tasks .stat-card .value {
-  color: #ffffff !important;
+  color: #0b5139;
   font-size: 24px;
   font-weight: 800;
 }
 
 /* Task progress notice */
 #page-employee-tasks .notice {
-  background: #202020 !important;
-  border: 1px solid #444444 !important;
-  color: #eeeeee !important;
+  background: #fff8e5 !important;
+  border: 1px solid #d4af37 !important;
+  color: #17452f !important;
   border-radius: 12px;
 }
 
 /* Individual daily task cards */
 #page-employee-tasks .task-card {
-  background: #181818 !important;
-  color: #ffffff !important;
-  border: 1px solid #444444;
+  background: #ffffff;
+  border: 1px solid #d4af37;
   border-radius: 14px;
   padding: 16px;
-  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.12);
 }
 
 #page-employee-tasks .task-card h4 {
-  color: #ffffff !important;
+  color: #0b5139;
 }
 
 #page-employee-tasks .task-card p {
-  color: #cccccc !important;
+  color: #52665a;
 }
 
 #page-employee-tasks .task-card button {
-  background: linear-gradient(145deg, #333333, #111111) !important;
-  color: #ffffff !important;
-  border: 1px solid #555555;
+  background: #0f5c42;
+  color: #ffffff;
   border-radius: 9px;
 }
 
 #page-employee-tasks .task-card button:disabled {
-  background: #292929 !important;
-  color: #999999 !important;
+  background: #8a9b91;
 }
 
 /* Task payment history */
 #page-employee-tasks .section .section {
-  background: #181818 !important;
-  color: #ffffff !important;
-  border: 1px solid #444444 !important;
+  background: #ffffff !important;
+  border: 1px solid #d4af37 !important;
   border-radius: 14px;
   padding: 15px !important;
   margin-top: 16px;
 }
 
 #page-employee-tasks .section .section h3 {
-  color: #ffffff !important;
+  color: #0b5139;
 }
 
 #page-employee-tasks table {
-  background: #111111 !important;
-  color: #ffffff !important;
+  background: #ffffff;
+  color: #173b2b;
 }
 
 #page-employee-tasks th {
-  background: #292929 !important;
-  color: #ffffff !important;
+  background: #e8f2eb;
+  color: #0b5139;
 }
 
 #page-employee-tasks td {
-  background: #181818 !important;
-  color: #eeeeee !important;
-  border-color: #383838 !important;
+  color: #263d31;
 }
 
 /* Mobile screen adjustment */
@@ -941,9 +783,30 @@ header,
   }
 }
 
-    
-/* PALMGROW REFERRAL PAGE - BLACK PREMIUM DESIGN */
+    /* PALMGROW REFERRAL PAGE DESIGN */
+#page-referral {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.referral-team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+}
 
+.referral-team-grid .referral-team-card {
+  min-width: 0;
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .referral-team-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+    }
 #page-referral.hidden {
   display: none !important;
 }
@@ -960,9 +823,9 @@ header,
   border-radius: 18px;
   color: #fff;
   background:
-    linear-gradient(rgba(0,0,0,.72), rgba(0,0,0,.72)),
-    url('1794192101869.jpg') center/cover no-repeat;
-  box-shadow: 0 8px 22px rgba(0,0,0,.4);
+  linear-gradient(rgba(4,45,30,.72), rgba(4,45,30,.72)),
+  url('1794192101869.jpg') center/cover no-repeat;
+  box-shadow: 0 8px 22px rgba(7,61,43,.16);
 }
 
 .referral-hero::after {
@@ -987,7 +850,6 @@ header,
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 2px;
-  color: #cccccc;
 }
 
 .referral-hero h2 {
@@ -1008,10 +870,10 @@ header,
   align-items: center;
   gap: 13px;
   padding: 17px;
-  background: #181818;
-  border: 1px solid #383838;
+  background: #fff;
+  border: 1px solid var(--border);
   border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,.35);
+  box-shadow: 0 4px 12px rgba(0,0,0,.035);
 }
 
 .referral-team-icon {
@@ -1022,7 +884,7 @@ header,
   justify-content: center;
   flex-shrink: 0;
   border-radius: 12px;
-  background: #292929;
+  background: #e8f4ed;
   font-size: 23px;
 }
 
@@ -1033,32 +895,31 @@ header,
 }
 
 .referral-team-card strong {
-  color: #ffffff;
+  color: var(--green-dark);
   font-size: 14px;
 }
 
 .referral-team-card span {
-  color: #aaaaaa;
+  color: var(--muted);
   font-size: 11px;
 }
 
 .referral-team-card > b {
   margin-left: auto;
-  color: #ffffff;
+  color: var(--green-dark);
   font-size: 25px;
 }
 
 .referral-level-section {
   padding: 18px;
   border-radius: 16px;
-  background: linear-gradient(145deg, #080808, #222222);
-  border: 1px solid #444444;
-  box-shadow: 0 7px 18px rgba(0,0,0,.45);
+  background: linear-gradient(145deg, #073d2b, #10583d);
+  box-shadow: 0 7px 18px rgba(7,61,43,.14);
 }
 
 .referral-rates-title {
   margin-bottom: 14px;
-  color: #ffffff;
+  color: #f5d879;
   font-size: 16px;
   font-weight: 800;
 }
@@ -1067,7 +928,7 @@ header,
   padding: 14px 10px;
   border: 1px solid rgba(255,255,255,.15);
   border-radius: 12px;
-  background: rgba(255,255,255,.06);
+  background: rgba(255,255,255,.08);
 }
 
 .referral-rate-grid {
@@ -1089,7 +950,7 @@ header,
 }
 
 .referral-rate-grid strong {
-  color: #ffffff;
+  color: #f5d879;
   font-size: 17px;
 }
 
@@ -1098,9 +959,8 @@ header,
   margin: 14px auto 8px;
   padding: 7px 15px;
   border-radius: 30px;
-  color: #ffffff;
-  background: #333333;
-  border: 1px solid #666666;
+  color: #073d2b;
+  background: #f5d879;
   font-size: 13px;
   font-weight: 800;
 }
@@ -1115,21 +975,20 @@ header,
 
 .referral-link-section {
   padding: 18px;
-  border: 1px solid #383838;
+  border: 1px solid var(--border);
   border-radius: 15px;
-  background: #181818;
-  color: #ffffff;
+  background: #fff;
 }
 
 .referral-link-section h3 {
   margin-bottom: 7px;
-  color: #ffffff;
+  color: var(--green-dark);
   font-size: 16px;
 }
 
 .referral-link-section p {
   margin-bottom: 12px;
-  color: #aaaaaa;
+  color: var(--muted);
   font-size: 12px;
 }
 
@@ -1138,10 +997,10 @@ header,
   width: 100%;
   min-width: 0;
   padding: 11px;
-  border: 1px solid #444444;
+  border: 1px solid var(--border);
   border-radius: 8px;
-  background: #101010;
-  color: #ffffff;
+background: #f6faf7;
+  color: var(--green-dark);
   font-size: 12px;
 }
 
@@ -1153,9 +1012,9 @@ header,
   width: 100%;
   margin-top: 6px;
   padding: 10px;
-  border: 1px solid #555555;
+  border: 0;
   border-radius: 8px;
-  background: linear-gradient(145deg, #333333, #111111);
+  background: var(--green);
   color: #fff;
   font-size: 13px;
   font-weight: 700;
@@ -1173,28 +1032,25 @@ header,
   width: 100%;
   margin-top: 8px;
   padding: 11px;
-  background: #292929;
-  border: 1px solid #555555;
+  background: var(--green);
   color: #fff;
 }
-
+ 
 #referralFeedback {
   margin-top: 8px;
   font-size: 12px;
-  color: #cccccc;
 }
 
 .referral-benefits {
   padding: 18px;
-  border: 1px solid #383838;
+  border: 1px solid var(--border);
   border-radius: 15px;
-  background: #181818;
-  color: #ffffff;
+  background: #fff;
 }
 
 .referral-benefits h3 {
   margin-bottom: 12px;
-  color: #ffffff;
+  color: var(--green-dark);
   font-size: 16px;
 }
 
@@ -1203,14 +1059,14 @@ header,
   align-items: flex-start;
   gap: 9px;
   margin: 10px 0;
-  color: #dddddd;
+  color: var(--text);
   font-size: 12px;
   line-height: 1.5;
 }
 
 @media(max-width:360px) {
   .referral-rate-grid {
-    gap: 2px;
+      gap: 2px;
   }
 
   .referral-rate-grid strong {
@@ -1220,876 +1076,318 @@ header,
   .referral-rate-grid span {
     font-size: 9px;
   }
-}
- 
-:root {
-  --green-dark:#000000;
-  --green:#202020;
-  --green-light:#303030;
-  --gold:#ffffff;
-  --bg:#000000;
-  --card:#151515;
-  --text:#ffffff;
-  --muted:#b0b0b0;
-  --border:#383838;
-}
+  }
 
-* {
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-html {
-  background:#000000;
-  color-scheme:dark;
-}
-
-body {
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  line-height:1.5;
-  min-height:100vh;
-}
-
-.hidden {
-  display:none!important;
-}
-
-#authScreen {
-  min-height:100vh;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:linear-gradient(135deg,#000000,#181818);
-}
-
-.auth-box {
-  background:var(--card);
-  color:var(--text);
-  width:100%;
-  max-width:400px;
-  border-radius:16px;
-  padding:28px 24px;
-  box-shadow:0 20px 40px rgba(0,0,0,.7);
-}
-
-.auth-box h1 {
-  font-size:22px;
-  margin-bottom:6px;
-  color:#ffffff;
-}
-
-.auth-box .sub {
-  color:var(--muted);
-  font-size:14px;
-  margin-bottom:20px;
-}
-
-.auth-box label {
-  display:block;
-  font-size:13px;
-  font-weight:600;
-  margin-bottom:4px;
-  color:var(--text);
-}
-
-.auth-box input {
-  width:100%;
-  padding:12px 14px;
-  border:1px solid var(--border);
-  border-radius:8px;
-  font-size:15px;
-  margin-bottom:14px;
-  background:#080808;
-  color:var(--text);
-}
-
-.auth-box button {
-  width:100%;
-  padding:13px;
-  background:#303030;
-  color:#fff;
-  border:1px solid #505050;
-  border-radius:8px;
-  font-size:15px;
-  font-weight:600;
-  cursor:pointer;
-  margin-top:6px;
-}
-
-.auth-box button.secondary {
-  background:#202020;
-  color:var(--text);
-  margin-top:10px;
-}
-
-.status {
-  margin-top:12px;
-  padding:10px;
-  border-radius:8px;
-  font-size:13px;
-}
-
-.success {
-  background:#202020;
-  color:#ffffff;
-  border:1px solid #505050;
-}
-
-.error {
-  background:#252525;
-  color:#d0d0d0;
-  border:1px solid #555555;
-}
-
-#app {
-  display:none;
-  min-height:100vh;
-  background:var(--bg);
-  color:var(--text);
-}
-
-.sidebar {
-  position:fixed;
-  top:0;
-  left:0;
-  bottom:0;
-  width:240px;
-  background:#080808;
-  color:#fff;
-  padding:20px 0;
-  overflow-y:auto;
-  z-index:100;
-  transform:translateX(-100%);
-  transition:transform .25s ease;
-}
-
-.sidebar.open {
-  transform:translateX(0);
-}
-
-.sidebar .logo {
-  padding:0 20px 24px;
-  font-size:22px;
-  font-weight:700;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.sidebar .logo span {
-  color:#ffffff;
-}
-
-.nav-item {
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:12px 20px;
-  color:rgba(255,255,255,.85);
-  cursor:pointer;
-  font-size:14px;
-  border-left:3px solid transparent;
-}
-
-.nav-item:hover,
-.nav-item.active {
-  background:rgba(255,255,255,.08);
-  border-left-color:#ffffff;
-  color:#fff;
-}
-
-.task-card {
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:14px;
-  margin:10px 0;
-  background:var(--card);
-  color:var(--text);
-}
-
-.task-card h4 {
-  color:#ffffff;
-  margin-bottom:6px;
-}
-
-.task-card p {
-  font-size:13px;
-  color:var(--muted);
-  margin-bottom:10px;
-}
-
-.task-card button {
-  width:100%;
-  padding:11px;
-  background:#303030;
-  color:#fff;
-  border:1px solid #505050;
-  border-radius:7px;
-  font-weight:600;
-  cursor:pointer;
-}
-
-.task-card button:disabled {
-  background:#252525;
-  color:#888888;
-  border-color:#383838;
-  cursor:not-allowed;
-}
-
-.task-done {
-  border-color:#606060;
-  background:#1c1c1c;
-}
+:root {  
+  --green-dark:#0b3d2e; --green:#0f5c42; --green-light:#147a56;  
+  --gold:#d4af37; --bg:#f4f7f5; --card:#fff; --text:#1a2e25;  
+  --muted:#6b7c73; --border:#e2ebe6;  
+}  
+*{box-sizing:border-box;margin:0;padding:0}  
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;min-height:100vh}  
+.hidden{display:none!important}  
+#authScreen{min-height:100vh;display:none;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#0b3d2e,#0f5c42)}
+.auth-box{background:#fff;width:100%;max-width:400px;border-radius:16px;padding:28px 24px;box-shadow:0 20px 40px rgba(0,0,0,.2)}  
+.auth-box h1{font-size:22px;margin-bottom:6px;color:var(--green-dark)}  
+.auth-box .sub{color:var(--muted);font-size:14px;margin-bottom:20px}  
+.auth-box label{display:block;font-size:13px;font-weight:600;margin-bottom:4px}  
+.auth-box input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;font-size:15px;margin-bottom:14px}  
+.auth-box button{width:100%;padding:13px;background:var(--green);color:#fff;border:0;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;margin-top:6px}  
+.auth-box button.secondary{background:#e8f0ec;color:var(--green-dark);margin-top:10px}  
+.status{margin-top:12px;padding:10px;border-radius:8px;font-size:13px}  
+.success{background:#e5f5e9;color:#155b31}  
+.error{background:#ffeded;color:#8a2222}  
+#app{display:none;min-height:100vh}  
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:240px;background:var(--green-dark);color:#fff;padding:20px 0;overflow-y:auto;z-index:100;transform:translateX(-100%);transition:transform .25s ease}  
+.sidebar.open{transform:translateX(0)}  
+.sidebar .logo{padding:0 20px 24px;font-size:22px;font-weight:700;display:flex;align-items:center;gap:8px}  
+.sidebar .logo span{color:var(--gold)}  
+.nav-item{display:flex;align-items:center;gap:12px;padding:12px 20px;color:rgba(255,255,255,.85);cursor:pointer;font-size:14px;border-left:3px solid transparent}  
+.nav-item:hover,.nav-item.active{background:rgba(255,255,255,.08);border-left-color:var(--gold);color:#fff}  
+.task-card{border:1px solid var(--border);border-radius:10px;padding:14px;margin:10px 0;background:#fff}  
+.task-card h4{color:var(--green-dark);margin-bottom:6px}  
+.task-card p{font-size:13px;color:var(--muted);margin-bottom:10px}  
+.task-card button{width:100%;padding:11px;background:var(--green);color:#fff;border:0;border-radius:7px;font-weight:600;cursor:pointer}  
+.task-card button:disabled{background:#8a9b91;cursor:not-allowed}  
+.task-done{border-color:#8ac49d;background:#f2fbf4}  
 
 
 /* PALMGROW PREMIUM EMPLOYEE LEVEL DESIGN */
 
 #page-employee-position .section {
-  background:linear-gradient(160deg,#151515,#202020);
-  border:1px solid #383838;
-  border-radius:20px;
-  padding:18px;
+  background: linear-gradient(160deg, #ffffff, #f3f8f4);
+  border: 1px solid #dce9df;
+  border-radius: 20px;
+  padding: 18px;
 }
 
 #page-employee-position h3 {
-  color:#ffffff;
-  font-size:21px;
-  font-weight:800;
-  margin-bottom:10px;
+  color: #073d2b;
+  font-size: 21px;
+  font-weight: 800;
+  margin-bottom: 10px;
 }
 
 #page-employee-position .notice {
-  background:linear-gradient(135deg,#111111,#292929);
-  color:#ffffff;
-  border:1px solid #505050;
-  border-radius:14px;
-  padding:16px;
-  margin:15px 0 20px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.35);
+  background: linear-gradient(135deg, #073d2b, #116b48);
+  color: #fff;
+  border: 1px solid #c9a64b;
+  border-radius: 14px;
+  padding: 16px;
+  margin: 15px 0 20px;
+  box-shadow: 0 5px 15px rgba(7,61,43,0.12);
 }
 
 #page-employee-position .notice strong {
-  color:#ffffff;
-  font-size:17px;
+  color: #f4d47c;
+  font-size: 17px;
 }
 
 /* LEVEL CARD */
 
 #employeePositionPlans {
-  display:grid;
-  grid-template-columns:1fr;
-  gap:14px;
-  margin-top:18px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 18px;
 }
 
 #employeePositionPlans .position-plan {
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  background:linear-gradient(145deg,#181818,#242424);
-  border:1px solid #444444;
-  border-left:5px solid #777777;
-  border-radius:17px;
-  padding:17px 15px;
-  margin:0;
-  box-shadow:0 5px 15px rgba(0,0,0,0.3);
-  transition:transform 0.2s ease,box-shadow 0.2s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: linear-gradient(145deg, #ffffff, #f2f8f3);
+  border: 1px solid #d5e4d9;
+  border-left: 5px solid #c9a64b;
+  border-radius: 17px;
+  padding: 17px 15px;
+  margin: 0;
+  box-shadow: 0 5px 15px rgba(7,61,43,0.07);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 #employeePositionPlans .position-plan:active {
-  transform:scale(0.985);
+  transform: scale(0.985);
 }
 
 /* LEVEL BADGE */
 
 #employeePositionPlans .position-left {
-  display:flex;
-  align-items:center;
-  gap:13px;
-  min-width:0;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
 }
 
 #employeePositionPlans .level-badge {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-width:53px;
-  height:53px;
-  padding:5px;
-  border-radius:15px;
-  background:linear-gradient(145deg,#202020,#383838);
-  color:#ffffff;
-  border:1px solid #666666;
-  font-size:16px;
-  font-weight:800;
-  box-shadow:0 4px 10px rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 53px;
+  height: 53px;
+  padding: 5px;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #073d2b, #16734c);
+  color: #f4d47c;
+  border: 1px solid #c9a64b;
+  font-size: 16px;
+  font-weight: 800;
+  box-shadow: 0 4px 10px rgba(7,61,43,0.18);
 }
 
 /* LEVEL DETAILS */
 
 #employeePositionPlans .position-details {
-  display:flex;
-  flex-direction:column;
-  gap:6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 #employeePositionPlans .position-details div {
-  font-size:12px;
-  color:#b0b0b0;
-  line-height:1.4;
+  font-size: 12px;
+  color: #64756b;
+  line-height: 1.4;
 }
 
 #employeePositionPlans .position-details strong {
-  color:#ffffff;
-  font-weight:800;
+  color: #073d2b;
+  font-weight: 800;
 }
 
 /* JOIN AND UPGRADE BUTTON */
 
 #employeePositionPlans .join-button {
-  padding:11px 15px;
-  background:linear-gradient(135deg,#292929,#444444);
-  color:#ffffff;
-  border:1px solid #666666;
-  border-radius:11px;
-  font-size:12px;
-  font-weight:800;
-  cursor:pointer;
-  white-space:nowrap;
-  box-shadow:0 4px 9px rgba(0,0,0,0.3);
+  padding: 11px 15px;
+  background: linear-gradient(135deg, #073d2b, #16804e);
+  color: #fff;
+  border: 1px solid #c9a64b;
+  border-radius: 11px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 4px 9px rgba(7,61,43,0.15);
 }
 
 #employeePositionPlans .join-button:disabled {
-  background:linear-gradient(135deg,#242424,#303030);
-  color:#888888;
-  border:1px solid #444444;
-  box-shadow:none;
-  cursor:not-allowed;
+  background: linear-gradient(135deg, #e5f3e9, #f5faf6);
+  color: #137333;
+  border: 1px solid #b9d8c2;
+  box-shadow: none;
+  cursor: not-allowed;
 }
 
 /* SMALL PHONE SCREENS */
-@media (min-width:600px) {
+@media (min-width: 600px) {
   #employeePositionPlans {
-    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-}
+    }
 
-@media (max-width:380px) {
+@media (max-width: 380px) {
   #employeePositionPlans .position-plan {
-    padding:12px 9px;
-    gap:7px;
+    padding: 12px 9px;
+    gap: 7px;
   }
 
   #employeePositionPlans .position-left {
-    gap:8px;
+    gap: 8px;
   }
 
   #employeePositionPlans .level-badge {
-    min-width:43px;
-    height:43px;
-    font-size:13px;
+    min-width: 43px;
+    height: 43px;
+    font-size: 13px;
   }
 
   #employeePositionPlans .position-details div {
-    font-size:11px;
+    font-size: 11px;
   }
 
   #employeePositionPlans .join-button {
-    padding:9px 10px;
-    font-size:11px;
+    padding: 9px 10px;
+    font-size: 11px;
   }
 }
 
 /* ADMIN PANEL TABS & CARDS */
 .admin-tabs {
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  padding-bottom:10px;
-  margin-bottom:16px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
 }
-
 .admin-tab-btn {
-  padding:10px 16px;
-  background:#202020;
-  color:#ffffff;
-  border:1px solid var(--border);
-  border-radius:8px;
-  font-weight:600;
-  font-size:13px;
-  cursor:pointer;
-  white-space:nowrap;
-  transition:all 0.2s ease;
+  padding: 10px 16px;
+  background: #e8f0ec;
+  color: var(--green-dark);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
 }
-
 .admin-tab-btn.active {
-  background:#383838;
-  color:#ffffff;
-  border-color:#666666;
+  background: var(--green);
+  color: white;
+  border-color: var(--green);
 }
-
 .admin-panel-section {
-  display:none;
+  display: none;
 }
-
 .admin-panel-section.active {
-  display:block;
+  display: block;
 }
 
-.main {
-  margin-left:0;
-  min-height:100vh;
-  padding-bottom:90px;
+.main{margin-left:0;min-height:100vh;padding-bottom:90px}  
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}  
+.menu-btn{background:none;border:0;font-size:22px;cursor:pointer;color:var(--green-dark);padding:4px 8px}  
+.user-info{display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer;padding:4px 8px;border-radius:8px;transition:background 0.2s}  
+.user-info:hover{background:#f0f5f2}  
+.user-info .avatar{width:36px;height:36px;background:var(--green);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600}  
+.content{padding:16px;max-width:480px;margin:0 auto}  
+@media(min-width:768px){.content{max-width:1100px}}  
+.section{background:#fff;border-radius:12px;border:1px solid var(--border);padding:18px;margin-bottom:16px}  
+.section h3{font-size:16px;margin-bottom:14px;display:flex;align-items:center;gap:8px}  
+.plans{display:grid;grid-template-columns:1fr;gap:12px}  
+.plan{border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center}  
+.plan .icon{font-size:28px}  
+.plan h4{margin:8px 0 4px;font-size:15px}  
+.plan .price{font-size:20px;font-weight:700;color:var(--green-dark);margin:8px 0}  
+.plan p{font-size:12px;color:var(--muted);margin-bottom:12px}  
+.plan button{width:100%;padding:10px;background:var(--green);color:#fff;border:0;border-radius:6px;font-weight:600;cursor:pointer}  
+.notice{background:#fff8e6;border:1px solid #f0d78c;color:#7a5c12;border-radius:8px;padding:12px;font-size:13px;margin-bottom:14px}  
+.payment-box{background:#f0fdf4;border:1px solid #16a34a;border-radius:8px;padding:14px;margin-bottom:16px;font-size:14px}  
+.payment-box strong{color:var(--green-dark)}  
+form label{display:block;font-size:13px;font-weight:600;margin-bottom:4px}  
+form input,form select{width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px;margin-bottom:12px}  
+form button,.primary-btn{width:100%;padding:12px;background:var(--green);color:#fff;border:0;border-radius:8px;font-weight:600;cursor:pointer}  
+button:disabled{opacity:.6;cursor:not-allowed}  
+.secondary-btn{background:#e8f0ec!important;color:var(--green-dark)!important;margin-top:10px}  
+.danger-btn{background:#b42318!important;color:white!important}  
+table{width:100%;border-collapse:collapse;font-size:13px}  
+th,td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}  
+th{background:#f0f5f2;font-weight:600}  
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:90;display:none}  
+.overlay.show{display:block}  
+.withdraw-grid{display:grid;grid-template-columns:1fr;gap:12px}  
+.withdraw-option{border:1px solid var(--border);border-radius:10px;padding:14px;background:#fff}  
+.withdraw-option strong{display:block;color:var(--green-dark);font-size:18px}  
+.withdraw-option span{font-size:12px;color:var(--muted)}  
+.withdraw-option button{width:100%;margin-top:10px;padding:10px;border:0;border-radius:7px;background:var(--green);color:#fff;font-weight:600}  
+.summary-row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px}  
+.summary-row.total{font-weight:700;color:var(--green-dark);font-size:16px}  
+.admin-actions{display:flex;flex-wrap:wrap;gap:6px}  
+.admin-actions button{padding:6px 8px;border:0;border-radius:4px;cursor:pointer;font-weight:600;font-size:11px}  
+
+/* Profile Modal Styles */
+.modal {position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:150;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal-content {background:#fff;border-radius:16px;padding:24px;width:100%;max-width:440px;box-shadow:0 10px 25px rgba(0,0,0,0.2);position:relative}
+.modal-header {display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:10px}
+.modal-header h3 {color:var(--green-dark);font-size:18px}
+.close-btn {background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted)}
+
+@media(min-width:768px){
+.sidebar{transform:translateX(0)}
+.main{margin-left:240px}
+.menu-btn{display:none}
+.plans{grid-template-columns:repeat(3,1fr)}
+.withdraw-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
-
-.topbar {
-  background:#101010;
-  color:#ffffff;
-  border-bottom:1px solid var(--border);
-  padding:12px 16px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  position:sticky;
-  top:0;
-  z-index:50;
-}
-
-.menu-btn {
-  background:none;
-  border:0;
-  font-size:22px;
-  cursor:pointer;
-  color:#ffffff;
-  padding:4px 8px;
-}
-
-.user-info {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:14px;
-  cursor:pointer;
-  padding:4px 8px;
-  border-radius:8px;
-  transition:background 0.2s;
-  color:#ffffff;
-}
-
-.user-info:hover {
-  background:#252525;
-}
-
-.user-info .avatar {
-  width:36px;
-  height:36px;
-  background:#383838;
-  color:#ffffff;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:600;
-}
-
-.content {
-  padding:16px;
-  max-width:480px;
-  margin:0 auto;
-}
-
-@media(min-width:768px) {
-  .content {
-    max-width:1100px;
-  }
-}
-
-.section {
-  background:#151515;
-  color:#ffffff;
-  border-radius:12px;
-  border:1px solid var(--border);
-  padding:18px;
-  margin-bottom:16px;
-}
-
-.section h3 {
-  font-size:16px;
-  margin-bottom:14px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  color:#ffffff;
-}
-
-.plans {
-  display:grid;
-  grid-template-columns:1fr;
-  gap:12px;
-}
-
-.plan {
-  background:#181818;
-  color:#ffffff;
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:16px;
-  text-align:center;
-}
-
-.plan .icon {
-  font-size:28px;
-}
-
-.plan h4 {
-  margin:8px 0 4px;
-  font-size:15px;
-  color:#ffffff;
-}
-
-.plan .price {
-  font-size:20px;
-  font-weight:700;
-  color:#ffffff;
-  margin:8px 0;
-}
-
-.plan p {
-  font-size:12px;
-  color:var(--muted);
-  margin-bottom:12px;
-}
-
-.plan button {
-  width:100%;
-  padding:10px;
-  background:#303030;
-  color:#ffffff;
-  border:1px solid #505050;
-  border-radius:6px;
-  font-weight:600;
-  cursor:pointer;
-}
-
-.notice {
-  background:#202020;
-  border:1px solid #505050;
-  color:#ffffff;
-  border-radius:8px;
-  padding:12px;
-  font-size:13px;
-  margin-bottom:14px;
-}
-
-.payment-box {
-  background:#191919;
-  border:1px solid #505050;
-  color:#ffffff;
-  border-radius:8px;
-  padding:14px;
-  margin-bottom:16px;
-  font-size:14px;
-}
-
-.payment-box strong {
-  color:#ffffff;
-}
-
-form label {
-  display:block;
-  font-size:13px;
-  font-weight:600;
-  margin-bottom:4px;
-  color:#ffffff;
-}
-
-form input,
-form select {
-  width:100%;
-  padding:11px 12px;
-  border:1px solid var(--border);
-  border-radius:8px;
-  font-size:15px;
-  margin-bottom:12px;
-  background:#101010;
-  color:#ffffff;
-}
-
-form button,
-.primary-btn {
-  width:100%;
-  padding:12px;
-  background:#303030;
-  color:#ffffff;
-  border:1px solid #505050;
-  border-radius:8px;
-  font-weight:600;
-  cursor:pointer;
-}
-
-button:disabled {
-  opacity:.6;
-  cursor:not-allowed;
-}
-
-.secondary-btn {
-  background:#252525!important;
-  color:#ffffff!important;
-  border:1px solid #505050!important;
-  margin-top:10px;
-}
-
-.danger-btn {
-  background:#303030!important;
-  color:#ffffff!important;
-  border:1px solid #666666!important;
-}
-
-table {
-  width:100%;
-  border-collapse:collapse;
-  font-size:13px;
-  color:#ffffff;
-}
-
-th,
-td {
-  padding:10px 8px;
-  text-align:left;
-  border-bottom:1px solid var(--border);
-  vertical-align:top;
-}
-
-th {
-  background:#252525;
-  color:#ffffff;
-  font-weight:600;
-}
-
-.overlay {
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.75);
-  z-index:90;
-  display:none;
-}
-
-.overlay.show {
-  display:block;
-}
-
-.withdraw-grid {
-  display:grid;
-  grid-template-columns:1fr;
-  gap:12px;
-}
-
-.withdraw-option {
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:14px;
-  background:#181818;
-  color:#ffffff;
-}
-
-.withdraw-option strong {
-  display:block;
-  color:#ffffff;
-  font-size:18px;
-}
-
-.withdraw-option span {
-  font-size:12px;
-  color:var(--muted);
-}
-
-.withdraw-option button {
-  width:100%;
-  margin-top:10px;
-  padding:10px;
-  border:1px solid #505050;
-  border-radius:7px;
-  background:#303030;
-  color:#ffffff;
-  font-weight:600;
-}
-
-.summary-row {
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  padding:8px 0;
-  border-bottom:1px solid var(--border);
-  font-size:14px;
-  color:#ffffff;
-}
-
-.summary-row.total {
-  font-weight:700;
-  color:#ffffff;
-  font-size:16px;
-}
-
-.admin-actions {
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-}
-
-.admin-actions button {
-  padding:6px 8px;
-  border:1px solid #505050;
-  border-radius:4px;
-  background:#303030;
-  color:#ffffff;
-  cursor:pointer;
-  font-weight:600;
-  font-size:11px;
-}
-
-/* PROFILE MODAL STYLES */
-.modal {
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.8);
-  z-index:150;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:16px;
-}
-
-.modal-content {
-  background:#181818;
-  color:#ffffff;
-  border:1px solid #444444;
-  border-radius:16px;
-  padding:24px;
-  width:100%;
-  max-width:440px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.6);
-  position:relative;
-}
-
-.modal-header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:16px;
-  border-bottom:1px solid var(--border);
-  padding-bottom:10px;
-}
-
-.modal-header h3 {
-  color:#ffffff;
-  font-size:18px;
-}
-
-.close-btn {
-  background:none;
-  border:none;
-  font-size:22px;
-  cursor:pointer;
-  color:#b0b0b0;
-}
-
-@media(min-width:768px) {
-  .sidebar {
-    transform:translateX(0);
-  }
-
-  .main {
-    margin-left:240px;
-  }
-
-  .menu-btn {
-    display:none;
-  }
-
-  .plans {
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .withdraw-grid {
-    grid-template-columns:repeat(3,minmax(0,1fr));
-  }
-}
-
-/* PASSWORD VISIBILITY CONTROLS */
+  /* Password visibility controls */
 .password-field {
-  position:relative;
-  width:100%;
-  display:flex;
-  align-items:center;
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .password-field input {
-  width:100%;
-  box-sizing:border-box;
-  padding-right:75px;
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 75px;
 }
 
 .password-field .password-toggle {
-  position:absolute;
-  right:8px;
-  top:50%;
-  transform:translateY(-50%);
-  width:auto;
-  margin:0;
-  padding:6px 10px;
-  background:transparent;
-  color:#ffffff;
-  border:none;
-  box-shadow:none;
-  cursor:pointer;
-  font-weight:600;
-}
-
-/* PALMGROW — FORCE BLACK BOTTOM NAVIGATION */
-
-div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space-around"] {
-  background: #000000 !important;
-  background-color: #000000 !important;
-  border-top: 1px solid #333333 !important;
-}
-
-div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space-around"] a {
-  background: transparent !important;
-  color: #b0b0b0 !important;
-}
-
-div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space-around"] > div > div {
-  background: #151515 !important;
-  border: 2px solid #777777 !important;
-  box-shadow: none !important;
-}
-
-div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space-around"] > div > div span {
-  color: #ffffff !important;
-}
-
- /* WITHDRAWAL AMOUNT INPUT — MAKE TEXT VISIBLE */
-
-#page-withdraw input[type="number"],
-#page-withdraw input[type="text"],
-#page-withdraw input:not([type]) {
-  background-color: #101010 !important;
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  border: 1px solid #777777 !important;
-  caret-color: #ffffff !important;
-}
-
-#page-withdraw input::placeholder {
-  color: #aaaaaa !important;
-  opacity: 1 !important;
-}
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: auto;
+  margin: 0;
+  padding: 6px 10px;
+  background: transparent;
+  color: #073d2b;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+  font-weight: 600;
+ }
  
 </style>
 </head>
@@ -2310,6 +1608,11 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
 <!-- PALMGROW HUB PAGE -->
 <div id="page-hub" class="hidden">
 
+  <div class="page-header">
+    <h2>PalmGrow Hub</h2>
+    <p>Discover PalmGrow, success stories, updates and more.</p>
+  </div>
+                
           <!-- PALMGROW HUB CONTENT: OPENS INSIDE HOME -->
 <div id="palmGrowHubContent">
 
@@ -2349,8 +1652,14 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
     </div>
 
     <div class="hub-menu-card" onclick="showPage('hub-about')">
-       
+        <div class="hub-menu-icon">🌿</div>
+        <h3>About PalmGrow</h3>
+        <p>Learn about PalmGrow and its purpose.</p>
+        <span>Learn More →</span>
     </div>
+
+    </div>
+
 </div>
 <!-- END PALMGROW HUB CONTENT -->
 
@@ -2363,6 +1672,11 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
         <h2>🏆 Success Stories</h2>
         <p>Real experiences and stories from the PalmGrow community.</p>
     </div>
+
+    <button type="button" onclick="showPage('hub')">
+        ← Back to PalmGrow Hub
+    </button>
+
     <div class="success-book-heading">
         <h2>⭐ PalmGrow Success Stories</h2>
         <p>Real experiences and stories from the PalmGrow community.</p>
@@ -2402,21 +1716,28 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
       
 <!-- PALMGROW HUB: TALK TO AGENT PAGE -->
 <div id="page-hub-agent" class="hidden">
-    <div class="hub-info-card" style="background:#101010;color:#ffffff;border:1px solid #333333;padding:16px;border-radius:12px;margin-top:15px;">
 
-        <h3 style="color:#ffffff;">🌴 PalmGrow Support Assistant</h3>
+    <div class="page-header">
+        <h2>💬 Talk to PalmGrow Assistant</h2>
+        <p>Get help with your PalmGrow account.</p>
+    </div>
 
-        <p style="color:#cccccc;line-height:1.6;">
-            Ask questions about your account, deposits, withdrawals, referrals, employee positions and more.
-        </p>
+    <button type="button" onclick="showPage('hub')">
+        ← Back to PalmGrow Hub
+    </button>
+
+    <div class="hub-info-card">
+
+        <h3>🌴 PalmGrow Support Assistant</h3>
+        <p>Ask questions about your account, deposits, withdrawals, referrals, employee positions and more.</p>
 
         <div id="palmGrowAgentChat"
-             style="background:#080808;color:#ffffff;border:1px solid #444444;border-radius:12px;padding:15px;margin-top:15px;min-height:250px;">
+             style="background:#f5f8f5; border:1px solid #dce8df; border-radius:12px; padding:15px; margin-top:15px; min-height:250px;">
 
-            <div style="background:#202020;color:#ffffff;border:1px solid #555555;padding:12px;border-radius:10px;margin-bottom:12px;">
-                <strong style="color:#ffffff;">🌴 PalmGrow Assistant</strong>
-                <p style="margin:6px 0 0;color:#ffffff;line-height:1.6;">
-                    Hello! Welcome to PalmGrow Support. I am Jones.
+            <div style="background:#e3f1e7; padding:12px; border-radius:10px; margin-bottom:12px;">
+                <strong>🌴 PalmGrow Assistant</strong>
+                <p style="margin:6px 0 0;">
+                    Hello! Welcome to PalmGrow Support.
                     How can I help you today?
                 </p>
             </div>
@@ -2424,84 +1745,84 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
         </div>
 
         <div style="margin-top:15px;">
-
             <textarea
                 id="palmGrowAgentInput"
                 rows="3"
                 placeholder="Type your question here..."
-                style="width:100%;padding:12px;background:#080808;color:#ffffff;border:1px solid #555555;border-radius:10px;box-sizing:border-box;resize:vertical;font-size:15px;">
+                style="width:100%; padding:12px; border:1px solid #ccc; border-radius:10px; box-sizing:border-box; resize:vertical;">
             </textarea>
 
             <button
                 type="button"
                 id="palmGrowAgentSend"
-                style="width:100%;margin-top:10px;padding:13px;background:#ffffff;color:#000000;border:1px solid #ffffff;border-radius:10px;font-weight:bold;font-size:15px;">
+                style="width:100%; margin-top:10px; padding:13px; background:#075c35; color:white; border:0; border-radius:10px; font-weight:bold;">
                 Send Message
             </button>
-
         </div>
 
-        <p style="font-size:12px;margin-top:12px;color:#b0b0b0;line-height:1.5;">
+        <p style="font-size:12px; margin-top:12px;">
             For your security, never share your password, OTP, login code or withdrawal PIN.
         </p>
 
     </div>
 
 </div>
+<!-- END TALK TO AGENT PAGE -->
 
-<!-- PALMGROW HUB: PALMGROW NEWS PAGE -->
+        <!-- PALMGROW HUB: PALMGROW NEWS PAGE -->
 <div id="page-hub-updates" class="hidden">
-    <div class="hub-info-card"
-         style="background:#101010;color:#fff;border:1px solid #333;border-radius:12px;padding:15px;margin-top:15px;">
 
-        <h3 style="color:#fff;">PalmGrow News & Articles</h3>
+    <div class="page-header">
+        <h2>📢 PalmGrow News</h2>
+        <p>Stay informed about PalmGrow announcements and updates.</p>
+    </div>
 
-        <div id="palmGrowNewsViewer"
-             style="background:#080808;border:1px solid #444;border-radius:10px;padding:10px;text-align:center;">
+    <button type="button" onclick="showPage('hub')">
+        ← Back to PalmGrow Hub
+    </button>
 
-            <div id="palmGrowNewsPageNumber"
-                 style="color:#ccc;margin-bottom:12px;font-weight:bold;">
-                Page 1 of 5
-            </div>
-
-            <img id="palmGrowNewsImage"
-                 src="palmgrow-news-page-1.jpg"
-                 alt="PalmGrow News Page 1"
-                 style="display:block;width:100%;height:auto;max-height:70vh;object-fit:contain;margin:auto;border-radius:6px;">
-
-            <div style="display:flex;justify-content:space-between;gap:10px;margin-top:15px;">
-
-                <button type="button"
-                        onclick="changePalmGrowNewsPage(-1)"
-                        style="flex:1;background:#303030;color:#fff;border:1px solid #666;padding:12px;border-radius:8px;font-weight:bold;">
-                    ← Previous
-                </button>
-
-                <button type="button"
-                        onclick="changePalmGrowNewsPage(1)"
-                        style="flex:1;background:#fff;color:#000;border:1px solid #fff;padding:12px;border-radius:8px;font-weight:bold;">
-                    Next →
-                </button>
-
-            </div>
-
+    <div class="hub-info-card">
+        <h3>News about PalmGrow</h3>
+        <div class="hub-empty">
+            Verified PalmGrow announcements will appear here.
         </div>
-
     </div>
 
 </div>
 <!-- END PALMGROW NEWS PAGE -->
-
         <!-- PALMGROW HUB: PALM INDUSTRY NEWS PAGE -->
 <div id="page-hub-industry" class="hidden">
+
     <div class="page-header">
         <h2>🌴 Palm Industry News</h2>
         <p>Discover updates from the oil-palm and agriculture industry.</p>
     </div>
+
+    <button type="button" onclick="showPage('hub')">
+        ← Back to PalmGrow Hub
+    </button>
+
+    <div class="hub-info-card">
+        <h3>Oil Palm & Agriculture News</h3>
+        <div class="hub-empty">
+            Verified oil-palm and agriculture news will appear here.
+        </div>
+    </div>
+
 </div>
 <!-- END PALM INDUSTRY NEWS PAGE -->
         <!-- PALMGROW HUB: ABOUT PALMGROW PAGE -->
 <div id="page-hub-about" class="hidden">
+
+    <div class="page-header">
+        <h2>🌿 About PalmGrow</h2>
+        <p>Learn more about PalmGrow and its purpose.</p>
+    </div>
+
+    <button type="button" onclick="showPage('hub')">
+        ← Back to PalmGrow Hub
+    </button>
+
     <div class="hub-info-card">
         <h3>About PalmGrow</h3>
 
@@ -2526,70 +1847,22 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
           <div id="positionMessage" class="status hidden"></div>  
         </div>  
       </div>  
-      
-<!-- EMPLOYEE TASKS PAGE -->
-<div id="page-employee-tasks" class="hidden">
-  <div class="section">
 
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;">
-      <h3>🌱 Employee Daily Tasks</h3>
-      <button
-        id="taskHistoryToggleBtn"
-        type="button"
-        onclick="toggleEmployeeTaskHistory()"
-        style="background:#ffffff;color:#000000;border:1px solid #ffffff;border-radius:8px;padding:9px 12px;font-weight:700;font-size:12px;white-space:nowrap;">
-        Task History
-      </button>
-    </div>
-
-    <div id="employeeDailyTasksView">
-
-      <p style="font-size:13px;color:var(--muted);margin-bottom:14px">
-        Your assigned practical palm-farm tasks appear here on working days. Mark each task complete only after doing the work. Task completion is self-reported.
-      </p>
-
-      <div class="stat-card" style="margin-bottom:12px;text-align:center;padding:18px">
-        <div class="label">Total Daily Task Payment</div>
-        <div class="value" id="dailyRateDisplay">₦0.00 / day</div>
-      </div>
-
-      <div class="notice" style="margin-bottom:12px">
-        <strong>Progress:</strong>
-        <span id="taskProgressDisplay">0 of 0 tasks completed</span>
-      </div>
-
-      <div id="employeeTaskList">
-        <p style="color:var(--muted)">Your tasks will load here.</p>
-      </div>
-
-      <div id="taskMessage" class="status hidden" style="margin-top:12px"></div>
-
-    </div>
-
-    <!-- TASK HISTORY VIEW -->
-    <div id="employeeTaskHistoryView" class="hidden">
-      <h3>My Task Payment History</h3>
-
-      <div style="overflow-x:auto">
-        <table>
-          <thead>
-            <tr>
-              <th>Payment</th>
-              <th>Description</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody id="employeePayrollBody">
-            <tr>
-              <td colspan="3">No task payments displayed yet.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-  </div>
-</div>
+      <!-- EMPLOYEE TASKS PAGE -->
+      <div id="page-employee-tasks" class="hidden">  
+        <div class="section">  
+          <h3>🌱 Employee Daily Tasks</h3>  
+          <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Your assigned practical palm-farm tasks appear here on working days. Mark each task complete only after doing the work. Task completion is self-reported.</p>  
+          <div class="stat-card" style="margin-bottom:12px;text-align:center;padding:18px"><div class="label">Total Daily Task Payment</div><div class="value" id="dailyRateDisplay">₦0.00 / day</div></div>  
+          <div class="notice" style="background:#e8f5e9;border:1px solid #2e7d32;color:#1b5e20;margin-bottom:12px"><strong>Progress:</strong> <span id="taskProgressDisplay">0 of 0 tasks completed</span></div>  
+          <div id="employeeTaskList"><p style="color:var(--muted)">Your tasks will load here.</p></div>  
+          <div id="taskMessage" class="status hidden" style="margin-top:12px"></div>  
+          <div class="section" style="margin-top:16px;background:#f8fbf9">  
+            <h3>My Task Payment History</h3>  
+            <div style="overflow-x:auto"><table><thead><tr><th>Payment</th><th>Description</th><th>Date</th></tr></thead><tbody id="employeePayrollBody"><tr><td colspan="3">No task payments displayed yet.</td></tr></tbody></table></div>  
+          </div>  
+        </div>  
+      </div>  
 
       <!-- DEPOSIT PAGE -->
       <div id="page-deposit" class="hidden">  
@@ -2887,7 +2160,7 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
         </div>  
       </div>  
 
-      <!-- INVEST PAGE -->
+<!-- INVEST PAGE -->
 <div id="page-invest" class="hidden">
   <div class="section">
     <h3>💰 Make Investment</h3>
@@ -3716,7 +2989,7 @@ const PAGE_NAMES=[
   "withdraw",
   "withdraw-history"
 ];
-       
+      
 function showPage(page, pushHistory = true){  
   if(pushHistory){  
     if(pageHistory[pageHistory.length - 1] !== page){  
@@ -3741,15 +3014,7 @@ function showPage(page, pushHistory = true){
     backBtn.classList.toggle("hidden", pageHistory.length <= 1 || page === "dashboard");  
   }  
    if(page==="hub-stories")renderHubBook();
-   if(page==="employee-tasks"){
-  console.log("Daily Tasks page opened");
-  const taskPage = $("page-employee-tasks");
-  console.log("Page found:", !!taskPage);
-  console.log("Page hidden:", taskPage?.classList.contains("hidden"));
-  loadEmployeeTasks().catch(error => {
-    console.error("Daily Tasks loading failed:", error);
-  });
- }
+  if(page==="employee-tasks")loadEmployeeTasks();  
   if(page==="employee-position")loadEmployeePositionPlans();  
   if(page==="withdraw")loadWithdrawalPage();
   if(page==="withdraw-history")loadWithdrawalHistory();
@@ -3950,9 +3215,10 @@ async function loadDashboardEmployeeLevel(){
 
 }
   async function loadDashboard(){
-        // standby while restoring the correct page
+
+  // Keep the app hidden while restoring the correct page
   $("app").style.display="none";
-      
+
   const {data:{session},error:sessionError} =
     await supabase.auth.getSession();
 
@@ -4007,11 +3273,7 @@ async function loadDashboardEmployeeLevel(){
   $("userPhone").textContent=profile.phone||"";
   $("userAvatar").textContent=name.charAt(0).toUpperCase();
 
-  try {
   await refreshPalmGrowReferralUI();
-} catch (error) {
-  console.error("Referral UI refresh failed:", error);
- }
 
   $("walletBalanceDisplay").textContent=naira(profile.available_balance);
   $("availableBalance").textContent=naira(profile.available_balance);
@@ -4368,27 +3630,7 @@ async function loadEmployeePayroll(){
     body.appendChild(tr);  
   });  
 }  
-
-function toggleEmployeeTaskHistory(){
-  const dailyView = $("employeeDailyTasksView");
-  const historyView = $("employeeTaskHistoryView");
-  const button = $("taskHistoryToggleBtn");
-
-  if(!dailyView || !historyView || !button)return;
-
-  const showingHistory = historyView.classList.contains("hidden");
-
-  dailyView.classList.toggle("hidden", showingHistory);
-  historyView.classList.toggle("hidden", !showingHistory);
-
-  button.textContent = showingHistory ? "Back to Tasks" : "Task History";
-
-  if(showingHistory){
-    loadEmployeePayroll();
-  }
-}
-
- window.toggleEmployeeTaskHistory = toggleEmployeeTaskHistory;
+ 
 $("depositForm").onsubmit = async (e) => {  
   e.preventDefault();  
  
@@ -4891,51 +4133,32 @@ function updateWithdrawalBalance() {
   }
 }
  
-function renderWithdrawalPresetGrid(){
-  const grid = $("amountGrid");
-  if(!grid)return;
-  grid.innerHTML = "";
-
-  WITHDRAWAL_AMOUNTS.forEach(amount => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-
-    btn.style.cssText = `
-      background: #151515;
-      border: 2px solid #555555;
-      border-radius: 10px;
-      padding: 12px 8px;
-      text-align: center;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 14px;
-      color: #ffffff;
-    `;
-
-    btn.textContent = naira(amount);
-
-    btn.onclick = () => {
-      document.querySelectorAll("#amountGrid button").forEach(b => {
-        b.style.background = "#151515";
-        b.style.borderColor = "#555555";
-        b.style.color = "#ffffff";
-        b.textContent = naira(WITHDRAWAL_AMOUNTS[
-          Array.from(grid.children).indexOf(b)
-        ]);
-      });
-
-      btn.style.background = "#ffffff";
-      btn.style.borderColor = "#ffffff";
-      btn.style.color = "#000000";
-      btn.textContent = "✓ " + naira(amount);
-
-      selectedWithdrawalAmount = amount;
-    };
-
-    grid.appendChild(btn);
-  });
-}
-
+function renderWithdrawalPresetGrid(){  
+  const grid = $("amountGrid");  
+  if(!grid)return;  
+  grid.innerHTML = "";  
+ 
+  WITHDRAWAL_AMOUNTS.forEach(amount => {  
+    const btn = document.createElement("button");  
+    btn.type = "button";  
+    btn.style.cssText = "background: white; border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px 8px; text-align: center; cursor: pointer; font-weight: 600; font-size: 14px; color: #1f2937;";  
+    btn.textContent = naira(amount);  
+ 
+    btn.onclick = () => {  
+      document.querySelectorAll("#amountGrid button").forEach(b => {  
+        b.style.background = "white";  
+        b.style.borderColor = "#e5e7eb";  
+        b.style.color = "#1f2937";  
+      });  
+      btn.style.background = "#e6f4ea";  
+      btn.style.borderColor = "#137333";  
+      btn.style.color = "#137333";  
+      selectedWithdrawalAmount = amount;  
+    };  
+    grid.appendChild(btn);  
+  });  
+}  
+ 
 $("submitWithdrawalBtn").onclick = async () => {  
   const pin = $("fundPasswordInput").value.trim();  
   const feedback = $("withdrawalFeedback");  
@@ -5229,141 +4452,6 @@ setInterval(() => {
 }, 30000);
 
 updateAuthUI();
-
-(function () {
-    const chat = document.getElementById("palmGrowAgentChat");
-    const input = document.getElementById("palmGrowAgentInput");
-    const sendButton = document.getElementById("palmGrowAgentSend");
-
-    if (!chat || !input || !sendButton) return;
-
-    function addMessage(message, sender) {
-        const bubble = document.createElement("div");
-
-        bubble.style.padding = "12px";
-        bubble.style.borderRadius = "10px";
-        bubble.style.marginBottom = "12px";
-        bubble.style.maxWidth = "90%";
-        bubble.style.whiteSpace = "pre-wrap";
-        bubble.style.overflowWrap = "anywhere";
-
-        if (sender === "user") {
-            bubble.style.background = "#dce9f7";
-            bubble.style.marginLeft = "auto";
-        } else {
-            bubble.style.background = "#e3f1e7";
-            bubble.style.marginRight = "auto";
-        }
-
-        const heading = document.createElement("strong");
-        heading.textContent = sender === "user"
-            ? "You"
-            : "🌴 PalmGrow Assistant";
-
-        const paragraph = document.createElement("p");
-        paragraph.textContent = message;
-        paragraph.style.margin = "6px 0 0";
-
-        bubble.appendChild(heading);
-        bubble.appendChild(paragraph);
-        chat.appendChild(bubble);
-
-        chat.scrollTop = chat.scrollHeight;
-    }
-
-    function getAnswer(question) {
-        const q = question.toLowerCase();
-
-        // Deposits
-        if (/deposit|fund account|payment|pay into|bank transfer/.test(q)) {
-            return "DEPOSITS\n\nOpen the Deposit page in your PalmGrow dashboard. Follow the payment instructions displayed there and submit the required payment details or proof.\n\nYour deposit should only be treated as successful after it has been verified and reflected in your account. If it is delayed, contact support with your transaction reference. Never share your password or OTP.";
-        }
-
-        // Withdrawals
-        if (/withdraw|withdrawal|cash out|bank account|withdrawal pin/.test(q)) {
-            return "WITHDRAWALS\n\nOpen the Withdraw page in your dashboard. Make sure your bank details and withdrawal PIN are properly registered before requesting a withdrawal.\n\nCheck the fees and net amount displayed before confirming. You can check your withdrawal history for the request status. Never share your withdrawal PIN with anyone.";
-        }
-
-        // Referral programme
-        if (/referr|bonus|commission|rebate|level 1|level 2|level 3|level 4|level 5|l1|l2|l3|l4|l5/.test(q)) {
-            return "REFERRALS AND BONUSES\n\nPalmGrow has five referral levels:\n\nL1: 10%\nL2: 3%\nL3: 1%\nL4: 0.7%\nL5: 0.4%\n\nDaily order rebate rates:\nL1: 3%\nL2: 2%\nL3: 1%\nL4: 0.7%\nL5: 0.4%\n\nActivation bonuses apply to eligible successful joins into M1–M9, not upgrades. Eligibility and genuine business revenue funding conditions must be met. Check your Referral Program page for your referral information.";
-        }
-
-        // Employee positions
-        if (/employee|position|upgrade|m0|m1|m2|m3|m4|m5|m6|m7|m8|m9|daily task/.test(q)) {
-            return "EMPLOYEE POSITIONS\n\nPalmGrow employee positions and their join amounts are:\n\nM0: Registered but not activated\nM1: ₦18,000\nM2: ₦51,000\nM3: ₦162,000\nM4: ₦436,800\nM5: ₦891,800\nM6: ₦1,690,000\nM7: ₦3,705,000\nM8: ₦7,080,000\nM9: ₦12,672,000\n\nM0 is not an active employee position. To join or upgrade, check the Employee Position page for the applicable requirements. Your available balance must cover the full new position amount.";
-        }
-
-        // Registration and login
-        if (/register|registration|sign up|signup|create account|login|log in|sign in|password|forgot password|reset password/.test(q)) {
-            return "REGISTRATION AND LOGIN\n\nTo register, open the PalmGrow registration area and complete the required details. Use an email address and phone number you can access.\n\nTo log in, enter your registered login details. If you forget your password, use the password reset option on the login page.\n\nNever share your password, OTP or login code with anyone.";
-        }
-
-        // Investment questions
-        if (/invest|investment|starter palm|growth palm|premium palm|plan/.test(q)) {
-            return "INVESTMENT INFORMATION\n\nOpen the Make Investment page to see the available PalmGrow plans, amounts and terms. Read the displayed conditions carefully before making an investment. Your account balances and investment records should be checked on your dashboard.";
-        }
-
-        // Navigation and general support
-        if (/dashboard|where|find|navigate|page|support|help|contact|kyc|verify|verification|success stor|news|about/.test(q)) {
-            return "PALMGROW WEBSITE SUPPORT\n\nUse the left sidebar to navigate PalmGrow:\n\n• Dashboard – account overview\n• Make Investment – investment plans\n• Deposit – add funds\n• Withdraw Funds – request withdrawals\n• Referral Program – referral information\n• Employee Position – employee levels\n• Employee Daily Tasks – available tasks, if enabled\n• Talk to Agent – ask support questions\n\nYou can also visit PalmGrow Hub for Success Stories, PalmGrow News, Palm Industry News and About PalmGrow.\n\nTell me the name of the page or feature you need help with.";
-        }
-
-        return "Thank you for contacting PalmGrow Support.\n\nI don't have a prepared answer for that question yet. Please try asking in a different way or mention whether your question is about deposits, withdrawals, referrals, employee positions, registration or website navigation.\n\nFor private account or transaction issues, use the appropriate PalmGrow page and contact the official support team.";
-    }
-
-    function sendMessage() {
-        const question = input.value.trim();
-
-        if (!question) return;
-
-        addMessage(question, "user");
-        input.value = "";
-
-        const answer = getAnswer(question);
-
-        addMessage(answer, "agent");
-    }
-
-    sendButton.addEventListener("click", sendMessage);
-
-    input.addEventListener("keydown", function (event) {
-        if (event.key === "Enter" && !event.shiftKey) {
-            event.preventDefault();
-            sendMessage();
-        }
-    });
-})();
-
-/* PALMGROW NEWS: FIVE-PAGE NAVIGATION */
-
-let currentPalmGrowNewsPage = 1;
-
-function changePalmGrowNewsPage(direction) {
-    const totalPages = 5;
-
-    currentPalmGrowNewsPage += direction;
-
-    currentPalmGrowNewsPage = Math.max(
-        1,
-        Math.min(totalPages, currentPalmGrowNewsPage)
-    );
-
-    const image = document.getElementById("palmGrowNewsImage");
-    const pageNumber = document.getElementById("palmGrowNewsPageNumber");
-
-    if (!image || !pageNumber) return;
-
-    image.src = "palmgrow-news-page-" +
-    currentPalmGrowNewsPage + ".jpg";
-
-    image.alt = "PalmGrow News Page " + currentPalmGrowNewsPage;
-
-    pageNumber.textContent =
-        "Page " + currentPalmGrowNewsPage + " of " + totalPages;
-}
-
-window.changePalmGrowNewsPage = changePalmGrowNewsPage;
 
 </script>
 </body>
