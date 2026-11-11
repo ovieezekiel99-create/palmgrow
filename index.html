@@ -4543,6 +4543,37 @@ setInterval(() => {
 
 updateAuthUI();
 
+/* PALMGROW NEWS: FIVE-PAGE NAVIGATION */
+
+let currentPalmGrowNewsPage = 1;
+
+function changePalmGrowNewsPage(direction) {
+    const totalPages = 5;
+
+    currentPalmGrowNewsPage += direction;
+
+    currentPalmGrowNewsPage = Math.max(
+        1,
+        Math.min(totalPages, currentPalmGrowNewsPage)
+    );
+
+    const image = document.getElementById("palmGrowNewsImage");
+    const pageNumber = document.getElementById("palmGrowNewsPageNumber");
+
+    if (!image || !pageNumber) return;
+
+    image.src = "news/palmgrow-news-page-" +
+        currentPalmGrowNewsPage + ".jpg";
+
+    image.alt = "PalmGrow News Page " + currentPalmGrowNewsPage;
+
+    pageNumber.textContent =
+        "Page " + currentPalmGrowNewsPage + " of " + totalPages;
+}
+
+window.changePalmGrowNewsPage = changePalmGrowNewsPage;
+
+    
 </script>
 </body>
 </html>
