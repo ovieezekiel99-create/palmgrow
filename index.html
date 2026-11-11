@@ -1806,27 +1806,60 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
 </div>
 <!-- END TALK TO AGENT PAGE -->
 
-        <!-- PALMGROW HUB: PALMGROW NEWS PAGE -->
+<!-- PALMGROW HUB: PALMGROW NEWS PAGE -->
 <div id="page-hub-updates" class="hidden">
 
     <div class="page-header">
         <h2>📢 PalmGrow News</h2>
-        <p>Stay informed about PalmGrow announcements and updates.</p>
+        <p>Stay informed about the Nigerian oil palm industry and PalmGrow updates.</p>
     </div>
 
-    <button type="button" onclick="showPage('hub')">
+    <button type="button" onclick="showPage('hub')"
+        style="background:#202020;color:#fff;border:1px solid #555;padding:10px 14px;border-radius:8px;">
         ← Back to PalmGrow Hub
     </button>
 
-    <div class="hub-info-card">
-        <h3>News about PalmGrow</h3>
-        <div class="hub-empty">
-            Verified PalmGrow announcements will appear here.
+    <div class="hub-info-card"
+         style="background:#101010;color:#fff;border:1px solid #333;border-radius:12px;padding:15px;margin-top:15px;">
+
+        <h3 style="color:#fff;">PalmGrow News & Articles</h3>
+
+        <div id="palmGrowNewsViewer"
+             style="background:#080808;border:1px solid #444;border-radius:10px;padding:10px;text-align:center;">
+
+            <div id="palmGrowNewsPageNumber"
+                 style="color:#ccc;margin-bottom:12px;font-weight:bold;">
+                Page 1 of 5
+            </div>
+
+            <img id="palmGrowNewsImage"
+                 src="news/palmgrow-news-page-1.jpg"
+                 alt="PalmGrow News Page 1"
+                 style="display:block;width:100%;height:auto;max-height:70vh;object-fit:contain;margin:auto;border-radius:6px;">
+
+            <div style="display:flex;justify-content:space-between;gap:10px;margin-top:15px;">
+
+                <button type="button"
+                        onclick="changePalmGrowNewsPage(-1)"
+                        style="flex:1;background:#303030;color:#fff;border:1px solid #666;padding:12px;border-radius:8px;font-weight:bold;">
+                    ← Previous
+                </button>
+
+                <button type="button"
+                        onclick="changePalmGrowNewsPage(1)"
+                        style="flex:1;background:#fff;color:#000;border:1px solid #fff;padding:12px;border-radius:8px;font-weight:bold;">
+                    Next →
+                </button>
+
+            </div>
+
         </div>
+
     </div>
 
 </div>
 <!-- END PALMGROW NEWS PAGE -->
+
         <!-- PALMGROW HUB: PALM INDUSTRY NEWS PAGE -->
 <div id="page-hub-industry" class="hidden">
 
