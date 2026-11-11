@@ -164,7 +164,7 @@ nav.mobile-nav {
   background: #000000 !important;
   background-color: #000000 !important;
   background-image: none !important;
-  border-color: #222222 !important;
+  border: 1px solid #222222 !important;
   box-shadow: none !important;
   color: #ffffff !important;
 }
@@ -175,14 +175,19 @@ nav.mobile-nav {
 .bottom-bar *,
 nav.bottom-nav *,
 nav.mobile-nav * {
-  color: #ffffff !important;
+  background-color: transparent;
+  color: #b0b0b0 !important;
   border-color: #333333 !important;
 }
 
 .bottom-nav .active,
 .bottom-navigation .active,
 .mobile-nav .active,
-.bottom-bar .active {
+.bottom-bar .active,
+.bottom-nav button.active,
+.bottom-navigation button.active,
+.mobile-nav button.active,
+.bottom-bar button.active {
   background: #222222 !important;
   color: #ffffff !important;
 }
