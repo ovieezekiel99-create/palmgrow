@@ -3668,24 +3668,36 @@ async function loadEmployeeTasks(){
   }
 }
  
-async function completeEmployeeTask(taskId,button){  
-  button.disabled=true;  
-  button.textContent="Processing...";  
-  try{  
-    const {data,error}=await supabase.rpc("complete_employee_task",{p_task_id:taskId});  
-    if(error)throw error;  
-    if(data?.success){  
-      msg("taskMessage",`Task completed. ${naira(data.payment)} has been credited.`);  
-      await loadDashboard();  
-      await loadEmployeeTasks();  
-    }else{  
-      msg("taskMessage",data?.message||"Task could not be completed.","error");  
-    }  
-  }catch(err){  
-    msg("taskMessage",err.message||"Unable to complete this task.","error");  
-  }  
-}  
- 
+async function completeEmployeeTask(taskId,button){
+  if(button.disabled)return;
+
+  button.disabled=true;
+  button.textContent="Processing...";
+
+  try{
+    const {data,error}=await supabase.rpc("complete_employee_task",{
+      p_task_id:taskId
+    });
+
+    if(error)throw error;
+
+    if(data?.success){
+      msg("taskMessage",`Task completed. ${naira(data.payment)} has been credited.`);
+
+      await loadEmployeeTasks();
+    }else{
+      msg("taskMessage",data?.message||"Task could not be completed.","error");
+      button.disabled=false;
+      button.textContent="Complete Task";
+    }
+
+  }catch(err){
+    msg("taskMessage",err.message||"Unable to complete this task.","error");
+    button.disabled=false;
+    button.textContent="Complete Task";
+  }
+}
+
 async function loadEmployeePayroll(){  
   const body=$("employeePayrollBody");  
   if(!body)return;  
