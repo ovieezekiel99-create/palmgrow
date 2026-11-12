@@ -3404,10 +3404,7 @@ positionValue.textContent = "Loading...";
   const activeEmployee =
     accountType === "employee" && employeeStatus === "active";
 
-  const canViewEmployeePositions =
-    accountType === "employee" &&
-    ["active", "pending_payment"].includes(employeeStatus);
-
+  const canViewEmployeePositions = true;
   $("employeeTasksNav").style.display =
     activeEmployee ? "flex" : "none";
 
