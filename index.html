@@ -3293,16 +3293,10 @@ async function loadDashboardEmployeeLevel(){
 
   if(!positionRow || !positionValue) return;
 
-  const accountType = String(currentProfile?.account_type || "")
-    .trim()
-    .toLowerCase();
+  // Show current employee position for every unified member.
+positionRow.style.display = "block";
+positionValue.textContent = "Loading...";
 
-  // Show Position only for employee accounts
-  if(accountType !== "employee"){
-    positionRow.style.display = "none";
-    positionValue.textContent = "—";
-    return;
-  }
 
   positionRow.style.display = "block";
   positionValue.textContent = "Loading...";
