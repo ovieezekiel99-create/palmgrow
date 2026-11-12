@@ -1872,21 +1872,79 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
         </div>  
       </div>  
 
-      <!-- EMPLOYEE TASKS PAGE -->
-      <div id="page-employee-tasks" class="hidden">  
-        <div class="section">  
-          <h3>🌱 Employee Daily Tasks</h3>  
-          <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Your assigned practical palm-farm tasks appear here on working days. Mark each task complete only after doing the work. Task completion is self-reported.</p>  
-          <div class="stat-card" style="margin-bottom:12px;text-align:center;padding:18px"><div class="label">Total Daily Task Payment</div><div class="value" id="dailyRateDisplay">₦0.00 / day</div></div>  
-          <div class="notice" style="background:#e8f5e9;border:1px solid #2e7d32;color:#1b5e20;margin-bottom:12px"><strong>Progress:</strong> <span id="taskProgressDisplay">0 of 0 tasks completed</span></div>  
-          <div id="employeeTaskList"><p style="color:var(--muted)">Your tasks will load here.</p></div>  
-          <div id="taskMessage" class="status hidden" style="margin-top:12px"></div>  
-          <div class="section" style="margin-top:16px;background:#f8fbf9">  
-            <h3>My Task Payment History</h3>  
-            <div style="overflow-x:auto"><table><thead><tr><th>Payment</th><th>Description</th><th>Date</th></tr></thead><tbody id="employeePayrollBody"><tr><td colspan="3">No task payments displayed yet.</td></tr></tbody></table></div>  
-          </div>  
-        </div>  
-      </div>  
+      
+<!-- EMPLOYEE TASKS PAGE -->
+<div id="page-employee-tasks" class="hidden">
+  <div class="section">
+
+    <h3>🌱 Employee Daily Tasks</h3>
+
+    <p style="font-size:13px;color:var(--muted);margin-bottom:14px">
+      Your assigned practical palm-farm tasks appear here on working days. Mark each task complete only after doing the work.
+    </p>
+
+    <div class="stat-card" style="margin-bottom:12px;text-align:center;padding:18px">
+      <div class="label">Total Daily Task Payment</div>
+      <div class="value" id="dailyRateDisplay">₦0.00 / day</div>
+    </div>
+
+    <div class="notice" style="margin-bottom:12px">
+      <strong>Progress:</strong>
+      <span id="taskProgressDisplay">0 of 0 tasks completed</span>
+    </div>
+
+    <div id="employeeTaskList">
+      <p style="color:var(--muted)">Your tasks will load here.</p>
+    </div>
+
+    <div id="taskMessage" class="status hidden" style="margin-top:12px"></div>
+
+    <button
+      type="button"
+      onclick="showPage('employee-task-history')"
+      style="width:100%;margin-top:18px;padding:14px;background:#202020;color:#fff;border:1px solid #555;border-radius:10px;font-weight:bold;">
+      📋 Task History →
+    </button>
+
+  </div>
+</div>
+
+<!-- EMPLOYEE TASK HISTORY PAGE -->
+<div id="page-employee-task-history" class="hidden">
+  <div class="section">
+
+    <h3>📋 Task History</h3>
+
+    <p style="font-size:13px;color:var(--muted);margin-bottom:14px">
+      View your completed tasks and their payment records.
+    </p>
+
+    <div style="overflow-x:auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Payment</th>
+            <th>Description</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody id="employeePayrollBody">
+          <tr>
+            <td colspan="3">No task payments displayed yet.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <button
+      type="button"
+      onclick="showPage('employee-tasks')"
+      style="width:100%;margin-top:18px;padding:14px;background:#202020;color:#fff;border:1px solid #555;border-radius:10px;font-weight:bold;">
+      ← Back to Daily Tasks
+    </button>
+
+  </div>
+</div>
 
       <!-- DEPOSIT PAGE -->
       <div id="page-deposit" class="hidden">  
