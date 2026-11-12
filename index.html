@@ -465,6 +465,35 @@
   border: 2px solid #d4af37;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
 }
+    /* Make investment plans fit phone screens */
+#page-invest .plans {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+#page-invest .plan {
+  min-width: 0;
+  padding: 10px 6px;
+  border-radius: 10px;
+}
+
+#page-invest .plan h4 {
+  font-size: 13px;
+}
+
+#page-invest .plan .price {
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+
+#page-invest .plan p {
+  font-size: 11px;
+}
+
+#page-invest .plan button {
+  padding: 9px 4px;
+  font-size: 12px;
+}
 
 /* Mobile display */
 @media (max-width: 480px) {
