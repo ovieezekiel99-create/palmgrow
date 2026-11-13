@@ -4491,7 +4491,8 @@ async function processWithdrawal(withdrawalId,action){
   }  
 }  
 
-// CHECK WHETHER AN EMPLOYEE ACCOUNT IS STILL ACTIVE
+
+// CHECK WHETHER A MEMBER ACCOUNT IS STILL ACTIVE
 let employeeSessionCheckRunning = false;
 
 async function verifyEmployeeSession() {
@@ -4509,26 +4510,25 @@ async function verifyEmployeeSession() {
 
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
-      .select("account_type, employee_status")
+      .select("role, member_status")
       .eq("id", session.user.id)
       .maybeSingle();
 
-    // Do not sign out a user just because of a temporary
-    // database or network error.
+    // Do not sign out because of a temporary database or network error.
     if (profileError || !profile) return;
 
-    const accountType = String(profile.account_type || "")
+    const role = String(profile.role || "")
       .trim()
       .toLowerCase();
 
-    const employeeStatus = String(profile.employee_status || "")
+    const memberStatus = String(profile.member_status || "")
       .trim()
       .toLowerCase();
 
-    if (
-      accountType === "employee" &&
-      employeeStatus === "disabled"
-    ) {
+    // Admin accounts are never disabled by this member check.
+    if (role === "admin") return;
+
+    if (memberStatus === "disabled") {
       $("app").style.display = "none";
       $("authScreen").style.display = "flex";
 
@@ -4538,18 +4538,19 @@ async function verifyEmployeeSession() {
       await supabase.auth.signOut();
 
       alert(
-        "Your employee account has been disabled. Please contact support."
+        "Your account has been disabled. Please contact support."
       );
     }
 
   } catch (err) {
-    console.error("Employee session check failed:", err);
+    console.error("Member session check failed:", err);
 
   } finally {
     employeeSessionCheckRunning = false;
   }
 }
 
+    
 // AUTHENTICATION LISTENER
 supabase.auth.onAuthStateChange((event, session) => {
 
