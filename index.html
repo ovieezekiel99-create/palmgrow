@@ -2979,17 +2979,25 @@ document.addEventListener("DOMContentLoaded", () => {
   prefillPalmGrowReferralCode();
 
   
-// Admin Panel Navigation Logic
-function showAdminTab(tab, addHistory = false) {
+
+// ADMIN PANEL NAVIGATION
+function showAdminTab(tab, pushHistory = true) {
+  const targetSection = document.getElementById("admin-tab-" + tab);
+  if (!targetSection) return;
+
+  if (pushHistory && tab !== "home") {
+    history.pushState(
+      { page: "admin", adminTab: tab },
+      "",
+      "#admin-" + tab
+    );
+  }
+
   document.querySelectorAll(".admin-tab-btn[data-admin-tab]")
     .forEach(btn => btn.classList.remove("active"));
 
   document.querySelectorAll(".admin-panel-section")
     .forEach(section => section.classList.remove("active"));
-
-  const targetSection = document.getElementById("admin-tab-" + tab);
-
-  if (!targetSection) return;
 
   targetSection.classList.add("active");
 
@@ -2998,10 +3006,6 @@ function showAdminTab(tab, addHistory = false) {
   );
 
   if (selectedButton) selectedButton.classList.add("active");
-
-  if (addHistory && tab !== "home") {
-    history.pushState({ palmGrowAdminPanel: true }, "", window.location.href);
-  }
 
   if (tab === "deposits") $("loadDepositsBtn").click();
   if (tab === "employees") loadAdminEmployees();
@@ -3013,15 +3017,6 @@ function showAdminTab(tab, addHistory = false) {
 // Dashboard card clicks
 document.querySelectorAll(".admin-tab-btn[data-admin-tab]").forEach(btn => {
   btn.onclick = () => showAdminTab(btn.dataset.adminTab, true);
-});
-
-// Phone Back button
-window.addEventListener("popstate", () => {
-  const adminPage = document.getElementById("page-admin");
-
-  if (adminPage && !adminPage.classList.contains("hidden")) {
-    showAdminTab("home", false);
-  }
 });
 
  
