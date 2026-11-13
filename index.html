@@ -2981,17 +2981,21 @@ document.addEventListener("DOMContentLoaded", () => {
   
 
 // ADMIN PANEL NAVIGATION
+ let currentAdminTab = "home";
 function showAdminTab(tab, pushHistory = true) {
   const targetSection = document.getElementById("admin-tab-" + tab);
   if (!targetSection) return;
 
   if (pushHistory && tab !== "home") {
-    history.pushState(
-      { page: "admin", adminTab: tab },
-      "",
-      "#admin-" + tab
-    );
+  const newState = { page: "admin", adminTab: tab };
+
+  if (currentAdminTab === "home") {
+    history.pushState(newState, "", "#admin-" + tab);
+  } else {
+    history.replaceState(newState, "", "#admin-" + tab);
   }
+  }
+    currentAdminTab = tab;
 
   document.querySelectorAll(".admin-tab-btn[data-admin-tab]")
     .forEach(btn => btn.classList.remove("active"));
