@@ -3450,20 +3450,27 @@ function showPage(page, pushHistory = true){
   }  
 
 window.onpopstate = (event) => {
+  const adminPage = $("page-admin");
+
+  // Return to Admin Home before leaving Admin.
+  if (
+    adminPage &&
+    !adminPage.classList.contains("hidden") &&
+    currentAdminTab !== "home"
+  ) {
+    showAdminTab("home", false);
+    return;
+  }
+
   const targetPage = event.state?.page || "dashboard";
 
   if (pageHistory.length > 1) {
     pageHistory.pop();
   }
 
-  if (targetPage === "admin") {
-    showPage("admin", false);
-    showAdminTab("home", false);
-    return;
-  }
-
   showPage(targetPage, false);
 };
+
  
 document.querySelectorAll(".nav-item[data-page]").forEach(item=>{  
   item.onclick=()=>showPage(item.dataset.page);  
