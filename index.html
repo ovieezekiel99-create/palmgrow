@@ -3673,19 +3673,19 @@ positionValue.textContent = "Loading...";
   }
 
 }
+    
   async function loadDashboard(){
 
-  // Keep the app hidden while restoring the correct page
-  $("app").style.display="none";
+  $("app").style.display = "none";
 
   const {data:{session},error:sessionError} =
     await supabase.auth.getSession();
 
   if(sessionError || !session){
-  $("authScreen").style.display = "flex";
-  $("app").style.display = "none";
-  return;
-}
+    $("authScreen").style.display = "flex";
+    $("app").style.display = "none";
+    return;
+  }
 
   currentUser = session.user;
 
@@ -3696,12 +3696,13 @@ positionValue.textContent = "Loading...";
     .maybeSingle();
 
   if(profileError || !profile){
-    $("app").style.display="none";
-    $("authScreen").style.display="";
-    $("adminNav").style.display="none";
+    $("app").style.display = "none";
+    $("authScreen").style.display = "flex";
+    $("adminNav").style.display = "none";
     return;
   }
 
+  
   const accountType = String(profile.account_type || "")
     .trim().toLowerCase();
 
