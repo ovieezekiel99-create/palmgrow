@@ -4764,21 +4764,21 @@ const month = result.this_month || {};
 
     periods.forEach(([name,period])=>{
 
-      const prefix = name==="Today" ? "Today" : name==="Week" ? "Week" : "Month";
+  const prefix = name==="Today" ? "Today" : name==="Week" ? "Week" : "Month";
 
-      setFund("adminFund"+prefix+"Opening",
-        period.opening_balance_reliable
-          ? money(period.opening_balance)
-          : "Needs reconciliation"
-      );
+  setFund("adminFund"+prefix+"Opening",
+    period.opening_balance_reliable
+      ? money(period.opening_balance_estimate)
+      : "Needs reconciliation"
+  );
 
-      setFund("adminFund"+prefix+"Received",money(period.money_received));
-      setFund("adminFund"+prefix+"Handling",money(period.handling_fee_income));
-      setFund("adminFund"+prefix+"Transfer",money(period.transfer_charges));
-      setFund("adminFund"+prefix+"Spent",money(period.money_spent));
-      setFund("adminFund"+prefix+"Net",money(period.net_movement));
+  setFund("adminFund"+prefix+"Received",money(period.received));
+  setFund("adminFund"+prefix+"Handling",money(period.handling_fee_income));
+  setFund("adminFund"+prefix+"Transfer",money(period.transfer_charges));
+  setFund("adminFund"+prefix+"Spent",money(period.spent));
+  setFund("adminFund"+prefix+"Net",money(period.net_movement));
 
-    });
+});
 
     const reconciliation = result.reconciliation || {};
 
@@ -4826,9 +4826,11 @@ const month = result.this_month || {};
           amount.textContent = money(item.amount);
 
           const movement = document.createElement("td");
-          movement.textContent =
-            (Number(item.amount || 0) >= 0 ? "+" : "") +
-            money(item.amount);
+const signedMovement = Number(item.movement || 0);
+
+movement.textContent =
+  (signedMovement > 0 ? "+" : "") +
+  money(signedMovement);
 
           tr.append(date,type,description,amount,movement);
           body.appendChild(tr);
