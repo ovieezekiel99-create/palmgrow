@@ -5193,8 +5193,8 @@ window.changePalmGrowNewsPage = changePalmGrowNewsPage;
     });
 })();
 /* END PALMGROW TALK TO AGENT */   
-    /* PALMGROW WALLET BALANCE VISIBILITY */
-function toggleWalletBalanceVisibility() {
+/* PALMGROW WALLET BALANCE VISIBILITY */
+window.toggleWalletBalanceVisibility = function() {
     const balance = document.getElementById("walletBalanceDisplay");
     const button = document.getElementById("toggleWalletBalance");
 
@@ -5209,7 +5209,7 @@ function toggleWalletBalanceVisibility() {
         "aria-label",
         isHidden ? "Hide wallet balance" : "Show wallet balance"
     );
-}
+};
 /* END WALLET BALANCE VISIBILITY */
     
 </script>
