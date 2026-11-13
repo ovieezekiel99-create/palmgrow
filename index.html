@@ -3,10 +3,815 @@
 <head>  
 <meta charset="UTF-8">  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<meta name="theme-color" content="#0b3d2e">  
+<meta name="theme-color" content="#000000">
 <title>PalmGrow | Dashboard</title>  
 
 <style>  
+    /* PALMGROW HUB MENU DESIGN */
+.hub-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 20px;
+}
+
+.hub-menu-card {
+    background: linear-gradient(145deg, #0b4b35, #073323);
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    border-radius: 18px;
+    padding: 20px 14px;
+    color: #ffffff;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.18);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.hub-menu-card:active {
+    transform: scale(0.97);
+}
+
+.hub-menu-icon {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid #d4af37;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+}
+
+.hub-menu-card h3 {
+    color: #f5d879;
+    font-size: 15px;
+    margin: 8px 0;
+}
+
+.hub-menu-card p {
+    color: #e0e9e3;
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 6px 0 12px;
+}
+
+.hub-menu-card span {
+    display: inline-block;
+    color: #f5d879;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+@media (max-width: 360px) {
+    .hub-menu-grid {
+        grid-template-columns: 1fr;
+    }
+}
+    /* PALMGROW HUB DESIGN */
+.hub-hero {
+  background: linear-gradient(130deg,#0b382b,#176047);
+  color: #fff;
+  border-radius: 18px;
+  padding: 22px;
+  margin-bottom: 16px;
+}
+.hub-hero h2 { margin: 0 0 7px; font-size: 23px; }
+.hub-hero p { margin: 0; color: #e3f2e9; font-size: 13px; line-height: 1.6; }
+
+.hub-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 2px 1px 12px;
+  margin-bottom: 8px;
+}
+.hub-tab {
+  white-space: nowrap;
+  border: 1px solid #d6e5dc;
+  background: #fff;
+  color: #174a37;
+  padding: 10px 13px;
+  border-radius: 22px;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+}
+.hub-tab.active {
+  background: #0d4935;
+  color: #fff;
+  border-color: #0d4935;
+}
+.hub-panel { display: none; }
+.hub-panel.active { display: block; }
+
+.hub-notebook {
+  background: linear-gradient(115deg,#f3ead6,#fffdf7 12%,#fffdf7 88%,#e9dfca);
+  border: 1px solid #d9c9a8;
+  border-radius: 18px;
+  padding: 17px;
+  box-shadow: 0 12px 28px #172f2417;
+  position: relative;
+  overflow: hidden;
+}
+.hub-book-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 0 0 13px 12px;
+  border-bottom: 1px solid #e4d8c1;
+  color: #254a38;
+}
+.hub-testimonial {
+  margin: 13px 0 0 12px;
+  padding: 13px 14px;
+  background: #fff;
+  border: 1px solid #eee4d2;
+  border-radius: 11px;
+  box-shadow: 0 3px 8px #4d38200a;
+}
+.hub-person { font-weight: 800; color: #174b36; font-size: 13px; }
+.hub-role { font-size: 11px; color: #92743e; margin: 2px 0 8px; }
+.hub-testimonial blockquote {
+  margin: 0;
+  color: #38483e;
+  font-size: 12px;
+  line-height: 1.65;
+}
+.hub-book-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0 0 12px;
+}
+.hub-book-controls button {
+  border: 0;
+  border-radius: 9px;
+  padding: 10px 14px;
+  background: #14543d;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+.hub-info-card {
+  background: #fff;
+  border: 1px solid #e3ebe5;
+  border-radius: 14px;
+  padding: 17px;
+  margin-bottom: 12px;
+}
+.hub-info-card h3 { margin: 0 0 8px; color: #124b35; }
+.hub-info-card p, .hub-info-card li {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #526158;
+}
+.hub-empty {
+  border: 1px dashed #b9cfc0;
+  background: #f6faf7;
+  border-radius: 13px;
+  padding: 20px;
+  text-align: center;
+  color: #52665a;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.hub-news-table-wrap { overflow-x: auto; margin: 12px 0; }
+.hub-news-table { min-width: 520px; }
+@media(max-width:600px) {
+  .hub-notebook { padding: 13px; }
+  .hub-testimonial { padding: 11px; }
+  .hub-testimonial blockquote { font-size: 12px; }
+    }
+    
+/* =====================================
+   PALMGROW SUCCESS STORIES - BLACK PREMIUM DESIGN
+===================================== */
+
+#page-hub-stories {
+  padding: 8px !important;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(180,180,180,.08), transparent 30%),
+    linear-gradient(145deg, #080808, #171717 55%, #000000);
+  border: 1.5px solid #444444;
+  color: #ffffff;
+  min-height: 0;
+}
+
+#page-hub-stories > .page-header {
+  margin: 0 0 5px;
+  padding: 0;
+}
+
+#page-hub-stories > .page-header h2 {
+  font-size: 17px;
+  margin: 0 0 3px;
+  color: #ffffff;
+}
+
+#page-hub-stories > .page-header p {
+  display: none;
+}
+
+#page-hub-stories > button {
+  padding: 6px 10px;
+  margin: 0 0 7px;
+  font-size: 11px;
+  border-radius: 7px;
+}
+
+.success-book-heading {
+  text-align: center;
+  padding: 3px 5px;
+}
+
+.success-book-heading h2 {
+  color: #ffffff;
+  font-size: 16px;
+  margin: 0;
+}
+
+.success-book-heading p {
+  display: none;
+}
+
+.success-book-stage {
+  perspective: 1200px;
+  width: 100%;
+  max-width: 760px;
+  margin: 5px auto;
+  padding: 3px;
+}
+
+.success-book {
+  position: relative;
+  padding: 5px;
+  border-radius: 11px;
+  background: linear-gradient(90deg, #222222, #777777 8%, #333333 50%, #777777 92%, #222222);
+  box-shadow: 0 8px 18px rgba(0,0,0,.6);
+}
+
+.success-book-page {
+  position: relative;
+  min-height: 0;
+  padding: 10px 10px 10px 24px;
+  color: #eeeeee;
+  background: #151515;
+  border: 1px solid #444444;
+  border-radius: 5px;
+  box-shadow: inset 5px 0 9px rgba(255,255,255,.03);
+}
+
+.success-book-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 17px;
+  width: 1px;
+  background: rgba(180,180,180,.2);
+}
+
+.success-page-title {
+  text-align: center;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 800;
+  margin: 0 0 7px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #555555;
+}
+
+.success-testimonial {
+  position: relative;
+  margin: 6px 0;
+  padding: 8px 9px;
+  border: 1px solid #444444;
+  border-radius: 8px;
+  background: #202020;
+  box-shadow: 0 2px 6px rgba(0,0,0,.4);
+}
+
+.success-testimonial::before {
+  content: "❝";
+  display: block;
+  color: #bbbbbb;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.success-testimonial p {
+  font-family: Georgia, serif;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #eeeeee;
+  margin: 3px 0 5px;
+}
+
+.success-testimonial strong {
+  display: block;
+  color: #ffffff;
+  font-size: 11px;
+}
+
+.success-testimonial small {
+  display: block;
+  color: #aaaaaa;
+  font-size: 9px;
+  margin-top: 2px;
+}
+
+.success-book-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 7px;
+  width: 100%;
+  max-width: 420px;
+  margin: 7px auto 3px;
+}
+
+.success-book-controls button {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 5px;
+  border: 1px solid #555555;
+  border-radius: 7px;
+  background: linear-gradient(145deg, #333333, #111111);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.success-book-controls button:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+.success-page-number {
+  color: #cccccc;
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+#hubBookRange {
+  margin: 3px 0 !important;
+  font-size: 10px !important;
+}
+
+@media(max-width:480px) {
+  #page-hub-stories {
+    padding: 7px !important;
+  }
+
+  .success-book-page {
+    padding: 8px 7px 8px 21px;
+  }
+
+  .success-book-page::before {
+    left: 14px;
+  }
+
+  .success-testimonial {
+    padding: 7px;
+    margin: 5px 0;
+  }
+
+  .success-testimonial p {
+    font-size: 10px;
+    line-height: 1.35;
+  }
+
+  .success-book-controls {
+    gap: 5px;
+  }
+
+  .success-book-controls button {
+    padding: 8px 3px;
+    font-size: 10px;
+  }
+
+  .success-page-number {
+    font-size: 10px;
+  }
+}
+
+
+    /* PALMGROW - STRONG PREMIUM EMERALD BACKGROUND */
+/* REFERRAL PAGE EXCLUDED */
+
+#page-dashboard,
+#page-invest,
+#page-deposit,
+#page-admin,
+#page-withdraw,
+#page-withdraw-history,
+#page-employee-position,
+#page-employee-tasks {
+  background:
+    radial-gradient(
+      circle at 95% 5%,
+      rgba(255, 215, 100, 0.35),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 5% 90%,
+      rgba(36, 160, 105, 0.45),
+      transparent 35%
+    ),
+    linear-gradient(
+      145deg,
+      #03291e 0%,
+      #075239 45%,
+      #0b704b 75%,
+      #043626 100%
+    ) !important;
+
+  border: 2px solid #d4af37 !important;
+  border-radius: 22px !important;
+  padding: 15px !important;
+  min-height: 75vh;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+}
+
+/* Make page headings stand out on green */
+#page-dashboard > h3,
+#page-invest > h3,
+#page-deposit > h3,
+#page-admin > h3 {
+  color: #f8df91;
+}
+
+/* Keep content cards bright and readable */
+#page-dashboard .section,
+#page-invest .section,
+#page-deposit .section,
+#page-admin .section,
+#page-employee-position .section {
+  background: linear-gradient(145deg, #ffffff, #edf6ef);
+  border: 2px solid #d4af37;
+  border-radius: 17px;
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.18);
+}
+
+/* Strong gold frame around investment plans */
+#page-invest .plan {
+  border: 2px solid #d4af37;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+    /* Make investment plans fit phone screens */
+#page-invest .plans {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+#page-invest .plan {
+  min-width: 0;
+  padding: 10px 6px;
+  border-radius: 10px;
+}
+
+#page-invest .plan h4 {
+  font-size: 13px;
+}
+
+#page-invest .plan .price {
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+
+#page-invest .plan p {
+  font-size: 11px;
+}
+
+#page-invest .plan button {
+  padding: 9px 4px;
+  font-size: 12px;
+}
+
+/* Mobile display */
+@media (max-width: 480px) {
+  #page-dashboard,
+  #page-invest,
+  #page-deposit,
+  #page-admin,
+  #page-withdraw,
+  #page-withdraw-history,
+  #page-employee-position,
+  #page-employee-tasks {
+    padding: 10px !important;
+    border-radius: 17px !important;
+  }
+}
+    /* =====================================
+   PALMGROW PREMIUM WEBSITE DESIGN
+   REFERRAL PAGE EXCLUDED
+===================================== */
+
+/* Main page backgrounds */
+#page-dashboard,
+#page-invest,
+#page-deposit,
+#page-admin,
+#page-withdraw,
+#page-withdraw-history {
+  background:
+    radial-gradient(circle at top right,
+      rgba(212,175,55,0.12), transparent 35%),
+    linear-gradient(145deg, #edf5ef, #f8faf8);
+  border: 1px solid #d6e5da;
+  border-radius: 20px;
+  padding: 12px;
+  margin-bottom: 18px;
+  box-shadow: 0 8px 24px rgba(7,61,43,0.07);
+}
+
+/* Premium frames around content cards */
+#page-dashboard .section,
+#page-invest .section,
+#page-deposit .section,
+#page-admin .section {
+  background: linear-gradient(145deg, #ffffff, #f7fbf8);
+  border: 1px solid #d4af37;
+  border-radius: 17px;
+  padding: 17px;
+  margin-bottom: 16px;
+  box-shadow: 0 5px 16px rgba(7,61,43,0.09);
+}
+
+/* Page headings */
+#page-dashboard h3,
+#page-invest h3,
+#page-deposit h3,
+#page-admin h3 {
+  color: #073d2b;
+  font-weight: 800;
+}
+
+/* Investment plan cards */
+#page-invest .plan {
+  background: linear-gradient(145deg, #ffffff, #f0f7f2);
+  border: 1px solid #d4af37;
+  border-radius: 16px;
+  padding: 17px;
+  box-shadow: 0 5px 14px rgba(7,61,43,0.09);
+}
+
+/* Tables */
+#page-dashboard table,
+#page-invest table,
+#page-deposit table,
+#page-admin table,
+#page-withdraw-history table {
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#page-dashboard th,
+#page-invest th,
+#page-deposit th,
+#page-admin th,
+#page-withdraw-history th {
+  background: #e5f1e9;
+  color: #073d2b;
+}
+
+#page-dashboard td,
+#page-invest td,
+#page-deposit td,
+#page-admin td,
+#page-withdraw-history td {
+  color: #263d31;
+}
+
+/* Form frames */
+#page-deposit input,
+#page-deposit select,
+#page-admin input,
+#page-admin select {
+  border: 1px solid #cbdccf;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+#page-deposit input:focus,
+#page-deposit select:focus,
+#page-admin input:focus,
+#page-admin select:focus {
+  outline: none;
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.13);
+}
+
+/* Premium buttons */
+#page-invest .plan button,
+#page-deposit form button,
+#page-admin .primary-btn {
+  background: linear-gradient(135deg, #073d2b, #147a56);
+  border: 1px solid #d4af37;
+  border-radius: 10px;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* Locked investment buttons */
+#page-invest .plan button:disabled {
+  background: #dfe9e2;
+  color: #52715e;
+  border: 1px solid #c5d8ca;
+  cursor: not-allowed;
+}
+
+/* Withdrawal page frames */
+#page-withdraw > div,
+#page-withdraw-history > div {
+  border: 1px solid #d4af37;
+  border-radius: 17px;
+  box-shadow: 0 6px 18px rgba(7,61,43,0.10);
+}
+
+/* Dashboard wallet frame */
+#page-dashboard #walletBalanceDisplay {
+  color: #ffffff;
+}
+
+/* Dashboard summary cards */
+#page-dashboard [id="totalInvestment"],
+#page-dashboard [id="totalEarnings"],
+#page-dashboard [id="dashboardWithdrawable"],
+#page-dashboard [id="referralEarnings"],
+#page-dashboard [id="availableBalance"] {
+  font-weight: 800;
+}
+
+/* Smooth appearance */
+#page-dashboard .section,
+#page-invest .plan,
+#page-deposit .section,
+#page-admin .section {
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+/* Mobile spacing */
+@media (max-width: 480px) {
+  #page-dashboard,
+  #page-invest,
+  #page-deposit,
+  #page-admin,
+  #page-withdraw,
+  #page-withdraw-history {
+    padding: 9px;
+    border-radius: 15px;
+  }
+
+  #page-dashboard .section,
+  #page-invest .section,
+  #page-deposit .section,
+  #page-admin .section {
+    padding: 13px;
+  }
+}
+    
+/* PALMGROW - FULL EMPLOYEE DAILY TASKS PAGE BACKGROUND */
+
+#page-employee-tasks {
+  min-height: calc(100vh - 120px);
+  padding: 12px;
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      circle at 95% 8%,
+      rgba(212, 175, 55, 0.20),
+      transparent 28%
+    ),
+    linear-gradient(
+      145deg,
+      #052f23,
+      #0b5139 55%,
+      #073d2b
+    );
+}
+
+/* Remove the white outer container */
+#page-employee-tasks > .section {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 8px !important;
+  margin: 0 !important;
+}
+
+/* Page heading */
+#page-employee-tasks > .section > h3 {
+  color: #f5d879;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+/* Introduction text */
+#page-employee-tasks > .section > p {
+  color: rgba(255, 255, 255, 0.9) !important;
+  line-height: 1.7;
+}
+
+/* Daily payment card */
+#page-employee-tasks .stat-card {
+  background: #ffffff;
+  border: 1px solid #d4af37;
+  border-radius: 14px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+#page-employee-tasks .stat-card .label {
+  color: #52665a;
+}
+
+#page-employee-tasks .stat-card .value {
+  color: #0b5139;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+/* Task progress notice */
+#page-employee-tasks .notice {
+  background: #fff8e5 !important;
+  border: 1px solid #d4af37 !important;
+  color: #17452f !important;
+  border-radius: 12px;
+}
+
+/* Individual daily task cards */
+#page-employee-tasks .task-card {
+  background: #ffffff;
+  border: 1px solid #d4af37;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.12);
+}
+
+#page-employee-tasks .task-card h4 {
+  color: #0b5139;
+}
+
+#page-employee-tasks .task-card p {
+  color: #52665a;
+}
+
+#page-employee-tasks .task-card button {
+  background: #0f5c42;
+  color: #ffffff;
+  border-radius: 9px;
+}
+
+#page-employee-tasks .task-card button:disabled {
+  background: #8a9b91;
+}
+
+/* Task payment history */
+#page-employee-tasks .section .section {
+  background: #ffffff !important;
+  border: 1px solid #d4af37 !important;
+  border-radius: 14px;
+  padding: 15px !important;
+  margin-top: 16px;
+}
+
+#page-employee-tasks .section .section h3 {
+  color: #0b5139;
+}
+
+#page-employee-tasks table {
+  background: #ffffff;
+  color: #173b2b;
+}
+
+#page-employee-tasks th {
+  background: #e8f2eb;
+  color: #0b5139;
+}
+
+#page-employee-tasks td {
+  color: #263d31;
+}
+
+/* Mobile screen adjustment */
+@media (max-width: 480px) {
+  #page-employee-tasks {
+    padding: 10px;
+  }
+
+  #page-employee-tasks > .section > h3 {
+    font-size: 18px;
+  }
+}
+
     /* PALMGROW REFERRAL PAGE DESIGN */
 #page-referral {
   display: flex;
@@ -259,7 +1064,7 @@ background: #f6faf7;
   background: var(--green);
   color: #fff;
 }
-  
+ 
 #referralFeedback {
   margin-top: 8px;
   font-size: 12px;
@@ -301,13 +1106,20 @@ background: #f6faf7;
     font-size: 9px;
   }
   }
+
 :root {  
   --green-dark:#0b3d2e; --green:#0f5c42; --green-light:#147a56;  
   --gold:#d4af37; --bg:#f4f7f5; --card:#fff; --text:#1a2e25;  
   --muted:#6b7c73; --border:#e2ebe6;  
 }  
 *{box-sizing:border-box;margin:0;padding:0}  
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;min-height:100vh}  
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  background:#000;
+  color:var(--text);
+  line-height:1.5;
+  min-height:100vh;
+    }
 .hidden{display:none!important}  
 #authScreen{min-height:100vh;display:none;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#0b3d2e,#0f5c42)}
 .auth-box{background:#fff;width:100%;max-width:400px;border-radius:16px;padding:28px 24px;box-shadow:0 20px 40px rgba(0,0,0,.2)}  
@@ -334,11 +1146,45 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
 .task-card button:disabled{background:#8a9b91;cursor:not-allowed}  
 .task-done{border-color:#8ac49d;background:#f2fbf4}  
 
-/* STACKED EMPLOYEE LEVEL CARDS */
+
+/* PALMGROW PREMIUM EMPLOYEE LEVEL DESIGN */
+
+#page-employee-position .section {
+  background: linear-gradient(160deg, #ffffff, #f3f8f4);
+  border: 1px solid #dce9df;
+  border-radius: 20px;
+  padding: 18px;
+}
+
+#page-employee-position h3 {
+  color: #073d2b;
+  font-size: 21px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+#page-employee-position .notice {
+  background: linear-gradient(135deg, #073d2b, #116b48);
+  color: #fff;
+  border: 1px solid #c9a64b;
+  border-radius: 14px;
+  padding: 16px;
+  margin: 15px 0 20px;
+  box-shadow: 0 5px 15px rgba(7,61,43,0.12);
+}
+
+#page-employee-position .notice strong {
+  color: #f4d47c;
+  font-size: 17px;
+}
+
+/* LEVEL CARD */
+
 #employeePositionPlans {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 14px;
+  margin-top: 18px;
 }
 
 #employeePositionPlans .position-plan {
@@ -346,59 +1192,119 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 16px;
+  gap: 12px;
+  background: linear-gradient(145deg, #ffffff, #f2f8f3);
+  border: 1px solid #d5e4d9;
+  border-left: 5px solid #c9a64b;
+  border-radius: 17px;
+  padding: 17px 15px;
   margin: 0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-  background: linear-gradient(145deg, #fff, #f9fbf9);
+  box-shadow: 0 5px 15px rgba(7,61,43,0.07);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+#employeePositionPlans .position-plan:active {
+  transform: scale(0.985);
+}
+
+/* LEVEL BADGE */
 
 #employeePositionPlans .position-left {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 13px;
+  min-width: 0;
 }
 
 #employeePositionPlans .level-badge {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--green-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 53px;
+  height: 53px;
+  padding: 5px;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #073d2b, #16734c);
+  color: #f4d47c;
+  border: 1px solid #c9a64b;
+  font-size: 16px;
+  font-weight: 800;
+  box-shadow: 0 4px 10px rgba(7,61,43,0.18);
 }
+
+/* LEVEL DETAILS */
 
 #employeePositionPlans .position-details {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 6px;
 }
 
 #employeePositionPlans .position-details div {
-  font-size: 13px;
-  color: var(--muted);
+  font-size: 12px;
+  color: #64756b;
+  line-height: 1.4;
 }
 
 #employeePositionPlans .position-details strong {
-  color: var(--text);
-  font-weight: 600;
+  color: #073d2b;
+  font-weight: 800;
 }
 
+/* JOIN AND UPGRADE BUTTON */
+
 #employeePositionPlans .join-button {
-  padding: 10px 18px;
-  background: var(--green);
+  padding: 11px 15px;
+  background: linear-gradient(135deg, #073d2b, #16804e);
   color: #fff;
-  border: 0;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 600;
+  border: 1px solid #c9a64b;
+  border-radius: 11px;
+  font-size: 12px;
+  font-weight: 800;
   cursor: pointer;
   white-space: nowrap;
+  box-shadow: 0 4px 9px rgba(7,61,43,0.15);
 }
 
 #employeePositionPlans .join-button:disabled {
-  background: #e5f5e9;
+  background: linear-gradient(135deg, #e5f3e9, #f5faf6);
   color: #137333;
+  border: 1px solid #b9d8c2;
+  box-shadow: none;
   cursor: not-allowed;
+}
+
+/* SMALL PHONE SCREENS */
+@media (min-width: 600px) {
+  #employeePositionPlans {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+    }
+
+@media (max-width: 380px) {
+  #employeePositionPlans .position-plan {
+    padding: 12px 9px;
+    gap: 7px;
+  }
+
+  #employeePositionPlans .position-left {
+    gap: 8px;
+  }
+
+  #employeePositionPlans .level-badge {
+    min-width: 43px;
+    height: 43px;
+    font-size: 13px;
+  }
+
+  #employeePositionPlans .position-details div {
+    font-size: 11px;
+  }
+
+  #employeePositionPlans .join-button {
+    padding: 9px 10px;
+    font-size: 11px;
+  }
 }
 
 /* ADMIN PANEL TABS & CARDS */
@@ -432,9 +1338,88 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
 .admin-panel-section.active {
   display: block;
 }
+    
+/* ADMIN DASHBOARD HOME CARDS */
+.admin-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.admin-dashboard-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  white-space: normal;
+  min-height: 145px;
+  padding: 17px 14px;
+  background: #ffffff;
+  color: var(--green-dark);
+  border: 1px solid #dce8e1;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(11, 61, 46, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-dashboard-card:hover {
+  background: #f5faf7;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(11, 61, 46, 0.10);
+}
+
+.admin-dashboard-card > span {
+  font-size: 27px;
+  margin-bottom: 12px;
+}
+
+.admin-dashboard-card strong {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.admin-dashboard-card small {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #66756d;
+}
+
+.admin-notification {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  min-width: 21px;
+  height: 21px;
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #b42318;
+  color: #ffffff;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+@media (min-width: 768px) {
+  .admin-dashboard-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .admin-dashboard-card {
+    min-height: 155px;
+    padding: 20px;
+  }
+}
 
 .main{margin-left:0;min-height:100vh;padding-bottom:90px}  
-.topbar{background:#fff;border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}  
+.topbar{background:#000;border-bottom:1px solid #333;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
 .menu-btn{background:none;border:0;font-size:22px;cursor:pointer;color:var(--green-dark);padding:4px 8px}  
 .user-info{display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer;padding:4px 8px;border-radius:8px;transition:background 0.2s}  
 .user-info:hover{background:#f0f5f2}  
@@ -517,7 +1502,107 @@ th{background:#f0f5f2;font-weight:600}
   cursor: pointer;
   font-weight: 600;
  }
-  
+
+/* PALMGROW — FORCE BLACK BOTTOM NAVIGATION */
+
+div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space-around"] {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  border-top: 1px solid #333333 !important;
+}
+
+div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space-around"] a {
+  background: transparent !important;
+  color: #b0b0b0 !important;
+}
+
+div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space-around"] > div > div {
+  background: #151515 !important;
+  border: 2px solid #777777 !important;
+  box-shadow: none !important;
+}
+
+div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space-around"] > div > div span {
+  color: #ffffff !important;
+}
+
+    /* WITHDRAWAL AMOUNT INPUT — MAKE TEXT VISIBLE */
+
+#page-withdraw input[type="number"],
+#page-withdraw input[type="text"],
+#page-withdraw input:not([type]) {
+  background-color: #101010 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: 1px solid #777777 !important;
+  caret-color: #ffffff !important;
+}
+
+#page-withdraw input::placeholder {
+  color: #aaaaaa !important;
+  opacity: 1 !important;
+    }
+/* OPERATING FUNDS OVERVIEW */
+.admin-fund-hero {
+  background: linear-gradient(135deg, #0b3d2e, #147a56);
+  color: #fff;
+  padding: 22px;
+  border-radius: 12px;
+  margin: 15px 0 22px;
+}
+
+.admin-fund-hero h2 {
+  font-size: 28px;
+  margin: 10px 0 0;
+  color: #fff;
+}
+
+.admin-fund-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 12px;
+  margin: 12px 0 24px;
+}
+
+.admin-fund-metric {
+  background: var(--card, #fff);
+  border: 1px solid rgba(15, 92, 66, 0.15);
+  border-radius: 9px;
+  padding: 14px;
+  font-size: 12px;
+  color: var(--text, #333);
+  min-width: 0;
+}
+
+.admin-fund-metric strong {
+  display: block;
+  margin-top: 9px;
+  font-size: 16px;
+  color: var(--green-dark);
+  overflow-wrap: anywhere;
+}
+
+.admin-fund-status {
+  padding: 14px;
+  border-radius: 9px;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  margin: 12px 0 22px;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+#admin-tab-funds h4 {
+  margin: 20px 0 10px;
+  color: var(--green-dark);
+}
+
+#adminFundTransactionsBody td {
+  font-size: 12px;
+  padding: 10px 8px;
+    }
+    
 </style>
 </head>
 <body>
@@ -596,12 +1681,13 @@ th{background:#f0f5f2;font-weight:600}
     <div class="logo">🌴 Palm<span>Grow</span></div>
     <div class="nav-item active" data-page="dashboard">🏠 Dashboard</div>
     <div class="nav-item" data-page="invest">💰 Make Investment</div>
-    <div class="nav-item" data-page="employee-position" id="employeePositionNav" style="display:none">📈 Employee Position M1–M9</div>
+    <div class="nav-item" data-page="employee-position" id="employeePositionNav" style="display:none">📈 Employee Position M1–M10</div>
     <div class="nav-item" data-page="employee-tasks" id="employeeTasksNav" style="display:none">🌱 Employee Daily Tasks</div>
     <div class="nav-item" data-page="deposit">📥 Deposit</div>
     <div class="nav-item" data-page="withdraw">💸 Withdraw Funds</div>
     <div class="nav-item" data-page="referral">👥 Referral Program</div>
-    <div class="nav-item" data-page="admin" id="adminNav" style="display:none">🛡️ Admin Panel</div>
+   <div class="nav-item" data-page="hub-agent">💬 Talk to Agent</div>
+ <div class="nav-item" data-page="admin" id="adminNav" style="display:none">🛡️ Admin Panel</div>
     <div class="nav-item" id="logoutNav">🚪 Log Out</div>
   </aside>
 
@@ -705,17 +1791,251 @@ th{background:#f0f5f2;font-weight:600}
             </div>  
         </div>  
 
-        <!-- Invite Friends / Team Promotional Banner -->  
-        <div onclick="showPage('referral')" style="background: linear-gradient(135deg, #0d382b 0%, #1b4d3e 100%); border-radius: 14px; padding: 20px; color: white; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(13, 56, 43, 0.15); cursor: pointer;">  
-            <div>  
-                <h2 style="margin: 0; font-size: 18px; font-weight: 700;">Invite Friends</h2>  
-                <h2 style="margin: 2px 0 0 0; font-size: 20px; font-weight: 800; color: #4ade80;">My Team</h2>  
-            </div>  
-            <div style="font-size: 28px;">👥</div>  
-        </div>  
-     </div>  
+        <!-- HOME PAGE: INVITE FRIENDS + PALMGROW HUB -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;">
 
-      <!-- EMPLOYEE POSITION PAGE -->
+    <!-- INVITE FRIENDS: LEFT HALF -->
+    <div onclick="showPage('referral')"
+         style="background:linear-gradient(135deg,#0d382b,#1b4d3e);border-radius:14px;padding:16px 10px;color:white;display:flex;justify-content:space-between;align-items:center;min-height:85px;cursor:pointer;">
+        <div>
+            <h2 style="margin:0;font-size:15px;font-weight:700;">Invite Friends</h2>
+            <p style="margin:5px 0 0;font-size:12px;color:#4ade80;">Grow My Team</p>
+        </div>
+        <div style="font-size:24px;">👥</div>
+    </div>
+
+    <!-- PALMGROW HUB: RIGHT HALF -->
+    <div onclick="showPage('hub')"
+         style="background:linear-gradient(135deg,#b88a32,#80601e);border-radius:14px;padding:16px 10px;color:white;display:flex;justify-content:space-between;align-items:center;min-height:85px;cursor:pointer;">
+        <div>
+            <h2 style="margin:0;font-size:15px;font-weight:700;">PalmGrow Hub</h2>
+            <p style="margin:5px 0 0;font-size:12px;color:#fff1c9;">Stories & Updates</p>
+        </div>
+        <div style="font-size:24px;">🌴</div>
+    </div>
+
+</div>
+
+
+</div>
+<!-- END DASHBOARD PAGE -->
+<!-- PALMGROW HUB PAGE -->
+<div id="page-hub" class="hidden">
+
+
+                
+          <!-- PALMGROW HUB CONTENT: OPENS INSIDE HOME -->
+<div id="palmGrowHubContent">
+
+    <div class="hub-hero">
+        <h2>🌴 PalmGrow Hub</h2>
+        <p>Stories, information, support and updates from the PalmGrow community and the wider oil-palm sector.</p>
+    </div>
+
+    <div class="hub-menu-grid">
+
+    <div class="hub-menu-card" onclick="showPage('hub-stories')">
+        <div class="hub-menu-icon">🏆</div>
+        <h3>Success Stories</h3>
+        <p>Read experiences from the PalmGrow community.</p>
+        <span>Explore Stories →</span>
+    </div>
+
+    <div class="hub-menu-card" onclick="showPage('hub-agent')">
+        <div class="hub-menu-icon">💬</div>
+        <h3>Talk to Agent</h3>
+        <p>Get help and support with your account.</p>
+        <span>Get Support →</span>
+    </div>
+
+    <div class="hub-menu-card" onclick="showPage('hub-updates')">
+        <div class="hub-menu-icon">📢</div>
+        <h3>PalmGrow News</h3>
+        <p>Stay informed about official announcements.</p>
+        <span>Read Updates →</span>
+    </div>
+
+    <div class="hub-menu-card" onclick="showPage('hub-industry')">
+        <div class="hub-menu-icon">🌴</div>
+        <h3>Palm Industry News</h3>
+        <p>Discover news from the oil-palm industry.</p>
+        <span>Explore News →</span>
+    </div>
+
+    <div class="hub-menu-card" onclick="showPage('hub-about')">
+        <div class="hub-menu-icon">🌿</div>
+        <h3>About PalmGrow</h3>
+        <p>Learn about PalmGrow and its purpose.</p>
+        <span>Learn More →</span>
+    </div>
+
+    </div>
+
+</div>
+<!-- END PALMGROW HUB CONTENT -->
+
+</div>
+<!-- END PALMGROW HUB PAGE -->
+        <!-- PALMGROW HUB: SUCCESS STORIES PAGE -->
+<div id="page-hub-stories" class="hidden">
+
+    <div class="page-header">
+        <h2>🏆 Success Stories</h2>
+        <p>Real experiences and stories from the PalmGrow community.</p>
+    </div>
+
+    <div class="success-book-stage">
+        <div class="success-book">
+            <div class="success-book-page">
+
+                <h3 class="success-page-title">
+                    📖 PalmGrow Community Testimonials
+                </h3>
+
+                <div id="hubTestimonials">
+                    <p>Testimonials will load here.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="success-book-controls">
+        <button type="button" id="hubPrev" disabled>← Previous</button>
+
+        <span class="success-page-number" id="hubBookPage">
+            Page 1 of 15
+        </span>
+
+        <button type="button" id="hubNext">Next →</button>
+    </div>
+
+    <p id="hubBookRange" style="text-align:center;font-size:11px;color:#f5d879;">
+        Stories 1–5 of 75
+    </p>
+
+</div>
+<!-- END SUCCESS STORIES PAGE -->
+      
+<!-- PALMGROW HUB: TALK TO AGENT PAGE -->
+<div id="page-hub-agent" class="hidden">
+
+    <div class="hub-info-card">
+
+        <h3>🌴 PalmGrow Support Assistant</h3>
+        <p>Ask questions about your account, deposits, withdrawals, referrals, employee positions and more.</p>
+
+        <div id="palmGrowAgentChat"
+             style="background:#f5f8f5; border:1px solid #dce8df; border-radius:12px; padding:15px; margin-top:15px; min-height:250px;">
+
+            <div style="background:#e3f1e7; padding:12px; border-radius:10px; margin-bottom:12px;">
+                <strong>🌴 PalmGrow Assistant</strong>
+                <p style="margin:6px 0 0;">
+                    Hello! Welcome to PalmGrow Support.
+                    I am Jones How can I help you today?
+                </p>
+            </div>
+
+        </div>
+
+        <div style="margin-top:15px;">
+            <textarea
+                id="palmGrowAgentInput"
+                rows="3"
+                placeholder="Type your question here..."
+                style="width:100%; padding:12px; border:1px solid #ccc; border-radius:10px; box-sizing:border-box; resize:vertical;">
+            </textarea>
+
+            <button
+                type="button"
+                id="palmGrowAgentSend"
+                style="width:100%; margin-top:10px; padding:13px; background:#075c35; color:white; border:0; border-radius:10px; font-weight:bold;">
+                Send Message
+            </button>
+        </div>
+
+        <p style="font-size:12px; margin-top:12px;">
+            For your security, never share your password, OTP, login code or withdrawal PIN.
+        </p>
+
+    </div>
+
+</div>
+<!-- END TALK TO AGENT PAGE -->
+
+<!-- PALMGROW HUB: PALMGROW NEWS PAGE -->
+<div id="page-hub-updates" class="hidden">
+
+    <div class="hub-info-card"
+         style="background:#101010;color:#fff;border:1px solid #333;border-radius:12px;padding:15px;margin-top:15px;">
+
+        <h3 style="color:#fff;">PalmGrow News & Articles</h3>
+
+        <div id="palmGrowNewsViewer"
+             style="background:#080808;border:1px solid #444;border-radius:10px;padding:10px;text-align:center;">
+
+            <div id="palmGrowNewsPageNumber"
+                 style="color:#ccc;margin-bottom:12px;font-weight:bold;">
+                Page 1 of 5
+            </div>
+
+            <img id="palmGrowNewsImage"
+                 src="palmgrow-news-page-1.jpg"
+                 alt="PalmGrow News Page 1"
+                 style="display:block;width:100%;height:auto;max-height:70vh;object-fit:contain;margin:auto;border-radius:6px;">
+
+            <div style="display:flex;justify-content:space-between;gap:10px;margin-top:15px;">
+
+                <button type="button"
+                        onclick="changePalmGrowNewsPage(-1)"
+                        style="flex:1;background:#303030;color:#fff;border:1px solid #666;padding:12px;border-radius:8px;font-weight:bold;">
+                    ← Previous
+                </button>
+
+                <button type="button"
+                        onclick="changePalmGrowNewsPage(1)"
+                        style="flex:1;background:#fff;color:#000;border:1px solid #fff;padding:12px;border-radius:8px;font-weight:bold;">
+                    Next →
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- END PALMGROW NEWS PAGE -->
+
+        <!-- PALMGROW HUB: PALM INDUSTRY NEWS PAGE -->
+<div id="page-hub-industry" class="hidden">
+
+    <div class="hub-info-card">
+        <h3>Oil Palm & Agriculture News</h3>
+        <div class="hub-empty">
+            Verified oil-palm and agriculture news will appear here.
+        </div>
+    </div>
+
+</div>
+<!-- END PALM INDUSTRY NEWS PAGE -->
+        <!-- PALMGROW HUB: ABOUT PALMGROW PAGE -->
+<div id="page-hub-about" class="hidden">
+
+    <div class="hub-info-card">
+        <h3>About PalmGrow</h3>
+
+        <p>
+            PalmGrow is an agricultural participation and digital community platform focused on the oil-palm value chain.
+        </p>
+
+        <p>
+            Our focus is clear information, responsible participation, agricultural development and transparent account processes.
+        </p>
+    </div>
+
+</div>
+<!-- END ABOUT PALMGROW PAGE -->
+<!-- EMPLOYEE POSITION PAGE -->
       <div id="page-employee-position" class="hidden">  
         <div class="section">  
           <h3>📈 Employee Level</h3>  
@@ -726,21 +2046,79 @@ th{background:#f0f5f2;font-weight:600}
         </div>  
       </div>  
 
-      <!-- EMPLOYEE TASKS PAGE -->
-      <div id="page-employee-tasks" class="hidden">  
-        <div class="section">  
-          <h3>🌱 Employee Daily Tasks</h3>  
-          <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Your assigned practical palm-farm tasks appear here on working days. Mark each task complete only after doing the work. Task completion is self-reported.</p>  
-          <div class="stat-card" style="margin-bottom:12px;text-align:center;padding:18px"><div class="label">Total Daily Task Payment</div><div class="value" id="dailyRateDisplay">₦0.00 / day</div></div>  
-          <div class="notice" style="background:#e8f5e9;border:1px solid #2e7d32;color:#1b5e20;margin-bottom:12px"><strong>Progress:</strong> <span id="taskProgressDisplay">0 of 0 tasks completed</span></div>  
-          <div id="employeeTaskList"><p style="color:var(--muted)">Your tasks will load here.</p></div>  
-          <div id="taskMessage" class="status hidden" style="margin-top:12px"></div>  
-          <div class="section" style="margin-top:16px;background:#f8fbf9">  
-            <h3>My Task Payment History</h3>  
-            <div style="overflow-x:auto"><table><thead><tr><th>Payment</th><th>Description</th><th>Date</th></tr></thead><tbody id="employeePayrollBody"><tr><td colspan="3">No task payments displayed yet.</td></tr></tbody></table></div>  
-          </div>  
-        </div>  
-      </div>  
+      
+<!-- EMPLOYEE TASKS PAGE -->
+<div id="page-employee-tasks" class="hidden">
+  <div class="section">
+
+    <h3>🌱 Employee Daily Tasks</h3>
+
+    <p style="font-size:13px;color:var(--muted);margin-bottom:14px">
+      Your assigned practical palm-farm tasks appear here on working days. Mark each task complete only after doing the work.
+    </p>
+
+    <div class="stat-card" style="margin-bottom:12px;text-align:center;padding:18px">
+      <div class="label">Total Daily Task Payment</div>
+      <div class="value" id="dailyRateDisplay">₦0.00 / day</div>
+    </div>
+
+    <div class="notice" style="margin-bottom:12px">
+      <strong>Progress:</strong>
+      <span id="taskProgressDisplay">0 of 0 tasks completed</span>
+    </div>
+
+    <div id="employeeTaskList">
+      <p style="color:var(--muted)">Your tasks will load here.</p>
+    </div>
+
+    <div id="taskMessage" class="status hidden" style="margin-top:12px"></div>
+
+    <button
+      type="button"
+      onclick="showPage('employee-task-history')"
+      style="width:100%;margin-top:18px;padding:14px;background:#202020;color:#fff;border:1px solid #555;border-radius:10px;font-weight:bold;">
+      📋 Task History →
+    </button>
+
+  </div>
+</div>
+
+<!-- EMPLOYEE TASK HISTORY PAGE -->
+<div id="page-employee-task-history" class="hidden">
+  <div class="section">
+
+    <h3>📋 Task History</h3>
+
+    <p style="font-size:13px;color:var(--muted);margin-bottom:14px">
+      View your completed tasks and their payment records.
+    </p>
+
+    <div style="overflow-x:auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Payment</th>
+            <th>Description</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody id="employeePayrollBody">
+          <tr>
+            <td colspan="3">No task payments displayed yet.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <button
+      type="button"
+      onclick="showPage('employee-tasks')"
+      style="width:100%;margin-top:18px;padding:14px;background:#202020;color:#fff;border:1px solid #555;border-radius:10px;font-weight:bold;">
+      ← Back to Daily Tasks
+    </button>
+
+  </div>
+</div>
 
       <!-- DEPOSIT PAGE -->
       <div id="page-deposit" class="hidden">  
@@ -912,10 +2290,9 @@ th{background:#f0f5f2;font-weight:600}
   <div id="withdrawalHistoryList"></div>
 
 </div>
-
   </div>
       </div>
-      
+     
       <!-- REFERRAL PAGE -->
 <div id="page-referral" class="hidden" style="position:relative;">
 
@@ -970,16 +2347,71 @@ th{background:#f0f5f2;font-weight:600}
         <div class="section">  
           <h3>🛡️ Admin Control Center</h3>  
           <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Manage platform operations, employee accounts, deposits, and payouts efficiently.</p>  
+         
           
-          <!-- Admin Navigation Sub-Tabs -->
-          <div class="admin-tabs">
-            <button class="admin-tab-btn active" data-admin-tab="deposits">📥 Review Deposits</button>
-            <button class="admin-tab-btn" data-admin-tab="employees">👥 Employees</button>
-            <button class="admin-tab-btn" data-admin-tab="banks">🏦 Bank Verifications</button>
-            <button class="admin-tab-btn" data-admin-tab="withdrawals">💸 Withdrawals</button>
-          </div>
-<!-- TAB 1: REVIEW DEPOSITS -->
-          <div class="admin-panel-section active" id="admin-tab-deposits">
+<!-- ADMIN DASHBOARD HOME -->
+<div class="admin-panel-section active" id="admin-tab-home">
+  <h4 style="margin-bottom:15px;color:var(--green-dark);">
+    Platform Management
+  </h4>
+
+  <div class="admin-dashboard-grid">
+
+    <button type="button" class="admin-tab-btn admin-dashboard-card"
+      data-admin-tab="deposits">
+      <span>📥</span>
+      <strong>Review Deposits</strong>
+      <small>Manage incoming payments</small>
+      <b id="adminDepositNotification" class="admin-notification hidden">0</b>
+    </button>
+
+    <button type="button" class="admin-tab-btn admin-dashboard-card"
+      data-admin-tab="employees">
+      <span>👥</span>
+      <strong>Employees</strong>
+      <small>Manage member accounts</small>
+      <b id="adminEmployeeNotification" class="admin-notification hidden">0</b>
+    </button>
+
+    <button type="button" class="admin-tab-btn admin-dashboard-card"
+      data-admin-tab="banks">
+      <span>🏦</span>
+      <strong>Bank Verifications</strong>
+      <small>Verify member bank details</small>
+      <b id="adminBankNotification" class="admin-notification hidden">0</b>
+    </button>
+
+    <button type="button" class="admin-tab-btn admin-dashboard-card"
+      data-admin-tab="withdrawals">
+      <span>💸</span>
+      <strong>Withdrawals</strong>
+      <small>Manage payout requests</small>
+      <b id="adminWithdrawalNotification" class="admin-notification hidden">0</b>
+    </button>
+
+    <button type="button" class="admin-tab-btn admin-dashboard-card"
+      data-admin-tab="funds">
+      <span>💰</span>
+      <strong>Operating Funds</strong>
+      <small>Monitor funds and transactions</small>
+      <b id="adminFundsNotification" class="admin-notification hidden">!</b>
+    </button>
+
+    <button type="button" class="admin-tab-btn admin-dashboard-card"
+      data-admin-tab="reports">
+      <span>📊</span>
+      <strong>Reports</strong>
+      <small>View financial and activity reports</small>
+      <b id="adminReportsNotification" class="admin-notification hidden">NEW</b>
+    </button>
+
+  </div>
+</div>
+<!-- END ADMIN DASHBOARD HOME -->
+
+
+          <!-- TAB 1: REVIEW DEPOSITS -->
+          <div class="admin-panel-section" id="admin-tab-deposits">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
               <h4 style="font-size:15px; color:var(--green-dark);">Pending Deposit Requests</h4>
               <button id="loadDepositsBtn" style="padding:8px 14px; background:var(--green); color:white; border:0; border-radius:6px; font-weight:600; cursor:pointer; font-size:12px;">Refresh List</button>
@@ -993,20 +2425,32 @@ th{background:#f0f5f2;font-weight:600}
             </div>
           </div>
 
-          <!-- TAB 2: EMPLOYEE ACCOUNTS -->
-          <div class="admin-panel-section" id="admin-tab-employees">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-              <h4 style="font-size:15px; color:var(--green-dark);">Employee Management</h4>
-              <button id="loadEmployeesBtn" class="admin-tab-btn" style="margin:0; padding:8px 14px; font-size:12px;">Load Employees</button>
-            </div>
-            <div id="adminEmployeeMessage" class="status hidden"></div>  
-            <div style="overflow-x:auto;">  
-              <table>  
-                <thead><tr><th>Employee</th><th>Status / Level</th><th>Balance</th><th>Actions</th></tr></thead>  
-                <tbody id="adminEmployeesBody"><tr><td colspan="4">Click "Load Employees" to view members.</td></tr></tbody>  
-              </table>  
-            </div>
-          </div>
+          
+<!-- TAB 2: MEMBER MANAGEMENT -->
+<div class="admin-panel-section" id="admin-tab-employees">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+    <h4 style="font-size:15px; color:var(--green-dark);">Member Management</h4>
+    <button id="loadEmployeesBtn" class="admin-tab-btn" style="margin:0; padding:8px 14px; font-size:12px;">Load Members</button>
+  </div>
+
+  <div id="adminEmployeeMessage" class="status hidden"></div>
+
+  <div style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>Member</th>
+          <th>Member Status</th>
+          <th>Balance</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="adminEmployeesBody">
+        <tr><td colspan="4">Click "Load Members" to view accounts.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
           <!-- TAB 3: BANK VERIFICATIONS -->
           <div class="admin-panel-section" id="admin-tab-banks">
@@ -1034,24 +2478,269 @@ th{background:#f0f5f2;font-weight:600}
               </table>  
             </div>
           </div>
+            
+<!-- TAB 5: OPERATING FUNDS -->
+<div class="admin-panel-section" id="admin-tab-funds">
 
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+    <h4 style="font-size:15px; color:var(--green-dark);">Operating Funds Overview</h4>
+    <button id="refreshAdminFundsBtn" class="admin-tab-btn" style="margin:0; padding:8px 14px; font-size:12px;">
+      Refresh Funds
+    </button>
+  </div>
+
+  <div id="adminFundsMessage" class="status hidden"></div>
+
+  <div class="admin-fund-hero">
+    <div>Current Operating Fund Balance</div>
+    <h2 id="adminOperatingFundBalance">₦0.00</h2>
+  </div>
+
+  <h4>Daily Summary</h4>
+  <div class="admin-fund-grid">
+    <div class="admin-fund-metric">Opening Balance <strong id="adminFundTodayOpening">—</strong></div>
+    <div class="admin-fund-metric">Money Received <strong id="adminFundTodayReceived">₦0.00</strong></div>
+    <div class="admin-fund-metric">Handling Fee Income <strong id="adminFundTodayHandling">₦0.00</strong></div>
+    <div class="admin-fund-metric">Transfer Charges <strong id="adminFundTodayTransfer">₦0.00</strong></div>
+    <div class="admin-fund-metric">Money Spent <strong id="adminFundTodaySpent">₦0.00</strong></div>
+    <div class="admin-fund-metric">Net Movement <strong id="adminFundTodayNet">₦0.00</strong></div>
+  </div>
+
+  <h4>Weekly Summary</h4>
+  <div class="admin-fund-grid">
+    <div class="admin-fund-metric">Opening Balance <strong id="adminFundWeekOpening">—</strong></div>
+    <div class="admin-fund-metric">Money Received <strong id="adminFundWeekReceived">₦0.00</strong></div>
+    <div class="admin-fund-metric">Handling Fee Income <strong id="adminFundWeekHandling">₦0.00</strong></div>
+    <div class="admin-fund-metric">Transfer Charges <strong id="adminFundWeekTransfer">₦0.00</strong></div>
+    <div class="admin-fund-metric">Money Spent <strong id="adminFundWeekSpent">₦0.00</strong></div>
+    <div class="admin-fund-metric">Net Movement <strong id="adminFundWeekNet">₦0.00</strong></div>
+  </div>
+
+  <h4>Monthly Summary</h4>
+  <div class="admin-fund-grid">
+    <div class="admin-fund-metric">Opening Balance <strong id="adminFundMonthOpening">—</strong></div>
+    <div class="admin-fund-metric">Money Received <strong id="adminFundMonthReceived">₦0.00</strong></div>
+    <div class="admin-fund-metric">Handling Fee Income <strong id="adminFundMonthHandling">₦0.00</strong></div>
+    <div class="admin-fund-metric">Transfer Charges <strong id="adminFundMonthTransfer">₦0.00</strong></div>
+    <div class="admin-fund-metric">Money Spent <strong id="adminFundMonthSpent">₦0.00</strong></div>
+    <div class="admin-fund-metric">Net Movement <strong id="adminFundMonthNet">₦0.00</strong></div>
+  </div>
+
+  <h4>Account Reconciliation</h4>
+  <div class="admin-fund-status" id="adminFundReconciliation">
+    Refresh Funds to check the account reconciliation.
+  </div>
+
+  <h4>Recent Operating Fund Transactions</h4>
+  <div style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Transaction</th>
+          <th>Description</th>
+          <th>Amount</th>
+          <th>Movement</th>
+        </tr>
+      </thead>
+      <tbody id="adminFundTransactionsBody">
+        <tr><td colspan="5">Click Refresh Funds to load transactions.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<!-- END TAB 5: OPERATING FUNDS -->
         </div>  
       </div>  
 
-      <!-- INVEST PAGE -->
-      <div id="page-invest" class="hidden">  
-        <div class="section">  
-          <h3>💰 Make Investment</h3>  
-          <div class="plans">  
-            <div class="plan"><div class="icon">🌱</div><h4>Starter Palm</h4><div class="price">₦5,000</div><p>Entry-level agricultural project</p><button class="planBtn" data-plan="Starter Palm" data-amount="5000">Invest Now</button></div>  
-            <div class="plan"><div class="
-icon">🌴</div><h4>Growth Palm</h4><div class="price">₦50,000</div><p>Medium-level project</p><button class="planBtn" data-plan="Growth Palm" data-amount="50000">Invest Now</button></div>  
-            <div class="plan"><div class="icon">🌳</div><h4>Premium Palm</h4><div class="price">₦100,000</div><p>Larger agricultural project</p><button class="planBtn" data-plan="Premium Palm" data-amount="100000">Invest Now</button></div>  
-          </div>  
-        </div>  
-      </div>  
+<!-- INVEST PAGE -->
+<div id="page-invest" class="hidden">
+  <div class="section">
+    <h3>💰 Make Investment</h3>
 
-    </div> <!-- End .content -->  
+    <p style="font-size:13px;color:var(--muted);margin-bottom:15px">
+      Choose your preferred PalmGrow investment plan.
+    </p>
+
+    <div class="plans">
+
+      <div class="plan">
+        <div class="icon">🌱</div>
+        <h4>Starter Palm</h4>
+        <div class="price">₦10,000</div>
+        <p>Proposed monthly payout: <strong>₦2,000</strong></p>
+        <button class="planBtn" type="button" disabled
+  data-plan="Starter Palm"
+  data-amount="10000"
+  data-monthly-payout="2000">
+  Coming Soon
+</button>
+      </div>
+
+      <div class="plan">
+        <div class="icon">🌴</div>
+        <h4>Growth Palm</h4>
+        <div class="price">₦30,000</div>
+        <p>Proposed monthly payout: <strong>₦6,000</strong></p>
+        <button class="planBtn" type="button" disabled
+ data-plan="Growth Palm"
+  data-amount="30000"
+  data-monthly-payout="6000">
+  Coming Soon
+</button>   </div>
+
+      <div class="plan">
+        <div class="icon">🌳</div>
+        <h4>Premium Palm</h4>
+        <div class="price">₦50,000</div>
+        <p>Proposed monthly payout: <strong>₦10,000</strong></p>
+         <button class="planBtn" type="button" disabled
+  data-plan="Premium Palm"
+  data-amount="50000"
+  data-monthly-payout="10000">
+  Coming Soon
+         </button>
+      </div>
+
+      <div class="plan">
+        <div class="icon">🥈</div>
+        <h4>Silver Palm</h4>
+        <div class="price">₦100,000</div>
+        <p>Proposed monthly payout: <strong>₦20,000</strong></p>
+        <button class="planBtn" type="button" disabled
+  data-plan="Silver Palm"
+  data-amount="100000"
+  data-monthly-payout="20000">
+  Coming Soon
+</button>
+      </div>
+
+      <div class="plan">
+        <div class="icon">🥇</div>
+        <h4>Gold Palm</h4>
+        <div class="price">₦300,000</div>
+        <p>Proposed monthly payout: <strong>₦60,000</strong></p>
+        <button class="planBtn" type="button" disabled
+  data-plan="Gold Palm"
+  data-amount="300000"
+  data-monthly-payout="60000">
+  Coming Soon
+        </button>
+      </div>
+
+      <div class="plan">
+        <div class="icon">💎</div>
+        <h4>Platinum Palm</h4>
+        <div class="price">₦500,000</div>
+        <p>Proposed monthly payout: <strong>₦100,000</strong></p>
+        <button class="planBtn" type="button" disabled
+  data-plan="Platinum Palm"
+  data-amount="500000"
+  data-monthly-payout="100000">
+  Coming Soon
+        </button>
+      </div>
+
+      <div class="plan">
+        <div class="icon">💠</div>
+        <h4>Diamond Palm</h4>
+        <div class="price">₦700,000</div>
+        <p>Proposed monthly payout: <strong>₦140,000</strong></p>
+        <button class="planBtn" type="button" disabled
+  data-plan="Diamond Palm"
+  data-amount="700000"
+  data-monthly-payout="140000">
+  Coming Soon
+        </button>
+      </div>
+
+      <div class="plan">
+        <div class="icon">🟢</div>
+        <h4>Emerald Palm</h4>
+        <div class="price">₦1,000,000</div>
+        <p>Proposed monthly payout: <strong>₦200,000</strong></p>
+        <button class="planBtn" type="button" disabled
+  data-plan="Emerald Palm"
+  data-amount="1000000"
+  data-monthly-payout="200000">
+  Coming Soon
+        </button>
+      </div>
+
+      <div class="plan">
+        <div class="icon">🔴</div>
+        <h4>Ruby Palm</h4>
+        <div class="price">₦3,000,000</div>
+        <p>Proposed monthly payout: <strong>₦600,000</strong></p>
+        <button class="planBtn" type="button" disabled
+  data-plan="Ruby Palm"
+  data-amount="3000000"
+  data-monthly-payout="600000">
+  Coming Soon
+        </button>
+      </div>
+
+      <div class="plan">
+        <div class="icon">🔵</div>
+        <h4>Sapphire Palm</h4>
+        <div class="price">₦5,000,000</div>
+        <p>Proposed monthly payout: <strong>₦1,000,000</strong></p>
+        <button class="planBtn" type="button" disabled
+  data-plan="Sapphire Palm"
+  data-amount="5000000"
+  data-monthly-payout="1000000">
+  Coming Soon
+        </button>
+      </div>
+
+      <div class="plan">
+        <div class="icon">⭐</div>
+        <h4>Elite Palm</h4>
+        <div class="price">₦10,000,000</div>
+        <p>Proposed monthly payout: <strong>₦2,000,000</strong></p>
+        <button class="planBtn" type="button" disabled
+  data-plan="Elite Palm"
+  data-amount="10000000"
+  data-monthly-payout="2000000">
+  Coming Soon
+        </button>
+      </div>
+
+      <div class="plan">
+        <div class="icon">👑</div>
+        <h4>Executive Palm</h4>
+        <div class="price">₦15,000,000</div>
+        <p>Proposed monthly payout: <strong>₦3,000,000</strong></p>
+        <button class="planBtn" type="button" disabled
+  data-plan="Executive Palm"
+  data-amount="15000000"
+  data-monthly-payout="3000000">
+  Coming Soon
+</button>
+      </div>
+
+      <div class="plan">
+        <div class="icon">🏆</div>
+        <h4>Royal Palm</h4>
+        <div class="price">₦20,000,000</div>
+        <p>Proposed monthly payout: <strong>₦4,000,000</strong></p>
+        <button class="planBtn" type="button" disabled
+  data-plan="Royal Palm"
+  data-amount="20000000"
+  data-monthly-payout="4000000">
+  Coming Soon
+</button>
+      </div>
+
+    </div>
+
+    <p style="font-size:11px;color:var(--muted);margin-top:15px">
+      Monthly payouts shown are proposed and subject to verified business
+      revenue, the investment agreement and applicable requirements.
+    </p>
+  </div>
+</div>
 
     <!-- Fixed Bottom Navigation Bar -->  
     <div style="position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; align-items: center; padding: 8px 0; max-width: 480px; margin: 0 auto; z-index: 100;">  
@@ -1127,16 +2816,16 @@ icon">🌴</div><h4>Growth Palm</h4><div class="price">₦50,000</div><p>Medium-
     <form id="profileForm">
       <label>Full Name</label>
       <input id="profFullName" type="text" required placeholder="Enter full name">
-      
+     
       <label>Phone Number</label>
       <input id="profPhone" type="tel" required placeholder="e.g. 07037816664">
-      
+     
       <label>Age</label>
       <input id="profAge" type="number" min="18" max="100" placeholder="Enter age">
-      
+     
       <label>Occupation</label>
       <input id="profOccupation" type="text" placeholder="e.g. Agricultural Specialist, Trader">
-      
+     
       <label>Gender</label>
       <select id="profGender">
         <option value="">Select Gender</option>
@@ -1144,7 +2833,7 @@ icon">🌴</div><h4>Growth Palm</h4><div class="price">₦50,000</div><p>Medium-
         <option value="Female">Female</option>
         <option value="Other">Other</option>
       </select>
-      
+     
       <button type="submit" id="saveProfileBtn">Save Details</button>
     </form>
     <div id="profileMessage" class="status hidden"></div>
@@ -1153,7 +2842,7 @@ icon">🌴</div><h4>Growth Palm</h4><div class="price">₦50,000</div><p>Medium-
 
 <script type="module">  
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";  
-  
+ 
 const SUPABASE_URL = "https://ghdiycdzsmncmlcpdniy.supabase.co";  
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_xy6UyL2BeQFgB8LeYMHuJA_k6MdhVz9";  
 const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);  
@@ -1303,11 +2992,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if(btn.dataset.adminTab === "employees") loadAdminEmployees();
         if(btn.dataset.adminTab === "banks") loadAdminWithdrawalBanks();
         if(btn.dataset.adminTab === "withdrawals") loadAdminWithdrawals();
+        if(btn.dataset.adminTab === "funds") loadAdminOperatingFundsOverview();
       }
     };
   });
 });
-  
+ 
 const $ = id => document.getElementById(id);  
 let loginMode = false;  
 let currentUser = null;  
@@ -1316,19 +3006,19 @@ let withdrawalSetup = null;
 let pageHistory = ["dashboard"];  
 let selectedWithdrawalAmount = null;  
 let isInitialBoot = true;
-  
+ 
 const WITHDRAWAL_AMOUNTS = [  
   1800,2800,8000,26000,75000,200000,  
   400000,1500000,3000000,6000000  
 ];  
-  
+ 
 function naira(v){  
   return "₦"+Number(v||0).toLocaleString("en-NG",{  
     minimumFractionDigits:2,  
     maximumFractionDigits:2  
   });  
 }  
-  
+ 
 function msg(id,text,type="success"){  
   const el=$(id);  
   if(!el)return;  
@@ -1336,13 +3026,13 @@ function msg(id,text,type="success"){
   el.className="status "+type;  
   el.classList.remove("hidden");  
 }  
-  
+ 
 function escapeHtml(value){  
   return String(value??"").replace(/[&<>"']/g,ch=>({  
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"  
   }[ch]));  
 }  
-  
+ 
 function rowsOf(data){  
   if(Array.isArray(data))return data;  
   if(Array.isArray(data?.data))return data.data;  
@@ -1351,23 +3041,23 @@ function rowsOf(data){
   if(Array.isArray(data?.requests))return data.requests;  
   return data ? [data] : [];  
 }  
-  
+ 
 function objectOf(data){  
   if(Array.isArray(data))return data[0]||{};  
   if(data?.data && !Array.isArray(data.data))return data.data;  
   return data||{};  
 }  
-  
+ 
 function dateText(value){  
   if(!value)return "—";  
   const date=new Date(value);  
   return Number.isNaN(date.getTime())?"—":date.toLocaleString();  
 }  
-  
+ 
 function displayStatus(status){  
   return String(status||"pending").replaceAll("_"," ").toUpperCase();  
 }  
-  
+ 
 function updateAuthUI(){
   $("authSub").textContent = loginMode
     ? "Login to your PalmGrow account"
@@ -1398,7 +3088,6 @@ function updateAuthUI(){
     : "Already have an account? Login";
 }
 
-
 // Password Show/Hide controls
 function setupPasswordToggle(inputId, buttonId){
   const input = $(inputId);
@@ -1426,7 +3115,6 @@ setupPasswordToggle(
   "toggleConfirmPassword"
 );
 
-
 // Switch between Login and Registration
 $("switchBtn").onclick = () => {
   loginMode = !loginMode;
@@ -1442,7 +3130,6 @@ $("switchBtn").onclick = () => {
 
   updateAuthUI();
 };
-
 
 // Authentication form
 $("authForm").onsubmit = async e => {
@@ -1525,7 +3212,7 @@ if (loginError) {
 // Open the new member's dashboard
 await loadDashboard();
 
-      
+     
     }
 
   }catch(err){
@@ -1542,13 +3229,163 @@ await loadDashboard();
     updateAuthUI();
   }
 };
-  
-const PAGE_NAMES=[
-  "dashboard","deposit","referral","admin","invest",
-  "employee-tasks","employee-position","withdraw","withdraw-history"
+ 
+// PALMGROW HUB: 75 testimonials, five displayed per page.
+const PALMGROW_TESTIMONIALS = [
+  {"name":"Chidi E.","role":"Senior Team Lead","quote":"When I joined PalmGrow, I shared my link with just a few colleagues in my agricultural network. Within three months, my team grew exponentially through the multi-tier commission structure. Receiving daily payouts from Level 1 down to Level 5 has given me incredible financial consistency!"},
+  {"name":"Amina K.","role":"Team Leader","quote":"Building a team on PalmGrow has been seamless. The dashboard stats update instantly whenever someone registers with my code. Hitting Tier-1 rewards and unlocking the global leaderboard has kept my entire downline motivated every single day."},
+  {"name":"Emeka O.","role":"Regional Partner","quote":"What blew my mind is the transparency of the referral tracking. You can see your exact earnings per level in real-time. I’ve already withdrawn my commissions straight to my bank account multiple times without any hitches."},
+  {"name":"Folake B.","role":"Network Partner","quote":"PalmGrow isn't just about sharing a link; it's a real community. My Level 1 direct referrals alone cover my weekly operational expenses, and the passive overflow from lower tiers keeps surprising me."},
+  {"name":"Ibrahim S.","role":"Executive Leader","quote":"The referral commission rates (from 10% on Level 1 down to 0.4% on Level 5) are structured so fairly. It rewards active leaders who take time to mentor their teams. My earnings have tripled since I started focusing on PalmGrow."},
+  {"name":"Ngozi A.","role":"Community Coordinator","quote":"Managing my downline used to feel like guesswork until I started using PalmGrow’s integrated dashboard. The tiered visibility lets me see where my team needs support so we can grow together."},
+  {"name":"Uche M.","role":"Director of Growth","quote":"PalmGrow completely changed my perspective on green-economy platforms. The compounding effect of 5-level referrals means my efforts compound every time someone in my network refers a friend."},
+  {"name":"Halima B.","role":"Senior Ambassador","quote":"The moment I hit my first milestone badge, my engagement skyrocketed. People love seeing real proof of daily withdrawals, and PalmGrow makes sharing those success stories so easy."},
+  {"name":"Tunde W.","role":"Master Networker","quote":"I’ve tested dozens of digital referral hubs, but PalmGrow’s infrastructure is unmatched. Zero lag, instant commission calculation, and prompt payouts make it a joy to promote."},
+  {"name":"Zainab O.","role":"Team Coordinator","quote":"My team members are spread across different regions, but the platform connects us all under one unified structure. Watching my downline succeed brings me as much joy as my own direct commissions."},
+  {"name":"Femi K.","role":"Global Builder","quote":"The transition from manual referral spreadsheets to PalmGrow’s automated web app saved me countless hours. Now I spend my time mentoring instead of calculating."},
+  {"name":"Blessing E.","role":"Senior Partner","quote":"Earning up to 15.1% total across all five tiers gave me the financial leverage I needed to expand my personal projects. PalmGrow is a game-changer."},
+  {"name":"David S.","role":"Community Lead","quote":"The daily sharing power-ups gave my community simple, bite-sized tasks to keep their engagement high. It’s brilliant engineering coupled with great incentives."},
+  {"name":"Chinwe T.","role":"Network Strategist","quote":"Transparency builds trust. Because my referrals can verify every naira earned in their wallet, retention in my team has been nearly 100%."},
+  {"name":"Kolawole P.","role":"Executive Director","quote":"PalmGrow turned my social media network into an automated revenue engine. The multi-tier depth ensures that growth never stops, even on weekends."},
+  {"name":"Tunde A.","role":"Agro-Partner","quote":"As someone deeply rooted in agricultural ventures, finding a platform like PalmGrow that rewards you for bringing others into the green economy is fantastic. The daily social sharing power-ups make promotion effortless on WhatsApp."},
+  {"name":"Ngozi E.","role":"Agro-Investor","quote":"I love how clean and modern the referral hub looks on my phone. Inviting fellow agro-investors has never been this smooth. The instant notification when someone activates their account gives me a rush!"},
+  {"name":"Yakubu M.","role":"Palm Farmer","quote":"The onboarding process is so straightforward. My referrals don’t struggle to sign up or find their links. Because the system is fast and clear, conversion rates from my WhatsApp status views have been amazing."},
+  {"name":"Grace D.","role":"Community Agro Partner","quote":"I started with zero active referrals just a month ago. By utilizing the daily sharing tips and keeping in touch with my team, I've built a solid network and started cashing out regular commissions."},
+  {"name":"Samuel O.","role":"Investor","quote":"The referral leaderboard feature adds a healthy competitive edge. Seeing my name climb up the ranks motivates me to share my link more consistently across my social channels."},
+  {"name":"Ahmed R.","role":"Crop Producer","quote":"Connecting traditional agriculture with digital referral rewards is genius. PalmGrow has given farmers like us an additional channel to build stable financial security."},
+  {"name":"Mary C.","role":"Agro-Enterprise Partner","quote":"The interface is so intuitive that even older members of our farming cooperative find it easy to navigate, copy their links, and track their downlines."},
+  {"name":"John D.","role":"Plantation Supervisor","quote":"Seeing how tech and agriculture merge seamlessly on PalmGrow gives me immense hope for the future of rural development and youth empowerment."},
+  {"name":"Esther L.","role":"Farm Investor","quote":"The passive income generated from my referral network has allowed me to reinvest directly back into agricultural inputs. It's a complete ecosystem of growth."},
+  {"name":"Kabiru N.","role":"Agro-Distributor","quote":"When I introduce my trade partners to PalmGrow, they are always impressed by how transparent and secure the wallet withdrawal system operates."},
+
+  {"name":"Ruth I.","role":"Agricultural Consultant","quote":"PalmGrow bridges the gap between modern digital income and sustainable agriculture. It’s an easy recommendation for anyone looking to diversify."},
+  {"name":"Bala S.","role":"Rural Developer","quote":"The platform has energized our local community. People are actively learning about digital assets and referral building while supporting agricultural growth."},
+  {"name":"Peace O.","role":"Agro-Tech Enthusiast","quote":"Every feature on the PalmGrow platform feels intentional. From the quick copy-link button to instant WhatsApp sharing, everything is built for speed."},
+  {"name":"Idris M.","role":"Palm Plantation Owner","quote":"Building a supportive network around agricultural sustainability has never been easier. PalmGrow gives everyone a stake in the harvest."},
+  {"name":"Vivian K.","role":"Agro-Processor","quote":"The clarity of the commission structure gave my team absolute confidence. No hidden terms—what you earn is exactly what lands in your wallet."},
+  {"name":"Blessing N.","role":"Brand Ambassador","quote":"Withdrawing my available wallet balance to my bank account takes just a few clicks. PalmGrow has turned my spare time on social media into a reliable secondary income stream."},
+  {"name":"David A.","role":"Digital Creator","quote":"The multi-tier setup means that even when I’m busy with work, my team is still active, and commissions keep rolling in. It's the truest form of passive growth I've experienced."},
+  {"name":"Zainab B.","role":"Community Member","quote":"The interface is light, fast, and doesn't lag on mobile. I can check my team stats, copy my referral link, and track my lifetime earnings on the go while using my phone."},
+  {"name":"Kelvin U.","role":"Active Referrer","quote":"I was skeptical about online referral programs until I tried PalmGrow. The instant wallet crediting and clear percentage breakdown for all five levels completely won me over."},
+  {"name":"Rita I.","role":"Social Ambassador","quote":"The community support and resources available make inviting friends super easy. I just drop my custom link, and the platform does all the heavy lifting of explaining the benefits to them."},
+  {"name":"Solomon E.","role":"Freelancer","quote":"PalmGrow has been a lifesaver for my monthly budgeting. The commissions supplement my freelance income perfectly with zero stress."},
+  {"name":"Jennifer O.","role":"Student Ambassador","quote":"Sharing my link between classes has become second nature. The extra earnings help cover my data and study expenses without cutting into my reading time."},
+  {"name":"Michael B.","role":"Content Creator","quote":"The branding assets and referral hubs look so professional that my audience trusts the link immediately upon clicking."},
+  {"name":"Deborah K.","role":"Online Marketer","quote":"Conversion rates on PalmGrow are higher than any other platform I’ve promoted. The value proposition is clear and people love the green-growth mission."},
+  {"name":"Victor E.","role":"Tech Enthusiast","quote":"I love clean code and fast web apps. PalmGrow’s Progressive Web App speed makes managing referrals right from my mobile browser effortless."},
+  {"name":"Cynthia U.","role":"Social Media Influencer","quote":"My followers constantly thank me for introducing them to PalmGrow. The daily earnings notifications are addictive in the best way possible!"},
+  {"name":"Abiodun S.","role":"Youth Mobilizer","quote":"We formed a campus referral challenge using PalmGrow links, and the engagement was electric. It’s practical financial empowerment in action."},
+  {"name":"Miriam T.","role":"Blogger","quote":"Writing a review about PalmGrow was easy because the platform delivers on every promise it makes regarding instant wallet withdrawals."},
+  {"name":"Godwin N.","role":"Digital Nomad","quote":"Managing my referral dashboard from my phone while traveling has been seamless. PalmGrow is truly built for the mobile-first generation."},
+  {"name":"Joy P.","role":"E-Commerce Vendor","quote":"I treat my PalmGrow link like an active storefront. Checking my available balance every morning sets a positive tone for my entire day."},
+  {"name":"Segun O.","role":"Independent Promoter","quote":"The support team is responsive, the payout gateway is reliable, and the community vibe is electric. PalmGrow sets the gold standard."},
+  {"name":"Anita R.","role":"Media Specialist","quote":"The referral commission rates provide an incredible incentive to keep sharing. You can literally watch your team expand across multiple levels in real-time."},
+  {"name":"Kenneth J.","role":"Online Earner","quote":"No red tape, no endless verification loops. Sign up, grab your link, share, and withdraw. PalmGrow keeps things beautifully simple."},
+  {"name":"Sandra D.","role":"Community Promoter","quote":"I’ve introduced over fifty friends to PalmGrow, and every single one of them praises how smooth the user interface and payout system are."},
+  {"name":"Nasiru H.","role":"Digital Advocate","quote":"The combination of high direct referral bonuses and steady passive depth earnings makes PalmGrow the most rewarding platform I’ve ever engaged with."},
+
+  {"name":"Ayodele S.","role":"Tier-1 Achiever","quote":"Unlocking exclusive investor status through the referral program opened doors I didn't expect. It’s rewarding to see a platform that genuinely values its community builders."},
+  {"name":"Chinwe M.","role":"Team Mentor","quote":"Getting a dedicated success coach after hitting high-tier milestones made a massive difference in how I manage and support my growing downline team."},
+  {"name":"Mustapha L.","role":"Verified Earner","quote":"No hidden fees, no delayed payouts. When my available balance hits the threshold, withdrawal is instant. PalmGrow has set a new standard for referral programs."},
+  {"name":"Oluwaseun T.","role":"Strategic Partner","quote":"The combination of high Level 1 direct commissions (10%) and steady depth bonuses down to Level 5 makes every single referral count toward long-term financial freedom."},
+  {"name":"Ejiro P.","role":"Community Leader","quote":"If you are active on WhatsApp, Telegram, or social media, sharing PalmGrow is a no-brainer. The conversion is high, the brand is solid, and the rewards are real!"},
+  {"name":"Patricia W.","role":"Milestone Winner","quote":"Winning recognition on the global leaderboard was a massive personal highlight. PalmGrow makes every active member feel like a VIP."},
+  {"name":"Ifeanyi C.","role":"Top Tier Achiever","quote":"Reaching Level 5 depth payouts showed me the true power of structural teamwork. PalmGrow’s math for commission distribution is flawless."},
+  {"name":"Hauwa M.","role":"Award Winner","quote":"The physical and digital rewards tied to our referral tiers gave me tangible goals to strive for every single week."},
+  {"name":"Richard O.","role":"Community Voice","quote":"PalmGrow doesn’t just pay commissions; they build leaders. The webinars, tips, and daily power-ups elevate everyone’s skill set."},
+  {"name":"Glory E.","role":"Global Achiever","quote":"When my lifetime earnings crossed major milestones, the platform’s celebratory interface updates made all the hard work feel deeply appreciated."},
+  {"name":"Lateef A.","role":"Pinnacle Partner","quote":"Consistency pays off here. Sticking with my daily sharing routine transformed my downline into a self-sustaining referral powerhouse."},
+  {"name":"Becky K.","role":"Ambassador Elite","quote":"The journey from zero referrals to leading a thriving multi-tier team has been life-changing. PalmGrow provided the vehicle; I just had to drive."},
+  {"name":"Emmanuel B.","role":"Top Earner Club","quote":"The transparency report on my dashboard gives me absolute peace of mind. Every commission is accounted for down to the last kobo."},
+  {"name":"Sarah J.","role":"Community Champion","quote":"Unlocking gadget perks and bonus incentives through my tier achievements proved that PalmGrow genuinely invests in its people."},
+  {"name":"Daniel O.","role":"Master Achiever","quote":"If you stay dedicated, follow the sharing guidelines, and support your downline, PalmGrow will change your financial trajectory completely."},
+  {"name":"Emmanuel O.","role":"Senior Full-Stack Engineer","quote":"Building the core architecture for PalmGrow’s multi-tier referral tracking and automated payout system has been the most rewarding project of my career. We designed our system to be zero-latency and completely transparent so users see every commission calculate accurately in real time."},
+  {"name":"Blessing I.","role":"Agricultural Field Operations Manager","quote":"Working on the ground with PalmGrow means connecting direct agricultural output with modern fintech. It’s inspiring to see how our platform empowers local palm oil producers and investors alike while maintaining high operational standards across our farm locations."},
+  {"name":"Kelechi N.","role":"Customer Success & Support Lead","quote":"Our support team operates with one main goal: complete user satisfaction. Seeing new users onboard effortlessly, clear their verification steps, and successfully execute their first wallet withdrawal within minutes makes every ticket we resolve worth it."},
+  {"name":"Tari P.","role":"Product Designer (UI/UX)","quote":"Designing the PalmGrow mobile interface was all about clarity and accessibility. We wanted a seamless, high-performance layout where anyone—from first-time earners to seasoned team leaders—can track their metrics, manage downlines, and share their referral links without friction."},
+  {"name":"Victor A.","role":"Growth & Regional Marketing Specialist","quote":"The energy within the PalmGrow team is unmatched. We are constantly rolling out new incentive structures, leaderboards, and promotional tools that actually help our community members grow their teams. It’s a fast-paced environment where ideas turn into live platform features within days."},
+  {"name":"Dr. Marcus H.","role":"Chief Technology Officer","quote":"Our engineering priority at PalmGrow is absolute data integrity and security. Ensuring that millions of micro-transactions across five referral tiers execute flawlessly every second is a challenge our team tackles with immense pride."},
+  {"name":"Aisha D.","role":"Community Engagement Manager","quote":"Interacting daily with our ambassadors, team leads, and farmers shows me the real-world impact of what we build. Hearing stories of financial independence from everyday users fuels our entire department's passion."},
+  {"name":"Kunle J.","role":"Backend Database Administrator","quote":"Optimizing Supabase relational triggers and automated webhook flows for PalmGrow has taught me how robust modern serverless architecture can be. System performance remains lightning-fast even during peak traffic hours."},
+  {"name":"Sandra M.","role":"Quality Assurance & Compliance Lead","quote":"We rigorously test every feature, security protocol, and withdrawal gateway update before it hits production. User trust is our most valuable asset, and we protect it fiercely."},
+  {"name":"Chinedu W.","role":"Product Manager","quote":"Every roadmap item we ship at PalmGrow is inspired by direct user feedback. Watching our community thrive on features we built together is the ultimate validation of our mission."}
 ];
 
-let pageHistory = [];   
+// 30-page PalmGrow Success Stories book
+let palmGrowBookPage = 0;
+const PALMGROW_BOOK_PAGES = 30;
+
+function renderHubBook(){
+  const host = document.getElementById("hubTestimonials");
+  if(!host) return;
+
+  const total = PALMGROW_TESTIMONIALS.length;
+
+  const start = Math.floor(
+    palmGrowBookPage * total / PALMGROW_BOOK_PAGES
+  );
+
+  const end = Math.floor(
+    (palmGrowBookPage + 1) * total / PALMGROW_BOOK_PAGES
+  );
+
+  const page = PALMGROW_TESTIMONIALS.slice(start, end);
+
+  host.innerHTML = page.map((item, index) => `
+    <article class="success-testimonial">
+      <p>${escapeHtml(item.quote)}</p>
+      <strong>${escapeHtml(item.name)}</strong>
+      <small>${escapeHtml(item.role)} · Story ${start + index + 1}</small>
+    </article>
+  `).join("");
+
+  document.getElementById("hubBookRange").textContent =
+    `Stories ${start + 1}–${end} of ${total}`;
+
+  document.getElementById("hubBookPage").textContent =
+    `Page ${palmGrowBookPage + 1} of ${PALMGROW_BOOK_PAGES}`;
+
+  document.getElementById("hubPrev").disabled =
+    palmGrowBookPage === 0;
+
+  document.getElementById("hubNext").disabled =
+    palmGrowBookPage === PALMGROW_BOOK_PAGES - 1;
+}
+
+function turnHubPage(direction){
+  palmGrowBookPage = Math.max(
+    0,
+    Math.min(
+      PALMGROW_BOOK_PAGES - 1,
+      palmGrowBookPage + direction
+    )
+  );
+
+  renderHubBook();
+}
+
+document.getElementById("hubPrev")?.addEventListener("click", () => turnHubPage(-1));
+document.getElementById("hubNext")?.addEventListener("click", () => turnHubPage(1));
+
+const PAGE_NAMES=[
+  "dashboard",
+  "hub",
+  "hub-stories",
+  "hub-agent",
+  "hub-updates",
+  "hub-industry",
+  "hub-about",
+  "deposit",
+  "referral",
+  "admin",
+  "invest",
+  "employee-tasks",
+  "employee-task-history",
+  "employee-position",
+  "withdraw",
+  "withdraw-history"
+];
+      
 function showPage(page, pushHistory = true){  
   if(pushHistory){  
     if(pageHistory[pageHistory.length - 1] !== page){  
@@ -1556,26 +3393,27 @@ function showPage(page, pushHistory = true){
       history.pushState({ page: page }, "", "#" + page);  
     }  
   }  
-  
+ 
   PAGE_NAMES.forEach(p=>{  
     const el=$("page-"+p);  
     if(el)el.classList.toggle("hidden",p!==page);  
   });  
-  
+ 
   document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));  
   const active=document.querySelector(`.nav-item[data-page="${page}"]`);  
   if(active)active.classList.add("active");  
-  
+ 
   closeSidebar();  
-  
+ 
   const backBtn = $("backBtn");  
   if(backBtn){  
     backBtn.classList.toggle("hidden", pageHistory.length <= 1 || page === "dashboard");  
   }  
-  
-  if(page==="employee-tasks")loadEmployeeTasks();  
+   if(page==="hub-stories")renderHubBook();
+  if(page==="employee-tasks")loadEmployeeTasks(); 
+  if(page==="employee-task-history")loadEmployeePayroll();
   if(page==="employee-position")loadEmployeePositionPlans();  
-  if(page==="withdraw")loadWithdrawalPage(); 
+  if(page==="withdraw")loadWithdrawalPage();
   if(page==="withdraw-history")loadWithdrawalHistory();
   if(page==="admin")loadAdminData();  
   if(page==="referral"){
@@ -1583,18 +3421,9 @@ function showPage(page, pushHistory = true){
     console.error("Referral page loading error:", error);
   });
 }
-}  
-    
-// FIX REFRESH: On load, start on the page from the link, not Dashboard
-(function(){
-  var startPage = location.hash ? location.hash.replace('#','') : 'dashboard';
-  if (!PAGE_NAMES.includes(startPage)) startPage = 'dashboard';
-  pageHistory = [startPage];
-  showPage(startPage, false);
-})();
-    
+  }  
+
 window.showPage=showPage;  
-  
 window.onpopstate = (event) => {  
   const targetPage = event.state?.page || "dashboard";  
   if(pageHistory.length > 1){  
@@ -1602,11 +3431,11 @@ window.onpopstate = (event) => {
   }  
   showPage(targetPage, false);  
 };  
-  
+ 
 document.querySelectorAll(".nav-item[data-page]").forEach(item=>{  
   item.onclick=()=>showPage(item.dataset.page);  
 });  
-  
+ 
 $("backBtn").onclick = () => {  
   if(pageHistory.length > 1){  
     pageHistory.pop();  
@@ -1614,24 +3443,24 @@ $("backBtn").onclick = () => {
     showPage(previousPage, false);  
   }  
 };  
-  
+ 
 $("menuBtn").onclick=()=>{  
   $("sidebar").classList.add("open");  
   $("overlay").classList.add("show");  
 };  
-  
+ 
 $("overlay").onclick=closeSidebar;  
-  
+ 
 function closeSidebar(){  
   $("sidebar").classList.remove("open");  
   $("overlay").classList.remove("show");  
 }  
-  
+ 
 $("logoutNav").onclick=async()=>{  
   await supabase.auth.signOut();  
   location.reload();  
 };  
-  
+ 
 document.querySelectorAll(".planBtn").forEach(btn=>{  
   btn.onclick=()=>{  
     $("depositAmount").value=btn.dataset.amount;  
@@ -1652,7 +3481,7 @@ function setProfileFormLock(isLocked) {
   $("profAge").disabled = isLocked;
   $("profOccupation").disabled = isLocked;
   $("profGender").disabled = isLocked;
-  
+ 
   const saveBtn = $("saveProfileBtn");
   const msgEl = $("profileMessage");
 
@@ -1676,7 +3505,7 @@ $("userProfileBtn").onclick = () => {
   $("profAge").value = currentProfile.age || "";
   $("profOccupation").value = currentProfile.occupation || "";
   $("profGender").value = currentProfile.gender || "";
-  
+ 
   const locked = isProfileFilled(currentProfile);
   setProfileFormLock(locked);
 
@@ -1716,7 +3545,7 @@ $("profileForm").onsubmit = async e => {
 
     if (error) throw error;
 
-currentProfile.full_name = fullName;
+    currentProfile.full_name = fullName;
     currentProfile.phone = phone;
     currentProfile.age = age;
     currentProfile.occupation = occupation;
@@ -1742,16 +3571,10 @@ async function loadDashboardEmployeeLevel(){
 
   if(!positionRow || !positionValue) return;
 
-  const accountType = String(currentProfile?.account_type || "")
-    .trim()
-    .toLowerCase();
+  // Show current employee position for every unified member.
+positionRow.style.display = "block";
+positionValue.textContent = "Loading...";
 
-  // Show Position only for employee accounts
-  if(accountType !== "employee"){
-    positionRow.style.display = "none";
-    positionValue.textContent = "—";
-    return;
-  }
 
   positionRow.style.display = "block";
   positionValue.textContent = "Loading...";
@@ -1780,8 +3603,12 @@ async function loadDashboardEmployeeLevel(){
     );
 
   }
+
 }
   async function loadDashboard(){
+
+  // Keep the app hidden while restoring the correct page
+  $("app").style.display="none";
 
   const {data:{session},error:sessionError} =
     await supabase.auth.getSession();
@@ -1809,8 +3636,17 @@ async function loadDashboardEmployeeLevel(){
   const employeeStatus = String(profile.employee_status || "")
     .trim().toLowerCase();
 
-  // Block disabled or inactive employees
-  if(accountType === "employee" && employeeStatus === "disabled"){
+   
+  // Block disabled member accounts, but never admin accounts
+  const memberStatus = String(profile.member_status || "")
+    .trim()
+    .toLowerCase();
+
+  const memberRole = String(profile.role || "")
+    .trim()
+    .toLowerCase();
+
+  if(memberRole !== "admin" && memberStatus === "disabled"){
 
     $("app").style.display="none";
     $("authScreen").style.display="";
@@ -1820,16 +3656,16 @@ async function loadDashboardEmployeeLevel(){
 
     await supabase.auth.signOut();
 
-    alert("Your employee account is disabled or inactive. Please contact support.");
+    alert("Your account has been disabled. Please contact support.");
 
     return;
   }
+
 
   // Load dashboard after account verification
   currentProfile = profile;
 
   $("authScreen").style.display="none";
-  $("app").style.display="block";
 
   const name = profile.full_name ||
     currentUser.user_metadata?.full_name || "Member";
@@ -1839,50 +3675,51 @@ async function loadDashboardEmployeeLevel(){
   $("userAvatar").textContent=name.charAt(0).toUpperCase();
 
   await refreshPalmGrowReferralUI();
+
   $("walletBalanceDisplay").textContent=naira(profile.available_balance);
   $("availableBalance").textContent=naira(profile.available_balance);
   $("totalInvestment").textContent=naira(profile.total_investment);
   $("totalEarnings").textContent=naira(profile.total_earnings);
   $("referralEarnings").textContent=naira(profile.referral_earnings);
   $("dailyRateDisplay").textContent=naira(profile.daily_payout_amount)+" / day";
-    await loadDashboardEmployeeLevel();
-const role=String(profile.role||"").trim().toLowerCase();
 
-$("adminNav").style.display=role==="admin"?"flex":"none";
+  await loadDashboardEmployeeLevel();
 
-const activeEmployee =
-  accountType === "employee" && employeeStatus === "active";
+  const role=String(profile.role||"").trim().toLowerCase();
 
-const canViewEmployeePositions =
-  accountType === "employee" &&
-  ["active", "pending_payment"].includes(employeeStatus);
+  $("adminNav").style.display=role==="admin"?"flex":"none";
 
-$("employeeTasksNav").style.display =
-  activeEmployee ? "flex" : "none";
+  const activeEmployee =
+    accountType === "employee" && employeeStatus === "active";
 
-$("employeePositionNav").style.display =
-  canViewEmployeePositions ? "flex" : "none";
+  const canViewEmployeePositions = true;
+  $("employeeTasksNav").style.display =
+    activeEmployee ? "flex" : "none";
+
+  $("employeePositionNav").style.display =
+    canViewEmployeePositions ? "flex" : "none";
 
   $("positionWalletBalance").textContent=naira(profile.available_balance);
 
   updateWithdrawalBalance();
 
+  // Restore the previous page before showing the app
   if(isInitialBoot){
     isInitialBoot = false;
+
     const hash = window.location.hash.replace("#", "").trim();
 
     if(hash && PAGE_NAMES.includes(hash)){
-      showPage(hash, true);
-      return;
+      showPage(hash, false);
+    }else{
+      showPage("dashboard", false);
     }
   }
 
-  // Don't force dashboard - keep the page from the Refresh Fix
-if(document.querySelector("#app").style.display !== "none" && pageHistory.length === 0){
-  showPage("dashboard", false);
-  }
-}  
-      
+  // Display the app only after the correct page is ready
+  $("app").style.display="block";
+    }
+     
 async function loadEmployeePositionPlans(){
   const host = $("employeePositionPlans");
   if(!currentUser) return;
@@ -1981,27 +3818,27 @@ async function loadEmployeePositionPlans(){
       "Unable to load position plans: " + err.message;
   }
 }
-  
+ 
 async function activateEmployeePosition(levelCode,button){  
   const confirmed=confirm("Join "+levelCode+"? PalmGrow will check your available wallet balance.");  
   if(!confirmed)return;  
-  
+ 
   button.disabled=true;  
   button.textContent="⏳ Checking wallet...";  
-  
+ 
   try{  
     const idempotencyKey="web-"+crypto.randomUUID();  
     const {data,error}=await supabase.rpc("activate_employee_position",{  
       p_level_code:levelCode,  
       p_idempotency_key:idempotencyKey  
     });  
-  
+ 
     if(error)throw error;  
     if(!data?.success){  
       msg("positionMessage",data?.message||"Insufficient available wallet balance.","error");  
       return;  
     }  
-  
+ 
     msg("positionMessage",data?.message||("You have successfully joined "+levelCode+"."));  
     await loadDashboard();  
     await loadEmployeePositionPlans();  
@@ -2075,7 +3912,7 @@ function lagosDate(){
   parts.forEach(p=>values[p.type]=p.value);  
   return `${values.year}-${values.month}-${values.day}`;  
 }  
-  
+ 
 async function loadEmployeeTasks(){
   if(!currentUser)return;
 
@@ -2099,7 +3936,7 @@ async function loadEmployeeTasks(){
     if(error)throw error;
 
     const activeTasks=(tasks||[]).filter(t=>t.status!=="cancelled");
-
+    const visibleTasks=activeTasks.filter(t=>t.status!=="completed");
     const completed=activeTasks.filter(t=>t.status==="completed").length;
     const total=activeTasks.length;
 
@@ -2110,16 +3947,16 @@ async function loadEmployeeTasks(){
     $("dailyRateDisplay").textContent=naira(dailyTotal)+" / day";
     $("taskProgressDisplay").textContent=`${completed} of ${total} tasks completed`;
 
-    if(!tasks||tasks.length===0){
-      list.innerHTML="<div class=\"notice\">No tasks are currently assigned.</div>";
+    if(visibleTasks.length===0){
+      list.innerHTML=completed>0
+        ? "<div class=\"notice\">All assigned tasks for today have been completed. Well done!</div>"
+        : "<div class=\"notice\">No tasks are currently assigned.</div>";
     }else{
       list.innerHTML="";
 
-      tasks.forEach(task=>{
-        if(task.status==="cancelled")return;
-
+      visibleTasks.forEach(task=>{
         const card=document.createElement("div");
-        card.className="task-card"+(task.status==="completed"?" task-done":"");
+        card.className="task-card";
 
         const title=document.createElement("h4");
         title.textContent=`Task ${task.task_sequence}: ${task.task_title||"Agricultural task"}`;
@@ -2128,8 +3965,8 @@ async function loadEmployeeTasks(){
         description.textContent=task.task_description||"Complete this assigned agricultural task.";
 
         const button=document.createElement("button");
-        button.textContent=task.status==="completed"?"✓ Completed":"Complete Task";
-        button.disabled=task.status!=="pending";
+        button.textContent="Complete Task";
+        button.disabled=false;
         button.addEventListener("click",()=>completeEmployeeTask(task.id,button));
 
         card.append(title,description,button);
@@ -2141,45 +3978,57 @@ async function loadEmployeeTasks(){
 
   }catch(err){
     list.textContent="Unable to load tasks: "+err.message;
+    msg("taskMessage",err.message||"Unable to load employee tasks.","error");
+  }
+}
+ 
+async function completeEmployeeTask(taskId,button){
+  if(button.disabled)return;
+
+  button.disabled=true;
+  button.textContent="Processing...";
+
+  try{
+    const {data,error}=await supabase.rpc("complete_employee_task",{
+      p_task_id:taskId
+    });
+
+    if(error)throw error;
+
+    if(data?.success){
+      msg("taskMessage",`Task completed. ${naira(data.payment)} has been credited.`);
+
+      await loadEmployeeTasks();
+    }else{
+      msg("taskMessage",data?.message||"Task could not be completed.","error");
+      button.disabled=false;
+      button.textContent="Complete Task";
+    }
+
+  }catch(err){
+    msg("taskMessage",err.message||"Unable to complete this task.","error");
+    button.disabled=false;
+    button.textContent="Complete Task";
   }
 }
 
-  
-async function completeEmployeeTask(taskId,button){  
-  button.disabled=true;  
-  button.textContent="Processing...";  
-  try{  
-    const {data,error}=await supabase.rpc("complete_employee_task",{p_task_id:taskId});  
-    if(error)throw error;  
-    if(data?.success){  
-      msg("taskMessage",`Task completed. ${naira(data.payment)} has been credited.`);  
-      await loadDashboard();  
-      await loadEmployeeTasks();  
-    }else{  
-      msg("taskMessage",data?.message||"Task could not be completed.","error");  
-    }  
-  }catch(err){  
-    msg("taskMessage",err.message||"Unable to complete this task.","error");  
-  }  
-}  
-  
 async function loadEmployeePayroll(){  
   const body=$("employeePayrollBody");  
   if(!body)return;  
   body.innerHTML="<tr><td colspan=\"3\">Loading payment history...</td></tr>";  
-  
+ 
   const {data,error}=await supabase  
     .from("employee_payroll_ledger")  
     .select("amount,description,credited_at")  
     .eq("employee_id",currentUser.id)  
     .order("credited_at",{ascending:false})  
     .limit(30);  
-  
+ 
   if(error||!data||data.length===0){  
     body.innerHTML="<tr><td colspan=\"3\">No task payments yet.</td></tr>";  
     return;  
   }  
-  
+ 
   body.innerHTML="";  
   data.forEach(row=>{  
     const tr=document.createElement("tr");  
@@ -2191,10 +4040,10 @@ async function loadEmployeePayroll(){
     body.appendChild(tr);  
   });  
 }  
-  
+ 
 $("depositForm").onsubmit = async (e) => {  
   e.preventDefault();  
-  
+ 
   const depositorName = $("depositorName").value.trim();
   if (!depositorName) {
     msg("depositMessage", "Please enter the depositor name", "error");
@@ -2203,7 +4052,7 @@ $("depositForm").onsubmit = async (e) => {
 
   const amount = Number($("depositAmount").value);  
   const reference = $("paymentReference").value.trim();  
-  
+ 
   if(!Number.isSafeInteger(amount)||amount<1){  
     msg("depositMessage","Enter a valid deposit amount in whole naira.","error");  
     return;  
@@ -2212,7 +4061,7 @@ $("depositForm").onsubmit = async (e) => {
     msg("depositMessage","Enter payment reference","error");  
     return;  
   }  
-  
+ 
   $("depositBtn").disabled=true;  
   try{  
     const { error } = await supabase
@@ -2236,7 +4085,7 @@ $("depositForm").onsubmit = async (e) => {
     $("depositBtn").disabled=false;  
   }  
 };  
-  
+ 
 async function loadMyDeposits(){  
   const tbody=$("myDepositsBody");  
   tbody.innerHTML="";  
@@ -2245,12 +4094,12 @@ async function loadMyDeposits(){
     .select("depositor_name,amount,payment_reference,status,submitted_at")  
     .eq("user_id",currentUser.id)  
     .order("submitted_at",{ascending:false});  
-  
+ 
   if(error||!data||data.length===0){  
     tbody.innerHTML='<tr><td colspan="5">No submissions yet</td></tr>';  
     return;  
   }  
-  
+ 
   data.forEach(item=>{  
     const tr=document.createElement("tr");  
     [item.depositor_name||"-",naira(item.amount),item.payment_reference||"-",displayStatus(item.status),dateText(item.submitted_at)].forEach(value=>{  
@@ -2261,29 +4110,29 @@ async function loadMyDeposits(){
     tbody.appendChild(tr);  
   });  
 }  
-  
+ 
 $("myDepositsBtn").onclick=loadMyDeposits;  
-  
+ 
 $("loadDepositsBtn").onclick=async()=>{  
   const tbody=$("adminDepositsBody");  
   tbody.innerHTML="";  
   msg("adminMessage","Loading...");  
-  
+ 
   const {data:profile}=await supabase.from("profiles").select("role").eq("id",currentUser.id).maybeSingle();  
   if(!profile||profile.role!=="admin"){  
     msg("adminMessage","Admin access required","error");  
     return;  
   }  
-  
+ 
   const {data,error}=await supabase.rpc("admin_get_pending_deposits");
   if(error){msg("adminMessage",error.message,"error");return;}  
-  
+ 
   if(!data||data.length===0){  
     tbody.innerHTML='<tr><td colspan="6">No pending deposits</td></tr>';  
     msg("adminMessage","No pending deposits found");  
     return;  
   }  
-  
+ 
   data.forEach(item=>{  
     const tr=document.createElement("tr");  
     [item.full_name||item.depositor_name||"Unknown",naira(item.amount),item.payment_reference||"-",displayStatus(item.status),dateText(item.submitted_at)].forEach(value=>{  
@@ -2291,25 +4140,25 @@ $("loadDepositsBtn").onclick=async()=>{
       td.textContent=value;  
       tr.appendChild(td);  
     });  
-  
+ 
     const action=document.createElement("td");  
     const approve=document.createElement("button");  
     approve.textContent="Confirm";  
     approve.style.cssText="background:#16a34a;color:white;border:0;padding:6px 10px;border-radius:4px;margin-right:4px";  
     approve.onclick=()=>reviewDeposit(item.id,"confirmed",item.account_type);  
-  
+ 
     const reject=document.createElement("button");  
     reject.textContent="Reject";  
     reject.style.cssText="background:#dc2626;color:white;border:0;padding:6px 10px;border-radius:4px";  
     reject.onclick=()=>reviewDeposit(item.id,"rejected",item.account_type);  
-  
+ 
     action.append(approve,reject);  
     tr.appendChild(action);  
     tbody.appendChild(tr);  
   });  
   msg("adminMessage",`Loaded ${data.length} pending deposit(s)`);  
 };  
-  
+ 
 async function reviewDeposit(id,decision,accountType){
   try{
     let rpcName = (decision==="confirmed" && accountType==="employee") ? "admin_confirm_employee_wallet_deposit" : "admin_review_deposit";
@@ -2324,76 +4173,141 @@ async function reviewDeposit(id,decision,accountType){
     alert("Error: "+err.message);
   }
 }
-  
+ 
 const loadEmployeesBtnEl = $("loadEmployeesBtn");
-if(loadEmployeesBtnEl) loadEmployeesBtnEl.onclick = loadAdminEmployees;  
-  
-async function loadAdminEmployees(){  
-  const tbody = $("adminEmployeesBody");  
-  if(!tbody) return;
-  tbody.innerHTML = "<tr><td colspan=\"4\">Loading employee accounts...</td></tr>";  
-  msg("adminEmployeeMessage", "Loading employees...");  
-  
-  try{  
-    const {data, error} = await supabase.from("profiles").select("id, full_name, phone, account_type, employee_status, available_balance").eq("account_type", "employee").order("full_name", {ascending: true});  
-    if(error) throw error;  
-  
-    if(!data || data.length === 0){  
-      tbody.innerHTML = "<tr><td colspan=\"4\">No employee accounts found.</td></tr>";  
-      msg("adminEmployeeMessage", "No employees found.");  
-      return;  
-    }  
-  
-    tbody.innerHTML = "";  
-    data.forEach(emp => {  
-      const tr = document.createElement("tr");  
-      const infoTd = document.createElement("td");  
-      infoTd.innerHTML = `<strong>${escapeHtml(emp.full_name || "Member")}</strong><br><span style="color:var(--muted);font-size:11px">${escapeHtml(emp.phone || "No phone")}</span>`;  
-  
-      const statusTd = document.createElement("td");  
-      statusTd.innerHTML = `<span style="font-weight:600">${displayStatus(emp.employee_status || "Active")}</span>`;  
-  
-      const balTd = document.createElement("td");  
-      balTd.textContent = naira(emp.available_balance);  
-  
-      const actionTd = document.createElement("td");  
-      const actionsDiv = document.createElement("div");  
-      actionsDiv.className = "admin-actions";  
-  
-      const isRestricted = emp.employee_status === "restricted";  
-      const restrictBtn = document.createElement("button");  
-      restrictBtn.textContent = isRestricted ? "Unrestrict" : "Restrict";  
-      restrictBtn.style.background = isRestricted ? "#16a34a" : "#d97706";  
-      restrictBtn.style.color = "white";  
-      restrictBtn.onclick = () => updateEmployeeStatus(emp.id, isRestricted ? "active" : "restricted");  
-      actionsDiv.appendChild(restrictBtn);  
-  
-      const isDisabled = emp.employee_status === "disabled";  
-      const disableBtn = document.createElement("button");  
-      disableBtn.textContent = isDisabled ? "Enable" : "Disable";  
-      disableBtn.style.background = isDisabled ? "#16a34a" : "#4b5563";  
-      disableBtn.style.color = "white";  
-      disableBtn.onclick = () => updateEmployeeStatus(emp.id, isDisabled ? "active" : "disabled");  
-      actionsDiv.appendChild(disableBtn);  
-  
-      const deleteBtn = document.createElement("button");  
-      deleteBtn.textContent = "Delete";  
-      deleteBtn.style.background = "#dc2626";  
-      deleteBtn.style.color = "white";  
-      deleteBtn.onclick = () => deleteEmployeeAccount(emp.id, emp.full_name);  
-      actionsDiv.appendChild(deleteBtn);  
-  
-      actionTd.appendChild(actionsDiv);  
-      tr.append(infoTd, statusTd, balTd, actionTd);  
-      tbody.appendChild(tr);  
-    });  
-    msg("adminEmployeeMessage", `Loaded ${data.length} employee account(s).`);  
-  }catch(err){  
-    tbody.innerHTML = "<tr><td colspan=\"4\">Unable to load employees.</td></tr>";  
-    msg("adminEmployeeMessage", err.message, "error");  
-  }  
-}  
-  
+if (loadEmployeesBtnEl) {
+  loadEmployeesBtnEl.onclick = loadAdminEmployees;
+}
+
+
+async function updateMemberStatus(memberId, newStatus, memberName) {
+  const action = newStatus === "disabled" ? "disable" : "restore";
+
+  if (!confirm(`Are you sure you want to ${action} "${memberName}"?`)) {
+    return;
+  }
+
+  try {
+    msg("adminEmployeeMessage", `Processing ${action}...`);
+
+    const { data, error } = await supabase.functions.invoke(
+      "bright-endpoint",
+      {
+        body: {
+          member_id: memberId,
+          member_status: newStatus
+        }
+      }
+    );
+
+    if (error) throw error;
+
+    if (!data || !data.success) {
+      throw new Error(data?.error || "Member status update failed.");
+    }
+
+    msg(
+      "adminEmployeeMessage",
+      `${memberName} has been ${action === "disable" ? "disabled" : "restored"}.`
+    );
+
+    await loadAdminEmployees();
+
+  } catch (err) {
+    console.error("Member status update failed:", err);
+    msg("adminEmployeeMessage", err.message || "Unable to update member.", "error");
+  }
+}
+
+
+async function loadAdminEmployees() {
+  const tbody = $("adminEmployeesBody");
+  if (!tbody) return;
+
+  tbody.innerHTML = '<tr><td colspan="4">Loading members...</td></tr>';
+  msg("adminEmployeeMessage", "Loading members...");
+
+  try {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("id, full_name, phone, role, account_type, member_status, available_balance")
+      .order("full_name", { ascending: true });
+
+    if (error) throw error;
+
+    // Administrators must not appear in member management.
+    const members = (data || []).filter(
+      member => String(member.role || "").trim().toLowerCase() !== "admin"
+    );
+
+    if (members.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4">No members found.</td></tr>';
+      msg("adminEmployeeMessage", "No members found.");
+      return;
+    }
+
+    tbody.innerHTML = "";
+
+    members.forEach(member => {
+      const name = member.full_name || "Member";
+      const status = String(member.member_status || "active")
+        .trim()
+        .toLowerCase();
+
+      const isDisabled = status === "disabled";
+
+      const tr = document.createElement("tr");
+
+      const infoTd = document.createElement("td");
+
+      const nameEl = document.createElement("strong");
+      nameEl.textContent = name;
+
+      const detailsEl = document.createElement("div");
+      detailsEl.style.cssText = "color:var(--muted);font-size:11px;";
+      detailsEl.textContent =
+        `${member.account_type || "Member"} • ${member.phone || "No phone"}`;
+
+      infoTd.append(nameEl, detailsEl);
+
+      const statusTd = document.createElement("td");
+      const statusEl = document.createElement("span");
+      statusEl.style.fontWeight = "600";
+      statusEl.textContent = isDisabled ? "Disabled" : "Active";
+      statusTd.appendChild(statusEl);
+
+      const balanceTd = document.createElement("td");
+      balanceTd.textContent = naira(member.available_balance);
+
+      const actionTd = document.createElement("td");
+      const actionBtn = document.createElement("button");
+
+      actionBtn.textContent = isDisabled ? "Restore" : "Disable";
+      actionBtn.style.background = isDisabled ? "#16a34a" : "#4b5563";
+      actionBtn.style.color = "white";
+
+      actionBtn.onclick = () =>
+        updateMemberStatus(
+          member.id,
+          isDisabled ? "active" : "disabled",
+          name
+        );
+
+      actionTd.appendChild(actionBtn);
+
+      tr.append(infoTd, statusTd, balanceTd, actionTd);
+      tbody.appendChild(tr);
+    });
+
+    msg("adminEmployeeMessage", `Loaded ${members.length} member account(s).`);
+
+  } catch (err) {
+    console.error("Member loading failed:", err);
+    tbody.innerHTML = '<tr><td colspan="4">Unable to load members.</td></tr>';
+    msg("adminEmployeeMessage", err.message || "Unable to load members.", "error");
+    }
+  }
+ 
 async function updateEmployeeStatus(employeeId, newStatus){  
   if(!confirm(`Update status to "${newStatus.toUpperCase()}"?`)) return;  
   try{  
@@ -2404,7 +4318,7 @@ async function updateEmployeeStatus(employeeId, newStatus){
     alert("Failed to update status: " + err.message);  
   }  
 }  
-  
+ 
 async function deleteEmployeeAccount(employeeId, employeeName){  
   if(!confirm(`Delete employee account for "${employeeName || 'Member'}"?`)) return;  
   try{  
@@ -2415,7 +4329,7 @@ async function deleteEmployeeAccount(employeeId, employeeName){
     alert("Failed to delete account: " + err.message);  
   }  
 }  
-  
+ 
 async function loadWithdrawalPage(){  
   if(!currentUser)return;  
   updateWithdrawalBalance();  
@@ -2425,7 +4339,7 @@ async function loadWithdrawalPage(){
   await loadWithdrawalSetup();  
   renderWithdrawalPresetGrid();  
 }  
-  
+ 
 async function loadWithdrawalSetup(){
   try{
     const {data,error}=await supabase.rpc("palmgrow_my_withdrawal_setup");
@@ -2509,6 +4423,7 @@ async function loadWithdrawalHistory(){
     message.textContent = err.message || "Unable to load withdrawal records.";
   }
 }
+
 // Show or hide new withdrawal PIN
 $("toggleNewPin").addEventListener("click", () => {
   const input = $("newWithdrawalPin");
@@ -2590,6 +4505,7 @@ $("createWithdrawalPinBtn").addEventListener("click", async () => {
     button.textContent = "Create Withdrawal PIN";
   }
 });
+
 // Open bank registration modal
 const bankDisplayBtn = $("selectAccountBtn");
 
@@ -2691,38 +4607,57 @@ function updateWithdrawalBalance() {
     if(dashTypeEl) dashTypeEl.textContent = currentProfile.account_type || "Flexible";
   }
 }
-  
-function renderWithdrawalPresetGrid(){  
-  const grid = $("amountGrid");  
-  if(!grid)return;  
-  grid.innerHTML = "";  
-  
+ 
+function renderWithdrawalPresetGrid(){
+  const grid = $("amountGrid");
+  if(!grid)return;
+  grid.innerHTML = "";
 
-                WITHDRAWAL_AMOUNTS.forEach(amount => {  
-    const btn = document.createElement("button");  
-    btn.type = "button";  
-    btn.style.cssText = "background: white; border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px 8px; text-align: center; cursor: pointer; font-weight: 600; font-size: 14px; color: #1f2937;";  
-    btn.textContent = naira(amount);  
-  
-    btn.onclick = () => {  
-      document.querySelectorAll("#amountGrid button").forEach(b => {  
-        b.style.background = "white";  
-        b.style.borderColor = "#e5e7eb";  
-        b.style.color = "#1f2937";  
-      });  
-      btn.style.background = "#e6f4ea";  
-      btn.style.borderColor = "#137333";  
-      btn.style.color = "#137333";  
-      selectedWithdrawalAmount = amount;  
-    };  
-    grid.appendChild(btn);  
-  });  
-}  
-  
+  WITHDRAWAL_AMOUNTS.forEach(amount => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+
+    btn.style.cssText = `
+      background: #151515;
+      border: 2px solid #555555;
+      border-radius: 10px;
+      padding: 12px 8px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      color: #ffffff;
+    `;
+
+    btn.textContent = naira(amount);
+
+    btn.onclick = () => {
+      document.querySelectorAll("#amountGrid button").forEach(b => {
+        b.style.background = "#151515";
+        b.style.borderColor = "#555555";
+        b.style.color = "#ffffff";
+        b.textContent = naira(WITHDRAWAL_AMOUNTS[
+          Array.from(grid.children).indexOf(b)
+        ]);
+      });
+
+      btn.style.background = "#ffffff";
+      btn.style.borderColor = "#ffffff";
+      btn.style.color = "#000000";
+      btn.textContent = "✓ " + naira(amount);
+
+      selectedWithdrawalAmount = amount;
+    };
+
+    grid.appendChild(btn);
+  });
+}
+
+ 
 $("submitWithdrawalBtn").onclick = async () => {  
   const pin = $("fundPasswordInput").value.trim();  
   const feedback = $("withdrawalFeedback");  
-  
+ 
   if(!selectedWithdrawalAmount){  
     feedback.style.display = "block";  
     feedback.style.background = "#ffeded";  
@@ -2737,25 +4672,25 @@ $("submitWithdrawalBtn").onclick = async () => {
     feedback.textContent = "Please enter your valid 6-digit fund password / PIN.";  
     return;  
   }  
-  
+ 
   $("submitWithdrawalBtn").disabled = true;  
   $("submitWithdrawalBtn").textContent = "Processing...";  
   feedback.style.display = "none";  
-  
+ 
   try{  
     const {data:verifyData, error:verifyError} = await supabase.rpc("palmgrow_verify_withdrawal_pin", {p_pin: pin});  
     if(verifyError) throw verifyError;  
     if(verifyData?.success === false) throw new Error(verifyData.message || "Invalid PIN.");  
-  
+ 
     const {data, error} = await supabase.rpc("palmgrow_request_withdrawal", {p_amount: selectedWithdrawalAmount});  
     if(error) throw error;  
     if(data?.success === false) throw new Error(data.message || "Withdrawal failed.");  
-  
+ 
     feedback.style.display = "block";  
     feedback.style.background = "#e5f5e9";  
     feedback.style.color = "#155b31";  
     feedback.textContent = data?.message || "Withdrawal request submitted successfully!";  
-      
+     
     $("fundPasswordInput").value = "";  
     selectedWithdrawalAmount = null;  
     await loadDashboard();  
@@ -2771,10 +4706,10 @@ $("submitWithdrawalBtn").onclick = async () => {
     $("submitWithdrawalBtn").textContent = "Submit Withdrawal";  
   }  
 };  
-  
+ 
 const loadWithdrawalBanksBtnEl = $("loadWithdrawalBanksBtn");
 if(loadWithdrawalBanksBtnEl) loadWithdrawalBanksBtnEl.onclick = loadAdminWithdrawalBanks;  
-  
+ 
 async function loadAdminWithdrawalBanks(){  
   const body=$("adminBanksBody");  
   if(!body) return;
@@ -2809,7 +4744,7 @@ async function loadAdminWithdrawalBanks(){
     body.innerHTML="<tr><td colspan=\"4\">"+escapeHtml(err.message)+"</td></tr>";  
   }  
 }  
-  
+ 
 async function verifyWithdrawalBank(userId,button){  
   if(!confirm("Verify account details?"))return;  
   button.disabled=true;  
@@ -2826,18 +4761,19 @@ async function verifyWithdrawalBank(userId,button){
     button.textContent="Verify";  
   }  
 }  
-  
+ 
 const loadAdminWithdrawalsBtnEl = $("loadAdminWithdrawalsBtn");
 if(loadAdminWithdrawalsBtnEl) loadAdminWithdrawalsBtnEl.onclick = loadAdminWithdrawals;  
-  
-async function loadAdminData(){  
-  if(currentProfile?.role==="admin"){  
-    await loadAdminEmployees();  
-    await loadAdminWithdrawalBanks();  
-    await loadAdminWithdrawals();  
-  }  
-}  
-  
+ 
+async function loadAdminData(){
+  if(currentProfile?.role==="admin"){
+    await loadAdminEmployees();
+    await loadAdminWithdrawalBanks();
+    await loadAdminWithdrawals();
+    await loadAdminOperatingFundsOverview();
+  }
+}
+ 
 async function loadAdminWithdrawals(){  
   const body=$("adminWithdrawalsBody");  
   if(!body) return;
@@ -2857,7 +4793,7 @@ async function loadAdminWithdrawals(){
       const handling=Number(item.handling_fee??0);  
       const transfer=Number(item.transfer_fee??0);  
       const net=Number(item.net_amount??(amount-handling-transfer));  
-  
+ 
       const tr=document.createElement("tr");  
       const member=document.createElement("td"); member.textContent=(item.full_name||item.name||"Member")+"\n"+(item.account_type||"");  
       const bank=document.createElement("td"); bank.textContent=(item.bank_name||"No bank")+"\n"+(item.account_number||"");  
@@ -2865,11 +4801,11 @@ async function loadAdminWithdrawals(){
       const fees=document.createElement("td"); fees.textContent=naira(handling+transfer);  
       const netCell=document.createElement("td"); netCell.textContent=naira(net);  
       const status=document.createElement("td"); status.textContent=displayStatus(item.status);  
-  
+ 
       const action=document.createElement("td");  
       const actions=document.createElement("div");  
       actions.className="admin-actions";  
-  
+ 
       if(item.status==="pending"){  
         const processing=document.createElement("button");  
         processing.textContent="Bank Processing";  
@@ -2880,8 +4816,9 @@ async function loadAdminWithdrawals(){
         const paid=document.createElement("button");  
         paid.textContent="Mark Paid";  
         paid.onclick=()=> { if(confirm("Confirm bank transfer of "+naira(net)+"?")) processWithdrawal(id,"paid"); };  
+
         actions.appendChild(paid);  
-  
+ 
         const reject=document.createElement("button");  
         reject.textContent="Reject";  
         reject.onclick=()=> { if(confirm("Reject withdrawal?")) processWithdrawal(id,"rejected"); };  
@@ -2895,7 +4832,7 @@ async function loadAdminWithdrawals(){
     body.innerHTML="<tr><td colspan=\"7\">"+escapeHtml(err.message)+"</td></tr>";  
   }  
 }  
-  
+ 
 async function processWithdrawal(withdrawalId,action){  
   const note=prompt("Enter an admin note (optional):")||"";  
   try{  
@@ -2908,7 +4845,163 @@ async function processWithdrawal(withdrawalId,action){
   }  
 }  
 
-// CHECK WHETHER AN EMPLOYEE ACCOUNT IS STILL ACTIVE
+    // OPERATING FUNDS OVERVIEW
+async function loadAdminOperatingFundsOverview(){
+
+  if(currentProfile?.role !== "admin") return;
+
+  const balanceEl = $("adminOperatingFundBalance");
+  const messageEl = $("adminFundsMessage");
+  const refreshBtn = $("refreshAdminFundsBtn");
+
+  if(!balanceEl) return;
+
+  if(messageEl){
+    messageEl.classList.remove("hidden");
+    messageEl.textContent = "Loading operating funds...";
+  }
+
+  if(refreshBtn) refreshBtn.disabled = true;
+
+  try{
+
+    const {data,error} = await supabase.rpc(
+      "palmgrow_admin_get_operating_funds_overview"
+    );
+
+    if(error) throw error;
+
+    const result = objectOf(data);
+
+    if(!result || typeof result !== "object"){
+      throw new Error("Invalid operating funds response.");
+    }
+
+    const money = value => naira(Number(value || 0));
+
+    const setFund = (id,value) => {
+      const el = $(id);
+      if(el) el.textContent = value;
+    };
+
+    const today = result.today || {};
+const week = result.this_week || {};
+const month = result.this_month || {};
+
+    setFund("adminOperatingFundBalance",money(result.current_balance));
+
+    const periods = [
+      ["Today",today],
+      ["Week",week],
+      ["Month",month]
+    ];
+
+    periods.forEach(([name,period])=>{
+
+  const prefix = name==="Today" ? "Today" : name==="Week" ? "Week" : "Month";
+
+  setFund("adminFund"+prefix+"Opening",
+    period.opening_balance_reliable
+      ? money(period.opening_balance_estimate)
+      : "Needs reconciliation"
+  );
+
+  setFund("adminFund"+prefix+"Received",money(period.received));
+  setFund("adminFund"+prefix+"Handling",money(period.handling_fee_income));
+  setFund("adminFund"+prefix+"Transfer",money(period.transfer_charges));
+  setFund("adminFund"+prefix+"Spent",money(period.spent));
+  setFund("adminFund"+prefix+"Net",money(period.net_movement));
+
+});
+
+    const reconciliation = result.reconciliation || {};
+
+    setFund(
+      "adminFundReconciliation",
+      "Status: " + (reconciliation.status || "Unknown") +
+      " | Actual balance: " + money(reconciliation.actual_balance) +
+      " | Ledger balance: " + money(reconciliation.ledger_implied_balance) +
+      " | Difference: " + money(reconciliation.difference)
+    );
+
+    const body = $("adminFundTransactionsBody");
+
+    if(body){
+
+      body.innerHTML = "";
+
+      const transactions = Array.isArray(result.recent_transactions)
+        ? result.recent_transactions
+        : [];
+
+      if(transactions.length===0){
+
+        body.innerHTML =
+          '<tr><td colspan="5">No transactions found.</td></tr>';
+
+      }else{
+
+        transactions.forEach(item=>{
+
+          const tr = document.createElement("tr");
+
+          const date = document.createElement("td");
+          date.textContent = item.created_at
+            ? new Date(item.created_at).toLocaleString("en-NG")
+            : "—";
+
+          const type = document.createElement("td");
+          type.textContent = item.transaction_type || item.type || "—";
+
+          const description = document.createElement("td");
+          description.textContent = item.description || "—";
+
+          const amount = document.createElement("td");
+          amount.textContent = money(item.amount);
+
+          const movement = document.createElement("td");
+const signedMovement = Number(item.movement || 0);
+
+movement.textContent =
+  (signedMovement > 0 ? "+" : "") +
+  money(signedMovement);
+
+          tr.append(date,type,description,amount,movement);
+          body.appendChild(tr);
+
+        });
+
+      }
+
+    }
+
+    if(messageEl){
+      messageEl.textContent = "Operating funds loaded.";
+      messageEl.classList.remove("hidden");
+    }
+
+  }catch(err){
+
+    if(messageEl){
+      messageEl.textContent = "Unable to load operating funds: " + err.message;
+      messageEl.classList.remove("hidden");
+    }
+
+  }finally{
+
+    if(refreshBtn) refreshBtn.disabled = false;
+
+  }
+
+}
+
+const refreshAdminFundsBtnEl = $("refreshAdminFundsBtn");
+
+if(refreshAdminFundsBtnEl){
+  refreshAdminFundsBtnEl.onclick = loadAdminOperatingFundsOverview;
+              }
+
+// CHECK WHETHER A MEMBER ACCOUNT IS STILL ACTIVE
 let employeeSessionCheckRunning = false;
 
 async function verifyEmployeeSession() {
@@ -2926,26 +5019,25 @@ async function verifyEmployeeSession() {
 
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
-      .select("account_type, employee_status")
+      .select("role, member_status")
       .eq("id", session.user.id)
       .maybeSingle();
 
-    // Do not sign out a user just because of a temporary
-    // database or network error.
+    // Do not sign out because of a temporary database or network error.
     if (profileError || !profile) return;
 
-    const accountType = String(profile.account_type || "")
+    const role = String(profile.role || "")
       .trim()
       .toLowerCase();
 
-    const employeeStatus = String(profile.employee_status || "")
+    const memberStatus = String(profile.member_status || "")
       .trim()
       .toLowerCase();
 
-    if (
-      accountType === "employee" &&
-      employeeStatus === "disabled"
-    ) {
+    // Admin accounts are never disabled by this member check.
+    if (role === "admin") return;
+
+    if (memberStatus === "disabled") {
       $("app").style.display = "none";
       $("authScreen").style.display = "flex";
 
@@ -2955,19 +5047,19 @@ async function verifyEmployeeSession() {
       await supabase.auth.signOut();
 
       alert(
-        "Your employee account has been disabled. Please contact support."
+        "Your account has been disabled. Please contact support."
       );
     }
 
   } catch (err) {
-    console.error("Employee session check failed:", err);
+    console.error("Member session check failed:", err);
 
   } finally {
     employeeSessionCheckRunning = false;
   }
 }
 
-
+    
 // AUTHENTICATION LISTENER
 supabase.auth.onAuthStateChange((event, session) => {
 
@@ -2997,7 +5089,6 @@ supabase.auth.onAuthStateChange((event, session) => {
   }
 });
 
-
 // RECHECK WHEN THE USER RETURNS TO THE APP
 document.addEventListener("visibilitychange", () => {
 
@@ -3007,18 +5098,43 @@ document.addEventListener("visibilitychange", () => {
 
 });
 
-
 // AUTOMATIC ACCOUNT CHECK EVERY 30 SECONDS
 setInterval(() => {
   verifyEmployeeSession();
 }, 30000);
 
-
 updateAuthUI();
 
-// Do not add another getSession()/loadDashboard() block here.
-// INITIAL_SESSION from the authentication listener handles startup.
+/* PALMGROW NEWS: FIVE-PAGE NAVIGATION */
 
+let currentPalmGrowNewsPage = 1;
+
+function changePalmGrowNewsPage(direction) {
+    const totalPages = 5;
+
+    currentPalmGrowNewsPage += direction;
+
+    currentPalmGrowNewsPage = Math.max(
+        1,
+        Math.min(totalPages, currentPalmGrowNewsPage)
+    );
+
+    const image = document.getElementById("palmGrowNewsImage");
+    const pageNumber = document.getElementById("palmGrowNewsPageNumber");
+
+    if (!image || !pageNumber) return;
+
+    image.src = "palmgrow-news-page-" +
+    currentPalmGrowNewsPage + ".jpg";
+    image.alt = "PalmGrow News Page " + currentPalmGrowNewsPage;
+
+    pageNumber.textContent =
+        "Page " + currentPalmGrowNewsPage + " of " + totalPages;
+}
+
+window.changePalmGrowNewsPage = changePalmGrowNewsPage;
+
+    
 </script>
 </body>
-</html>
+    </html>
