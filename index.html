@@ -3025,6 +3025,36 @@ document.querySelectorAll(".admin-tab-btn[data-admin-tab]").forEach(btn => {
 
  
 const $ = id => document.getElementById(id);  
+ 
+window.onerror = function(message, source, line, column, error) {
+  const details = [
+    "PALMGROW JAVASCRIPT ERROR",
+    String(message),
+    "Line: " + line,
+    "Column: " + column,
+    error && error.stack ? error.stack : ""
+  ].join("\n");
+
+  document.body.innerHTML =
+    '<pre style="padding:20px;color:#fff;background:#700;font-size:14px;white-space:pre-wrap;">' +
+    details +
+    '</pre>';
+
+  return false;
+};
+
+window.addEventListener("unhandledrejection", function(event) {
+  const reason = event.reason;
+  const message = reason && reason.stack
+    ? reason.stack
+    : String(reason);
+
+  document.body.innerHTML =
+    '<pre style="padding:20px;color:#fff;background:#700;font-size:14px;white-space:pre-wrap;">' +
+    "PALMGROW ASYNC ERROR\n" + message +
+    '</pre>';
+});
+   
 let loginMode = false;  
 let currentUser = null;  
 let currentProfile = null;  
