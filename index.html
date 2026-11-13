@@ -5192,7 +5192,25 @@ window.changePalmGrowNewsPage = changePalmGrowNewsPage;
         }
     });
 })();
-/* END PALMGROW TALK TO AGENT */    
+/* END PALMGROW TALK TO AGENT */   
+    /* PALMGROW WALLET BALANCE VISIBILITY */
+function toggleWalletBalanceVisibility() {
+    const balance = document.getElementById("walletBalanceDisplay");
+    const button = document.getElementById("toggleWalletBalance");
+
+    if (!balance || !button) return;
+
+    const isHidden = balance.style.visibility === "hidden";
+
+    balance.style.visibility = isHidden ? "visible" : "hidden";
+
+    button.textContent = isHidden ? "👁" : "🙈";
+    button.setAttribute(
+        "aria-label",
+        isHidden ? "Hide wallet balance" : "Show wallet balance"
+    );
+}
+/* END WALLET BALANCE VISIBILITY */
     
 </script>
 </body>
