@@ -4711,6 +4711,159 @@ async function processWithdrawal(withdrawalId,action){
   }  
 }  
 
+    // OPERATING FUNDS OVERVIEW
+async function loadAdminOperatingFundsOverview(){
+
+  if(currentProfile?.role !== "admin") return;
+
+  const balanceEl = $("adminOperatingFundBalance");
+  const messageEl = $("adminFundsMessage");
+  const refreshBtn = $("refreshAdminFundsBtn");
+
+  if(!balanceEl) return;
+
+  if(messageEl){
+    messageEl.classList.remove("hidden");
+    messageEl.textContent = "Loading operating funds...";
+  }
+
+  if(refreshBtn) refreshBtn.disabled = true;
+
+  try{
+
+    const {data,error} = await supabase.rpc(
+      "palmgrow_admin_get_operating_funds_overview"
+    );
+
+    if(error) throw error;
+
+    const result = objectOf(data);
+
+    if(!result || typeof result !== "object"){
+      throw new Error("Invalid operating funds response.");
+    }
+
+    const money = value => naira(Number(value || 0));
+
+    const setFund = (id,value) => {
+      const el = $(id);
+      if(el) el.textContent = value;
+    };
+
+    const today = result.today || {};
+    const week = result.week || {};
+    const month = result.month || {};
+
+    setFund("adminOperatingFundBalance",money(result.current_balance));
+
+    const periods = [
+      ["Today",today],
+      ["Week",week],
+      ["Month",month]
+    ];
+
+    periods.forEach(([name,period])=>{
+
+      const prefix = name==="Today" ? "Today" : name==="Week" ? "Week" : "Month";
+
+      setFund("adminFund"+prefix+"Opening",
+        period.opening_balance_reliable
+          ? money(period.opening_balance)
+          : "Needs reconciliation"
+      );
+
+      setFund("adminFund"+prefix+"Received",money(period.money_received));
+      setFund("adminFund"+prefix+"Handling",money(period.handling_fee_income));
+      setFund("adminFund"+prefix+"Transfer",money(period.transfer_charges));
+      setFund("adminFund"+prefix+"Spent",money(period.money_spent));
+      setFund("adminFund"+prefix+"Net",money(period.net_movement));
+
+    });
+
+    const reconciliation = result.reconciliation || {};
+
+    setFund(
+      "adminFundReconciliation",
+      "Status: " + (reconciliation.status || "Unknown") +
+      " | Actual balance: " + money(reconciliation.actual_balance) +
+      " | Ledger balance: " + money(reconciliation.ledger_implied_balance) +
+      " | Difference: " + money(reconciliation.difference)
+    );
+
+    const body = $("adminFundTransactionsBody");
+
+    if(body){
+
+      body.innerHTML = "";
+
+      const transactions = Array.isArray(result.recent_transactions)
+        ? result.recent_transactions
+        : [];
+
+      if(transactions.length===0){
+
+        body.innerHTML =
+          '<tr><td colspan="5">No transactions found.</td></tr>';
+
+      }else{
+
+        transactions.forEach(item=>{
+
+          const tr = document.createElement("tr");
+
+          const date = document.createElement("td");
+          date.textContent = item.created_at
+            ? new Date(item.created_at).toLocaleString("en-NG")
+            : "—";
+
+          const type = document.createElement("td");
+          type.textContent = item.transaction_type || item.type || "—";
+
+          const description = document.createElement("td");
+          description.textContent = item.description || "—";
+
+          const amount = document.createElement("td");
+          amount.textContent = money(item.amount);
+
+          const movement = document.createElement("td");
+          movement.textContent =
+            (Number(item.amount || 0) >= 0 ? "+" : "") +
+            money(item.amount);
+
+          tr.append(date,type,description,amount,movement);
+          body.appendChild(tr);
+
+        });
+
+      }
+
+    }
+
+    if(messageEl){
+      messageEl.textContent = "Operating funds loaded.";
+      messageEl.classList.remove("hidden");
+    }
+
+  }catch(err){
+
+    if(messageEl){
+      messageEl.textContent = "Unable to load operating funds: " + err.message;
+      messageEl.classList.remove("hidden");
+    }
+
+  }finally{
+
+    if(refreshBtn) refreshBtn.disabled = false;
+
+  }
+
+}
+
+const refreshAdminFundsBtnEl = $("refreshAdminFundsBtn");
+
+if(refreshAdminFundsBtnEl){
+  refreshAdminFundsBtnEl.onclick = loadAdminOperatingFundsOverview;
+              }
 
 // CHECK WHETHER A MEMBER ACCOUNT IS STILL ACTIVE
 let employeeSessionCheckRunning = false;
