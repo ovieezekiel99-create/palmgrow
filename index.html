@@ -5134,6 +5134,56 @@ function changePalmGrowNewsPage(direction) {
 
 window.changePalmGrowNewsPage = changePalmGrowNewsPage;
 
+/* PALMGROW TALK TO AGENT */
+(function initPalmGrowAgent() {
+    const chat = document.getElementById("palmGrowAgentChat");
+    const input = document.getElementById("palmGrowAgentInput");
+    const send = document.getElementById("palmGrowAgentSend");
+
+    if (!chat || !input || !send || send.dataset.agentReady) return;
+
+    send.dataset.agentReady = "true";
+
+    function addMessage(message, sender) {
+        const bubble = document.createElement("div");
+        bubble.style.cssText =
+            "padding:12px;margin-bottom:12px;border-radius:10px;" +
+            (sender === "user"
+                ? "background:#dcebdc;text-align:right;"
+                : "background:#e3f1e7;text-align:left;");
+        bubble.textContent = message;
+        chat.appendChild(bubble);
+        chat.scrollTop = chat.scrollHeight;
+    }
+
+    function getAnswer(question) {
+        const q = question.toLowerCase();
+        if (q.includes("deposit")) return "To make a deposit, open the Deposit page, follow the payment instructions and submit your payment details for review.";
+        if (q.includes("withdraw")) return "Open the Withdraw page to check your available balance, bank details and withdrawal instructions. Never share your withdrawal PIN.";
+        if (q.includes("referral")) return "Open the Referral Program page to find your referral link and view your referral information.";
+        if (q.includes("employee") || q.includes("position") || q.includes("m1")) return "Open Employee Position to view your available employee levels and current position.";
+        if (q.includes("invest")) return "Open Make Investment to view the available investment options and their terms.";
+        if (q.includes("hello") || q.includes("hi")) return "Hello! Welcome to PalmGrow Support. How can I help you today?";
+        return "Thank you for contacting PalmGrow Support. Please describe your question about deposits, withdrawals, referrals, investments or employee positions.";
+    }
+
+    function sendMessage() {
+        const message = input.value.trim();
+        if (!message) return;
+        addMessage(message, "user");
+        input.value = "";
+        setTimeout(function() { addMessage(getAnswer(message), "assistant"); }, 300);
+    }
+
+    send.addEventListener("click", sendMessage);
+    input.addEventListener("keydown", function(event) {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            sendMessage();
+        }
+    });
+})();
+/* END PALMGROW TALK TO AGENT */    
     
 </script>
 </body>
