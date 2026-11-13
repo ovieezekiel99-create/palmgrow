@@ -3358,8 +3358,17 @@ positionValue.textContent = "Loading...";
   const employeeStatus = String(profile.employee_status || "")
     .trim().toLowerCase();
 
-  // Block disabled or inactive employees
-  if(accountType === "employee" && employeeStatus === "disabled"){
+   
+  // Block disabled member accounts, but never admin accounts
+  const memberStatus = String(profile.member_status || "")
+    .trim()
+    .toLowerCase();
+
+  const memberRole = String(profile.role || "")
+    .trim()
+    .toLowerCase();
+
+  if(memberRole !== "admin" && memberStatus === "disabled"){
 
     $("app").style.display="none";
     $("authScreen").style.display="";
@@ -3369,10 +3378,11 @@ positionValue.textContent = "Loading...";
 
     await supabase.auth.signOut();
 
-    alert("Your employee account is disabled or inactive. Please contact support.");
+    alert("Your account has been disabled. Please contact support.");
 
     return;
   }
+
 
   // Load dashboard after account verification
   currentProfile = profile;
