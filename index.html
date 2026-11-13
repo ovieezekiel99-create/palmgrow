@@ -3925,7 +3925,7 @@ async function updateMemberStatus(memberId, newStatus, memberName) {
     msg("adminEmployeeMessage", `Processing ${action}...`);
 
     const { data, error } = await supabase.functions.invoke(
-      "palmgrow-member-control",
+      "bright-endpoint",
       {
         body: {
           member_id: memberId,
