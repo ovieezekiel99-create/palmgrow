@@ -5193,24 +5193,34 @@ window.changePalmGrowNewsPage = changePalmGrowNewsPage;
     });
 })();
 /* END PALMGROW TALK TO AGENT */   
-/* PALMGROW WALLET BALANCE VISIBILITY */
+
+    /* PALMGROW WALLET BALANCE VISIBILITY */
 window.toggleWalletBalanceVisibility = function() {
     const balance = document.getElementById("walletBalanceDisplay");
     const button = document.getElementById("toggleWalletBalance");
 
     if (!balance || !button) return;
 
-    const isHidden = balance.style.visibility === "hidden";
+    if (!balance.dataset.originalBalance) {
+        balance.dataset.originalBalance = balance.textContent;
+    }
 
-    balance.style.visibility = isHidden ? "visible" : "hidden";
+    const isHidden = balance.dataset.hidden === "true";
 
-    button.textContent = isHidden ? "👁" : "🙈";
-    button.setAttribute(
-        "aria-label",
-        isHidden ? "Hide wallet balance" : "Show wallet balance"
-    );
+    if (isHidden) {
+        balance.textContent = balance.dataset.originalBalance;
+        balance.dataset.hidden = "false";
+        button.textContent = "👁";
+        button.setAttribute("aria-label", "Hide wallet balance");
+    } else {
+        balance.dataset.originalBalance = balance.textContent;
+        balance.textContent = "*****";
+        balance.dataset.hidden = "true";
+        button.textContent = "🙈";
+        button.setAttribute("aria-label", "Show wallet balance");
+    }
 };
-/* END WALLET BALANCE VISIBILITY */
+/* END PALMGROW WALLET BALANCE VISIBILITY */
     
 </script>
 </body>
