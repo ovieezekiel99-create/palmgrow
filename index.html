@@ -2215,6 +2215,7 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
             <button class="admin-tab-btn" data-admin-tab="employees">👥 Employees</button>
             <button class="admin-tab-btn" data-admin-tab="banks">🏦 Bank Verifications</button>
             <button class="admin-tab-btn" data-admin-tab="withdrawals">💸 Withdrawals</button>
+            <button class="admin-tab-btn" data-admin-tab="funds">💰 Operating Funds</button>
           </div>
 
           <!-- TAB 1: REVIEW DEPOSITS -->
@@ -2285,7 +2286,79 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
               </table>  
             </div>
           </div>
+            
+<!-- TAB 5: OPERATING FUNDS -->
+<div class="admin-panel-section" id="admin-tab-funds">
 
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+    <h4 style="font-size:15px; color:var(--green-dark);">Operating Funds Overview</h4>
+    <button id="refreshAdminFundsBtn" class="admin-tab-btn" style="margin:0; padding:8px 14px; font-size:12px;">
+      Refresh Funds
+    </button>
+  </div>
+
+  <div id="adminFundsMessage" class="status hidden"></div>
+
+  <div class="admin-fund-hero">
+    <div>Current Operating Fund Balance</div>
+    <h2 id="adminOperatingFundBalance">₦0.00</h2>
+  </div>
+
+  <h4>Daily Summary</h4>
+  <div class="admin-fund-grid">
+    <div class="admin-fund-metric">Opening Balance <strong id="adminFundTodayOpening">—</strong></div>
+    <div class="admin-fund-metric">Money Received <strong id="adminFundTodayReceived">₦0.00</strong></div>
+    <div class="admin-fund-metric">Handling Fee Income <strong id="adminFundTodayHandling">₦0.00</strong></div>
+    <div class="admin-fund-metric">Transfer Charges <strong id="adminFundTodayTransfer">₦0.00</strong></div>
+    <div class="admin-fund-metric">Money Spent <strong id="adminFundTodaySpent">₦0.00</strong></div>
+    <div class="admin-fund-metric">Net Movement <strong id="adminFundTodayNet">₦0.00</strong></div>
+  </div>
+
+  <h4>Weekly Summary</h4>
+  <div class="admin-fund-grid">
+    <div class="admin-fund-metric">Opening Balance <strong id="adminFundWeekOpening">—</strong></div>
+    <div class="admin-fund-metric">Money Received <strong id="adminFundWeekReceived">₦0.00</strong></div>
+    <div class="admin-fund-metric">Handling Fee Income <strong id="adminFundWeekHandling">₦0.00</strong></div>
+    <div class="admin-fund-metric">Transfer Charges <strong id="adminFundWeekTransfer">₦0.00</strong></div>
+    <div class="admin-fund-metric">Money Spent <strong id="adminFundWeekSpent">₦0.00</strong></div>
+    <div class="admin-fund-metric">Net Movement <strong id="adminFundWeekNet">₦0.00</strong></div>
+  </div>
+
+  <h4>Monthly Summary</h4>
+  <div class="admin-fund-grid">
+    <div class="admin-fund-metric">Opening Balance <strong id="adminFundMonthOpening">—</strong></div>
+    <div class="admin-fund-metric">Money Received <strong id="adminFundMonthReceived">₦0.00</strong></div>
+    <div class="admin-fund-metric">Handling Fee Income <strong id="adminFundMonthHandling">₦0.00</strong></div>
+    <div class="admin-fund-metric">Transfer Charges <strong id="adminFundMonthTransfer">₦0.00</strong></div>
+    <div class="admin-fund-metric">Money Spent <strong id="adminFundMonthSpent">₦0.00</strong></div>
+    <div class="admin-fund-metric">Net Movement <strong id="adminFundMonthNet">₦0.00</strong></div>
+  </div>
+
+  <h4>Account Reconciliation</h4>
+  <div class="admin-fund-status" id="adminFundReconciliation">
+    Refresh Funds to check the account reconciliation.
+  </div>
+
+  <h4>Recent Operating Fund Transactions</h4>
+  <div style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Transaction</th>
+          <th>Description</th>
+          <th>Amount</th>
+          <th>Movement</th>
+        </tr>
+      </thead>
+      <tbody id="adminFundTransactionsBody">
+        <tr><td colspan="5">Click Refresh Funds to load transactions.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<!-- END TAB 5: OPERATING FUNDS -->
         </div>  
       </div>  
 
