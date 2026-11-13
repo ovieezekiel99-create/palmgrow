@@ -3445,14 +3445,21 @@ function showPage(page, pushHistory = true){
 }
   }  
 
-window.showPage=showPage;  
-window.onpopstate = (event) => {  
-  const targetPage = event.state?.page || "dashboard";  
-  if(pageHistory.length > 1){  
-    pageHistory.pop();  
-  }  
-  showPage(targetPage, false);  
-};  
+window.onpopstate = (event) => {
+  const targetPage = event.state?.page || "dashboard";
+
+  if (pageHistory.length > 1) {
+    pageHistory.pop();
+  }
+
+  if (targetPage === "admin") {
+    showPage("admin", false);
+    showAdminTab("home", false);
+    return;
+  }
+
+  showPage(targetPage, false);
+};
  
 document.querySelectorAll(".nav-item[data-page]").forEach(item=>{  
   item.onclick=()=>showPage(item.dataset.page);  
