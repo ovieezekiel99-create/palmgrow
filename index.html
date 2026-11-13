@@ -2269,17 +2269,70 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
           <h3>🛡️ Admin Control Center</h3>  
           <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Manage platform operations, employee accounts, deposits, and payouts efficiently.</p>  
          
-          <!-- Admin Navigation Sub-Tabs -->
-          <div class="admin-tabs">
-            <button class="admin-tab-btn active" data-admin-tab="deposits">📥 Review Deposits</button>
-            <button class="admin-tab-btn" data-admin-tab="employees">👥 Employees</button>
-            <button class="admin-tab-btn" data-admin-tab="banks">🏦 Bank Verifications</button>
-            <button class="admin-tab-btn" data-admin-tab="withdrawals">💸 Withdrawals</button>
-            <button class="admin-tab-btn" data-admin-tab="funds">💰 Operating Funds</button>
-          </div>
+          
+<!-- ADMIN DASHBOARD HOME -->
+<div class="admin-panel-section active" id="admin-tab-home">
+  <h4 style="margin-bottom:15px;color:var(--green-dark);">
+    Platform Management
+  </h4>
+
+  <div class="admin-dashboard-grid">
+
+    <button type="button" class="admin-tab-btn admin-dashboard-card"
+      data-admin-tab="deposits">
+      <span>📥</span>
+      <strong>Review Deposits</strong>
+      <small>Manage incoming payments</small>
+      <b id="adminDepositNotification" class="admin-notification hidden">0</b>
+    </button>
+
+    <button type="button" class="admin-tab-btn admin-dashboard-card"
+      data-admin-tab="employees">
+      <span>👥</span>
+      <strong>Employees</strong>
+      <small>Manage member accounts</small>
+      <b id="adminEmployeeNotification" class="admin-notification hidden">0</b>
+    </button>
+
+    <button type="button" class="admin-tab-btn admin-dashboard-card"
+      data-admin-tab="banks">
+      <span>🏦</span>
+      <strong>Bank Verifications</strong>
+      <small>Verify member bank details</small>
+      <b id="adminBankNotification" class="admin-notification hidden">0</b>
+    </button>
+
+    <button type="button" class="admin-tab-btn admin-dashboard-card"
+      data-admin-tab="withdrawals">
+      <span>💸</span>
+      <strong>Withdrawals</strong>
+      <small>Manage payout requests</small>
+      <b id="adminWithdrawalNotification" class="admin-notification hidden">0</b>
+    </button>
+
+    <button type="button" class="admin-tab-btn admin-dashboard-card"
+      data-admin-tab="funds">
+      <span>💰</span>
+      <strong>Operating Funds</strong>
+      <small>Monitor funds and transactions</small>
+      <b id="adminFundsNotification" class="admin-notification hidden">!</b>
+    </button>
+
+    <button type="button" class="admin-tab-btn admin-dashboard-card"
+      data-admin-tab="reports">
+      <span>📊</span>
+      <strong>Reports</strong>
+      <small>View financial and activity reports</small>
+      <b id="adminReportsNotification" class="admin-notification hidden">NEW</b>
+    </button>
+
+  </div>
+</div>
+<!-- END ADMIN DASHBOARD HOME -->
+
 
           <!-- TAB 1: REVIEW DEPOSITS -->
-          <div class="admin-panel-section active" id="admin-tab-deposits">
+          <div class="admin-panel-section" id="admin-tab-deposits">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
               <h4 style="font-size:15px; color:var(--green-dark);">Pending Deposit Requests</h4>
               <button id="loadDepositsBtn" style="padding:8px 14px; background:var(--green); color:white; border:0; border-radius:6px; font-weight:600; cursor:pointer; font-size:12px;">Refresh List</button>
