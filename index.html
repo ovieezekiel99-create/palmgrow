@@ -3712,7 +3712,11 @@ positionValue.textContent = "Loading...";
   $("userPhone").textContent=profile.phone||"";
   $("userAvatar").textContent=name.charAt(0).toUpperCase();
 
+  try {
   await refreshPalmGrowReferralUI();
+} catch (error) {
+  console.error("Referral UI loading failed:", error);
+}
 
   $("walletBalanceDisplay").textContent=naira(profile.available_balance);
   $("availableBalance").textContent=naira(profile.available_balance);
