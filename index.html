@@ -4751,8 +4751,8 @@ async function loadAdminOperatingFundsOverview(){
     };
 
     const today = result.today || {};
-    const week = result.week || {};
-    const month = result.month || {};
+const week = result.this_week || {};
+const month = result.this_month || {};
 
     setFund("adminOperatingFundBalance",money(result.current_balance));
 
