@@ -2978,25 +2978,47 @@ function prefillPalmGrowReferralCode() {
 document.addEventListener("DOMContentLoaded", () => {
   prefillPalmGrowReferralCode();
 
-  // Admin Panel Tab Switcher Logic
-  document.querySelectorAll(".admin-tab-btn[data-admin-tab]").forEach(btn => {
-    btn.onclick = () => {
-      document.querySelectorAll(".admin-tab-btn").forEach(b => b.classList.remove("active"));
-      document.querySelectorAll(".admin-panel-section").forEach(s => s.classList.remove("active"));
+  
 
-      btn.classList.add("active");
-      const targetSection = document.getElementById("admin-tab-" + btn.dataset.adminTab);
-      if(targetSection) {
-        targetSection.classList.add("active");
-        if(btn.dataset.adminTab === "deposits") $("loadDepositsBtn").click();
-        if(btn.dataset.adminTab === "employees") loadAdminEmployees();
-        if(btn.dataset.adminTab === "banks") loadAdminWithdrawalBanks();
-        if(btn.dataset.adminTab === "withdrawals") loadAdminWithdrawals();
-        if(btn.dataset.adminTab === "funds") loadAdminOperatingFundsOverview();
-      }
-    };
-  });
+// ADMIN PANEL NAVIGATION
+function showAdminTab(tab, pushHistory = true) {
+  const targetSection = document.getElementById("admin-tab-" + tab);
+  if (!targetSection) return;
+
+  if (pushHistory && tab !== "home") {
+    history.pushState(
+      { page: "admin", adminTab: tab },
+      "",
+      "#admin-" + tab
+    );
+  }
+
+  document.querySelectorAll(".admin-tab-btn[data-admin-tab]")
+    .forEach(btn => btn.classList.remove("active"));
+
+  document.querySelectorAll(".admin-panel-section")
+    .forEach(section => section.classList.remove("active"));
+
+  targetSection.classList.add("active");
+
+  const selectedButton = document.querySelector(
+    '.admin-tab-btn[data-admin-tab="' + tab + '"]'
+  );
+
+  if (selectedButton) selectedButton.classList.add("active");
+
+  if (tab === "deposits") $("loadDepositsBtn").click();
+  if (tab === "employees") loadAdminEmployees();
+  if (tab === "banks") loadAdminWithdrawalBanks();
+  if (tab === "withdrawals") loadAdminWithdrawals();
+  if (tab === "funds") loadAdminOperatingFundsOverview();
+}
+
+// Dashboard card clicks
+document.querySelectorAll(".admin-tab-btn[data-admin-tab]").forEach(btn => {
+  btn.onclick = () => showAdminTab(btn.dataset.adminTab, true);
 });
+
  
 const $ = id => document.getElementById(id);  
 let loginMode = false;  
