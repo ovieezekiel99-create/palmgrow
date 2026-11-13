@@ -2232,20 +2232,32 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
             </div>
           </div>
 
-          <!-- TAB 2: EMPLOYEE ACCOUNTS -->
-          <div class="admin-panel-section" id="admin-tab-employees">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-              <h4 style="font-size:15px; color:var(--green-dark);">Employee Management</h4>
-              <button id="loadEmployeesBtn" class="admin-tab-btn" style="margin:0; padding:8px 14px; font-size:12px;">Load Employees</button>
-            </div>
-            <div id="adminEmployeeMessage" class="status hidden"></div>  
-            <div style="overflow-x:auto;">  
-              <table>  
-                <thead><tr><th>Employee</th><th>Status / Level</th><th>Balance</th><th>Actions</th></tr></thead>  
-                <tbody id="adminEmployeesBody"><tr><td colspan="4">Click "Load Employees" to view members.</td></tr></tbody>  
-              </table>  
-            </div>
-          </div>
+          
+<!-- TAB 2: MEMBER MANAGEMENT -->
+<div class="admin-panel-section" id="admin-tab-employees">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+    <h4 style="font-size:15px; color:var(--green-dark);">Member Management</h4>
+    <button id="loadEmployeesBtn" class="admin-tab-btn" style="margin:0; padding:8px 14px; font-size:12px;">Load Members</button>
+  </div>
+
+  <div id="adminEmployeeMessage" class="status hidden"></div>
+
+  <div style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>Member</th>
+          <th>Member Status</th>
+          <th>Balance</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="adminEmployeesBody">
+        <tr><td colspan="4">Click "Load Members" to view accounts.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
           <!-- TAB 3: BANK VERIFICATIONS -->
           <div class="admin-panel-section" id="admin-tab-banks">
