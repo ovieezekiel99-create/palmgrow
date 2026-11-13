@@ -3473,16 +3473,14 @@ window.onpopstate = (event) => {
 
  
 document.querySelectorAll(".nav-item[data-page]").forEach(item=>{  
-  item.onclick=()=>showPage(item.dataset.page);  
+ item.onclick=()=>showPage(item.dataset.page);  
 });  
  
-$("backBtn").onclick = () => {  
-  if(pageHistory.length > 1){  
-    pageHistory.pop();  
-    const previousPage = pageHistory[pageHistory.length - 1];  
-    showPage(previousPage, false);  
-  }  
-};  
+$("backBtn").onclick = () => {
+  if (pageHistory.length > 1) {
+    history.back();
+  }
+};
  
 $("menuBtn").onclick=()=>{  
   $("sidebar").classList.add("open");  
