@@ -3681,7 +3681,11 @@ positionValue.textContent = "Loading...";
   const {data:{session},error:sessionError} =
     await supabase.auth.getSession();
 
-  if(sessionError || !session) return;
+  if(sessionError || !session){
+  $("authScreen").style.display = "flex";
+  $("app").style.display = "none";
+  return;
+}
 
   currentUser = session.user;
 
