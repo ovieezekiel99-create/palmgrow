@@ -3909,73 +3909,138 @@ async function reviewDeposit(id,decision,accountType){
 }
  
 const loadEmployeesBtnEl = $("loadEmployeesBtn");
-if(loadEmployeesBtnEl) loadEmployeesBtnEl.onclick = loadAdminEmployees;  
- 
-async function loadAdminEmployees(){  
-  const tbody = $("adminEmployeesBody");  
-  if(!tbody) return;
-  tbody.innerHTML = "<tr><td colspan=\"4\">Loading employee accounts...</td></tr>";  
-  msg("adminEmployeeMessage", "Loading employees...");  
- 
-  try{  
-    const {data, error} = await supabase.from("profiles").select("id, full_name, phone, account_type, employee_status, available_balance").eq("account_type", "employee").order("full_name", {ascending: true});  
-    if(error) throw error;  
- 
-    if(!data || data.length === 0){  
-      tbody.innerHTML = "<tr><td colspan=\"4\">No employee accounts found.</td></tr>";  
-      msg("adminEmployeeMessage", "No employees found.");  
-      return;  
-    }  
- 
-    tbody.innerHTML = "";  
-    data.forEach(emp => {  
-      const tr = document.createElement("tr");  
-      const infoTd = document.createElement("td");  
-      infoTd.innerHTML = `<strong>${escapeHtml(emp.full_name || "Member")}</strong><br><span style="color:var(--muted);font-size:11px">${escapeHtml(emp.phone || "No phone")}</span>`;  
- 
-      const statusTd = document.createElement("td");  
-      statusTd.innerHTML = `<span style="font-weight:600">${displayStatus(emp.employee_status || "Active")}</span>`;  
- 
-      const balTd = document.createElement("td");  
-      balTd.textContent = naira(emp.available_balance);  
- 
-      const actionTd = document.createElement("td");  
-      const actionsDiv = document.createElement("div");  
-      actionsDiv.className = "admin-actions";  
- 
-      const isRestricted = emp.employee_status === "restricted";  
-      const restrictBtn = document.createElement("button");  
-      restrictBtn.textContent = isRestricted ? "Unrestrict" : "Restrict";  
-      restrictBtn.style.background = isRestricted ? "#16a34a" : "#d97706";  
-      restrictBtn.style.color = "white";  
-      restrictBtn.onclick = () => updateEmployeeStatus(emp.id, isRestricted ? "active" : "restricted");  
-      actionsDiv.appendChild(restrictBtn);  
- 
-      const isDisabled = emp.employee_status === "disabled";  
-      const disableBtn = document.createElement("button");  
-      disableBtn.textContent = isDisabled ? "Enable" : "Disable";  
-      disableBtn.style.background = isDisabled ? "#16a34a" : "#4b5563";  
-      disableBtn.style.color = "white";  
-      disableBtn.onclick = () => updateEmployeeStatus(emp.id, isDisabled ? "active" : "disabled");  
-      actionsDiv.appendChild(disableBtn);  
- 
-      const deleteBtn = document.createElement("button");  
-      deleteBtn.textContent = "Delete";  
-      deleteBtn.style.background = "#dc2626";  
-      deleteBtn.style.color = "white";  
-      deleteBtn.onclick = () => deleteEmployeeAccount(emp.id, emp.full_name);  
-      actionsDiv.appendChild(deleteBtn);  
- 
-      actionTd.appendChild(actionsDiv);  
-      tr.append(infoTd, statusTd, balTd, actionTd);  
-      tbody.appendChild(tr);  
-    });  
-    msg("adminEmployeeMessage", `Loaded ${data.length} employee account(s).`);  
-  }catch(err){  
-    tbody.innerHTML = "<tr><td colspan=\"4\">Unable to load employees.</td></tr>";  
-    msg("adminEmployeeMessage", err.message, "error");  
-  }  
-}  
+if (loadEmployeesBtnEl) {
+  loadEmployeesBtnEl.onclick = loadAdminEmployees;
+}
+
+
+async function updateMemberStatus(memberId, newStatus, memberName) {
+  const action = newStatus === "disabled" ? "disable" : "restore";
+
+  if (!confirm(`Are you sure you want to ${action} "${memberName}"?`)) {
+    return;
+  }
+
+  try {
+    msg("adminEmployeeMessage", `Processing ${action}...`);
+
+    const { data, error } = await supabase.functions.invoke(
+      "palmgrow-member-control",
+      {
+        body: {
+          member_id: memberId,
+          member_status: newStatus
+        }
+      }
+    );
+
+    if (error) throw error;
+
+    if (!data || !data.success) {
+      throw new Error(data?.error || "Member status update failed.");
+    }
+
+    msg(
+      "adminEmployeeMessage",
+      `${memberName} has been ${action === "disable" ? "disabled" : "restored"}.`
+    );
+
+    await loadAdminEmployees();
+
+  } catch (err) {
+    console.error("Member status update failed:", err);
+    msg("adminEmployeeMessage", err.message || "Unable to update member.", "error");
+  }
+}
+
+
+async function loadAdminEmployees() {
+  const tbody = $("adminEmployeesBody");
+  if (!tbody) return;
+
+  tbody.innerHTML = '<tr><td colspan="4">Loading members...</td></tr>';
+  msg("adminEmployeeMessage", "Loading members...");
+
+  try {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("id, full_name, phone, role, account_type, member_status, available_balance")
+      .order("full_name", { ascending: true });
+
+    if (error) throw error;
+
+    // Administrators must not appear in member management.
+    const members = (data || []).filter(
+      member => String(member.role || "").trim().toLowerCase() !== "admin"
+    );
+
+    if (members.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4">No members found.</td></tr>';
+      msg("adminEmployeeMessage", "No members found.");
+      return;
+    }
+
+    tbody.innerHTML = "";
+
+    members.forEach(member => {
+      const name = member.full_name || "Member";
+      const status = String(member.member_status || "active")
+        .trim()
+        .toLowerCase();
+
+      const isDisabled = status === "disabled";
+
+      const tr = document.createElement("tr");
+
+      const infoTd = document.createElement("td");
+
+      const nameEl = document.createElement("strong");
+      nameEl.textContent = name;
+
+      const detailsEl = document.createElement("div");
+      detailsEl.style.cssText = "color:var(--muted);font-size:11px;";
+      detailsEl.textContent =
+        `${member.account_type || "Member"} • ${member.phone || "No phone"}`;
+
+      infoTd.append(nameEl, detailsEl);
+
+      const statusTd = document.createElement("td");
+      const statusEl = document.createElement("span");
+      statusEl.style.fontWeight = "600";
+      statusEl.textContent = isDisabled ? "Disabled" : "Active";
+      statusTd.appendChild(statusEl);
+
+      const balanceTd = document.createElement("td");
+      balanceTd.textContent = naira(member.available_balance);
+
+      const actionTd = document.createElement("td");
+      const actionBtn = document.createElement("button");
+
+      actionBtn.textContent = isDisabled ? "Restore" : "Disable";
+      actionBtn.style.background = isDisabled ? "#16a34a" : "#4b5563";
+      actionBtn.style.color = "white";
+
+      actionBtn.onclick = () =>
+        updateMemberStatus(
+          member.id,
+          isDisabled ? "active" : "disabled",
+          name
+        );
+
+      actionTd.appendChild(actionBtn);
+
+      tr.append(infoTd, statusTd, balanceTd, actionTd);
+      tbody.appendChild(tr);
+    });
+
+    msg("adminEmployeeMessage", `Loaded ${members.length} member account(s).`);
+
+  } catch (err) {
+    console.error("Member loading failed:", err);
+    tbody.innerHTML = '<tr><td colspan="4">Unable to load members.</td></tr>';
+    msg("adminEmployeeMessage", err.message || "Unable to load members.", "error");
+    }
+  }
  
 async function updateEmployeeStatus(employeeId, newStatus){  
   if(!confirm(`Update status to "${newStatus.toUpperCase()}"?`)) return;  
