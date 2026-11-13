@@ -3685,6 +3685,7 @@ positionValue.textContent = "Loading...";
   $("availableBalance").textContent=naira(profile.available_balance);
   $("totalInvestment").textContent=naira(profile.total_investment);
   $("totalEarnings").textContent=naira(profile.total_earnings);
+    await loadTodayEarnings();  
   $("referralEarnings").textContent=naira(profile.referral_earnings);
   $("dailyRateDisplay").textContent=naira(profile.daily_payout_amount)+" / day";
 
