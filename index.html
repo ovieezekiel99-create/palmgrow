@@ -2993,6 +2993,96 @@ function getPalmGrowReferralCode() {
   );
 }
 
+async function loadPalmGrowReferralNetwork() {
+  const message = $("referralNetworkMessage");
+
+  if (message) {
+    message.textContent = "Loading your referral network...";
+    message.style.color = "var(--muted)";
+  }
+
+  try {
+    const { data, error } = await supabase.rpc(
+      "palmgrow_my_referral_network"
+    );
+
+    if (error) throw error;
+
+    const counts = Array.isArray(data) ? data : [];
+
+    let totalRegistered = 0;
+    let totalActive = 0;
+
+    for (let level = 1; level <= 5; level++) {
+      const team = counts.find(
+        item => Number(item.team_level) === level
+      );
+
+      const registered = Number(team?.registered_count || 0);
+      const active = Number(team?.active_count || 0);
+
+      totalRegistered += registered;
+      totalActive += active;
+
+      const registeredElement = $(
+        `networkTeam${level}Registered`
+      );
+
+      const activeElement = $(
+        `networkTeam${level}Active`
+      );
+
+      const progressElement = $(
+        `networkTeam${level}Progress`
+      );
+
+      if (registeredElement) {
+        registeredElement.textContent = registered.toLocaleString();
+      }
+
+      if (activeElement) {
+        activeElement.textContent = active.toLocaleString();
+      }
+
+      if (progressElement) {
+        const percentage = registered > 0
+          ? Math.min(100, (active / registered) * 100)
+          : 0;
+
+        progressElement.style.width = percentage + "%";
+      }
+    }
+
+    const totalRegisteredElement = $("networkTotalRegistered");
+    const totalActiveElement = $("networkTotalActive");
+
+    if (totalRegisteredElement) {
+      totalRegisteredElement.textContent =
+        totalRegistered.toLocaleString();
+    }
+
+    if (totalActiveElement) {
+      totalActiveElement.textContent =
+        totalActive.toLocaleString();
+    }
+
+    if (message) {
+      message.textContent = "Referral network updated successfully.";
+      message.style.color = "#16845a";
+    }
+
+  } catch (error) {
+    console.error("Referral network loading error:", error);
+
+    if (message) {
+      message.textContent =
+        "Unable to load your referral network. Please try again.";
+      message.style.color = "#c0392b";
+    }
+  }
+}
+
+    
 async function refreshPalmGrowReferralUI() {
   const code = getPalmGrowReferralCode();
 
