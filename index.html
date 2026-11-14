@@ -2346,6 +2346,113 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
 
 </div>
 <!-- END REFERRAL PAGE -->
+        
+<!-- MY REFERRAL NETWORK PAGE -->
+<div id="page-referral-network" class="hidden" style="padding:16px 12px 30px;">
+
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+    <button type="button" onclick="showPage('referral')"
+      style="background:#0b3d2e;color:white;border:0;border-radius:9px;padding:10px 14px;font-size:13px;cursor:pointer;">
+      ← Back
+    </button>
+    <div>
+      <h2 style="margin:0;color:var(--green);font-size:20px;">My Referral Network</h2>
+      <p style="margin:4px 0 0;color:var(--muted);font-size:12px;">Your five-level team summary</p>
+    </div>
+  </div>
+
+  <!-- NETWORK TOTALS -->
+  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:20px;">
+
+    <div style="background:#0b3d2e;color:white;border-radius:14px;padding:16px;">
+      <div style="font-size:11px;opacity:.85;">TOTAL TEAM</div>
+      <div id="networkTotalRegistered" style="font-size:28px;font-weight:800;margin-top:7px;">0</div>
+      <div style="font-size:11px;opacity:.8;">Registered members</div>
+    </div>
+
+    <div style="background:#147a56;color:white;border-radius:14px;padding:16px;">
+      <div style="font-size:11px;opacity:.9;">ACTIVE EMPLOYEES</div>
+      <div id="networkTotalActive" style="font-size:28px;font-weight:800;margin-top:7px;">0</div>
+      <div style="font-size:11px;opacity:.85;">Employment activated</div>
+    </div>
+
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;">
+    <h3 style="margin:0;font-size:16px;color:var(--text);">Team Breakdown</h3>
+    <span style="font-size:10px;color:var(--muted);">5 Referral Levels</span>
+  </div>
+
+  <!-- TEAM 1 -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:15px;margin-bottom:12px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <strong>TEAM 1</strong>
+      <span style="background:#d4af37;color:#0b3d2e;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:700;">10%</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+      <div><small style="color:var(--muted);">Registered</small><div id="networkTeam1Registered" style="font-size:23px;font-weight:800;">0</div></div>
+      <div><small style="color:var(--muted);">Active</small><div id="networkTeam1Active" style="font-size:23px;font-weight:800;color:#16845a;">0</div></div>
+    </div>
+    <div style="height:7px;background:var(--border);border-radius:10px;margin-top:12px;overflow:hidden;"><div id="networkTeam1Progress" style="height:100%;width:0%;background:#16845a;border-radius:10px;"></div></div>
+  </div>
+
+  <!-- TEAM 2 -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:15px;margin-bottom:12px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <strong>TEAM 2</strong>
+      <span style="background:#d4af37;color:#0b3d2e;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:700;">3%</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+      <div><small style="color:var(--muted);">Registered</small><div id="networkTeam2Registered" style="font-size:23px;font-weight:800;">0</div></div>
+      <div><small style="color:var(--muted);">Active</small><div id="networkTeam2Active" style="font-size:23px;font-weight:800;color:#16845a;">0</div></div>
+    </div>
+    <div style="height:7px;background:var(--border);border-radius:10px;margin-top:12px;overflow:hidden;"><div id="networkTeam2Progress" style="height:100%;width:0%;background:#16845a;border-radius:10px;"></div></div>
+  </div>
+
+  <!-- TEAM 3 -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:15px;margin-bottom:12px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <strong>TEAM 3</strong>
+      <span style="background:#d4af37;color:#0b3d2e;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:700;">1%</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+      <div><small style="color:var(--muted);">Registered</small><div id="networkTeam3Registered" style="font-size:23px;font-weight:800;">0</div></div>
+      <div><small style="color:var(--muted);">Active</small><div id="networkTeam3Active" style="font-size:23px;font-weight:800;color:#16845a;">0</div></div>
+    </div>
+    <div style="height:7px;background:var(--border);border-radius:10px;margin-top:12px;overflow:hidden;"><div id="networkTeam3Progress" style="height:100%;width:0%;background:#16845a;border-radius:10px;"></div></div>
+  </div>
+
+  <!-- TEAM 4 -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:15px;margin-bottom:12px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <strong>TEAM 4</strong>
+      <span style="background:#d4af37;color:#0b3d2e;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:700;">0.7%</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+      <div><small style="color:var(--muted);">Registered</small><div id="networkTeam4Registered" style="font-size:23px;font-weight:800;">0</div></div>
+      <div><small style="color:var(--muted);">Active</small><div id="networkTeam4Active" style="font-size:23px;font-weight:800;color:#16845a;">0</div></div>
+    </div>
+    <div style="height:7px;background:var(--border);border-radius:10px;margin-top:12px;overflow:hidden;"><div id="networkTeam4Progress" style="height:100%;width:0%;background:#16845a;border-radius:10px;"></div></div>
+  </div>
+
+  <!-- TEAM 5 -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:15px;margin-bottom:12px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <strong>TEAM 5</strong>
+      <span style="background:#d4af37;color:#0b3d2e;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:700;">0.4%</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+      <div><small style="color:var(--muted);">Registered</small><div id="networkTeam5Registered" style="font-size:23px;font-weight:800;">0</div></div>
+      <div><small style="color:var(--muted);">Active</small><div id="networkTeam5Active" style="font-size:23px;font-weight:800;color:#16845a;">0</div></div>
+    </div>
+    <div style="height:7px;background:var(--border);border-radius:10px;margin-top:12px;overflow:hidden;"><div id="networkTeam5Progress" style="height:100%;width:0%;background:#16845a;border-radius:10px;"></div></div>
+  </div>
+
+  <div id="referralNetworkMessage" style="font-size:12px;text-align:center;color:var(--muted);margin-top:14px;" aria-live="polite"></div>
+
+</div>
+<!-- END MY REFERRAL NETWORK PAGE -->
+
 
       <!-- ADMIN PAGE (REORGANIZED WITH TABS) -->
       <div id="page-admin" class="hidden">  
