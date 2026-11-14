@@ -3919,39 +3919,31 @@ function lagosDate(){
   return `${values.year}-${values.month}-${values.day}`;  
 }  
 
-/* PALMGROW TODAY'S INVESTOR EARNINGS */
+/* PALMGROW UNIFIED TODAY'S EARNINGS */
 async function loadTodayEarnings(){
   const earningsElement = $("todayEarnings");
   if(!earningsElement) return;
 
   earningsElement.textContent = naira(0);
 
-  try{
-    const {data,error} = await supabase.rpc(
-      "palmgrow_my_payout_history"
+  try {
+    const { data, error } = await supabase.rpc(
+      "palmgrow_my_today_earnings"
     );
 
     if(error) throw error;
 
-    const today = lagosDate();
+    earningsElement.textContent = naira(
+      Number(data || 0)
+    );
 
-    const todayTotal = (Array.isArray(data) ? data : [])
-      .filter(payout =>
-        payout.status === "active" &&
-        payout.paid_at &&
-        lagosDateFromTimestamp(payout.paid_at) === today
-      )
-      .reduce((total,payout) =>
-        total + Number(payout.amount || 0), 0
-      );
-
-    earningsElement.textContent = naira(todayTotal);
-
-  }catch(error){
-    console.error("Today's earnings error:",error);
+  } catch(error) {
+    console.error("Today's earnings error:", error);
     earningsElement.textContent = naira(0);
   }
 }
+/* END PALMGROW UNIFIED TODAY'S EARNINGS */
+
 
 function lagosDateFromTimestamp(timestamp){
   const parts = new Intl.DateTimeFormat("en-CA",{
