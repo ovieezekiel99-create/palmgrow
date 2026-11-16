@@ -3078,7 +3078,87 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 const SUPABASE_URL = "https://ghdiycdzsmncmlcpdniy.supabase.co";  
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_xy6UyL2BeQFgB8LeYMHuJA_k6MdhVz9";  
 const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);  
+/* TEMPORARY ADMIN EMAIL CHANGE */
 
+async function changeOwnAuthEmail() {
+  try {
+    // Confirm the currently logged-in user
+    const { data: userData, error: userError } =
+      await supabase.auth.getUser();
+
+    if (userError) throw userError;
+
+    const user = userData?.user;
+
+    if (!user) {
+      alert("Please log in first.");
+      return;
+    }
+
+    // Confirm that this account has the admin role
+    const { data: profile, error: profileError } =
+      await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .maybeSingle();
+
+    if (profileError) throw profileError;
+
+    if (String(profile?.role || "").toLowerCase() !== "admin") {
+      alert("Only the admin can change the admin login email.");
+      return;
+    }
+
+    const newEmail = prompt("Enter your new admin login email:");
+
+    if (!newEmail) return;
+
+    const cleanedEmail = newEmail.trim();
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanedEmail)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    const confirmation = prompt("Enter the new email again to confirm:");
+
+    if (
+      !confirmation ||
+      confirmation.trim().toLowerCase() !== cleanedEmail.toLowerCase()
+    ) {
+      alert("The email addresses do not match. No change was requested.");
+      return;
+    }
+
+    if (
+      cleanedEmail.toLowerCase() ===
+      String(user.email || "").toLowerCase()
+    ) {
+      alert("That is already your current login email.");
+      return;
+    }
+
+    const { error: updateError } =
+      await supabase.auth.updateUser({
+        email: cleanedEmail
+      });
+
+    if (updateError) throw updateError;
+
+    alert(
+      "Email change request submitted. Check your email inboxes for the confirmation instructions. The login email may not change until verification is completed."
+    );
+
+  } catch (error) {
+    console.error("Admin email change error:", error);
+    alert("Email change failed: " + (error.message || "Unknown error"));
+  }
+}
+
+window.changeOwnAuthEmail = changeOwnAuthEmail;
+
+/* END TEMPORARY ADMIN EMAIL CHANGE */
 /* PALMGROW REFERRAL LINK FUNCTIONS */
 
 function getPalmGrowReferralCode() {
