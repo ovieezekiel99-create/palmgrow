@@ -4039,6 +4039,13 @@ currentProfile = profile;
 
 // Display the member's actual Gems balance
 const gemsBalance = Number(profile.gems_balance || 0);
+      const checkinStreak = Number(profile.checkin_streak || 0);
+
+if($("checkinStreakDisplay")){
+  $("checkinStreakDisplay").textContent =
+    "Current streak: " + checkinStreak +
+    (checkinStreak === 1 ? " day" : " days");
+}
 const gemsBalanceText = gemsBalance.toLocaleString() + " Gems";
 
 if($("gemsBalanceDisplay")){
