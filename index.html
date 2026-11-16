@@ -3985,10 +3985,16 @@ positionValue.textContent = "Loading...";
   }
 
 
-  // Load dashboard after account verification
-  currentProfile = profile;
+// Load dashboard after account verification
+currentProfile = profile;
 
-  $("authScreen").style.display="none";
+// Display the member's actual Gems balance
+const gemsBalance = Number(profile.gems_balance || 0);
+
+$("gemsBalanceDisplay").textContent =
+  gemsBalance.toLocaleString() + " Gems";
+
+$("authScreen").style.display="none";
 
   const name = profile.full_name ||
     currentUser.user_metadata?.full_name || "Member";
