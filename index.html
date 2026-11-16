@@ -3284,7 +3284,68 @@ function msg(id,text,type="success"){
   el.className="status "+type;  
   el.classList.remove("hidden");  
 }  
- 
+ // CLAIM DAILY GEMS
+async function claimDailyGems(button){
+  if(!currentUser || !button) return;
+
+  const originalText = button.textContent;
+
+  button.disabled = true;
+  button.textContent = "Claiming...";
+
+  try{
+    const {data,error} = await supabase.rpc(
+      "claim_daily_checkin",
+      {
+        p_user_id: currentUser.id
+      }
+    );
+
+    if(error) throw error;
+
+    if(data && data.success){
+      const balance = Number(data.gems_balance || 0);
+
+      $("gemsBalanceDisplay").textContent =
+        balance.toLocaleString() + " Gems";
+
+      msg(
+        "gemsMessage",
+        data.message || "Claimed 100 Gems!",
+        "success"
+      );
+
+      button.textContent = "Claimed Today";
+      button.disabled = true;
+      return;
+    }
+
+    const message = data?.message || "Unable to claim Gems.";
+
+    msg("gemsMessage", message, "error");
+
+    if(message.toLowerCase().includes("already claimed")){
+      button.textContent = "Already Claimed Today";
+      button.disabled = true;
+    }else{
+      button.textContent = originalText;
+      button.disabled = false;
+    }
+
+  }catch(err){
+    console.error("Daily Gems claim error:", err);
+
+    msg(
+      "gemsMessage",
+      err.message || "Could not claim Gems. Please try again.",
+      "error"
+    );
+
+    button.textContent = originalText;
+    button.disabled = false;
+  }
+}
+// END CLAIM DAILY GEMS
 function escapeHtml(value){  
   return String(value??"").replace(/[&<>"']/g,ch=>({  
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"  
