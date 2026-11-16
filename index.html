@@ -3357,8 +3357,10 @@ if($("gemsDashboardBalance")){
       );
 
       button.textContent = "Claimed Today";
-      button.disabled = true;
-      return;
+button.disabled = true;
+button.style.opacity = "0.45";
+button.style.cursor = "not-allowed";
+return;
     }
 
     const message = data?.message || "Unable to claim Gems.";
