@@ -1727,6 +1727,38 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
   </div>
 
 </div>
+          <!-- DAILY GEMS CHECK-IN -->
+<div id="dailyGemsCard" class="section"
+     style="background:linear-gradient(135deg,#0b3d2e,#147a56);border:2px solid #d4af37;border-radius:15px;padding:17px;margin-bottom:16px;color:white;">
+
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
+    <div>
+      <div style="font-size:13px;font-weight:700;color:#f5d879;">
+        ✨ DAILY GEMS
+      </div>
+      <div style="font-size:12px;margin-top:5px;">
+        Your Gems balance
+      </div>
+      <div id="gemsBalanceDisplay"
+           style="font-size:25px;font-weight:800;margin-top:5px;">
+        0 Gems
+      </div>
+    </div>
+    <div style="font-size:38px;">💎</div>
+  </div>
+
+  <button type="button" id="claimGemsButton"
+          onclick="claimDailyGems(this)"
+          style="width:100%;margin-top:15px;padding:13px;background:#d4af37;color:#173b2b;border:0;border-radius:10px;font-weight:800;font-size:14px;cursor:pointer;">
+    Claim 100 Gems
+  </button>
+
+  <div id="gemsMessage"
+       class="status hidden"
+       style="margin-top:10px;background:white;">
+  </div>
+</div>
+<!-- END DAILY GEMS CHECK-IN -->
         <!-- Top Wallet Section Container -->  
         <div style="background: #0d382b; padding: 20px 20px 30px 20px; border-radius: 20px; color: white; margin-bottom: 20px;">  
             <!-- Wallet Type Selector Tabs -->  
