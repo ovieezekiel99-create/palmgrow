@@ -3340,8 +3340,15 @@ async function claimDailyGems(button){
     if(data && data.success){
       const balance = Number(data.gems_balance || 0);
 
-      $("gemsBalanceDisplay").textContent =
-        balance.toLocaleString() + " Gems";
+      const balanceText = balance.toLocaleString() + " Gems";
+
+if($("gemsBalanceDisplay")){
+  $("gemsBalanceDisplay").textContent = balanceText;
+}
+
+if($("gemsDashboardBalance")){
+  $("gemsDashboardBalance").textContent = balanceText;
+    }
 
       msg(
         "gemsMessage",
