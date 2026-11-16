@@ -4025,9 +4025,15 @@ currentProfile = profile;
 
 // Display the member's actual Gems balance
 const gemsBalance = Number(profile.gems_balance || 0);
+const gemsBalanceText = gemsBalance.toLocaleString() + " Gems";
 
-$("gemsBalanceDisplay").textContent =
-  gemsBalance.toLocaleString() + " Gems";
+if($("gemsBalanceDisplay")){
+  $("gemsBalanceDisplay").textContent = gemsBalanceText;
+}
+
+if($("gemsDashboardBalance")){
+  $("gemsDashboardBalance").textContent = gemsBalanceText;
+}
 
 $("authScreen").style.display="none";
 
