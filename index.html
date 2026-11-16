@@ -3959,13 +3959,21 @@ function isProfileFilled(profile) {
   return Boolean(profile.phone && profile.age && profile.occupation && profile.gender);
 }
 
+// Identify the admin using the existing profile information
+function isAdminProfile(profile) {
+  return (
+    String(profile?.role || "").toLowerCase() === "admin" ||
+    String(profile?.account_type || "").toLowerCase() === "admin"
+  );
+}
+
 function setProfileFormLock(isLocked) {
   $("profFullName").disabled = isLocked;
   $("profPhone").disabled = isLocked;
   $("profAge").disabled = isLocked;
   $("profOccupation").disabled = isLocked;
   $("profGender").disabled = isLocked;
- 
+
   const saveBtn = $("saveProfileBtn");
   const msgEl = $("profileMessage");
 
@@ -3983,14 +3991,17 @@ function setProfileFormLock(isLocked) {
 }
 
 $("userProfileBtn").onclick = () => {
-  if(!currentProfile) return;
+  if (!currentProfile) return;
+
   $("profFullName").value = currentProfile.full_name || "";
   $("profPhone").value = currentProfile.phone || "";
   $("profAge").value = currentProfile.age || "";
   $("profOccupation").value = currentProfile.occupation || "";
   $("profGender").value = currentProfile.gender || "";
- 
-  const locked = isProfileFilled(currentProfile);
+
+  const admin = isAdminProfile(currentProfile);
+  const locked = !admin && isProfileFilled(currentProfile);
+
   setProfileFormLock(locked);
 
   $("profileModal").classList.remove("hidden");
@@ -4001,6 +4012,70 @@ $("closeProfileModal").onclick = () => {
 };
 
 $("profileForm").onsubmit = async e => {
+  e.preventDefault();
+
+  const admin = isAdminProfile(currentProfile);
+
+  if (!admin && isProfileFilled(currentProfile)) return;
+
+  const fullName = $("profFullName").value.trim();
+  const phone = $("profPhone").value.trim();
+  const age = $("profAge").value ? Number($("profAge").value) : null;
+  const occupation = $("profOccupation").value.trim();
+  const gender = $("profGender").value;
+
+  if (!phone || !age || !occupation || !gender) {
+    msg("profileMessage", "Please fill out all details before saving.", "error");
+    return;
+  }
+
+  // Ordinary members retain the original one-time confirmation.
+  if (!admin) {
+    const confirmSubmit = confirm(
+      "Notice: Once you save your profile details, they cannot be edited again. Are you sure you want to proceed?"
+    );
+    if (!confirmSubmit) return;
+  }
+
+  $("saveProfileBtn").disabled = true;
+  $("saveProfileBtn").textContent = "Saving...";
+
+  try {
+    const { error } = await supabase
+      .from("profiles")
+      .update({
+        full_name: fullName,
+        phone: phone,
+        age: age,
+        occupation: occupation,
+        gender: gender
+      })
+      .eq("id", currentUser.id);
+
+    if (error) throw error;
+
+    currentProfile.full_name = fullName;
+    currentProfile.phone = phone;
+    currentProfile.age = age;
+    currentProfile.occupation = occupation;
+    currentProfile.gender = gender;
+
+    $("userName").textContent = fullName || "Member";
+    $("userPhone").textContent = phone || "";
+    $("userAvatar").textContent = (fullName || "M").charAt(0).toUpperCase();
+
+    setProfileFormLock(!admin);
+    $("profileModal").classList.add("hidden");
+
+    alert("Profile details updated successfully.");
+
+  } catch (err) {
+    msg("profileMessage", err.message || "Failed to update profile", "error");
+    $("saveProfileBtn").disabled = false;
+    $("saveProfileBtn").textContent = "Save Details";
+  }
+};
+
   e.preventDefault();
   if (isProfileFilled(currentProfile)) return;
 
