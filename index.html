@@ -4076,52 +4076,6 @@ $("profileForm").onsubmit = async e => {
   }
 };
 
-  e.preventDefault();
-  if (isProfileFilled(currentProfile)) return;
-
-  const fullName = $("profFullName").value.trim();
-  const phone = $("profPhone").value.trim();
-  const age = $("profAge").value ? Number($("profAge").value) : null;
-  const occupation = $("profOccupation").value.trim();
-  const gender = $("profGender").value;
-
-  if(!phone || !age || !occupation || !gender) {
-    msg("profileMessage", "Please fill out all details before saving.", "error");
-    return;
-  }
-
-  const confirmSubmit = confirm("Notice: Once you save your profile details, they cannot be edited again. Are you sure you want to proceed?");
-  if(!confirmSubmit) return;
-
-  $("saveProfileBtn").disabled = true;
-  $("saveProfileBtn").textContent = "Saving...";
-
-  try {
-    const { error } = await supabase
-      .from("profiles")
-      .update({ full_name: fullName, phone: phone, age: age, occupation: occupation, gender: gender })
-      .eq("id", currentUser.id);
-
-    if (error) throw error;
-
-    currentProfile.full_name = fullName;
-    currentProfile.phone = phone;
-    currentProfile.age = age;
-    currentProfile.occupation = occupation;
-    currentProfile.gender = gender;
-
-    $("userName").textContent = fullName || "Member";
-    $("userPhone").textContent = phone || "";
-    $("userAvatar").textContent = (fullName || "M").charAt(0).toUpperCase();
-
-    setProfileFormLock(true);
-    $("profileModal").classList.add("hidden");
-  } catch(err) {
-    msg("profileMessage", err.message || "Failed to update profile", "error");
-    $("saveProfileBtn").disabled = false;
-    $("saveProfileBtn").textContent = "Save Details";
-  }
-};
   // LOAD CURRENT EMPLOYEE LEVEL ON DASHBOARD
 async function loadDashboardEmployeeLevel(){
 
