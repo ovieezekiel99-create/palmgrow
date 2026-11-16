@@ -4043,7 +4043,29 @@ if($("gemsBalanceDisplay")){
 if($("gemsDashboardBalance")){
   $("gemsDashboardBalance").textContent = gemsBalanceText;
 }
+// Restore daily Gems check-in button state
+const gemsButton = $("claimGemsButton");
 
+if(gemsButton){
+  const today = new Date();
+  const todayDate =
+    today.getFullYear() + "-" +
+    String(today.getMonth() + 1).padStart(2, "0") + "-" +
+    String(today.getDate()).padStart(2, "0");
+
+  const alreadyClaimed =
+    profile.last_checkin_date === todayDate;
+
+  gemsButton.disabled = alreadyClaimed;
+  gemsButton.textContent = alreadyClaimed
+    ? "Claimed Today"
+    : "Claim 100 Gems";
+
+  gemsButton.style.opacity = alreadyClaimed ? "0.45" : "1";
+  gemsButton.style.cursor = alreadyClaimed
+    ? "not-allowed"
+    : "pointer";
+    }
 $("authScreen").style.display="none";
 
   const name = profile.full_name ||
