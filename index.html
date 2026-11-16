@@ -3353,7 +3353,13 @@ if($("gemsBalanceDisplay")){
 if($("gemsDashboardBalance")){
   $("gemsDashboardBalance").textContent = balanceText;
     }
+if($("checkinStreakDisplay")){
+  const streak = Number(data.checkin_streak || 0);
 
+  $("checkinStreakDisplay").textContent =
+    "Current streak: " + streak +
+    (streak === 1 ? " day" : " days");
+                                         }
       msg(
         "gemsMessage",
         data.message || "Claimed 100 Gems!",
