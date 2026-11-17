@@ -4253,7 +4253,13 @@ function showPage(page, pushHistory = true){
     const el=$("page-"+p);  
     if(el)el.classList.toggle("hidden",p!==page);  
   });  
- 
+ // Keep the PalmGrow carousel visible only on Dashboard
+const homeCarousel = $("palmgrowHomeCarousel");
+
+if(homeCarousel){
+  homeCarousel.style.display =
+    page === "dashboard" ? "block" : "none";
+    }
   document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));  
   const active=document.querySelector(`.nav-item[data-page="${page}"]`);  
   if(active)active.classList.add("active");  
