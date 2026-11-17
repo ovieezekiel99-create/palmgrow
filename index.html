@@ -3541,7 +3541,9 @@ async function claimDailyGems(button){
 
     if(error) throw error;
 
-    if(data && data.success){
+if(data && data.success){
+
+  playGemsExplosion();
       const balance = Number(data.gems_balance || 0);
 
       const balanceText = balance.toLocaleString() + " Gems";
