@@ -4774,7 +4774,30 @@ async function loadEmployeePositionPlans(){
   }
 }
  
+// PALMGROW DASHBOARD IMAGE CAROUSEL
+let palmGrowHomeSlideIndex = 0;
 
+window.palmGrowHomeMove = function(direction) {
+  const slides = document.querySelectorAll(
+    "#palmgrowHomeCarousel .pg-home-slide"
+  );
+
+  if (!slides.length) return;
+
+  palmGrowHomeSlideIndex =
+    (palmGrowHomeSlideIndex + direction + slides.length)
+    % slides.length;
+
+  slides.forEach((slide, index) => {
+    slide.style.display =
+      index === palmGrowHomeSlideIndex ? "block" : "none";
+  });
+};
+
+// Automatically change image every 5 seconds
+setInterval(() => {
+  window.palmGrowHomeMove(1);
+}, 5000);
 async function activateEmployeePosition(levelCode, button) {
   const originalText = button.textContent;
 
