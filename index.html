@@ -1837,45 +1837,52 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
 <!-- END DAILY GEMS DASHBOARD SHORTCUT -->
 </div>
 
-<!-- PALMGROW AGRICULTURE IMAGE CAROUSEL -->
-<div id="palmgrowHomeCarousel" style="margin:18px 0 10px;background:#0b3d2e;border-radius:15px;overflow:hidden;color:white;">
 
-  <div style="position:relative;height:155px;overflow:hidden;">
+<!-- PALMGROW DASHBOARD TESTIMONIAL CAROUSEL -->
+<div id="palmgrowHomeCarousel" style="margin:18px 0 10px;background:#0b3d2e;border-radius:12px;overflow:hidden;color:white;">
 
-    <div class="pg-home-slide active" style="position:absolute;inset:0;">
-      <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=900" alt="Green tropical plantation" style="width:100%;height:100%;object-fit:cover;">
-      <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.75),rgba(0,0,0,.08));display:flex;flex-direction:column;justify-content:center;padding:18px;">
-        <strong style="font-size:19px;">Growing a Greener Future</strong>
-        <span style="font-size:12px;margin-top:7px;">Supporting sustainable agriculture and growth.</span>
+  <div id="palmgrowTestimonialSlide" style="position:relative;min-height:190px;overflow:hidden;background:#0b3d2e;">
+
+    <img id="palmgrowTestimonialBg"
+         src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900"
+         alt="Agricultural background"
+         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+
+    <div style="position:absolute;inset:0;background:rgba(0,35,20,.76);"></div>
+
+    <div style="position:relative;z-index:1;padding:18px 16px;min-height:190px;display:flex;flex-direction:column;justify-content:center;">
+
+      <div style="font-size:10px;color:#f5d879;font-weight:700;margin-bottom:10px;">
+        PALMGROW COMMUNITY TESTIMONIAL
       </div>
-    </div>
 
-    <div class="pg-home-slide" style="position:absolute;inset:0;display:none;">
-      <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900" alt="Green agricultural farmland" style="width:100%;height:100%;object-fit:cover;">
-      <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.75),rgba(0,0,0,.08));display:flex;flex-direction:column;justify-content:center;padding:18px;">
-        <strong style="font-size:19px;">Agriculture Creates Value</strong>
-        <span style="font-size:12px;margin-top:7px;">Building opportunities through agricultural activities.</span>
-      </div>
-    </div>
+      <p id="palmgrowTestimonialQuote" style="font-size:13px;line-height:1.65;margin:0 0 13px;color:white;">
+        Community stories will appear here.
+      </p>
 
-    <div class="pg-home-slide" style="position:absolute;inset:0;display:none;">
-      <img src="https://images.unsplash.com/photo-1499529112087-3cb3b73cec95?w=900" alt="Lush green agricultural landscape" style="width:100%;height:100%;object-fit:cover;">
-      <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.75),rgba(0,0,0,.08));display:flex;flex-direction:column;justify-content:center;padding:18px;">
-        <strong style="font-size:19px;">Welcome to PalmGrow</strong>
-        <span style="font-size:12px;margin-top:7px;">Growing together through agriculture.</span>
-      </div>
-    </div>
+      <strong id="palmgrowTestimonialName" style="font-size:13px;color:#f5d879;"></strong>
 
+      <span id="palmgrowTestimonialRole" style="font-size:11px;color:#e5eee8;margin-top:3px;"></span>
+
+    </div>
   </div>
 
-  <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 13px;">
-    <span style="font-size:11px;color:#f5d879;font-weight:700;">PALMGROW • GROWTH • OPPORTUNITY</span>
-    <div style="display:flex;gap:7px;">
-      <button type="button" onclick="palmGrowHomeMove(-1)" aria-label="Previous slide" style="background:transparent;border:1px solid #d4af37;color:white;border-radius:50%;width:27px;height:27px;">‹</button>
-      <button type="button" onclick="palmGrowHomeMove(1)" aria-label="Next slide" style="background:transparent;border:1px solid #d4af37;color:white;border-radius:50%;width:27px;height:27px;">›</button>
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 12px;">
+
+    <span id="palmgrowTestimonialCount" style="font-size:10px;color:#f5d879;">
+      Story 1 of 75
+    </span>
+
+    <div style="display:flex;gap:8px;">
+      <button type="button" onclick="palmGrowTestimonialMove(-1)" aria-label="Previous testimony" style="background:transparent;border:1px solid #d4af37;color:white;border-radius:50%;width:30px;height:30px;">‹</button>
+
+      <button type="button" onclick="palmGrowTestimonialMove(1)" aria-label="Next testimony" style="background:transparent;border:1px solid #d4af37;color:white;border-radius:50%;width:30px;height:30px;">›</button>
     </div>
+
   </div>
 </div>
+<!-- END PALMGROW DASHBOARD TESTIMONIAL CAROUSEL -->
+
 
 </div>
 <!-- END DASHBOARD PAGE -->
