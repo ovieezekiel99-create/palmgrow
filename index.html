@@ -4828,9 +4828,14 @@ function renderPalmGrowTestimonial() {
     ];
 
   background.onload = () => {
-    background.style.transition = "opacity 0.8s ease";
-    background.style.opacity = "1";
-  };
+  background.style.transition = "opacity 0.8s ease";
+  background.style.opacity = "1";
+};
+
+background.onerror = () => {
+  background.style.opacity = "0";
+  background.style.backgroundColor = "#0b3d2e";
+};
 }
 
 window.palmGrowTestimonialMove = function(direction) {
