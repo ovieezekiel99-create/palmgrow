@@ -4757,20 +4757,19 @@ async function activateEmployeePosition(levelCode, button) {
       button.textContent = "Insufficient Funds";
 
       setTimeout(() => {
-        button.textContent = originalText;
-        button.disabled = false;
+        if (button.isConnected) {
+          button.textContent = originalText;
+          button.disabled = false;
+        }
       }, 2500);
 
       return;
     }
 
+    button.textContent = "Joined Successfully!";
+
     await loadDashboard();
     await loadEmployeePositionPlans();
-
-    if (button.isConnected) {
-      button.textContent = "Joined Successfully!";
-      button.disabled = true;
-    }
 
   } catch (err) {
     console.error("Position activation error:", err);
@@ -4778,8 +4777,10 @@ async function activateEmployeePosition(levelCode, button) {
     button.textContent = "Join Failed";
 
     setTimeout(() => {
-      button.textContent = originalText;
-      button.disabled = false;
+      if (button.isConnected) {
+        button.textContent = originalText;
+        button.disabled = false;
+      }
     }, 2500);
   }
 }
