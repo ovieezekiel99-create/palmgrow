@@ -3443,6 +3443,85 @@ function msg(id,text,type="success"){
   el.className="status "+type;  
   el.classList.remove("hidden");  
 }  
+    
+// PALMGROW GEMS EXPLOSION EFFECT
+function playGemsExplosion(){
+
+  const overlay = document.getElementById("gemsExplosion");
+  const gem = document.getElementById("gemsExplosionCenter");
+  const particles = document.getElementById("gemsExplosionParticles");
+
+  if(!overlay || !gem || !particles) return;
+
+  let style = document.getElementById("gemsExplosionStyles");
+
+  if(!style){
+    style = document.createElement("style");
+    style.id = "gemsExplosionStyles";
+
+    style.textContent = `
+      @keyframes gemsCoreBurst {
+        0% {transform:translate(-50%,-50%) scale(0.2);opacity:0;}
+        35% {transform:translate(-50%,-50%) scale(1.4);opacity:1;}
+        65% {transform:translate(-50%,-50%) scale(1);opacity:1;}
+        100% {transform:translate(-50%,-50%) scale(1.8);opacity:0;}
+      }
+
+      @keyframes gemsShardBurst {
+        0% {
+          transform:translate(0,0) rotate(0deg) scale(1);
+          opacity:1;
+        }
+        100% {
+          transform:translate(var(--gem-x),var(--gem-y))
+          rotate(var(--gem-r)) scale(0.15);
+          opacity:0;
+        }
+      }
+    `;
+
+    document.head.appendChild(style);
+  }
+
+  particles.innerHTML = "";
+  overlay.style.display = "block";
+
+  gem.style.animation = "none";
+  void gem.offsetWidth;
+  gem.style.animation = "gemsCoreBurst 850ms ease-out forwards";
+
+  for(let i=0;i<24;i++){
+
+    const piece = document.createElement("span");
+
+    const angle = (Math.PI * 2 * i) / 24;
+    const distance = 90 + Math.random() * 160;
+
+    piece.textContent = "💎";
+
+    piece.style.cssText = `
+      position:absolute;
+      left:50%;
+      top:45%;
+      font-size:${12 + Math.random()*17}px;
+      --gem-x:${Math.cos(angle)*distance}px;
+      --gem-y:${Math.sin(angle)*distance}px;
+      --gem-r:${Math.random()*900-450}deg;
+      animation:gemsShardBurst ${850+Math.random()*350}ms ease-out forwards;
+      animation-delay:${Math.random()*100}ms;
+    `;
+
+    particles.appendChild(piece);
+  }
+
+  setTimeout(()=>{
+    overlay.style.display = "none";
+    particles.innerHTML = "";
+    gem.style.animation = "none";
+  },1500);
+}
+// END PALMGROW GEMS EXPLOSION EFFECT
+
  // CLAIM DAILY GEMS
 async function claimDailyGems(button){
   if(!currentUser || !button) return;
