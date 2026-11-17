@@ -4734,9 +4734,6 @@ async function loadEmployeePositionPlans(){
 }
  
 async function activateEmployeePosition(levelCode,button){  
-  const confirmed=confirm("Join "+levelCode+"? PalmGrow will check your available wallet balance.");  
-  if(!confirmed)return;  
- 
   button.disabled=true;  
   button.textContent="⏳ Checking wallet...";  
  
