@@ -2462,6 +2462,37 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
   <i class="fa-solid fa-chevron-right" style="color:var(--muted);"></i>
 </button>
 <!-- END OPEN MY REFERRAL NETWORK -->
+    
+<!-- MY COMMISSION HISTORY -->
+<div id="myCommissionHistory" style="margin-top:16px;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:14px;">
+
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;">
+    <div>
+      <strong style="display:block;font-size:15px;color:var(--text);">My Commission History</strong>
+      <small style="color:var(--muted);font-size:11px;">Your referral activation bonuses and daily task rebates</small>
+    </div>
+    <button type="button" onclick="loadMyCommissionHistory(true)" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text);font-size:11px;cursor:pointer;">
+      <i class="fa-solid fa-rotate"></i> Refresh
+    </button>
+  </div>
+
+  <div id="commissionHistoryMessage" style="font-size:12px;color:var(--muted);text-align:center;padding:12px;">
+    Commission history will appear here.
+  </div>
+
+  <div id="commissionHistoryList"></div>
+
+  <button
+    type="button"
+    id="loadMoreCommissionsBtn"
+    onclick="loadMoreMyCommissions()"
+    style="display:none;width:100%;margin-top:12px;padding:11px;border:1px solid var(--border);border-radius:9px;background:var(--card);color:var(--text);font-size:12px;cursor:pointer;">
+    Load More
+  </button>
+
+</div>
+<!-- END MY COMMISSION HISTORY -->
+
 
 
   <!-- HIDDEN FIELDS -->
