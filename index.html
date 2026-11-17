@@ -4216,13 +4216,39 @@ function showPage(page, pushHistory = true){
   }  
 
 window.showPage=showPage;  
-window.onpopstate = (event) => {  
-  const targetPage = event.state?.page || "dashboard";  
-  if(pageHistory.length > 1){  
-    pageHistory.pop();  
-  }  
-  showPage(targetPage, false);  
-};  
+window.onpopstate = (event) => {
+  const state = event.state || {};
+  const targetPage = state.page || "dashboard";
+
+  if (targetPage === "admin") {
+    showPage("admin", false);
+
+    const tabName = state.adminTab || "home";
+
+    document.querySelectorAll(".admin-tab-btn")
+      .forEach(btn => btn.classList.remove("active"));
+
+    document.querySelectorAll(".admin-panel-section")
+      .forEach(section => section.classList.remove("active"));
+
+    const section = document.getElementById("admin-tab-" + tabName);
+    if (section) section.classList.add("active");
+
+    const button = document.querySelector(
+      `.admin-tab-btn[data-admin-tab="${tabName}"]`
+    );
+    if (button) button.classList.add("active");
+
+    return;
+  }
+
+  if (pageHistory.length > 1) {
+    pageHistory.pop();
+  }
+
+  showPage(targetPage, false);
+};
+
  
 document.querySelectorAll(".nav-item[data-page]").forEach(item=>{  
   item.onclick=()=>showPage(item.dataset.page);  
