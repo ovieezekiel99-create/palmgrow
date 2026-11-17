@@ -4733,33 +4733,57 @@ async function loadEmployeePositionPlans(){
   }
 }
  
-async function activateEmployeePosition(levelCode,button){  
-  button.disabled=true;  
-  button.textContent="⏳ Checking wallet...";  
- 
-  try{  
-    const idempotencyKey="web-"+crypto.randomUUID();  
-    const {data,error}=await supabase.rpc("activate_employee_position",{  
-      p_level_code:levelCode,  
-      p_idempotency_key:idempotencyKey  
-    });  
- 
-    if(error)throw error;  
-    if(!data?.success){  
-      msg("positionMessage",data?.message||"Insufficient available wallet balance.","error");  
-      return;  
-    }  
- 
-    msg("positionMessage",data?.message||("You have successfully joined "+levelCode+"."));  
-    await loadDashboard();  
-    await loadEmployeePositionPlans();  
-  }catch(err){  
-    msg("positionMessage",err.message||"Position activation was not completed.","error");  
-  }finally{  
-    button.disabled=false;  
-    button.textContent="Join Now";  
-  }  
-}  
+
+async function activateEmployeePosition(levelCode, button) {
+  const originalText = button.textContent;
+
+  button.disabled = true;
+  button.textContent = "⏳ Checking Wallet...";
+
+  try {
+    const idempotencyKey = "web-" + crypto.randomUUID();
+
+    const { data, error } = await supabase.rpc(
+      "activate_employee_position",
+      {
+        p_level_code: levelCode,
+        p_idempotency_key: idempotencyKey
+      }
+    );
+
+    if (error) throw error;
+
+    if (!data?.success) {
+      button.textContent = "Insufficient Funds";
+
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.disabled = false;
+      }, 2500);
+
+      return;
+    }
+
+    await loadDashboard();
+    await loadEmployeePositionPlans();
+
+    if (button.isConnected) {
+      button.textContent = "Joined Successfully!";
+      button.disabled = true;
+    }
+
+  } catch (err) {
+    console.error("Position activation error:", err);
+
+    button.textContent = "Join Failed";
+
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.disabled = false;
+    }, 2500);
+  }
+}
+  
   // Upgrade an existing employee position
 async function upgradeEmployeePosition(levelCode, button){
   const confirmed = confirm(
