@@ -6235,35 +6235,51 @@ window.changePalmGrowNewsPage = changePalmGrowNewsPage;
     });
 })();
 /* END PALMGROW TALK TO AGENT */   
+    
+/* PALMGROW WALLET BALANCE VISIBILITY */
 
-    /* PALMGROW WALLET BALANCE VISIBILITY */
 window.toggleWalletBalanceVisibility = function() {
     const balance = document.getElementById("walletBalanceDisplay");
     const button = document.getElementById("toggleWalletBalance");
 
     if (!balance || !button) return;
 
-    if (!balance.dataset.originalBalance) {
-        balance.dataset.originalBalance = balance.textContent;
-    }
-
-    const isHidden = balance.dataset.hidden === "true";
+    const isHidden = balance.dataset.hidden !== "false";
 
     if (isHidden) {
-        balance.textContent = balance.dataset.originalBalance;
+        balance.textContent = balance.dataset.originalBalance || "₦0.00";
         balance.dataset.hidden = "false";
         button.textContent = "👁";
         button.setAttribute("aria-label", "Hide wallet balance");
     } else {
         balance.dataset.originalBalance = balance.textContent;
-        balance.textContent = "*****";
+        balance.textContent = "••••••";
         balance.dataset.hidden = "true";
         button.textContent = "🙈";
         button.setAttribute("aria-label", "Show wallet balance");
     }
 };
+
+/* Hide wallet balance by default */
+window.hideWalletBalance = function() {
+    const balance = document.getElementById("walletBalanceDisplay");
+    const button = document.getElementById("toggleWalletBalance");
+
+    if (!balance || !button) return;
+
+    if (balance.dataset.hidden !== "true") {
+        balance.dataset.originalBalance = balance.textContent;
+    }
+
+    balance.textContent = "••••••";
+    balance.dataset.hidden = "true";
+    button.textContent = "🙈";
+    button.setAttribute("aria-label", "Show wallet balance");
+};
+
 /* END PALMGROW WALLET BALANCE VISIBILITY */
-    
+
+            
 </script>
 </body>
 </html>
