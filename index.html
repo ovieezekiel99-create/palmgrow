@@ -7333,5 +7333,78 @@ if ("serviceWorker" in navigator) {
   });
 }
     </script>
+    
+<script>
+// PALMGROW INSTALL APP
+let palmGrowInstallPrompt = null;
+
+const palmGrowInstallButton = document.getElementById(
+  "installPalmGrowAppButton"
+);
+
+function palmGrowInstallMessage(message) {
+  if (!palmGrowInstallButton) return;
+
+  let notice = document.getElementById("palmGrowInstallNotice");
+
+  if (!notice) {
+    notice = document.createElement("div");
+    notice.id = "palmGrowInstallNotice";
+    notice.style.cssText =
+      "font-size:11px;color:#66816e;text-align:right;margin:-8px 0 12px;line-height:1.5;";
+
+    palmGrowInstallButton.parentElement.insertAdjacentElement(
+      "afterend",
+      notice
+    );
+  }
+
+  notice.textContent = message;
+}
+
+window.addEventListener("beforeinstallprompt", event => {
+  event.preventDefault();
+  palmGrowInstallPrompt = event;
+
+  if (palmGrowInstallButton) {
+    palmGrowInstallButton.textContent = "📲 Install App";
+    palmGrowInstallButton.style.display = "inline-block";
+  }
+});
+
+window.installPalmGrowApp = async function () {
+  if (window.matchMedia("(display-mode: standalone)").matches) {
+    palmGrowInstallMessage("PalmGrow is already installed on this phone.");
+    return;
+  }
+
+  if (!palmGrowInstallPrompt) {
+    palmGrowInstallMessage(
+      "To install PalmGrow, open your browser menu ⋮ and select Install App or Add to Home Screen."
+    );
+    return;
+  }
+
+  palmGrowInstallPrompt.prompt();
+
+  const choice = await palmGrowInstallPrompt.userChoice;
+
+  if (choice.outcome === "accepted") {
+    palmGrowInstallMessage("PalmGrow installation accepted.");
+  }
+
+  palmGrowInstallPrompt = null;
+};
+
+window.addEventListener("appinstalled", () => {
+  if (palmGrowInstallButton) {
+    palmGrowInstallButton.textContent = "✓ App Installed";
+  }
+
+  palmGrowInstallMessage("PalmGrow has been installed successfully.");
+});
+// END PALMGROW INSTALL APP
+</script>
+
 </body>
 </html>
