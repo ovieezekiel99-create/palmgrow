@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b3d2e">
+  <title>PalmGrow - You're Offline</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f1f8f2;
+      font-family: Arial, sans-serif;
+      color: #0b3d2e;
+      text-align: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .card {
+      max-width: 360px;
+      background: white;
+      border: 1px solid #d5e7d8;
+      border-radius: 14px;
+      padding: 28px 22px;
+    }
+    img {
+      width: 85px;
+      height: 85px;
+      object-fit: contain;
+    }
+    h2 { margin-bottom: 10px; }
+    p {
+      color: #66816e;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    button {
+      background: #0b3d2e;
+      color: white;
+      border: 0;
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-weight: bold;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img src="./palmgrow-icon-192.png" alt="PalmGrow">
+    <h2>You're Offline 🌴</h2>
+    <p>
+      Your internet connection appears to be unavailable.
+      Please reconnect to the internet to access your PalmGrow
+      account and financial services.
+    </p>
+    <p>Your account transactions cannot be completed offline.</p>
+    <button onclick="window.location.reload()">Try Again</button>
+  </div>
+</body>
+</html>
