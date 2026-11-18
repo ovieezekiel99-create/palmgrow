@@ -1648,6 +1648,74 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
             </div>  
         </div>  
 
+<!-- PALMGROW DEPOSIT WALLET CONTRACT DETAILS PANEL -->
+<div id="depositWalletPanel"
+     style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:9999;align-items:center;justify-content:center;padding:18px;">
+
+  <div style="width:100%;max-width:400px;background:#f5faf6;border:1px solid #c9dfce;border-radius:14px;padding:20px;color:#0b3d2e;position:relative;">
+
+    <button type="button"
+            id="closeDepositWalletPanel"
+            aria-label="Close Deposit Wallet"
+            style="position:absolute;top:10px;right:12px;border:none;background:transparent;color:#0b3d2e;font-size:25px;font-weight:bold;cursor:pointer;">
+      ✕
+    </button>
+
+    <h3 style="margin:0 35px 18px 0;font-size:18px;">
+      Deposit Wallet
+    </h3>
+
+    <p style="font-size:12px;color:#66816e;margin-bottom:5px;">
+      CONTRACT DEPOSIT AMOUNT
+    </p>
+
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+      <strong id="contractDepositAmount"
+              style="font-size:25px;color:#66816e;">
+        ••••••
+      </strong>
+
+      <button type="button"
+              id="toggleContractDeposit"
+              aria-label="Show contract deposit"
+              style="border:0;background:transparent;font-size:20px;cursor:pointer;">
+        🙈
+      </button>
+    </div>
+
+    <div style="background:#e8f3eb;border-radius:9px;padding:13px;margin-bottom:12px;">
+      <p style="font-size:11px;color:#66816e;margin:0 0 5px;">
+        CONTRACT NAME
+      </p>
+      <strong id="contractDepositTitle">Loading...</strong>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+
+      <div style="background:#e8f3eb;border-radius:9px;padding:12px;">
+        <p style="font-size:11px;color:#66816e;margin:0 0 6px;">
+          START DATE
+        </p>
+        <strong id="contractStartDate" style="font-size:12px;">—</strong>
+      </div>
+
+      <div style="background:#e8f3eb;border-radius:9px;padding:12px;">
+        <p style="font-size:11px;color:#66816e;margin:0 0 6px;">
+          END DATE
+        </p>
+        <strong id="contractEndDate" style="font-size:12px;">—</strong>
+      </div>
+
+    </div>
+
+    <p id="contractWalletMessage"
+       style="font-size:12px;color:#66816e;margin:14px 0 0;">
+    </p>
+
+  </div>
+</div>
+<!-- END PALMGROW DEPOSIT WALLET PANEL -->
+
         <!-- 2x3 Earnings & Metrics Grid -->  
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">  
             <div style="background: white; padding: 12px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-align: center;">  
