@@ -1966,6 +1966,180 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
 </div>
 <!-- END DAILY GEMS PAGE -->
 
+<!-- PALMGROW EXCHANGE GIFT GALLERY -->
+<div id="page-redemption-gallery" class="hidden">
+
+  <div class="section">
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+      <div>
+        <h2 style="color:#0b3d2e;margin:0;font-size:20px;">🎁 Gift Gallery</h2>
+        <p style="font-size:12px;color:#66816e;margin:5px 0 0;">
+          Exchange your Gems for exciting gifts.
+        </p>
+      </div>
+      <button type="button" onclick="showPage('dashboard')"
+        style="background:#e8f3eb;color:#0b3d2e;border:1px solid #c9dfce;border-radius:8px;padding:8px 11px;font-weight:700;">
+        ✕ Close
+      </button>
+    </div>
+
+    <div style="background:#0b3d2e;color:white;border-radius:13px;padding:17px;margin-bottom:18px;">
+      <div style="font-size:11px;color:#d4af37;font-weight:700;">
+        PALMGROW EXCHANGE GIFT GALLERY
+      </div>
+      <h3 style="font-size:17px;margin:8px 0;">
+        Your Gems. Your Rewards. 🌴
+      </h3>
+      <p style="font-size:12px;line-height:1.6;margin:0;color:#e5eee8;">
+        Browse available gifts and use your earned Gems to redeem your favourite items.
+      </p>
+    </div>
+
+    <div style="margin-bottom:15px;">
+      <input id="giftGallerySearch"
+        type="search"
+        placeholder="🔍 Search gifts..."
+        style="width:100%;padding:12px;border:1px solid #dce9df;border-radius:9px;font-size:13px;">
+    </div>
+
+    <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:12px;">
+      <button class="gift-category-btn active" data-category="all">All Gifts</button>
+      <button class="gift-category-btn" data-category="electronics">Electronics</button>
+      <button class="gift-category-btn" data-category="food">Food Items</button>
+      <button class="gift-category-btn" data-category="home">Home & Household</button>
+    </div>
+
+    <div id="giftGalleryProducts"
+      style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;">
+
+      <div class="gift-product" data-category="electronics" data-name="iPhone 17 Pro Max Cosmic Orange">
+        <div class="gift-product-image">📱</div>
+        <div class="gift-product-info">
+          <strong>Apple iPhone 17 Pro Max</strong>
+          <p>6.9″ · 256GB · 12GB RAM · iOS 26 · Single SIM · Cosmic Orange</p>
+          <div class="gift-product-price">3,125,000 Gems</div>
+          <button type="button" class="gift-exchange-btn" disabled>Redemption coming soon</button>
+        </div>
+      </div>
+
+      <div class="gift-product" data-category="electronics" data-name="iPhone 16 Plus Pink">
+        <div class="gift-product-image">📱</div>
+        <div class="gift-product-info">
+          <strong>Apple iPhone 16 Plus 5G</strong>
+          <p>6.7″ · 128GB ROM · 8GB RAM · Single SIM · Pink</p>
+          <div class="gift-product-price">1,587,500 Gems</div>
+          <button type="button" class="gift-exchange-btn" disabled>Redemption coming soon</button>
+        </div>
+      </div>
+
+      <div class="gift-product" data-category="electronics" data-name="SPL solar rechargeable standing fan">
+        <div class="gift-product-image">🌀</div>
+        <div class="gift-product-info">
+          <strong>SPL Solar Rechargeable Fan</strong>
+          <p>18-inch · Solar panel · LED lights · 3-year warranty</p>
+          <div class="gift-product-price">150,000 Gems</div>
+          <button type="button" class="gift-exchange-btn" disabled>Redemption coming soon</button>
+        </div>
+      </div>
+
+      <div class="gift-product" data-category="food" data-name="Big Bull Rice 5kg">
+        <div class="gift-product-image">🍚</div>
+        <div class="gift-product-info">
+          <strong>Big Bull Rice</strong>
+          <p>5kg bag</p>
+          <div class="gift-product-price">12,250 Gems</div>
+          <button type="button" class="gift-exchange-btn" disabled>Redemption coming soon</button>
+        </div>
+      </div>
+
+      <div class="gift-product" data-category="food" data-name="Penny Spaghetti">
+        <div class="gift-product-image">🍝</div>
+        <div class="gift-product-info">
+          <strong>Penny Spaghetti</strong>
+          <p>1 pack</p>
+          <div class="gift-product-price">48,750 Gems</div>
+          <button type="button" class="gift-exchange-btn" disabled>Redemption coming soon</button>
+        </div>
+      </div>
+
+      <div class="gift-product" data-category="food" data-name="Indomie Regular Chicken">
+        <div class="gift-product-image">🍜</div>
+        <div class="gift-product-info">
+          <strong>Indomie Regular Chicken</strong>
+          <p>70g · 1 carton</p>
+          <div class="gift-product-price">19,375–21,625 Gems</div>
+          <button type="button" class="gift-exchange-btn" disabled>Redemption coming soon</button>
+        </div>
+      </div>
+
+      <div class="gift-product" data-category="food" data-name="Eggs">
+        <div class="gift-product-image">🥚</div>
+        <div class="gift-product-info">
+          <strong>Eggs</strong>
+          <p>1 crate · 30 pieces</p>
+          <div class="gift-product-price">7,500 Gems</div>
+          <button type="button" class="gift-exchange-btn" disabled>Redemption coming soon</button>
+        </div>
+      </div>
+
+      <div class="gift-product" data-category="food" data-name="Milo Activ-Go">
+        <div class="gift-product-image">🥛</div>
+        <div class="gift-product-info">
+          <strong>Nestlé Milo Activ-Go</strong>
+          <p>800g sachet</p>
+          <div class="gift-product-price">16,250 Gems</div>
+          <button type="button" class="gift-exchange-btn" disabled>Redemption coming soon</button>
+        </div>
+      </div>
+
+      <div class="gift-product" data-category="food" data-name="Terra Golden Vegetable Oil">
+        <div class="gift-product-image">🫙</div>
+        <div class="gift-product-info">
+          <strong>Terra Golden Vegetable Oil</strong>
+          <p>3 litres</p>
+          <div class="gift-product-price">21,500 Gems</div>
+          <button type="button" class="gift-exchange-btn" disabled>Redemption coming soon</button>
+        </div>
+      </div>
+
+      <div class="gift-product" data-category="home" data-name="Wheat Straw Dinnerware Set">
+        <div class="gift-product-image">🍽️</div>
+        <div class="gift-product-info">
+          <strong>16PCS Wheat Straw Dinnerware Set</strong>
+          <p>Black</p>
+          <div class="gift-product-price">34,221 Gems</div>
+          <button type="button" class="gift-exchange-btn" disabled>Redemption coming soon</button>
+        </div>
+      </div>
+
+      <div class="gift-product" data-category="home" data-name="Gold Plated Stainless Steel Cutlery">
+        <div class="gift-product-image">🍴</div>
+        <div class="gift-product-info">
+          <strong>Gold-Plated Stainless Steel Cutlery</strong>
+          <p>4 pieces</p>
+          <div class="gift-product-price">7,500 Gems</div>
+          <button type="button" class="gift-exchange-btn" disabled>Redemption coming soon</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="giftGalleryEmpty" style="display:none;text-align:center;padding:25px;color:#66816e;">
+      No matching gifts found.
+    </div>
+
+    <div style="margin-top:18px;background:#f1f8f2;border:1px solid #d5e7d8;border-radius:10px;padding:13px;">
+      <strong style="color:#0b3d2e;font-size:13px;">🌱 Gift Redemption Information</strong>
+      <p style="font-size:12px;line-height:1.6;color:#526b59;margin:7px 0 0;">
+        Product prices are displayed in Gems. Redemption will be available after your account balance and gift availability have been securely verified.
+      </p>
+    </div>
+
+  </div>
+</div>
+<!-- END PALMGROW EXCHANGE GIFT GALLERY -->
+
 <!-- PALMGROW HUB PAGE -->
 <div id="page-hub" class="hidden">
 
