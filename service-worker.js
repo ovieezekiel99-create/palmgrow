@@ -1,5 +1,5 @@
 
-const CACHE_NAME = "palmgrow-app-v1";
+const CACHE_NAME = "palmgrow-app-v2";
 
 self.addEventListener("install", event => {
   event.waitUntil(
