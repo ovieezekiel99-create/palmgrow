@@ -6355,7 +6355,150 @@ window.hideWalletBalance = function() {
 
 /* END PALMGROW WALLET BALANCE VISIBILITY */
 
-            
+   
+// ==========================================
+// PALMGROW DEPOSIT WALLET CONTRACT DETAILS
+// ==========================================
+
+let palmGrowContractDepositValue = null;
+let palmGrowContractDepositVisible = false;
+
+// Format database date as DD/MM/YYYY
+function formatPalmGrowContractDate(value) {
+    if (!value) return "—";
+
+    const parts = String(value).split("-");
+
+    if (parts.length !== 3) return String(value);
+
+    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+}
+
+// Load the logged-in member's active contract
+async function loadMyContractDeposit() {
+    const titleEl = $("contractDepositTitle");
+    const amountEl = $("contractDepositAmount");
+    const startEl = $("contractStartDate");
+    const endEl = $("contractEndDate");
+    const messageEl = $("contractWalletMessage");
+    const toggleEl = $("toggleContractDeposit");
+
+    if (!currentUser) {
+        titleEl.textContent = "Please log in to view your contract.";
+        return;
+    }
+
+    titleEl.textContent = "Loading...";
+    amountEl.textContent = "••••••";
+    startEl.textContent = "—";
+    endEl.textContent = "—";
+    messageEl.textContent = "";
+
+    palmGrowContractDepositValue = null;
+    palmGrowContractDepositVisible = false;
+
+    toggleEl.textContent = "🙈";
+    toggleEl.setAttribute("aria-label", "Show contract deposit");
+
+    try {
+        const { data, error } = await supabase
+            .from("employee_contracts")
+            .select("contract_title,deposit_amount,start_date,end_date,status")
+            .eq("employee_id", currentUser.id)
+            .eq("status", "active")
+            .order("created_at", { ascending: false })
+            .limit(1)
+            .maybeSingle();
+
+        if (error) throw error;
+
+        if (!data) {
+            titleEl.textContent = "No active contract";
+            messageEl.textContent =
+                "No active contract details were found for your account.";
+            return;
+        }
+
+        palmGrowContractDepositValue =
+            data.deposit_amount == null ? null : Number(data.deposit_amount);
+
+        titleEl.textContent =
+            data.contract_title || "PalmGrow Contract";
+
+        startEl.textContent =
+            formatPalmGrowContractDate(data.start_date);
+
+        endEl.textContent =
+            formatPalmGrowContractDate(data.end_date);
+
+        if (palmGrowContractDepositValue === null ||
+            !Number.isFinite(palmGrowContractDepositValue)) {
+            amountEl.textContent = "Not available";
+            messageEl.textContent =
+                "The contract deposit amount is not available.";
+            return;
+        }
+
+        amountEl.textContent = "••••••";
+        messageEl.textContent = "Your active contract details.";
+
+    } catch (error) {
+        console.error("Deposit Wallet contract loading error:", error);
+        titleEl.textContent = "Unable to load contract";
+        messageEl.textContent =
+            "Please try again later.";
+    }
+}
+
+// Open Deposit Wallet panel
+$("depositTab")?.addEventListener("click", async () => {
+    const panel = $("depositWalletPanel");
+
+    if (!panel) return;
+
+    panel.style.display = "flex";
+    await loadMyContractDeposit();
+});
+
+// Close Deposit Wallet panel
+$("closeDepositWalletPanel")?.addEventListener("click", () => {
+    const panel = $("depositWalletPanel");
+
+    if (panel) panel.style.display = "none";
+});
+
+// Close panel when clicking outside its content
+$("depositWalletPanel")?.addEventListener("click", (event) => {
+    if (event.target.id === "depositWalletPanel") {
+        event.currentTarget.style.display = "none";
+    }
+});
+
+// Show or hide contract deposit amount
+$("toggleContractDeposit")?.addEventListener("click", () => {
+    const amountEl = $("contractDepositAmount");
+    const button = $("toggleContractDeposit");
+
+    if (!amountEl || palmGrowContractDepositValue === null) return;
+
+    palmGrowContractDepositVisible =
+        !palmGrowContractDepositVisible;
+
+    if (palmGrowContractDepositVisible) {
+        amountEl.textContent = naira(palmGrowContractDepositValue);
+        button.textContent = "👁";
+        button.setAttribute("aria-label", "Hide contract deposit");
+    } else {
+        amountEl.textContent = "••••••";
+        button.textContent = "🙈";
+        button.setAttribute("aria-label", "Show contract deposit");
+    }
+});
+
+// ==========================================
+// END DEPOSIT WALLET CONTRACT DETAILS
+// ==========================================
+         
 </script>
 </body>
 </html>
