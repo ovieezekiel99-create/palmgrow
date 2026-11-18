@@ -1,10 +1,11 @@
-
 const CACHE_NAME = "palmgrow-app-v2";
 
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.add("./"))
-  );
+  caches.open(CACHE_NAME).then(cache =>
+    cache.addAll(["./", "./offline.html"])
+  )
+);
   self.skipWaiting();
 });
 
