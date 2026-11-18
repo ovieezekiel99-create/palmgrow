@@ -4585,8 +4585,16 @@ $("authScreen").style.display="none";
 
   await refreshPalmGrowReferralUI();
 
-  $("walletBalanceDisplay").textContent=naira(profile.available_balance);
-  $("availableBalance").textContent=naira(profile.available_balance);
+  // Load wallet balance and hide it by default
+$("walletBalanceDisplay").textContent =
+  naira(profile.available_balance);
+
+if (typeof window.hideWalletBalance === "function") {
+  window.hideWalletBalance();
+}
+
+$("availableBalance").textContent =
+  naira(profile.available_balance);
   $("totalInvestment").textContent=naira(profile.total_investment);
   $("totalEarnings").textContent=naira(profile.total_earnings);
     await loadTodayEarnings();  
