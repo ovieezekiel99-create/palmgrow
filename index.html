@@ -4900,7 +4900,59 @@ if(homeCarousel){
   loadPalmGrowReferralNetwork();
     }
   }  
+// PALMGROW GIFT GALLERY SEARCH AND FILTER
 
+(function () {
+  const searchInput = document.getElementById("giftGallerySearch");
+  const categoryButtons = document.querySelectorAll(".gift-category-btn");
+  const products = document.querySelectorAll(".gift-product");
+  const emptyMessage = document.getElementById("giftGalleryEmpty");
+
+  if (!searchInput || !products.length || !emptyMessage) return;
+
+  let selectedCategory = "all";
+
+  function filterGiftProducts() {
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    let visibleCount = 0;
+
+    products.forEach(product => {
+      const name = (product.dataset.name || "").toLowerCase();
+      const description = product.textContent.toLowerCase();
+      const category = product.dataset.category;
+
+      const matchesSearch =
+        name.includes(searchTerm) || description.includes(searchTerm);
+
+      const matchesCategory =
+        selectedCategory === "all" || category === selectedCategory;
+
+      const visible = matchesSearch && matchesCategory;
+
+      product.style.display = visible ? "" : "none";
+
+      if (visible) visibleCount++;
+    });
+
+    emptyMessage.style.display = visibleCount ? "none" : "block";
+  }
+
+  searchInput.addEventListener("input", filterGiftProducts);
+
+  categoryButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      selectedCategory = button.dataset.category;
+
+      categoryButtons.forEach(item =>
+        item.classList.toggle("active", item === button)
+      );
+
+      filterGiftProducts();
+    });
+  });
+})();
+
+// END PALMGROW GIFT GALLERY SEARCH AND FILTER
 window.showPage=showPage;  
 window.onpopstate = (event) => {
   const state = event.state || {};
