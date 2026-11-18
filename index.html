@@ -6408,7 +6408,7 @@ function formatPalmGrowContractDate(value) {
     return `${parts[2]}/${parts[1]}/${parts[0]}`;
 }
 
-
+ 
 async function loadMyContractDeposit() {
     const titleEl = $("contractDepositTitle");
     const amountEl = $("contractDepositAmount");
@@ -6416,6 +6416,11 @@ async function loadMyContractDeposit() {
     const endEl = $("contractEndDate");
     const messageEl = $("contractWalletMessage");
     const toggleEl = $("toggleContractDeposit");
+
+    const levelEl = $("contractLevelValue");
+    const statusEl = $("contractStatusValue");
+    const durationEl = $("contractDurationValue");
+    const remainingEl = $("contractRemainingValue");
 
     if (!currentUser) {
         titleEl.textContent = "Please log in to view your position.";
@@ -6428,6 +6433,11 @@ async function loadMyContractDeposit() {
     endEl.textContent = "—";
     messageEl.textContent = "";
 
+    levelEl.textContent = "—";
+    statusEl.textContent = "—";
+    durationEl.textContent = "—";
+    remainingEl.textContent = "—";
+
     palmGrowContractDepositValue = null;
     palmGrowContractDepositVisible = false;
 
@@ -6439,7 +6449,6 @@ async function loadMyContractDeposit() {
             .from("employee_positions")
             .select("level_code,locked_deposit,position_status,activated_at")
             .eq("employee_id", currentUser.id)
-            .eq("position_status", "active")
             .order("activated_at", { ascending: false })
             .limit(1)
             .maybeSingle();
@@ -6447,47 +6456,120 @@ async function loadMyContractDeposit() {
         if (error) throw error;
 
         if (!data) {
-            titleEl.textContent = "No active position";
+            titleEl.textContent = "No position found";
             messageEl.textContent =
-                "No active M-level position was found for your account.";
+                "No M-level position was found for your account.";
             return;
         }
 
+        // Contract level
+        titleEl.textContent =
+            "PalmGrow " + data.level_code + " Contract";
+
+        levelEl.textContent = data.level_code || "—";
+
+        // Contract status from the database
+        const positionStatus = data.position_status || "unknown";
+
+        statusEl.textContent =
+            positionStatus.charAt(0).toUpperCase() +
+            positionStatus.slice(1).replace(/_/g, " ");
+
+        // Locked deposit amount
         palmGrowContractDepositValue =
             data.locked_deposit == null
                 ? null
                 : Number(data.locked_deposit);
-
-        titleEl.textContent =
-            "PalmGrow " + data.level_code + " Contract";
-
-        const startDate = data.activated_at
-            ? new Date(data.activated_at)
-            : null;
-
-        if (startDate && !isNaN(startDate.getTime())) {
-            const endDate = new Date(startDate);
-            endDate.setFullYear(endDate.getFullYear() + 2);
-
-            startEl.textContent =
-                startDate.toLocaleDateString("en-GB");
-
-            endEl.textContent =
-                endDate.toLocaleDateString("en-GB");
-        }
 
         if (
             palmGrowContractDepositValue === null ||
             !Number.isFinite(palmGrowContractDepositValue)
         ) {
             amountEl.textContent = "Not available";
-            messageEl.textContent =
-                "The locked deposit amount is not available.";
-            return;
+        } else {
+            amountEl.textContent = "••••••";
         }
 
-        amountEl.textContent = "••••••";
-        messageEl.textContent = "Your active position contract details.";
+        // Contract dates and duration
+        if (data.activated_at) {
+            const startDate = new Date(data.activated_at);
+
+            if (!isNaN(startDate.getTime())) {
+                const endDate = new Date(startDate);
+                endDate.setFullYear(endDate.getFullYear() + 2);
+
+                startEl.textContent =
+                    startDate.toLocaleDateString("en-GB");
+
+                endEl.textContent =
+                    endDate.toLocaleDateString("en-GB");
+
+                durationEl.textContent = "2 Years";
+
+                // Calculate remaining contract time
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                endDate.setHours(0, 0, 0, 0);
+
+                if (today >= endDate) {
+                    remainingEl.textContent = "Period ended";
+                } else {
+                    let years =
+                        endDate.getFullYear() - today.getFullYear();
+
+                    let months =
+                        endDate.getMonth() - today.getMonth();
+
+                    let days =
+                        endDate.getDate() - today.getDate();
+
+                    if (days < 0) {
+                        months--;
+
+                        const previousMonthDays =
+                            new Date(
+                                endDate.getFullYear(),
+                                endDate.getMonth(),
+                                0
+                            ).getDate();
+
+                        days += previousMonthDays;
+                    }
+
+                    if (months < 0) {
+                        years--;
+                        months += 12;
+                    }
+
+                    const remainingParts = [];
+
+                    if (years > 0) {
+                        remainingParts.push(
+                            years + (years === 1 ? " year" : " years")
+                        );
+                    }
+
+                    if (months > 0) {
+                        remainingParts.push(
+                            months + (months === 1 ? " month" : " months")
+                        );
+                    }
+
+                    if (days > 0 && years === 0) {
+                        remainingParts.push(
+                            days + (days === 1 ? " day" : " days")
+                        );
+                    }
+
+                    remainingEl.textContent =
+                        remainingParts.join(", ") || "Less than a day";
+                }
+            }
+        }
+
+        messageEl.textContent =
+            "Your position contract details.";
 
     } catch (error) {
         console.error("Deposit Wallet position loading error:", error);
@@ -6497,7 +6579,7 @@ async function loadMyContractDeposit() {
             "Please try again later.";
     }
 }
-
+      
 
 // Open Deposit Wallet panel
 $("depositTab")?.addEventListener("click", async () => {
