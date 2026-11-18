@@ -1445,7 +1445,41 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
   font-size: 12px;
   padding: 10px 8px;
     }
-    
+    /* PALMGROW WELCOME SCROLLING ANIMATION */
+
+.palmgrow-welcome-wrap {
+    width: 145px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: right;
+    position: relative;
+}
+
+.palmgrow-welcome-text {
+    display: inline-block;
+    color: #4ade80;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    animation: palmGrowWelcomeScroll 6s linear infinite;
+}
+
+@keyframes palmGrowWelcomeScroll {
+    0% {
+        transform: translateX(110%);
+    }
+
+    100% {
+        transform: translateX(-110%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .palmgrow-welcome-text {
+        animation: none;
+        transform: none;
+    }
+    }
 </style>
 </head>
 <body>
