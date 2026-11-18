@@ -2303,6 +2303,76 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
 <!-- END ABOUT PALMGROW PAGE -->
 
 
+<!-- PALMGROW FINANCIAL STATEMENT PAGE -->
+<div id="page-financial-statement" class="hidden">
+  <div class="section">
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+      <h3 style="margin:0;color:#0b3d2e;">📊 Financial Statement</h3>
+      <button type="button"
+              onclick="showPage('dashboard')"
+              style="background:#e8f3eb;color:#0b3d2e;border:1px solid #c9dfce;border-radius:7px;padding:7px 11px;font-size:12px;font-weight:600;">
+        ✕ Close
+      </button>
+    </div>
+
+    <p style="font-size:12px;color:#66816e;margin-bottom:15px;">
+      Your personal financial activities for the most recent 3 months.
+    </p>
+
+    <!-- FINANCIAL SUMMARY -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:15px;">
+
+      <div style="background:#e8f3eb;border:1px solid #c9dfce;border-radius:9px;padding:12px;">
+        <small style="color:#66816e;">CURRENT WALLET BALANCE</small>
+        <strong id="statementCurrentBalance" style="display:block;font-size:17px;color:#0b3d2e;">₦0.00</strong>
+      </div>
+
+      <div style="background:#e8f3eb;border:1px solid #c9dfce;border-radius:9px;padding:12px;">
+        <small style="color:#66816e;">TOTAL CREDITS</small>
+        <strong id="statementTotalCredits" style="display:block;font-size:17px;color:#0b7a42;">₦0.00</strong>
+      </div>
+
+      <div style="background:#f8eeee;border:1px solid #ead0d0;border-radius:9px;padding:12px;">
+        <small style="color:#866060;">TOTAL DEBITS</small>
+        <strong id="statementTotalDebits" style="display:block;font-size:17px;color:#b42318;">₦0.00</strong>
+      </div>
+
+      <div style="background:#f5f1e5;border:1px solid #e5d9b5;border-radius:9px;padding:12px;">
+        <small style="color:#88733b;">NET MOVEMENT</small>
+        <strong id="statementNetMovement" style="display:block;font-size:17px;color:#80651d;">₦0.00</strong>
+      </div>
+
+    </div>
+
+    <div id="statementPeriod"
+         style="font-size:11px;color:#66816e;margin-bottom:12px;">
+      Reporting period: Last 3 months
+    </div>
+
+    <div id="statementMessage"
+         style="font-size:12px;margin-bottom:12px;">
+    </div>
+
+    <!-- TRANSACTION HISTORY -->
+    <h4 style="font-size:14px;color:#0b3d2e;margin-bottom:10px;">
+      Transaction History
+    </h4>
+
+    <div id="statementEntries">
+      <p style="font-size:12px;color:#66816e;">Your financial records will appear here.</p>
+    </div>
+
+    <button type="button"
+            onclick="loadPalmGrowFinancialStatement()"
+            style="width:100%;margin-top:15px;padding:11px;background:#0b3d2e;color:white;border:0;border-radius:8px;font-size:12px;font-weight:600;">
+      ↻ Refresh Statement
+    </button>
+
+  </div>
+</div>
+<!-- END PALMGROW FINANCIAL STATEMENT PAGE -->
+
 <!-- EMPLOYEE POSITION PAGE -->
       <div id="page-employee-position" class="hidden">  
         <div class="section">  
