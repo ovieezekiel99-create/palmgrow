@@ -1,0 +1,13 @@
+
+{
+  "name": "PalmGrow",
+  "short_name": "PalmGrow",
+  "description": "PalmGrow Member Platform",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#0b3d2e",
+  "icons": []
+}
