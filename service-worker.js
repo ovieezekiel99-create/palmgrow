@@ -41,10 +41,10 @@ self.addEventListener("fetch", event => {
       })
       .catch(async () => {
   return (
-    await caches.match(event.request) ||
-    await caches.match("./offline.html") ||
-    Response.error()
-  );
+  await caches.match("./offline.html") ||
+  await caches.match(event.request) ||
+  Response.error()
+);
 })
   );
 });
