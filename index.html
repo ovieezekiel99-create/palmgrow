@@ -6374,7 +6374,7 @@ function formatPalmGrowContractDate(value) {
     return `${parts[2]}/${parts[1]}/${parts[0]}`;
 }
 
-// Load the logged-in member's active contract
+
 async function loadMyContractDeposit() {
     const titleEl = $("contractDepositTitle");
     const amountEl = $("contractDepositAmount");
@@ -6384,7 +6384,7 @@ async function loadMyContractDeposit() {
     const toggleEl = $("toggleContractDeposit");
 
     if (!currentUser) {
-        titleEl.textContent = "Please log in to view your contract.";
+        titleEl.textContent = "Please log in to view your position.";
         return;
     }
 
@@ -6402,53 +6402,68 @@ async function loadMyContractDeposit() {
 
     try {
         const { data, error } = await supabase
-            .from("employee_contracts")
-            .select("contract_title,deposit_amount,start_date,end_date,status")
+            .from("employee_positions")
+            .select("level_code,locked_deposit,position_status,activated_at")
             .eq("employee_id", currentUser.id)
-            .eq("status", "active")
-            .order("created_at", { ascending: false })
+            .eq("position_status", "active")
+            .order("activated_at", { ascending: false })
             .limit(1)
             .maybeSingle();
 
         if (error) throw error;
 
         if (!data) {
-            titleEl.textContent = "No active contract";
+            titleEl.textContent = "No active position";
             messageEl.textContent =
-                "No active contract details were found for your account.";
+                "No active M-level position was found for your account.";
             return;
         }
 
         palmGrowContractDepositValue =
-            data.deposit_amount == null ? null : Number(data.deposit_amount);
+            data.locked_deposit == null
+                ? null
+                : Number(data.locked_deposit);
 
         titleEl.textContent =
-            data.contract_title || "PalmGrow Contract";
+            "PalmGrow " + data.level_code + " Contract";
 
-        startEl.textContent =
-            formatPalmGrowContractDate(data.start_date);
+        const startDate = data.activated_at
+            ? new Date(data.activated_at)
+            : null;
 
-        endEl.textContent =
-            formatPalmGrowContractDate(data.end_date);
+        if (startDate && !isNaN(startDate.getTime())) {
+            const endDate = new Date(startDate);
+            endDate.setFullYear(endDate.getFullYear() + 2);
 
-        if (palmGrowContractDepositValue === null ||
-            !Number.isFinite(palmGrowContractDepositValue)) {
+            startEl.textContent =
+                startDate.toLocaleDateString("en-GB");
+
+            endEl.textContent =
+                endDate.toLocaleDateString("en-GB");
+        }
+
+        if (
+            palmGrowContractDepositValue === null ||
+            !Number.isFinite(palmGrowContractDepositValue)
+        ) {
             amountEl.textContent = "Not available";
             messageEl.textContent =
-                "The contract deposit amount is not available.";
+                "The locked deposit amount is not available.";
             return;
         }
 
         amountEl.textContent = "••••••";
-        messageEl.textContent = "Your active contract details.";
+        messageEl.textContent = "Your active position contract details.";
 
     } catch (error) {
-        console.error("Deposit Wallet contract loading error:", error);
-        titleEl.textContent = "Unable to load contract";
+        console.error("Deposit Wallet position loading error:", error);
+
+        titleEl.textContent = "Unable to load position";
         messageEl.textContent =
             "Please try again later.";
     }
 }
+
 
 // Open Deposit Wallet panel
 $("depositTab")?.addEventListener("click", async () => {
