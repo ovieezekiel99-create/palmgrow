@@ -3937,7 +3937,7 @@ function msg(id,text,type="success"){
 async function loadPalmGrowFinancialStatement() {
   const message = $("statementMessage");
   const entriesHost = $("statementEntries");
-
+if (!message || !entriesHost) return;
   if (!currentUser) {
     message.textContent = "Please log in to view your financial statement.";
     return;
