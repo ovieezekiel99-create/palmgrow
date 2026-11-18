@@ -40,9 +40,11 @@ self.addEventListener("fetch", event => {
         return response;
       })
       .catch(async () => {
-        return (
-          await caches.match("./")
-        ) || Response.error();
-      })
+  return (
+    await caches.match(event.request) ||
+    await caches.match("./offline.html") ||
+    Response.error()
+  );
+})
   );
 });
