@@ -7314,5 +7314,13 @@ $("toggleContractDeposit")?.addEventListener("click", () => {
 // ==========================================
          
 </script>
+    <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js")
+      .catch(error => console.error("PalmGrow app setup:", error));
+  });
+}
+    </script>
 </body>
 </html>
