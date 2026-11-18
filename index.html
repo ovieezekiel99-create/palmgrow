@@ -3930,6 +3930,206 @@ function msg(id,text,type="success"){
   el.classList.remove("hidden");  
 }  
     
+// ==========================================
+// PALMGROW FINANCIAL STATEMENT
+// ==========================================
+
+async function loadPalmGrowFinancialStatement() {
+  const message = $("statementMessage");
+  const entriesHost = $("statementEntries");
+
+  if (!currentUser) {
+    message.textContent = "Please log in to view your financial statement.";
+    return;
+  }
+
+  message.textContent = "Loading your financial records...";
+  entriesHost.textContent = "Loading...";
+
+  try {
+    const { data, error } = await supabase.rpc(
+      "palmgrow_my_financial_statement_v2"
+    );
+
+    if (error) throw error;
+
+    if (!data) {
+      throw new Error("No financial statement was returned.");
+    }
+
+    // Summary figures
+    $("statementCurrentBalance").textContent =
+      naira(data.current_balance);
+
+    $("statementTotalCredits").textContent =
+      naira(data.total_credits);
+
+    $("statementTotalDebits").textContent =
+      naira(data.total_debits);
+
+    $("statementNetMovement").textContent =
+      naira(data.net_movement);
+
+    $("statementInterestBalance").textContent =
+      naira(data.current_investment_interest_balance);
+
+    $("statementInvestmentPayouts").textContent =
+      naira(data.total_investment_payouts);
+
+    // Reporting period
+    const startDate = new Date(data.period_start);
+    const endDate = new Date(data.period_end);
+
+    $("statementPeriod").textContent =
+      "Reporting period: " +
+      startDate.toLocaleDateString("en-GB") +
+      " – " +
+      endDate.toLocaleDateString("en-GB");
+
+    // Clear previous transaction history
+    entriesHost.replaceChildren();
+
+    const entries = Array.isArray(data.entries)
+      ? [...data.entries]
+      : [];
+
+    entries.sort((a, b) =>
+      new Date(b.date) - new Date(a.date)
+    );
+
+    if (!entries.length) {
+      entriesHost.textContent =
+        "No financial transactions found for this period.";
+    }
+
+    entries.forEach(entry => {
+      const card = document.createElement("div");
+
+      card.style.cssText =
+        "background:#fff;border:1px solid #dce9df;" +
+        "border-radius:9px;padding:12px;margin-bottom:9px;";
+
+      const heading = document.createElement("strong");
+      heading.style.cssText =
+        "display:block;color:#0b3d2e;font-size:13px;";
+
+      const date = document.createElement("small");
+      date.style.cssText =
+        "display:block;color:#66816e;font-size:11px;margin-top:4px;";
+
+      const amount = document.createElement("strong");
+      amount.style.cssText =
+        "display:block;font-size:14px;margin-top:8px;";
+
+      const status = document.createElement("small");
+      status.style.cssText =
+        "display:block;color:#66816e;font-size:11px;margin-top:5px;";
+
+      const category = entry.category || "transaction";
+      const details = entry.details || {};
+      const walletEffect = Number(entry.wallet_effect || 0);
+
+      const labels = {
+        deposit: "Wallet Deposit",
+        wallet: "Wallet Transaction",
+        task_earning: "Task Earnings",
+        withdrawal: "Withdrawal Request",
+        withdrawal_refund: "Withdrawal Refund",
+        investment_payout: "Investment Interest Payout"
+      };
+
+      heading.textContent =
+        labels[category] || entry.description || "Financial Transaction";
+
+      date.textContent = entry.date
+        ? new Date(entry.date).toLocaleString("en-GB")
+        : "Date unavailable";
+
+      if (
+        category === "deposit" &&
+        details.credit_verified !== true
+      ) {
+        amount.textContent = naira(entry.amount);
+        amount.style.color = "#b7791f";
+
+        status.textContent =
+          "Deposit record shown, but wallet credit has not been verified.";
+      } else if (category === "investment_payout") {
+        amount.textContent =
+          "+" + naira(entry.amount) + " investment interest";
+
+        amount.style.color = "#80651d";
+
+        status.textContent =
+          "Separate investment interest. Not a Flexible Wallet credit.";
+      } else {
+        amount.textContent =
+          (walletEffect > 0 ? "+" : walletEffect < 0 ? "−" : "") +
+          naira(Math.abs(walletEffect));
+
+        amount.style.color =
+          walletEffect > 0 ? "#0b7a42" :
+          walletEffect < 0 ? "#b42318" : "#66816e";
+
+        status.textContent =
+          "Status: " + String(entry.status || "recorded");
+      }
+
+      if (category === "withdrawal") {
+        const fees =
+          Number(details.handling_fee || 0) +
+          Number(details.transfer_fee || 0);
+
+        const extra = document.createElement("small");
+
+        extra.style.cssText =
+          "display:block;color:#66816e;font-size:11px;margin-top:5px;";
+
+        extra.textContent =
+          "Handling and transfer fees: " + naira(fees) +
+          " | Net amount: " + naira(details.net_amount);
+
+        card.appendChild(heading);
+        card.appendChild(date);
+        card.appendChild(amount);
+        card.appendChild(status);
+        card.appendChild(extra);
+
+        entriesHost.appendChild(card);
+        return;
+      }
+
+      card.appendChild(heading);
+      card.appendChild(date);
+      card.appendChild(amount);
+      card.appendChild(status);
+
+      entriesHost.appendChild(card);
+    });
+
+    message.textContent =
+      "Your financial statement has been updated successfully.";
+
+  } catch (error) {
+    console.error("Financial statement error:", error);
+
+    message.textContent =
+      error.message || "Unable to load your financial statement.";
+
+    entriesHost.textContent =
+      "Your financial records could not be loaded. Please try again.";
+  }
+}
+
+// Make the function available to the page buttons.
+window.loadPalmGrowFinancialStatement =
+  loadPalmGrowFinancialStatement;
+
+// ==========================================
+// END PALMGROW FINANCIAL STATEMENT
+// ==========================================
+
+    
 // PALMGROW GEMS EXPLOSION EFFECT
 function playGemsExplosion(){
 
