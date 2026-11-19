@@ -6629,6 +6629,57 @@ async function verifyWithdrawalBank(userId,button){
 const loadAdminWithdrawalsBtnEl = $("loadAdminWithdrawalsBtn");
 if(loadAdminWithdrawalsBtnEl) loadAdminWithdrawalsBtnEl.onclick = loadAdminWithdrawals;  
  
+function setAdminNotificationBadge(id, count) {
+  const badge = $(id);
+  if (!badge) return;
+
+  const total = Math.max(0, Number(count) || 0);
+  badge.textContent = String(total);
+  badge.style.display = total > 0 ? "inline-block" : "none";
+}
+
+async function loadAdminNotificationCounts() {
+  if (currentProfile?.role !== "admin") return;
+
+  try {
+    const [deposits, withdrawals, banks] = await Promise.all([
+      supabase.rpc("admin_get_pending_deposits"),
+      supabase.rpc("palmgrow_admin_get_withdrawals"),
+      supabase.rpc("palmgrow_admin_get_withdrawal_banks")
+    ]);
+
+    if (!deposits.error) {
+      setAdminNotificationBadge(
+        "adminDepositNotificationCount",
+        rowsOf(deposits.data).length
+      );
+    }
+
+    if (!withdrawals.error) {
+      const pendingWithdrawals = rowsOf(withdrawals.data)
+        .filter(item => item.status === "pending");
+
+      setAdminNotificationBadge(
+        "adminWithdrawalNotificationCount",
+        pendingWithdrawals.length
+      );
+    }
+
+    if (!banks.error) {
+      const pendingBanks = rowsOf(banks.data)
+        .filter(item => !item.bank_verified && !item.is_bank_verified);
+
+      setAdminNotificationBadge(
+        "adminBankNotificationCount",
+        pendingBanks.length
+      );
+    }
+
+  } catch (err) {
+    console.error("Admin notification count error:", err);
+  }
+}
+
 async function loadAdminData(){
   if(currentProfile?.role==="admin"){
     await loadAdminEmployees();
