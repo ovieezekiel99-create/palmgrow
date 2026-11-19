@@ -6686,8 +6686,9 @@ async function loadAdminData(){
     await loadAdminWithdrawalBanks();
     await loadAdminWithdrawals();
     await loadAdminOperatingFundsOverview();
+    await loadAdminNotificationCounts();
   }
-}
+    }
  
 async function loadAdminWithdrawals(){  
   const body=$("adminWithdrawalsBody");  
