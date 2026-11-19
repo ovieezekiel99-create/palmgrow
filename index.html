@@ -1974,27 +1974,34 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
 
 <!-- END PALMGROW DASHBOARD TESTIMONIAL CAROUSEL -->
 
+
 <!-- ADMIN HOME NOTIFICATIONS -->
 <div id="palmgrowAdminNotifications"
      style="display:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:10px 0 15px;">
 
-  <div style="min-width:0;background:#0b3d2e;border:1px solid #d4af37;border-radius:9px;padding:9px 3px;text-align:center;color:white;">
+  <button type="button"
+    onclick='showPage("admin"); document.querySelector(".admin-tab-btn[data-admin-tab=deposits]").click();'
+    style="min-width:0;width:100%;background:#0b3d2e;border:1px solid #d4af37;border-radius:9px;padding:9px 3px;text-align:center;color:white;font-family:inherit;cursor:pointer;">
     <div style="font-size:10px;white-space:nowrap;">Deposits</div>
     <strong id="adminDepositNotificationCount" style="display:none;font-size:17px;color:#f5d879;">0</strong>
     <div style="font-size:9px;color:#e5eee8;">Pending review</div>
-  </div>
+  </button>
 
-  <div style="min-width:0;background:#0b3d2e;border:1px solid #d4af37;border-radius:9px;padding:9px 3px;text-align:center;color:white;">
+  <button type="button"
+    onclick='showPage("admin"); document.querySelector(".admin-tab-btn[data-admin-tab=withdrawals]").click();'
+    style="min-width:0;width:100%;background:#0b3d2e;border:1px solid #d4af37;border-radius:9px;padding:9px 3px;text-align:center;color:white;font-family:inherit;cursor:pointer;">
     <div style="font-size:10px;white-space:nowrap;">Withdrawals</div>
     <strong id="adminWithdrawalNotificationCount" style="display:none;font-size:17px;color:#f5d879;">0</strong>
     <div style="font-size:9px;color:#e5eee8;">New requests</div>
-  </div>
+  </button>
 
-  <div style="min-width:0;background:#0b3d2e;border:1px solid #d4af37;border-radius:9px;padding:9px 3px;text-align:center;color:white;">
+  <button type="button"
+    onclick='showPage("admin"); document.querySelector(".admin-tab-btn[data-admin-tab=banks]").click();'
+    style="min-width:0;width:100%;background:#0b3d2e;border:1px solid #d4af37;border-radius:9px;padding:9px 3px;text-align:center;color:white;font-family:inherit;cursor:pointer;">
     <div style="font-size:10px;white-space:nowrap;">Bank checks</div>
     <strong id="adminBankNotificationCount" style="display:none;font-size:17px;color:#f5d879;">0</strong>
     <div style="font-size:9px;color:#e5eee8;">Awaiting verify</div>
-  </div>
+  </button>
 
 </div>
 <!-- END ADMIN HOME NOTIFICATIONS -->
