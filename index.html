@@ -6663,7 +6663,14 @@ function setAdminNotificationBadge(id, count) {
 }
 
 async function loadAdminNotificationCounts() {
-  if (currentProfile?.role !== "admin") return;
+  const notificationPanel = $("palmgrowAdminNotifications");
+
+  if (currentProfile?.role !== "admin") {
+    if (notificationPanel) notificationPanel.style.display = "none";
+    return;
+  }
+
+  if (notificationPanel) notificationPanel.style.display = "grid";
 
   try {
     const [deposits, withdrawals, banks] = await Promise.all([
