@@ -6683,7 +6683,13 @@ async function loadAdminNotificationCounts() {
     return;
   }
 
-  if (notificationPanel) notificationPanel.style.display = "grid";
+  if (notificationPanel) {
+  const dashboardPage = $("page-dashboard");
+  const isDashboardVisible =
+    dashboardPage && !dashboardPage.classList.contains("hidden");
+
+  notificationPanel.style.display = isDashboardVisible ? "grid" : "none";
+}
 
   try {
     const [deposits, withdrawals, banks] = await Promise.all([
