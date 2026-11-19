@@ -5435,7 +5435,7 @@ $("availableBalance").textContent =
   const role=String(profile.role||"").trim().toLowerCase();
 
   $("adminNav").style.display=role==="admin"?"flex":"none";
-
+await loadAdminNotificationCounts();
   const activeEmployee =
     accountType === "employee" && employeeStatus === "active";
 
