@@ -1,4 +1,4 @@
-const CACHE_NAME = "palmgrow-app-v3";
+const CACHE_NAME = "palmgrow-app-v4";
 
 const HOME_URL = self.registration.scope;
 const OFFLINE_URL = new URL(
@@ -43,13 +43,10 @@ self.addEventListener("fetch", event => {
 
   event.respondWith(
     fetch(event.request)
-      .then(response => {
+      .then(async response => {
         if (response.ok) {
-          const copy = response.clone();
-
-          caches.open(CACHE_NAME).then(cache =>
-            cache.put(event.request, copy)
-          );
+          const cache = await caches.open(CACHE_NAME);
+          await cache.put(event.request, response.clone());
         }
 
         return response;
