@@ -1,4 +1,4 @@
-const CACHE_NAME = "palmgrow-app-v4";
+const CACHE_NAME = "palmgrow-app-v5";
 
 const HOME_URL = self.registration.scope;
 const OFFLINE_URL = new URL(
