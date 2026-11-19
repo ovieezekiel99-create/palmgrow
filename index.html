@@ -4990,6 +4990,15 @@ if(homeCarousel){
   homeCarousel.style.display =
     page === "dashboard" ? "block" : "none";
     }
+    // Show admin notifications only on the Home dashboard
+const adminNotifications = $("palmgrowAdminNotifications");
+
+if(adminNotifications){
+  adminNotifications.style.display =
+    page === "dashboard" && currentProfile?.role === "admin"
+      ? "grid"
+      : "none";
+}
   document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));  
   const active=document.querySelector(`.nav-item[data-page="${page}"]`);  
   if(active)active.classList.add("active");  
