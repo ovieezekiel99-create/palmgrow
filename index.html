@@ -5327,6 +5327,26 @@ positionValue.textContent = "Loading...";
   // Keep the app hidden while restoring the correct page
   $("app").style.display="none";
 
+  // OFFLINE: Show last saved dashboard, don't call Supabase
+  if(!navigator.onLine){
+    const saved = localStorage.getItem("palmgrow_last_dashboard");
+    if(saved){
+      try{
+        const data = JSON.parse(saved);
+        const profile = data.profile;
+        if(profile){
+          currentUser = { id: profile.id };
+          currentProfile = profile;
+          renderSavedDashboard(profile);
+          return;
+        }
+      }catch(e){}
+    }
+    // No saved data + offline = show login
+    $("authScreen").style.display="";
+    return;
+  }
+
   const {data:{session},error:sessionError} =
     await supabase.auth.getSession();
 
@@ -5347,14 +5367,17 @@ positionValue.textContent = "Loading...";
     return;
   }
 
+  // SAVE FOR OFFLINE - This is the new line
+  try{
+    localStorage.setItem("palmgrow_last_dashboard", JSON.stringify({ profile: profile, savedAt: Date.now() }));
+  }catch(e){}
+
   const accountType = String(profile.account_type || "")
     .trim().toLowerCase();
 
   const employeeStatus = String(profile.employee_status || "")
     .trim().toLowerCase();
 
-   
-  // Block disabled member accounts, but never admin accounts
   const memberStatus = String(profile.member_status || "")
     .trim()
     .toLowerCase();
@@ -5364,66 +5387,49 @@ positionValue.textContent = "Loading...";
     .toLowerCase();
 
   if(memberRole !== "admin" && memberStatus === "disabled"){
-
     $("app").style.display="none";
     $("authScreen").style.display="";
-
     currentUser = null;
     currentProfile = null;
-
     await supabase.auth.signOut();
-
     alert("Your account has been disabled. Please contact support.");
-
     return;
   }
 
+  currentProfile = profile;
 
-// Load dashboard after account verification
-currentProfile = profile;
+  const gemsBalance = Number(profile.gems_balance || 0);
+  const checkinStreak = Number(profile.checkin_streak || 0);
 
-// Display the member's actual Gems balance
-const gemsBalance = Number(profile.gems_balance || 0);
-      const checkinStreak = Number(profile.checkin_streak || 0);
+  if($("checkinStreakDisplay")){
+    $("checkinStreakDisplay").textContent =
+      "Current streak: " + checkinStreak +
+      (checkinStreak === 1 ? " day" : " days");
+  }
+  const gemsBalanceText = gemsBalance.toLocaleString() + " Gems";
 
-if($("checkinStreakDisplay")){
-  $("checkinStreakDisplay").textContent =
-    "Current streak: " + checkinStreak +
-    (checkinStreak === 1 ? " day" : " days");
-}
-const gemsBalanceText = gemsBalance.toLocaleString() + " Gems";
+  if($("gemsBalanceDisplay")){
+    $("gemsBalanceDisplay").textContent = gemsBalanceText;
+  }
+  if($("gemsDashboardBalance")){
+    $("gemsDashboardBalance").textContent = gemsBalanceText;
+  }
 
-if($("gemsBalanceDisplay")){
-  $("gemsBalanceDisplay").textContent = gemsBalanceText;
-}
+  const gemsButton = $("claimGemsButton");
+  if(gemsButton){
+    const today = new Date();
+    const todayDate =
+      today.getFullYear() + "-" +
+      String(today.getMonth() + 1).padStart(2, "0") + "-" +
+      String(today.getDate()).padStart(2, "0");
+    const alreadyClaimed = profile.last_checkin_date === todayDate;
+    gemsButton.disabled = alreadyClaimed;
+    gemsButton.textContent = alreadyClaimed ? "Claimed Today" : "Claim 100 Gems";
+    gemsButton.style.opacity = alreadyClaimed ? "0.45" : "1";
+    gemsButton.style.cursor = alreadyClaimed ? "not-allowed" : "pointer";
+  }
 
-if($("gemsDashboardBalance")){
-  $("gemsDashboardBalance").textContent = gemsBalanceText;
-}
-// Restore daily Gems check-in button state
-const gemsButton = $("claimGemsButton");
-
-if(gemsButton){
-  const today = new Date();
-  const todayDate =
-    today.getFullYear() + "-" +
-    String(today.getMonth() + 1).padStart(2, "0") + "-" +
-    String(today.getDate()).padStart(2, "0");
-
-  const alreadyClaimed =
-    profile.last_checkin_date === todayDate;
-
-  gemsButton.disabled = alreadyClaimed;
-  gemsButton.textContent = alreadyClaimed
-    ? "Claimed Today"
-    : "Claim 100 Gems";
-
-  gemsButton.style.opacity = alreadyClaimed ? "0.45" : "1";
-  gemsButton.style.cursor = alreadyClaimed
-    ? "not-allowed"
-    : "pointer";
-    }
-$("authScreen").style.display="none";
+  $("authScreen").style.display="none";
 
   const name = profile.full_name ||
     currentUser.user_metadata?.full_name || "Member";
@@ -5434,59 +5440,70 @@ $("authScreen").style.display="none";
 
   await refreshPalmGrowReferralUI();
 
-  // Load wallet balance and hide it by default
-$("walletBalanceDisplay").textContent =
-  naira(profile.available_balance);
-
-if (typeof window.hideWalletBalance === "function") {
-  window.hideWalletBalance();
-}
-
-$("availableBalance").textContent =
-  naira(profile.available_balance);
+  $("walletBalanceDisplay").textContent = naira(profile.available_balance);
+  if (typeof window.hideWalletBalance === "function") {
+    window.hideWalletBalance();
+  }
+  $("availableBalance").textContent = naira(profile.available_balance);
   $("totalInvestment").textContent=naira(profile.total_investment);
   $("totalEarnings").textContent=naira(profile.total_earnings);
-    await loadTodayEarnings();  
+  await loadTodayEarnings();
   $("referralEarnings").textContent=naira(profile.referral_earnings);
   $("dailyRateDisplay").textContent=naira(profile.daily_payout_amount)+" / day";
 
   await loadDashboardEmployeeLevel();
 
   const role=String(profile.role||"").trim().toLowerCase();
-
   $("adminNav").style.display=role==="admin"?"flex":"none";
-await loadAdminNotificationCounts();
-  const activeEmployee =
-    accountType === "employee" && employeeStatus === "active";
-
+  await loadAdminNotificationCounts();
+  const activeEmployee = accountType === "employee" && employeeStatus === "active";
   const canViewEmployeePositions = true;
-  $("employeeTasksNav").style.display =
-    activeEmployee ? "flex" : "none";
-
-  $("employeePositionNav").style.display =
-    canViewEmployeePositions ? "flex" : "none";
-
+  $("employeeTasksNav").style.display = activeEmployee ? "flex" : "none";
+  $("employeePositionNav").style.display = canViewEmployeePositions ? "flex" : "none";
   $("positionWalletBalance").textContent=naira(profile.available_balance);
-
   updateWithdrawalBalance();
 
-  // Restore the previous page before showing the app
   if(isInitialBoot){
     isInitialBoot = false;
-
     const hash = window.location.hash.replace("#", "").trim();
-
     if(hash && PAGE_NAMES.includes(hash)){
       showPage(hash, false);
     }else{
       showPage("dashboard", false);
     }
   }
+  $("app").style.display="block";
+}
 
-  // Display the app only after the correct page is ready
+// NEW HELPER: Renders saved dashboard when offline (no Supabase calls)
+function renderSavedDashboard(profile){
+  $("authScreen").style.display="none";
+  const name = profile.full_name || "Member";
+  if($("userName")) $("userName").textContent = name;
+  if($("userPhone")) $("userPhone").textContent = profile.phone || "";
+  if($("userAvatar")) $("userAvatar").textContent = name.charAt(0).toUpperCase();
+  if($("walletBalanceDisplay")) $("walletBalanceDisplay").textContent = naira(profile.available_balance);
+  if($("availableBalance")) $("availableBalance").textContent = naira(profile.available_balance);
+  if($("totalInvestment")) $("totalInvestment").textContent = naira(profile.total_investment);
+  if($("totalEarnings")) $("totalEarnings").textContent = naira(profile.total_earnings);
+  if($("referralEarnings")) $("referralEarnings").textContent = naira(profile.referral_earnings);
+  if($("dailyRateDisplay")) $("dailyRateDisplay").textContent = naira(profile.daily_payout_amount)+" / day";
+  if($("gemsBalanceDisplay")) $("gemsBalanceDisplay").textContent = Number(profile.gems_balance||0).toLocaleString() + " Gems";
+  if($("gemsDashboardBalance")) $("gemsDashboardBalance").textContent = Number(profile.gems_balance||0).toLocaleString() + " Gems";
+  if($("checkinStreakDisplay")) $("checkinStreakDisplay").textContent = "Current streak: " + Number(profile.checkin_streak||0) + " days";
+  const role = String(profile.role||"").trim().toLowerCase();
+  if($("adminNav")) $("adminNav").style.display = role==="admin"?"flex":"none";
+  if($("positionWalletBalance")) $("positionWalletBalance").textContent = naira(profile.available_balance);
+  if (typeof window.hideWalletBalance === "function") { window.hideWalletBalance(); }
+  // Show dashboard page
+  if(isInitialBoot){
+    isInitialBoot = false;
+    const hash = window.location.hash.replace("#", "").trim();
+    if(hash && PAGE_NAMES.includes(hash)){ showPage(hash, false); } else { showPage("dashboard", false); }
+  }
   $("app").style.display="block";
     }
-     
+
 async function loadEmployeePositionPlans(){
   const host = $("employeePositionPlans");
   if(!currentUser) return;
