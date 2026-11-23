@@ -6123,7 +6123,51 @@ async function updateMemberStatus(memberId, newStatus, memberName) {
   }
 }
 
+// TEMPORARY: Test admin authentication
+$("testMemberDeletionAuthBtn")?.addEventListener("click", async () => {
+    const button = $("testMemberDeletionAuthBtn");
 
+    if (!button) return;
+
+    button.disabled = true;
+    button.textContent = "Testing...";
+
+    try {
+        const { data, error } = await supabase.functions.invoke(
+            "admin-delete-member",
+            {
+                body: {
+                    action: "check"
+                }
+            }
+        );
+
+        if (error) throw error;
+
+        if (
+            data?.success === true &&
+            data?.authenticated === true &&
+            data?.administrator === true
+        ) {
+            alert("SUCCESS: Your administrator authentication is verified.");
+        } else {
+            console.error("Unexpected authentication response:", data);
+            alert("Authentication check returned an unexpected response.");
+        }
+
+    } catch (error) {
+        console.error("Admin authentication test:", error);
+
+        alert(
+            "Authentication test failed: " +
+            (error.message || "Unknown error")
+        );
+
+    } finally {
+        button.disabled = false;
+        button.textContent = "Test Admin Authentication";
+    }
+});
 async function loadAdminEmployees() {
   const tbody = $("adminEmployeesBody");
   if (!tbody) return;
