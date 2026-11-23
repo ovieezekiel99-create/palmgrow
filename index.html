@@ -3328,9 +3328,16 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="justify-content: space
           
 <!-- TAB 2: MEMBER MANAGEMENT -->
 <div class="admin-panel-section" id="admin-tab-employees">
-  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-    <h4 style="font-size:15px; color:var(--green-dark);">Member Management</h4>
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:12px; flex-wrap:wrap;">
+  <h4 style="font-size:15px; color:var(--green-dark);">Member Management</h4>
+
+  <div style="display:flex; gap:8px; flex-wrap:wrap;">
     <button id="loadEmployeesBtn" class="admin-tab-btn" style="margin:0; padding:8px 14px; font-size:12px;">Load Members</button>
+
+    <button id="testMemberDeletionAuthBtn" class="admin-tab-btn" type="button" style="margin:0; padding:8px 14px; font-size:12px;">
+      Test Admin Authentication
+    </button>
+  </div>
   </div>
 
   <div id="adminEmployeeMessage" class="status hidden"></div>
