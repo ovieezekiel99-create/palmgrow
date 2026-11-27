@@ -6302,17 +6302,6 @@ async function updateEmployeeStatus(employeeId, newStatus){
   }  
 }  
  
-async function deleteEmployeeAccount(employeeId, employeeName){  
-  if(!confirm(`Delete employee account for "${employeeName || 'Member'}"?`)) return;  
-  try{  
-    const {error} = await supabase.from("profiles").delete().eq("id", employeeId);  
-    if(error) throw error;  
-    loadAdminEmployees();  
-  }catch(err){  
-    alert("Failed to delete account: " + err.message);  
-  }  
-}  
- 
 async function loadWithdrawalPage(){  
   if(!currentUser)return;  
   updateWithdrawalBalance();  
