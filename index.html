@@ -6261,7 +6261,22 @@ async function loadAdminEmployees() {
           name
         );
 
-      actionTd.appendChild(actionBtn);
+      // Permanent deletion stays unavailable until backend safety checks pass.
+const deleteBtn = document.createElement("button");
+deleteBtn.type = "button";
+deleteBtn.textContent = "Permanently Delete";
+deleteBtn.disabled = true;
+deleteBtn.title = "Temporarily unavailable while deletion safety checks are completed.";
+deleteBtn.setAttribute(
+  "aria-label",
+  `Permanently delete ${name} (temporarily unavailable)`
+);
+deleteBtn.style.background = "#9ca3af";
+deleteBtn.style.color = "white";
+deleteBtn.style.marginLeft = "6px";
+deleteBtn.style.cursor = "not-allowed";
+
+actionTd.append(actionBtn, deleteBtn);
 
       tr.append(infoTd, statusTd, balanceTd, actionTd);
       tbody.appendChild(tr);
